@@ -1,0 +1,526 @@
+# Dockerfile for Crisis Detection Service
+# Specialized microservice for real-time mental health crisis detection
+
+# ================================
+# Python ML Environment Stage
+# ================================
+FROM python:3.11-slim AS python-builder
+
+# Install system dependencies for ML libraries
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc \
+        g++ \
+        gfortran \
+        libopenblas-dev \
+        liblapack-dev \
+        pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python requirements
+COPY requirements-crisis.txt ./
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-crisis.txt
+
+# ================================
+# Node.js Build Stage
+# ================================
+FROM node:20-alpine AS node-builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install Node.js dependencies
+RUN npm ci --only=production --no-audit --no-fund
+
+# Copy crisis detection source code
+COPY src/services/crisis/ ./src/services/crisis/
+COPY src/services/ml/ ./src/services/ml/
+COPY src/utils/mlModels.ts ./src/utils/
+COPY src/types/ ./src/types/
+
+# Build TypeScript
+RUN npm run build:crisis-detector
+
+# ================================
+# Production Stage
+# ================================
+FROM python:3.11-slim AS production
+
+# Set build arguments
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG CRISIS_MODEL_VERSION=v1.0.0
+
+# Add metadata
+LABEL org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.version=$BUILD_VERSION \
+      org.opencontainers.image.title="Crisis Detection Service" \
+      org.opencontainers.image.description="Real-time mental health crisis detection microservice" \
+      org.opencontainers.image.vendor="Mental Health Platform Team" \
+      org.opencontainers.image.licenses="MIT" \
+      crisis.model.version=$CRISIS_MODEL_VERSION
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        ca-certificates \
+        libopenblas-dev \
+        liblapack-dev \
+        libgomp1 && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+# Create non-root user for security
+RUN groupadd -r crisis && \
+    useradd -r -g crisis -u 1001 crisis
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python dependencies from builder
+COPY --from=python-builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=python-builder /usr/local/bin /usr/local/bin
+
+# Copy built Node.js application
+COPY --from=node-builder --chown=crisis:crisis /app/dist/crisis-detector ./
+
+# Copy crisis detection models and configuration
+COPY --chown=crisis:crisis models/ ./models/
+COPY --chown=crisis:crisis config/crisis-detection.yml ./config/
+
+# Create crisis detection service
+COPY --chown=crisis:crisis << 'EOF' ./crisis-detector.py
+#!/usr/bin/env python3
+"""
+Crisis Detection Service for Mental Health Platform
+Real-time analysis of text for mental health crisis indicators
+"""
+
+import os
+import json
+import logging
+import asyncio
+import aiohttp
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple
+import redis.asyncio as redis
+import tensorflow as tf
+import numpy as np
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+from flask import Flask, request, jsonify
+import prometheus_client
+from prometheus_client import Counter, Histogram, Gauge
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Prometheus metrics
+CRISIS_REQUESTS = Counter('crisis_detection_requests_total', 'Total crisis detection requests')
+CRISIS_DETECTED = Counter('crisis_detected_total', 'Total crises detected', ['severity'])
+RESPONSE_TIME = Histogram('crisis_detection_duration_seconds', 'Crisis detection response time')
+MODEL_ACCURACY = Gauge('crisis_model_accuracy', 'Current model accuracy')
+ACTIVE_CRISES = Gauge('crisis_active_count', 'Number of active crises')
+
+class CrisisDetector:
+    def __init__(self):
+        self.app = Flask(__name__)
+        self.redis_client = None
+        self.model = None
+        self.tokenizer = None
+        self.crisis_keywords = []
+        self.setup_routes()
+        
+    async def initialize(self):
+        """Initialize the crisis detection service"""
+        try:
+            # Load ML models
+            await self.load_models()
+            
+            # Connect to Redis
+            self.redis_client = redis.Redis(
+                host=os.getenv('REDIS_HOST', 'redis-service'),
+                port=int(os.getenv('REDIS_PORT', 6379)),
+                password=os.getenv('REDIS_PASSWORD'),
+                decode_responses=True
+            )
+            
+            # Load crisis keywords
+            await self.load_crisis_keywords()
+            
+            logger.info("Crisis Detection Service initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize crisis detector: {e}")
+            raise
+    
+    async def load_models(self):
+        """Load pre-trained crisis detection models"""
+        try:
+            # Load BERT-based crisis detection model
+            model_path = os.getenv('CRISIS_MODEL_PATH', './models/crisis-detection-model')
+            
+            self.tokenizer = AutoTokenizer.from_pretrained(model_path)
+            self.model = AutoModelForSequenceClassification.from_pretrained(model_path)
+            self.model.eval()
+            
+            # Load TensorFlow model for severity classification
+            self.severity_model = tf.keras.models.load_model('./models/severity-classifier')
+            
+            logger.info("Crisis detection models loaded successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to load models: {e}")
+            # Fallback to keyword-based detection
+            logger.warning("Falling back to keyword-based crisis detection")
+    
+    async def load_crisis_keywords(self):
+        """Load crisis detection keywords"""
+        try:
+            with open('./config/crisis-keywords.json', 'r') as f:
+                self.crisis_keywords = json.load(f)
+            logger.info(f"Loaded {len(self.crisis_keywords)} crisis keywords")
+        except Exception as e:
+            logger.error(f"Failed to load crisis keywords: {e}")
+            # Default keywords
+            self.crisis_keywords = [
+                'suicide', 'kill myself', 'end my life', 'self-harm',
+                'hurt myself', 'want to die', 'hopeless', 'no point living'
+            ]
+    
+    def setup_routes(self):
+        """Setup Flask routes"""
+        
+        @self.app.route('/health', methods=['GET'])
+        def health_check():
+            return jsonify({
+                'status': 'healthy',
+                'service': 'crisis-detector',
+                'model_loaded': self.model is not None,
+                'timestamp': datetime.utcnow().isoformat()
+            })
+        
+        @self.app.route('/ready', methods=['GET'])
+        def readiness_check():
+            ready = self.model is not None and self.redis_client is not None
+            status = 'ready' if ready else 'not_ready'
+            return jsonify({'status': status}), 200 if ready else 503
+        
+        @self.app.route('/detect', methods=['POST'])
+        async def detect_crisis():
+            with RESPONSE_TIME.time():
+                return await self.detect_crisis_endpoint()
+        
+        @self.app.route('/metrics', methods=['GET'])
+        def metrics():
+            return prometheus_client.generate_latest()
+    
+    async def detect_crisis_endpoint(self):
+        """Main crisis detection endpoint"""
+        try:
+            CRISIS_REQUESTS.inc()
+            
+            data = request.get_json()
+            if not data or 'message' not in data:
+                return jsonify({'error': 'Message is required'}), 400
+            
+            message = data['message']
+            user_id = data.get('userId', 'anonymous')
+            session_id = data.get('sessionId', 'unknown')
+            
+            # Detect crisis
+            result = await self.analyze_message(message)
+            
+            # Store result in Redis if crisis detected
+            if result['crisis_detected']:
+                await self.store_crisis_event(user_id, session_id, message, result)
+                CRISIS_DETECTED.labels(severity=result['severity']).inc()
+                
+                # Trigger immediate alerts for high severity
+                if result['severity'] in ['high', 'critical']:
+                    await self.trigger_emergency_alert(user_id, session_id, result)
+            
+            return jsonify(result)
+            
+        except Exception as e:
+            logger.error(f"Crisis detection error: {e}")
+            return jsonify({'error': 'Internal server error'}), 500
+    
+    async def analyze_message(self, message: str) -> Dict:
+        """Analyze message for crisis indicators"""
+        try:
+            # Multiple detection methods for reliability
+            keyword_result = self.keyword_detection(message)
+            ml_result = await self.ml_detection(message) if self.model else None
+            
+            # Combine results
+            crisis_detected = keyword_result['detected']
+            confidence = keyword_result['confidence']
+            severity = keyword_result['severity']
+            
+            if ml_result:
+                # Use ML model results if available
+                crisis_detected = ml_result['detected'] or crisis_detected
+                confidence = max(confidence, ml_result['confidence'])
+                severity = self.determine_severity(ml_result['severity_score'])
+            
+            return {
+                'crisis_detected': crisis_detected,
+                'confidence': confidence,
+                'severity': severity,
+                'keywords_matched': keyword_result.get('keywords_matched', []),
+                'resources': self.get_crisis_resources(severity) if crisis_detected else [],
+                'timestamp': datetime.utcnow().isoformat(),
+                'detection_method': 'hybrid' if ml_result else 'keyword'
+            }
+            
+        except Exception as e:
+            logger.error(f"Message analysis error: {e}")
+            return {
+                'crisis_detected': False,
+                'confidence': 0.0,
+                'severity': 'unknown',
+                'error': str(e)
+            }
+    
+    def keyword_detection(self, message: str) -> Dict:
+        """Keyword-based crisis detection"""
+        message_lower = message.lower()
+        matched_keywords = []
+        
+        for keyword in self.crisis_keywords:
+            if keyword.lower() in message_lower:
+                matched_keywords.append(keyword)
+        
+        detected = len(matched_keywords) > 0
+        confidence = min(len(matched_keywords) * 0.3, 1.0) if detected else 0.0
+        
+        # Determine severity based on keywords
+        high_risk_keywords = ['suicide', 'kill myself', 'end my life', 'want to die']
+        severity = 'high' if any(k in message_lower for k in high_risk_keywords) else 'medium'
+        
+        return {
+            'detected': detected,
+            'confidence': confidence,
+            'severity': severity,
+            'keywords_matched': matched_keywords
+        }
+    
+    async def ml_detection(self, message: str) -> Optional[Dict]:
+        """Machine learning-based crisis detection"""
+        try:
+            if not self.model or not self.tokenizer:
+                return None
+            
+            # Tokenize message
+            inputs = self.tokenizer(
+                message,
+                return_tensors="pt",
+                truncation=True,
+                padding=True,
+                max_length=512
+            )
+            
+            # Get model prediction
+            with torch.no_grad():
+                outputs = self.model(**inputs)
+                probabilities = torch.softmax(outputs.logits, dim=-1)
+                
+            # Extract results
+            crisis_prob = probabilities[0][1].item()  # Assuming index 1 is crisis class
+            detected = crisis_prob > 0.5
+            
+            # Get severity prediction
+            severity_score = 0.5
+            if detected and self.severity_model:
+                # Use TensorFlow model for severity
+                severity_input = np.array([crisis_prob]).reshape(1, -1)
+                severity_score = self.severity_model.predict(severity_input)[0][0]
+            
+            return {
+                'detected': detected,
+                'confidence': crisis_prob,
+                'severity_score': severity_score
+            }
+            
+        except Exception as e:
+            logger.error(f"ML detection error: {e}")
+            return None
+    
+    def determine_severity(self, severity_score: float) -> str:
+        """Determine crisis severity from score"""
+        if severity_score >= 0.8:
+            return 'critical'
+        elif severity_score >= 0.6:
+            return 'high'
+        elif severity_score >= 0.4:
+            return 'medium'
+        else:
+            return 'low'
+    
+    def get_crisis_resources(self, severity: str) -> List[Dict]:
+        """Get appropriate crisis resources based on severity"""
+        resources = [
+            {
+                'name': '988 Suicide & Crisis Lifeline',
+                'phone': '988',
+                'text': 'Text HOME to 741741',
+                'url': 'https://988lifeline.org/',
+                'available_24_7': True
+            }
+        ]
+        
+        if severity in ['high', 'critical']:
+            resources.append({
+                'name': 'Emergency Services',
+                'phone': '911',
+                'description': 'For immediate life-threatening situations',
+                'available_24_7': True
+            })
+        
+        return resources
+    
+    async def store_crisis_event(self, user_id: str, session_id: str, message: str, result: Dict):
+        """Store crisis event in Redis for tracking"""
+        try:
+            event = {
+                'user_id': user_id,
+                'session_id': session_id,
+                'message_hash': hash(message),  # Don't store actual message for privacy
+                'severity': result['severity'],
+                'confidence': result['confidence'],
+                'timestamp': datetime.utcnow().isoformat(),
+                'resolved': False
+            }
+            
+            # Store with expiration (HIPAA compliance)
+            await self.redis_client.setex(
+                f"crisis:{user_id}:{session_id}",
+                86400,  # 24 hours
+                json.dumps(event)
+            )
+            
+            # Update active crisis count
+            await self.redis_client.incr('crisis:active_count')
+            ACTIVE_CRISES.set(int(await self.redis_client.get('crisis:active_count') or 0))
+            
+        except Exception as e:
+            logger.error(f"Failed to store crisis event: {e}")
+    
+    async def trigger_emergency_alert(self, user_id: str, session_id: str, result: Dict):
+        """Trigger emergency alerts for high-severity crises"""
+        try:
+            alert_data = {
+                'user_id': user_id,
+                'session_id': session_id,
+                'severity': result['severity'],
+                'confidence': result['confidence'],
+                'timestamp': datetime.utcnow().isoformat(),
+                'alert_type': 'crisis_detected'
+            }
+            
+            # Send to emergency notification webhook
+            webhook_url = os.getenv('EMERGENCY_NOTIFICATION_WEBHOOK')
+            if webhook_url:
+                async with aiohttp.ClientSession() as session:
+                    await session.post(webhook_url, json=alert_data)
+            
+            logger.critical(f"EMERGENCY ALERT: High-severity crisis detected for user {user_id}")
+            
+        except Exception as e:
+            logger.error(f"Failed to send emergency alert: {e}")
+
+# Initialize and run the service
+detector = CrisisDetector()
+
+if __name__ == '__main__':
+    # Initialize async components
+    asyncio.run(detector.initialize())
+    
+    # Start Flask app
+    port = int(os.getenv('PORT', 8080))
+    detector.app.run(host='0.0.0.0', port=port, debug=False)
+EOF
+
+# Make the script executable
+RUN chmod +x ./crisis-detector.py
+
+# Create health check script
+COPY --chown=crisis:crisis << 'EOF' ./health-check.py
+#!/usr/bin/env python3
+import requests
+import sys
+import os
+
+try:
+    response = requests.get(f"http://localhost:{os.getenv('PORT', 8080)}/health", timeout=5)
+    if response.status_code == 200:
+        sys.exit(0)
+    else:
+        sys.exit(1)
+except:
+    sys.exit(1)
+EOF
+
+RUN chmod +x ./health-check.py
+
+# Create requirements file
+COPY --chown=crisis:crisis << 'EOF' ./requirements-crisis.txt
+Flask==2.3.3
+aiohttp==3.8.5
+redis==4.6.0
+tensorflow==2.13.0
+torch==2.0.1
+transformers==4.33.2
+numpy==1.24.3
+prometheus-client==0.17.1
+requests==2.31.0
+asyncio-mqtt==0.13.0
+python-json-logger==2.0.7
+cryptography==41.0.3
+EOF
+
+# Install Python requirements
+RUN pip install --no-cache-dir -r requirements-crisis.txt
+
+# Create model directories
+RUN mkdir -p ./models/crisis-detection-model ./models/severity-classifier ./config
+
+# Create default crisis keywords
+RUN echo '["suicide", "kill myself", "end my life", "self-harm", "hurt myself", "want to die", "hopeless", "no point living", "planning to hurt", "thoughts of death", "better off dead", "cant go on", "worthless", "burden to everyone"]' > ./config/crisis-keywords.json
+
+# Set ownership
+RUN chown -R crisis:crisis /app
+
+# Switch to non-root user
+USER crisis
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD python health-check.py
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PORT=8080
+
+# Start the crisis detection service
+CMD ["python", "crisis-detector.py"]

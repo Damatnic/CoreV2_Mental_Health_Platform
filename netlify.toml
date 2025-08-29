@@ -1,0 +1,115 @@
+[build]
+  # Directory to serve from
+  publish = "dist"
+  
+  # Build command
+  command = "npm run build"
+  
+  # Install dependencies before build
+  ignore = "false"
+
+[build.environment]
+  # Node.js version
+  NODE_VERSION = "18"
+  
+  # NPM version  
+  NPM_VERSION = "9"
+  
+  # Build optimizations
+  NODE_ENV = "production"
+  GENERATE_SOURCEMAP = "false"
+  
+  # Vite specific
+  VITE_NODE_ENV = "production"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # CSP for mental health platform security
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data: https:;
+      connect-src 'self' https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com wss: https:;
+      media-src 'self';
+    """
+    
+    # Performance headers
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Special headers for HTML files
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Service Worker
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Service-Worker-Allowed = "/"
+
+# API routes (for future backend functions)
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+# Redirects for SPA routing
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Functions configuration
+[functions]
+  # Directory for Netlify functions
+  directory = "netlify/functions"
+  
+  # Node.js runtime
+  node_bundler = "esbuild"
+  
+  # Environment variables available to functions
+  [functions.environment]
+    NODE_ENV = "production"
+
+# Dev server settings (for netlify dev)
+[dev]
+  command = "npm run dev"
+  port = 3000
+  publish = "dist"
+  autoLaunch = false
+
+# Plugin configuration
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+  
+  [plugins.inputs]
+    output_path = "reports/lighthouse.html"
+
+# Environment-specific builds
+[context.production]
+  environment = { NODE_ENV = "production", VITE_NODE_ENV = "production" }
+  
+[context.deploy-preview]
+  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging" }
+  
+[context.branch-deploy]
+  environment = { NODE_ENV = "development", VITE_NODE_ENV = "development" }

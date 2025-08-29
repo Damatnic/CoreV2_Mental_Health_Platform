@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mental-health-platform
+  labels:
+    name: mental-health-platform
+    environment: production
+    compliance: hipaa
+    criticality: life-critical
+  annotations:
+    kubernetes.io/managed-by: "infrastructure-deployment-army"
+    deployment.astralcore.com/version: "v1.0.0"
+    security.compliance/hipaa: "enabled"
+    monitoring.observability/enabled: "true"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mental-health-resource-quota
+  namespace: mental-health-platform
+spec:
+  hard:
+    requests.cpu: "8"
+    requests.memory: 16Gi
+    limits.cpu: "16"
+    limits.memory: 32Gi
+    persistentvolumeclaims: "10"
+    services: "20"
+    secrets: "30"
+    configmaps: "20"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mental-health-limits
+  namespace: mental-health-platform
+spec:
+  limits:
+  - default:
+      cpu: "1"
+      memory: "2Gi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "128Mi"
+    type: Container
+  - max:
+      cpu: "4"
+      memory: "8Gi"
+    min:
+      cpu: "50m"
+      memory: "64Mi"
+    type: Container

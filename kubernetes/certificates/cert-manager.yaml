@@ -1,0 +1,458 @@
+# Cert-Manager Issuer for Let's Encrypt SSL Certificates
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  acme:
+    # ACME server URL for Let's Encrypt production
+    server: https://acme-v02.api.letsencrypt.org/directory
+    
+    # Email address for ACME registration
+    email: security@mentalhealthplatform.com
+    
+    # Private key secret reference
+    privateKeySecretRef:
+      name: letsencrypt-prod-private-key
+    
+    # Solvers for domain validation
+    solvers:
+    # HTTP-01 solver for standard domains
+    - http01:
+        ingress:
+          class: nginx
+          podTemplate:
+            metadata:
+              labels:
+                app: cert-manager-solver
+                component: acme-solver
+                tier: security
+            spec:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+                runAsGroup: 1000
+                fsGroup: 1000
+              containers:
+              - name: acme-solver
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities:
+                    drop:
+                    - ALL
+                    add:
+                    - NET_BIND_SERVICE
+      selector:
+        dnsNames:
+        - 'mentalhealthplatform.com'
+        - 'www.mentalhealthplatform.com'
+        - 'api.mentalhealthplatform.com'
+    
+    # DNS-01 solver for wildcard certificates (if using AWS Route53)
+    - dns01:
+        route53:
+          region: us-east-1
+          accessKeyID: AWS_ACCESS_KEY_ID
+          secretAccessKeySecretRef:
+            name: route53-secret
+            key: secret-access-key
+      selector:
+        dnsNames:
+        - '*.mentalhealthplatform.com'
+
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  acme:
+    # ACME server URL for Let's Encrypt staging (for testing)
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    
+    # Email address for ACME registration
+    email: security@mentalhealthplatform.com
+    
+    # Private key secret reference
+    privateKeySecretRef:
+      name: letsencrypt-staging-private-key
+    
+    # Solvers for domain validation
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+      selector:
+        dnsNames:
+        - 'staging.mentalhealthplatform.com'
+        - 'api-staging.mentalhealthplatform.com'
+
+---
+# Certificate for production domains
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mental-health-platform-tls
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  # Secret name where the certificate will be stored
+  secretName: mental-health-tls-secret
+  
+  # Certificate issuer reference
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io
+  
+  # Certificate common name
+  commonName: mentalhealthplatform.com
+  
+  # Subject Alternative Names
+  dnsNames:
+  - mentalhealthplatform.com
+  - www.mentalhealthplatform.com
+  - api.mentalhealthplatform.com
+  
+  # Certificate usage
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  
+  # Certificate duration (90 days, will auto-renew at 30 days)
+  duration: 2160h # 90 days
+  renewBefore: 720h # 30 days
+  
+  # Key algorithm and size
+  privateKey:
+    algorithm: RSA
+    size: 4096
+    rotationPolicy: Always
+
+---
+# Wildcard certificate for all subdomains (requires DNS-01 validation)
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mental-health-wildcard-tls
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  secretName: mental-health-wildcard-tls-secret
+  
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io
+  
+  commonName: "*.mentalhealthplatform.com"
+  
+  dnsNames:
+  - "*.mentalhealthplatform.com"
+  - mentalhealthplatform.com
+  
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  
+  duration: 2160h # 90 days
+  renewBefore: 720h # 30 days
+  
+  privateKey:
+    algorithm: RSA
+    size: 4096
+    rotationPolicy: Always
+
+---
+# Internal CA for internal services communication
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mental-health-internal-ca
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  ca:
+    secretName: mental-health-ca-secret
+
+---
+# Self-signed root CA certificate for internal services
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mental-health-root-ca
+  namespace: cert-manager
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  secretName: mental-health-ca-secret
+  
+  commonName: "Mental Health Platform Internal CA"
+  
+  usages:
+  - cert sign
+  - crl sign
+  - digital signature
+  - key encipherment
+  
+  duration: 26280h # 3 years
+  renewBefore: 8760h # 1 year
+  
+  isCA: true
+  
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  
+  issuerRef:
+    name: mental-health-selfsigned-issuer
+    kind: ClusterIssuer
+
+---
+# Self-signed issuer for creating the root CA
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mental-health-selfsigned-issuer
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+spec:
+  selfSigned: {}
+
+---
+# Certificate for internal database connections
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: postgresql-tls
+  namespace: mental-health-platform
+  labels:
+    app: postgresql
+    component: certificates
+    tier: security
+spec:
+  secretName: postgresql-tls-secret
+  
+  issuerRef:
+    name: mental-health-internal-ca
+    kind: ClusterIssuer
+  
+  commonName: postgresql-primary-service
+  
+  dnsNames:
+  - postgresql-primary-service
+  - postgresql-primary-service.mental-health-platform.svc.cluster.local
+  - localhost
+  
+  ipAddresses:
+  - 127.0.0.1
+  
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
+  
+  duration: 8760h # 1 year
+  renewBefore: 2160h # 90 days
+  
+  privateKey:
+    algorithm: RSA
+    size: 2048
+
+---
+# Certificate for Redis connections
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: redis-tls
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: certificates
+    tier: security
+spec:
+  secretName: redis-tls-secret
+  
+  issuerRef:
+    name: mental-health-internal-ca
+    kind: ClusterIssuer
+  
+  commonName: redis-service
+  
+  dnsNames:
+  - redis-service
+  - redis-service.mental-health-platform.svc.cluster.local
+  - localhost
+  
+  ipAddresses:
+  - 127.0.0.1
+  
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
+  
+  duration: 8760h # 1 year
+  renewBefore: 2160h # 90 days
+  
+  privateKey:
+    algorithm: RSA
+    size: 2048
+
+---
+# Certificate renewal monitoring
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cert-renewal-monitoring
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: monitoring
+data:
+  alert-rules.yml: |
+    groups:
+    - name: certificate-expiry
+      rules:
+      - alert: CertificateExpiringIn30Days
+        expr: (certmanager_certificate_expiration_timestamp_seconds - time()) / 86400 < 30
+        for: 1h
+        labels:
+          severity: warning
+          team: platform
+          service: certificates
+        annotations:
+          summary: "TLS certificate expiring in less than 30 days"
+          description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} expires in {{ $value }} days"
+      
+      - alert: CertificateExpiringIn7Days
+        expr: (certmanager_certificate_expiration_timestamp_seconds - time()) / 86400 < 7
+        for: 1h
+        labels:
+          severity: critical
+          team: platform
+          service: certificates
+        annotations:
+          summary: "TLS certificate expiring in less than 7 days"
+          description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} expires in {{ $value }} days"
+      
+      - alert: CertificateRenewalFailed
+        expr: certmanager_certificate_ready_status{condition="False"} == 1
+        for: 1h
+        labels:
+          severity: critical
+          team: platform
+          service: certificates
+        annotations:
+          summary: "Certificate renewal failed"
+          description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} renewal has failed"
+
+---
+# Route53 secret for DNS-01 challenge (if using AWS)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: route53-secret
+  namespace: cert-manager
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: security
+type: Opaque
+stringData:
+  # IMPORTANT: Replace with actual AWS credentials for Route53
+  secret-access-key: "REPLACE_WITH_AWS_SECRET_ACCESS_KEY"
+
+---
+# Certificate monitoring service
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: certificate-health-check
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: certificates
+    tier: monitoring
+spec:
+  schedule: "0 */6 * * *"  # Every 6 hours
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: mental-health-service-account
+          restartPolicy: OnFailure
+          containers:
+          - name: cert-checker
+            image: alpine:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              apk add --no-cache curl openssl
+              
+              echo "Checking certificate health for mentalhealthplatform.com..."
+              
+              # Check external certificate
+              CERT_INFO=$(echo | openssl s_client -servername mentalhealthplatform.com -connect mentalhealthplatform.com:443 2>/dev/null | openssl x509 -noout -dates)
+              
+              if [ $? -eq 0 ]; then
+                echo "✅ External certificate is valid"
+                echo "$CERT_INFO"
+              else
+                echo "❌ External certificate check failed"
+                exit 1
+              fi
+              
+              # Check internal certificates exist
+              echo "Checking internal certificate secrets..."
+              
+              if kubectl get secret mental-health-tls-secret -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -noout -text > /dev/null 2>&1; then
+                echo "✅ Internal TLS certificate is valid"
+              else
+                echo "❌ Internal TLS certificate is invalid"
+                exit 1
+              fi
+              
+              echo "All certificate checks passed!"
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "100m"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534

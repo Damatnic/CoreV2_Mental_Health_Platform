@@ -1,0 +1,537 @@
+/**
+ * Achievement Badge Styles
+ * Encouraging, non-competitive visual design for mental health achievements
+ */
+
+.achievement-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.achievement-badge.animate {
+  animation: badgeAppear 0.5s ease-out;
+}
+
+.achievement-badge.clickable {
+  cursor: pointer;
+}
+
+.achievement-badge.clickable:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.achievement-badge.clickable:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Badge Container */
+.badge-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--badge-background, #f3f4f6);
+  border: 3px solid var(--badge-border, #e5e7eb);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Size Variations */
+.achievement-badge.small .badge-container {
+  width: 48px;
+  height: 48px;
+  border-width: 2px;
+}
+
+.achievement-badge.medium .badge-container {
+  width: 72px;
+  height: 72px;
+  border-width: 3px;
+}
+
+.achievement-badge.large .badge-container {
+  width: 96px;
+  height: 96px;
+  border-width: 4px;
+}
+
+/* Badge Icon */
+.badge-icon {
+  font-size: 24px;
+  transition: all 0.3s ease;
+  z-index: 1;
+  user-select: none;
+}
+
+.achievement-badge.small .badge-icon {
+  font-size: 20px;
+}
+
+.achievement-badge.medium .badge-icon {
+  font-size: 32px;
+}
+
+.achievement-badge.large .badge-icon {
+  font-size: 48px;
+}
+
+.badge-icon.locked {
+  filter: grayscale(100%) opacity(0.5);
+}
+
+.badge-icon.hidden-icon {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-secondary, #6b7280);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Unlocked State */
+.achievement-badge.unlocked .badge-container {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fbbf24;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+}
+
+.achievement-badge.unlocked .badge-icon {
+  filter: none;
+  animation: bounce 0.6s ease-out;
+}
+
+/* Locked Overlay */
+.badge-overlay.locked {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  backdrop-filter: blur(2px);
+}
+
+.lock-icon {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.achievement-badge.small .lock-icon {
+  font-size: 12px;
+}
+
+.achievement-badge.large .lock-icon {
+  font-size: 20px;
+}
+
+/* Hidden Achievement */
+.achievement-badge.hidden .badge-container {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  border-color: #4b5563;
+}
+
+/* Rarity Styles */
+.achievement-badge.rarity-common.unlocked .badge-container {
+  background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+  border-color: #9ca3af;
+}
+
+.achievement-badge.rarity-uncommon.unlocked .badge-container {
+  background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+  border-color: #3b82f6;
+}
+
+.achievement-badge.rarity-rare.unlocked .badge-container {
+  background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+  border-color: #6366f1;
+}
+
+.achievement-badge.rarity-epic.unlocked .badge-container {
+  background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 100%);
+  border-color: #9333ea;
+  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.3);
+}
+
+.achievement-badge.rarity-legendary.unlocked .badge-container {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #f59e0b;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  animation: legendaryGlow 2s ease-in-out infinite;
+}
+
+/* Rarity Indicator */
+.badge-rarity-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid currentColor;
+  z-index: 2;
+}
+
+.achievement-badge.rarity-uncommon .badge-rarity-indicator {
+  color: #3b82f6;
+}
+
+.achievement-badge.rarity-rare .badge-rarity-indicator {
+  color: #6366f1;
+}
+
+.achievement-badge.rarity-epic .badge-rarity-indicator {
+  color: #9333ea;
+}
+
+.achievement-badge.rarity-legendary .badge-rarity-indicator {
+  color: #f59e0b;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Progress Ring */
+.badge-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-circle-bg {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  stroke-width: 2;
+}
+
+.progress-circle {
+  fill: none;
+  stroke: var(--accent-color, #6366f1);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7280);
+}
+
+.achievement-badge.medium .progress-text {
+  font-size: 12px;
+}
+
+.achievement-badge.large .progress-text {
+  font-size: 14px;
+}
+
+/* Shine Effect */
+.badge-shine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Badge Details */
+.badge-details {
+  margin-top: 8px;
+  text-align: center;
+  max-width: 120px;
+}
+
+.badge-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin-bottom: 2px;
+}
+
+.badge-description {
+  font-size: 11px;
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.badge-unlock-date {
+  font-size: 10px;
+  color: var(--text-tertiary, #9ca3af);
+  font-style: italic;
+}
+
+.badge-points {
+  font-size: 11px;
+  color: var(--success-color, #10b981);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Tooltip */
+.badge-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  z-index: 1000;
+  pointer-events: none;
+  animation: tooltipFadeIn 0.2s ease;
+}
+
+.tooltip-content {
+  background: var(--tooltip-background, #1f2937);
+  color: var(--tooltip-color, #f3f4f6);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--tooltip-background, #1f2937);
+}
+
+.tooltip-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tooltip-description {
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.tooltip-category {
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.tooltip-date {
+  font-size: 10px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.tooltip-progress {
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.tooltip-points {
+  color: var(--success-light, #34d399);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Animations */
+@keyframes badgeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  75% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  10%, 100% {
+    transform: translateX(200%) rotate(45deg);
+  }
+}
+
+@keyframes legendaryGlow {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(245, 158, 11, 0.6);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Accessibility Focus Styles */
+.achievement-badge:focus {
+  outline: none;
+}
+
+.achievement-badge:focus .badge-container {
+  box-shadow: 0 0 0 3px var(--focus-ring, rgba(99, 102, 241, 0.5));
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .badge-container {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  .achievement-badge.unlocked .badge-container {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+    border-color: #d97706;
+  }
+  
+  .badge-icon.hidden-icon {
+    color: #9ca3af;
+  }
+  
+  .badge-name {
+    color: #f3f4f6;
+  }
+  
+  .badge-description {
+    color: #d1d5db;
+  }
+  
+  .badge-unlock-date {
+    color: #9ca3af;
+  }
+  
+  .tooltip-content {
+    background: #111827;
+    color: #f3f4f6;
+  }
+  
+  .tooltip-content::after {
+    border-top-color: #111827;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .achievement-badge.large .badge-container {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .achievement-badge.large .badge-icon {
+    font-size: 40px;
+  }
+  
+  .badge-details {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .achievement-badge.medium .badge-container {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .achievement-badge.medium .badge-icon {
+    font-size: 28px;
+  }
+  
+  .badge-name {
+    font-size: 12px;
+  }
+  
+  .badge-description {
+    font-size: 10px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .achievement-badge,
+  .achievement-badge.animate,
+  .badge-shine,
+  .achievement-badge.rarity-legendary.unlocked .badge-container,
+  .badge-rarity-indicator {
+    animation: none;
+  }
+  
+  .achievement-badge.clickable:hover {
+    transform: none;
+  }
+  
+  .progress-circle {
+    transition: none;
+  }
+}

@@ -1,0 +1,478 @@
+/**
+ * Music Therapy Player Styles
+ * Calming, accessible styles for the music therapy interface
+ */
+
+.music-therapy-player {
+  @apply bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 max-w-4xl mx-auto;
+  transition: all 0.3s ease;
+}
+
+/* Header Section */
+.player-header {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-6;
+}
+
+.category-selector {
+  @apply space-y-2;
+}
+
+.category-grid {
+  @apply flex flex-wrap gap-2;
+}
+
+.category-btn {
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg;
+  @apply bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300;
+  @apply hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.category-btn.active {
+  @apply bg-gradient-to-r from-purple-500 to-blue-500 text-white;
+}
+
+.category-label {
+  @apply text-sm font-medium capitalize hidden sm:inline;
+}
+
+.mood-selector {
+  @apply space-y-2;
+}
+
+.mood-select {
+  @apply w-full px-4 py-2 rounded-lg;
+  @apply bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300;
+  @apply border border-gray-200 dark:border-gray-700;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+/* Playlist Section */
+.playlist-section {
+  @apply mb-6;
+}
+
+.playlist-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3;
+}
+
+.playlist-card {
+  @apply flex flex-col items-center p-3 rounded-lg;
+  @apply bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700;
+  @apply transition-all cursor-pointer;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.playlist-card.active {
+  @apply bg-gradient-to-br from-purple-100 to-blue-100;
+  @apply dark:from-purple-900 dark:to-blue-900;
+  @apply ring-2 ring-purple-500;
+}
+
+.playlist-cover {
+  @apply w-16 h-16 rounded-lg bg-gradient-to-br from-purple-400 to-blue-400;
+  @apply flex items-center justify-center mb-2;
+  @apply text-white;
+}
+
+.playlist-info {
+  @apply text-center;
+}
+
+.playlist-name {
+  @apply text-sm font-medium text-gray-800 dark:text-gray-200;
+  @apply line-clamp-2;
+}
+
+.playlist-duration {
+  @apply text-xs text-gray-500 dark:text-gray-400 mt-1;
+}
+
+/* Visualizer Section */
+.visualizer-section {
+  @apply mb-6 rounded-lg overflow-hidden bg-gray-900;
+}
+
+.audio-visualizer {
+  @apply w-full h-32 md:h-48;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+/* Track Info */
+.track-info {
+  @apply flex items-center justify-between mb-4 p-4;
+  @apply bg-gradient-to-r from-purple-50 to-blue-50;
+  @apply dark:from-purple-900/20 dark:to-blue-900/20;
+  @apply rounded-lg;
+}
+
+.track-details {
+  @apply flex-1;
+}
+
+.track-title {
+  @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
+}
+
+.track-artist {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.track-actions {
+  @apply flex gap-2;
+}
+
+.action-btn {
+  @apply p-2 rounded-lg;
+  @apply text-gray-600 dark:text-gray-400;
+  @apply hover:bg-white/50 dark:hover:bg-gray-800/50;
+  @apply transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.action-btn.active {
+  @apply text-purple-600 dark:text-purple-400;
+}
+
+/* Progress Section */
+.progress-section {
+  @apply flex items-center gap-3 mb-6;
+}
+
+.time-label {
+  @apply text-sm text-gray-600 dark:text-gray-400 min-w-[45px];
+}
+
+.progress-slider {
+  @apply flex-1 h-2 rounded-full appearance-none;
+  @apply bg-gray-200 dark:bg-gray-700;
+  background: linear-gradient(to right, 
+    rgb(139, 92, 246) 0%, 
+    rgb(139, 92, 246) var(--progress, 0%), 
+    rgb(229, 231, 235) var(--progress, 0%), 
+    rgb(229, 231, 235) 100%);
+}
+
+.progress-slider::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-purple-600;
+  @apply cursor-pointer shadow-lg;
+  @apply hover:scale-110 transition-transform;
+}
+
+.progress-slider::-moz-range-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-purple-600;
+  @apply cursor-pointer shadow-lg border-0;
+  @apply hover:scale-110 transition-transform;
+}
+
+/* Playback Controls */
+.playback-controls {
+  @apply flex items-center justify-center gap-4 mb-6;
+}
+
+.control-btn {
+  @apply p-3 rounded-full;
+  @apply text-gray-600 dark:text-gray-400;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+  @apply transition-all;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.control-btn.active {
+  @apply text-purple-600 dark:text-purple-400;
+  @apply bg-purple-100 dark:bg-purple-900/30;
+}
+
+.play-pause-btn {
+  @apply p-4 rounded-full;
+  @apply bg-gradient-to-r from-purple-500 to-blue-500;
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl hover:scale-105;
+  @apply transition-all;
+  @apply focus:outline-none focus:ring-4 focus:ring-purple-500/50;
+}
+
+/* Audio Controls */
+.audio-controls {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 mb-6;
+}
+
+.volume-control {
+  @apply flex items-center gap-3;
+  @apply px-4 py-2 rounded-lg;
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.volume-slider {
+  @apply flex-1 h-1 rounded-full appearance-none;
+  @apply bg-gray-300 dark:bg-gray-600;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  @apply appearance-none w-3 h-3 rounded-full bg-purple-600;
+  @apply cursor-pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+  @apply appearance-none w-3 h-3 rounded-full bg-purple-600;
+  @apply cursor-pointer border-0;
+}
+
+.volume-value {
+  @apply text-sm text-gray-600 dark:text-gray-400 min-w-[40px];
+}
+
+.speed-control {
+  @apply flex items-center gap-3;
+  @apply px-4 py-2 rounded-lg;
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.speed-label {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.speed-buttons {
+  @apply flex gap-2;
+}
+
+.speed-btn {
+  @apply px-3 py-1 rounded text-sm;
+  @apply text-gray-600 dark:text-gray-400;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-700;
+  @apply transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.speed-btn.active {
+  @apply bg-purple-500 text-white;
+}
+
+/* Additional Features */
+.additional-features {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-3 mb-6;
+}
+
+.feature-btn {
+  @apply flex items-center justify-center gap-2 px-4 py-3 rounded-lg;
+  @apply bg-gray-50 dark:bg-gray-800;
+  @apply text-gray-700 dark:text-gray-300;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+  @apply transition-colors text-sm;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.feature-btn.active {
+  @apply bg-gradient-to-r from-purple-500 to-blue-500 text-white;
+}
+
+/* Session Timer Panel */
+.session-timer-panel {
+  @apply bg-gradient-to-br from-purple-50 to-blue-50;
+  @apply dark:from-purple-900/20 dark:to-blue-900/20;
+  @apply rounded-lg p-4 mb-4;
+}
+
+.panel-title {
+  @apply text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3;
+}
+
+.timer-display {
+  @apply text-center mb-4;
+}
+
+.timer-value {
+  @apply text-3xl font-bold text-purple-600 dark:text-purple-400;
+}
+
+.timer-controls {
+  @apply flex justify-center gap-2 mb-4;
+}
+
+.timer-preset-btn {
+  @apply px-4 py-2 rounded-lg;
+  @apply bg-white dark:bg-gray-800;
+  @apply text-gray-700 dark:text-gray-300;
+  @apply hover:bg-purple-100 dark:hover:bg-purple-900;
+  @apply transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.timer-start-btn {
+  @apply w-full py-3 rounded-lg font-medium;
+  @apply bg-gradient-to-r from-green-500 to-emerald-500;
+  @apply text-white;
+  @apply hover:from-green-600 hover:to-emerald-600;
+  @apply transition-all;
+  @apply focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.timer-start-btn.active {
+  @apply from-red-500 to-rose-500;
+  @apply hover:from-red-600 hover:to-rose-600;
+}
+
+/* Breathing Sync */
+.breathing-sync {
+  @apply flex justify-center items-center p-8;
+  @apply bg-gradient-to-br from-blue-50 to-purple-50;
+  @apply dark:from-blue-900/20 dark:to-purple-900/20;
+  @apply rounded-lg mb-4;
+}
+
+.breathing-indicator {
+  @apply relative;
+}
+
+.breathing-circle {
+  @apply w-32 h-32 rounded-full;
+  @apply bg-gradient-to-br from-blue-400 to-purple-400;
+  @apply flex items-center justify-center;
+  @apply transition-transform duration-[4000ms] ease-in-out;
+  @apply shadow-xl;
+}
+
+.breathing-text {
+  @apply text-white font-medium text-lg;
+}
+
+.breathing-indicator.inhale .breathing-circle {
+  animation: breatheIn 4s ease-in-out;
+}
+
+.breathing-indicator.hold .breathing-circle {
+  animation: hold 2s ease-in-out;
+}
+
+.breathing-indicator.exhale .breathing-circle {
+  animation: breatheOut 4s ease-in-out;
+}
+
+@keyframes breatheIn {
+  from { transform: scale(1); }
+  to { transform: scale(1.3); }
+}
+
+@keyframes hold {
+  from, to { transform: scale(1.2); }
+}
+
+@keyframes breatheOut {
+  from { transform: scale(1.2); }
+  to { transform: scale(1); }
+}
+
+/* Binaural Beats Panel */
+.binaural-beats-panel {
+  @apply bg-gradient-to-br from-indigo-50 to-purple-50;
+  @apply dark:from-indigo-900/20 dark:to-purple-900/20;
+  @apply rounded-lg p-4 mb-4;
+}
+
+.beats-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 gap-3;
+}
+
+.beat-btn {
+  @apply flex flex-col items-center p-3 rounded-lg;
+  @apply bg-white dark:bg-gray-800;
+  @apply hover:bg-indigo-100 dark:hover:bg-indigo-900;
+  @apply transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+
+.beat-btn.active {
+  @apply bg-gradient-to-r from-indigo-500 to-purple-500 text-white;
+}
+
+.beat-name {
+  @apply text-sm font-medium;
+}
+
+.beat-freq {
+  @apply text-xs opacity-75 mt-1;
+}
+
+/* Nature Sounds Panel */
+.nature-sounds-panel {
+  @apply bg-gradient-to-br from-green-50 to-teal-50;
+  @apply dark:from-green-900/20 dark:to-teal-900/20;
+  @apply rounded-lg p-4 mb-4;
+}
+
+.sounds-grid {
+  @apply grid grid-cols-3 md:grid-cols-5 gap-3;
+}
+
+.sound-btn {
+  @apply flex items-center justify-center p-3 rounded-lg;
+  @apply bg-white dark:bg-gray-800;
+  @apply hover:bg-green-100 dark:hover:bg-green-900;
+  @apply transition-colors text-sm;
+  @apply focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.sound-btn.active {
+  @apply bg-gradient-to-r from-green-500 to-teal-500 text-white;
+}
+
+.sound-name {
+  @apply text-xs md:text-sm font-medium;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .music-therapy-player {
+    @apply p-4;
+  }
+
+  .playback-controls {
+    @apply gap-2;
+  }
+
+  .control-btn {
+    @apply p-2;
+  }
+
+  .play-pause-btn {
+    @apply p-3;
+  }
+
+  .additional-features {
+    @apply grid-cols-2 gap-2;
+  }
+
+  .feature-btn {
+    @apply px-2 py-2 text-xs;
+  }
+
+  .feature-btn span {
+    @apply hidden;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .progress-slider {
+    background: linear-gradient(to right, 
+      rgb(147, 51, 234) 0%, 
+      rgb(147, 51, 234) var(--progress, 0%), 
+      rgb(55, 65, 81) var(--progress, 0%), 
+      rgb(55, 65, 81) 100%);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .breathing-circle,
+  .play-pause-btn,
+  .control-btn {
+    transition: none;
+  }
+
+  .breathing-indicator.inhale .breathing-circle,
+  .breathing-indicator.hold .breathing-circle,
+  .breathing-indicator.exhale .breathing-circle {
+    animation: none;
+  }
+}

@@ -31,7 +31,7 @@
     "server:dev": "nodemon server-http.js",
     "server:pm2": "pm2 start ecosystem.config.js",
     "server:build": "npm run build && npm run server",
-    "test": "jest",
+    "test": "npx --yes jest@29.7.0",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "test:sw": "jest --testPathPattern=service-worker",

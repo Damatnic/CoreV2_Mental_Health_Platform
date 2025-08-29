@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mental Health Platform - Performance Test Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .header { background: #2563eb; color: white; padding: 20px; border-radius: 8px; }
+        .summary { background: #f3f4f6; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .suite { border: 1px solid #d1d5db; margin: 20px 0; border-radius: 8px; }
+        .suite-header { background: #e5e7eb; padding: 15px; border-radius: 8px 8px 0 0; }
+        .test-result { padding: 15px; border-bottom: 1px solid #e5e7eb; }
+        .passed { color: #059669; }
+        .failed { color: #dc2626; }
+        .metric { display: inline-block; margin: 10px 20px 10px 0; }
+        .metric-label { font-weight: bold; }
+        .timestamp { color: #6b7280; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏥 Mental Health Platform - Performance Test Report</h1>
+        <p class="timestamp">Generated: 2025-08-29T21:40:52.447Z</p>
+        <p>Environment: <strong>local</strong></p>
+    </div>
+    
+    <div class="summary">
+        <h2>📊 Test Summary</h2>
+        <div class="metric">
+            <span class="metric-label">Total Suites:</span> 1
+        </div>
+        <div class="metric">
+            <span class="metric-label">Total Tests:</span> 2
+        </div>
+        <div class="metric">
+            <span class="metric-label passed">Passed:</span> 0
+        </div>
+        <div class="metric">
+            <span class="metric-label failed">Failed:</span> 2
+        </div>
+        <div class="metric">
+            <span class="metric-label">Success Rate:</span> 0.00%
+        </div>
+    </div>
+    
+    
+        <div class="suite">
+            <div class="suite-header">
+                <h3>Smoke Tests</h3>
+                <p>Quick validation of core functionality</p>
+                <p class="timestamp">Executed: 2025-08-29T21:40:52.447Z</p>
+            </div>
+            
+                <div class="test-result">
+                    <h4 class="failed">authentication-load</h4>
+                    <p>Status: <span class="failed">FAILED</span></p>
+                    
+                    <p class="failed">Error: K6 test execution failed: Command failed: k6 run --duration 2m --vus 2 --out json=H:\Astral Core\CoreV2_Mental_Health_Platform\k6\results\authentication-load-2025-08-29T21-40-52-422Z.json --summary-export H:\Astral Core\CoreV2_Mental_Health_Platform\k6\results\authentication-load-2025-08-29T21-40-52-422Z-summary.json --env ENVIRONMENT=local --env BASE_URL=http://localhost:3000 --env WS_URL=ws://localhost:3000 --no-color H:\Astral Core\CoreV2_Mental_Health_Platform\k6\tests\authentication-load.js
+'k6' is not recognized as an internal or external command,
+operable program or batch file.
+</p>
+                </div>
+            
+                <div class="test-result">
+                    <h4 class="failed">crisis-services-load</h4>
+                    <p>Status: <span class="failed">FAILED</span></p>
+                    
+                    <p class="failed">Error: K6 test execution failed: Command failed: k6 run --duration 2m --vus 2 --out json=H:\Astral Core\CoreV2_Mental_Health_Platform\k6\results\crisis-services-load-2025-08-29T21-40-52-436Z.json --summary-export H:\Astral Core\CoreV2_Mental_Health_Platform\k6\results\crisis-services-load-2025-08-29T21-40-52-436Z-summary.json --env ENVIRONMENT=local --env BASE_URL=http://localhost:3000 --env WS_URL=ws://localhost:3000 --no-color H:\Astral Core\CoreV2_Mental_Health_Platform\k6\tests\crisis-services-load.js
+'k6' is not recognized as an internal or external command,
+operable program or batch file.
+</p>
+                </div>
+            
+        </div>
+    
+    
+    <div class="summary">
+        <h2>🔍 Test Details</h2>
+        <p>For detailed metrics, check the individual JSON result files in the results directory.</p>
+        <p><strong>Critical Services Tested:</strong></p>
+        <ul>
+            <li>🔐 Authentication & Authorization</li>
+            <li>🚨 Crisis Detection & Response</li>
+            <li>📞 988 Lifeline Integration</li>
+            <li>🎥 Teletherapy Video Sessions</li>
+            <li>👥 Group Therapy Sessions</li>
+            <li>🛡️ Safety Plan Activation</li>
+        </ul>
+    </div>
+</body>
+</html>

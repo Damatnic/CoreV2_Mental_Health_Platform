@@ -1,0 +1,607 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: cache
+    tier: data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: fast-ssd
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: cache
+    tier: data
+data:
+  redis.conf: |
+    # Redis Configuration for Mental Health Platform - HIPAA Compliant
+    
+    # Network and Security
+    bind 0.0.0.0
+    port 6379
+    tcp-backlog 511
+    tcp-keepalive 300
+    
+    # TLS Configuration (for encrypted connections)
+    tls-port 6380
+    tls-cert-file /etc/redis/tls/tls.crt
+    tls-key-file /etc/redis/tls/tls.key
+    tls-ca-cert-file /etc/redis/tls/ca.crt
+    tls-protocols "TLSv1.2 TLSv1.3"
+    tls-ciphers "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+    
+    # Authentication
+    requirepass "REDIS_PASSWORD_PLACEHOLDER"
+    
+    # Memory Management
+    maxmemory 1gb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 10
+    
+    # Persistence (for session data and crisis alerts)
+    save 900 1
+    save 300 10
+    save 60 10000
+    
+    # AOF (Append Only File) for durability - Critical for mental health data
+    appendonly yes
+    appendfilename "appendonly.aof"
+    appendfsync everysec
+    no-appendfsync-on-rewrite no
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+    aof-load-truncated yes
+    aof-use-rdb-preamble yes
+    
+    # Logging (HIPAA requirement for audit trail)
+    loglevel notice
+    logfile "/var/log/redis/redis-server.log"
+    syslog-enabled yes
+    syslog-ident redis
+    syslog-facility local0
+    
+    # Performance Tuning
+    timeout 300
+    tcp-keepalive 60
+    databases 16
+    
+    # Slow log for performance monitoring
+    slowlog-log-slower-than 10000
+    slowlog-max-len 128
+    
+    # Client output buffer limits
+    client-output-buffer-limit normal 0 0 0
+    client-output-buffer-limit replica 256mb 64mb 60
+    client-output-buffer-limit pubsub 32mb 8mb 60
+    
+    # Crisis detection optimization
+    hash-max-ziplist-entries 512
+    hash-max-ziplist-value 64
+    list-max-ziplist-size -2
+    list-compress-depth 0
+    set-max-intset-entries 512
+    zset-max-ziplist-entries 128
+    zset-max-ziplist-value 64
+    
+    # HyperLogLog
+    hll-sparse-max-bytes 3000
+    
+    # Streams
+    stream-node-max-bytes 4096
+    stream-node-max-entries 100
+    
+    # Active rehashing
+    activerehashing yes
+    
+    # Memory usage optimization
+    jemalloc-bg-thread yes
+    
+    # Security
+    protected-mode yes
+    
+    # Disable dangerous commands in production
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+    rename-command EVAL ""
+    rename-command DEBUG ""
+    rename-command CONFIG "CONFIG_CRISIS_OVERRIDE_98654321"
+    
+    # Enable keyspace notifications for real-time features
+    notify-keyspace-events "Ex"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: cache
+    tier: data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      component: cache
+  template:
+    metadata:
+      labels:
+        app: redis
+        component: cache
+        tier: data
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
+        prometheus.io/path: "/metrics"
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        runAsNonRoot: true
+      containers:
+      - name: redis
+        image: redis:7.0-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: redis
+          containerPort: 6379
+          protocol: TCP
+        - name: redis-tls
+          containerPort: 6380
+          protocol: TCP
+        command:
+        - redis-server
+        - /etc/redis/redis.conf
+        - --requirepass
+        - $(REDIS_PASSWORD)
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mental-health-secrets
+              key: REDIS_PASSWORD
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        - name: redis-config
+          mountPath: /etc/redis
+          readOnly: true
+        - name: redis-tls
+          mountPath: /etc/redis/tls
+          readOnly: true
+        - name: redis-logs
+          mountPath: /var/log/redis
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --no-auth-warning
+            - -a
+            - $(REDIS_PASSWORD)
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --no-auth-warning
+            - -a
+            - $(REDIS_PASSWORD)
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities:
+            drop:
+            - ALL
+      
+      # Redis Exporter for Prometheus monitoring
+      - name: redis-exporter
+        image: oliver006/redis_exporter:v1.45.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: metrics
+          containerPort: 9121
+          protocol: TCP
+        env:
+        - name: REDIS_ADDR
+          value: "redis://localhost:6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mental-health-secrets
+              key: REDIS_PASSWORD
+        - name: REDIS_EXPORTER_LOG_FORMAT
+          value: "json"
+        - name: REDIS_EXPORTER_CHECK_KEYS
+          value: "crisis:*,session:*,user:*,cache:*"
+        - name: REDIS_EXPORTER_CHECK_SINGLE_KEYS
+          value: "crisis:active_count,crisis:response_time"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 65534
+          runAsGroup: 65534
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: metrics
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: metrics
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-data-pvc
+      - name: redis-config
+        configMap:
+          name: redis-config
+          items:
+          - key: redis.conf
+            path: redis.conf
+      - name: redis-tls
+        secret:
+          secretName: redis-tls-secret
+          defaultMode: 0600
+      - name: redis-logs
+        emptyDir: {}
+      
+      terminationGracePeriodSeconds: 30
+      
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-type
+                operator: In
+                values:
+                - memory-optimized
+                - general
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: cache
+    tier: data
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9121"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: redis
+    protocol: TCP
+  - name: redis-tls
+    port: 6380
+    targetPort: redis-tls
+    protocol: TCP
+  - name: metrics
+    port: 9121
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app: redis
+    component: cache
+
+---
+# Redis Sentinel for high availability (optional but recommended for production)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-sentinel
+  namespace: mental-health-platform
+  labels:
+    app: redis-sentinel
+    component: cache-ha
+    tier: data
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis-sentinel
+      component: cache-ha
+  template:
+    metadata:
+      labels:
+        app: redis-sentinel
+        component: cache-ha
+        tier: data
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        runAsNonRoot: true
+      containers:
+      - name: sentinel
+        image: redis:7.0-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: sentinel
+          containerPort: 26379
+          protocol: TCP
+        command:
+        - redis-sentinel
+        - /etc/redis/sentinel.conf
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mental-health-secrets
+              key: REDIS_PASSWORD
+        volumeMounts:
+        - name: sentinel-config
+          mountPath: /etc/redis
+          readOnly: true
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - -p
+            - "26379"
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - -p
+            - "26379"
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: sentinel-config
+        configMap:
+          name: redis-sentinel-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-sentinel-config
+  namespace: mental-health-platform
+  labels:
+    app: redis-sentinel
+    component: cache-ha
+    tier: data
+data:
+  sentinel.conf: |
+    # Redis Sentinel Configuration for Mental Health Platform
+    
+    port 26379
+    dir /tmp
+    
+    # Monitor the Redis master
+    sentinel monitor mymaster redis-service 6379 2
+    sentinel auth-pass mymaster REDIS_PASSWORD_PLACEHOLDER
+    
+    # Failover configuration
+    sentinel down-after-milliseconds mymaster 30000
+    sentinel parallel-syncs mymaster 1
+    sentinel failover-timeout mymaster 180000
+    
+    # Notification scripts for crisis system
+    sentinel notification-script mymaster /usr/local/bin/notify-failover.sh
+    
+    # Security
+    requirepass "REDIS_PASSWORD_PLACEHOLDER"
+    
+    # Logging
+    loglevel notice
+    logfile /var/log/sentinel/sentinel.log
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-sentinel-service
+  namespace: mental-health-platform
+  labels:
+    app: redis-sentinel
+    component: cache-ha
+    tier: data
+spec:
+  type: ClusterIP
+  ports:
+  - name: sentinel
+    port: 26379
+    targetPort: sentinel
+    protocol: TCP
+  selector:
+    app: redis-sentinel
+    component: cache-ha
+
+---
+# Redis backup CronJob for disaster recovery
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: redis-backup
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: backup
+    tier: data
+spec:
+  schedule: "0 */6 * * *"  # Every 6 hours
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
+            fsGroup: 999
+            runAsNonRoot: true
+          containers:
+          - name: redis-backup
+            image: redis:7.0-alpine
+            command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              BACKUP_FILE="redis_backup_$(date +%Y%m%d_%H%M%S).rdb"
+              
+              echo "Starting Redis backup: $BACKUP_FILE"
+              
+              # Create backup using Redis BGSAVE
+              redis-cli -h redis-service -p 6379 -a "$REDIS_PASSWORD" --no-auth-warning BGSAVE
+              
+              # Wait for background save to complete
+              while [ $(redis-cli -h redis-service -p 6379 -a "$REDIS_PASSWORD" --no-auth-warning LASTSAVE) -eq $(redis-cli -h redis-service -p 6379 -a "$REDIS_PASSWORD" --no-auth-warning LASTSAVE) ]; do
+                sleep 1
+              done
+              
+              # Copy the RDB file
+              redis-cli -h redis-service -p 6379 -a "$REDIS_PASSWORD" --no-auth-warning --rdb /backup/"$BACKUP_FILE"
+              
+              echo "Redis backup completed: $BACKUP_FILE"
+              
+              # Cleanup old backups (keep last 7 days)
+              find /backup -name "redis_backup_*.rdb" -mtime +7 -delete
+              
+              echo "Backup cleanup completed"
+            env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mental-health-secrets
+                  key: REDIS_PASSWORD
+            volumeMounts:
+            - name: backup-storage
+              mountPath: /backup
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "200m"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                - ALL
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: redis-backup-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-backup-pvc
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: backup
+    tier: data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: standard
+
+---
+# Service Monitor for Prometheus to scrape Redis metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: redis-service-monitor
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: monitoring
+    tier: observability
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      component: cache
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+    scrapeTimeout: 10s

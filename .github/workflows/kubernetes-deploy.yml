@@ -1,0 +1,690 @@
+name: Kubernetes Production Deployment
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+    - 'src/**'
+    - 'kubernetes/**'
+    - 'package.json'
+    - 'Dockerfile*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+      skip_tests:
+        description: 'Skip tests (emergency deployment only)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  KUBE_NAMESPACE: mental-health-platform
+  HELM_VERSION: v3.12.0
+  KUBECTL_VERSION: v1.28.0
+
+jobs:
+  # Security and vulnerability scanning
+  security-scan:
+    name: Security & Vulnerability Scan
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_tests }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '1'
+
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Docker Scout scan
+        uses: docker/scout-action@v1
+        with:
+          command: quickview,cves
+          format: sarif
+          output: 'docker-scout-results.sarif'
+        continue-on-error: true
+
+  # Build and push container images
+  build-images:
+    name: Build & Push Container Images
+    runs-on: ubuntu-latest
+    needs: [security-scan]
+    if: always() && (needs.security-scan.result == 'success' || inputs.skip_tests)
+    
+    strategy:
+      matrix:
+        service: [backend, frontend, crisis-detector]
+    
+    outputs:
+      backend-image: ${{ steps.meta.outputs.tags }}
+      backend-digest: ${{ steps.build.outputs.digest }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.service }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.${{ matrix.service }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            NODE_ENV=production
+            BUILD_DATE=${{ github.event.head_commit.timestamp }}
+            BUILD_VERSION=${{ github.sha }}
+            CRISIS_DETECTION_ENABLED=true
+            HIPAA_COMPLIANCE=true
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ steps.meta.outputs.tags }}
+          format: spdx-json
+          output-file: '${{ matrix.service }}-sbom.spdx.json'
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: '${{ matrix.service }}-sbom'
+          path: '${{ matrix.service }}-sbom.spdx.json'
+
+  # Run comprehensive tests
+  test-suite:
+    name: Comprehensive Test Suite
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_tests }}
+    needs: [build-images]
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: mental_health_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 3s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test -- --coverage --watchAll=false
+        env:
+          CI: true
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: test_user
+          DB_PASSWORD: test_password
+          DB_NAME: mental_health_test
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          CI: true
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: test_user
+          DB_PASSWORD: test_password
+          DB_NAME: mental_health_test
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+
+      - name: Run E2E tests
+        run: npm run test:e2e-crisis
+        env:
+          CI: true
+          TEST_TIMEOUT: 120000
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: |
+            coverage/
+            test-results/
+
+  # Deploy to staging for testing
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build-images, test-suite]
+    if: always() && (needs.test-suite.result == 'success' || inputs.skip_tests)
+    environment: staging
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Set up Kubernetes context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+          kubectl config current-context
+
+      - name: Create namespace if not exists
+        run: |
+          kubectl apply -f kubernetes/namespace.yaml
+          kubectl label namespace ${{ env.KUBE_NAMESPACE }} environment=staging --overwrite
+
+      - name: Deploy secrets (staging)
+        run: |
+          # Create secrets from environment variables
+          kubectl create secret generic mental-health-secrets \
+            --namespace=${{ env.KUBE_NAMESPACE }} \
+            --from-literal=DB_PASSWORD="${{ secrets.STAGING_DB_PASSWORD }}" \
+            --from-literal=JWT_SECRET="${{ secrets.STAGING_JWT_SECRET }}" \
+            --from-literal=REDIS_PASSWORD="${{ secrets.STAGING_REDIS_PASSWORD }}" \
+            --from-literal=ENCRYPTION_KEY="${{ secrets.STAGING_ENCRYPTION_KEY }}" \
+            --from-literal=CRISIS_OVERRIDE_KEY="${{ secrets.CRISIS_OVERRIDE_KEY }}" \
+            --from-literal=SENDGRID_API_KEY="${{ secrets.SENDGRID_API_KEY }}" \
+            --from-literal=TWILIO_ACCOUNT_SID="${{ secrets.TWILIO_ACCOUNT_SID }}" \
+            --from-literal=TWILIO_AUTH_TOKEN="${{ secrets.TWILIO_AUTH_TOKEN }}" \
+            --from-literal=OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            --from-literal=SENTRY_DSN="${{ secrets.SENTRY_DSN }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Deploy ConfigMaps
+        run: |
+          kubectl apply -f kubernetes/configmaps/ --namespace=${{ env.KUBE_NAMESPACE }}
+
+      - name: Deploy Database
+        run: |
+          kubectl apply -f kubernetes/database/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl rollout status statefulset/postgresql-primary --namespace=${{ env.KUBE_NAMESPACE }} --timeout=300s
+
+      - name: Deploy Redis
+        run: |
+          kubectl apply -f kubernetes/redis/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl rollout status deployment/redis --namespace=${{ env.KUBE_NAMESPACE }} --timeout=180s
+
+      - name: Deploy Backend
+        run: |
+          # Update image tags in deployment
+          sed -i "s|mental-health-platform/backend:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}|g" kubernetes/backend/deployment.yaml
+          kubectl apply -f kubernetes/backend/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl rollout status deployment/mental-health-backend --namespace=${{ env.KUBE_NAMESPACE }} --timeout=300s
+
+      - name: Deploy Frontend
+        run: |
+          sed -i "s|mental-health-platform/frontend:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:${{ github.sha }}|g" kubernetes/frontend/deployment.yaml
+          kubectl apply -f kubernetes/frontend/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl rollout status deployment/mental-health-frontend --namespace=${{ env.KUBE_NAMESPACE }} --timeout=300s
+
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for all services to be ready..."
+          kubectl wait --for=condition=available --timeout=300s deployment/mental-health-backend --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl wait --for=condition=available --timeout=300s deployment/mental-health-frontend --namespace=${{ env.KUBE_NAMESPACE }}
+
+      - name: Run health checks
+        run: |
+          echo "Running health checks..."
+          
+          # Wait for LoadBalancer IP
+          sleep 30
+          
+          # Get service endpoints
+          BACKEND_URL=$(kubectl get service backend-service --namespace=${{ env.KUBE_NAMESPACE }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}' || echo "cluster-internal")
+          
+          if [ "$BACKEND_URL" != "cluster-internal" ]; then
+            # External health check
+            curl -f "http://$BACKEND_URL:3001/health" || echo "External health check failed"
+          fi
+          
+          # Internal health check via port-forward
+          kubectl port-forward service/backend-service 8080:3001 --namespace=${{ env.KUBE_NAMESPACE }} &
+          PF_PID=$!
+          sleep 10
+          
+          curl -f http://localhost:8080/health || (echo "Health check failed" && exit 1)
+          curl -f http://localhost:8080/health/ready || (echo "Readiness check failed" && exit 1)
+          
+          kill $PF_PID
+
+  # Crisis system validation
+  crisis-validation:
+    name: Crisis System Validation
+    runs-on: ubuntu-latest
+    needs: [deploy-staging]
+    environment: staging
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Set up Kubernetes context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Test crisis detection endpoints
+        run: |
+          echo "Testing crisis detection system..."
+          
+          # Port forward to backend service
+          kubectl port-forward service/backend-service 8080:3001 --namespace=${{ env.KUBE_NAMESPACE }} &
+          PF_PID=$!
+          sleep 10
+          
+          # Test crisis detection API
+          RESPONSE=$(curl -s -X POST http://localhost:8080/api/crisis/detect \
+            -H "Content-Type: application/json" \
+            -d '{"message": "I am having thoughts of self-harm"}' \
+            -w "%{http_code}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -c 4)
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Crisis detection test failed with HTTP code: $HTTP_CODE"
+            kill $PF_PID
+            exit 1
+          fi
+          
+          echo "Crisis detection system validated successfully"
+          kill $PF_PID
+
+      - name: Test 988 hotline integration
+        run: |
+          echo "Testing 988 hotline integration..."
+          
+          kubectl port-forward service/backend-service 8080:3001 --namespace=${{ env.KUBE_NAMESPACE }} &
+          PF_PID=$!
+          sleep 10
+          
+          # Test hotline integration
+          RESPONSE=$(curl -s -X POST http://localhost:8080/api/crisis/hotline \
+            -H "Content-Type: application/json" \
+            -d '{"emergency": true, "location": "test"}' \
+            -w "%{http_code}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -c 4)
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "988 hotline integration test failed with HTTP code: $HTTP_CODE"
+            kill $PF_PID
+            exit 1
+          fi
+          
+          echo "988 hotline integration validated successfully"
+          kill $PF_PID
+
+      - name: Test emergency escalation workflow
+        run: |
+          echo "Testing emergency escalation workflow..."
+          
+          kubectl port-forward service/backend-service 8080:3001 --namespace=${{ env.KUBE_NAMESPACE }} &
+          PF_PID=$!
+          sleep 10
+          
+          # Test escalation workflow
+          RESPONSE=$(curl -s -X POST http://localhost:8080/api/crisis/escalate \
+            -H "Content-Type: application/json" \
+            -d '{"severity": "high", "userId": "test-user", "reason": "automated-test"}' \
+            -w "%{http_code}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -c 4)
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Emergency escalation test failed with HTTP code: $HTTP_CODE"
+            kill $PF_PID
+            exit 1
+          fi
+          
+          echo "Emergency escalation workflow validated successfully"
+          kill $PF_PID
+
+  # Performance testing
+  performance-test:
+    name: Performance & Load Testing
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, crisis-validation]
+    environment: staging
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install k6
+        run: |
+          curl https://github.com/grafana/k6/releases/download/v0.45.0/k6-v0.45.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Set up Kubernetes context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Run crisis response performance test
+        run: |
+          echo "Running crisis response performance test..."
+          
+          # Get the LoadBalancer IP or use port-forward
+          kubectl port-forward service/backend-service 8080:3001 --namespace=${{ env.KUBE_NAMESPACE }} &
+          PF_PID=$!
+          sleep 10
+          
+          # Run k6 performance test for crisis endpoints
+          ./k6 run --vus 50 --duration 2m k6/crisis-load-test.js
+          
+          kill $PF_PID
+
+      - name: Monitor HPA scaling during load test
+        run: |
+          echo "Monitoring HPA scaling..."
+          kubectl get hpa --namespace=${{ env.KUBE_NAMESPACE }} -w --timeout=60s
+
+  # Production deployment (requires manual approval)
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, crisis-validation, performance-test]
+    if: github.ref == 'refs/heads/main' && (inputs.environment == 'production' || github.event_name == 'push')
+    environment: 
+      name: production
+      url: https://mentalhealthplatform.com
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl (Production)
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Set up Production Kubernetes context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_PRODUCTION }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+          kubectl config current-context
+
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production environment..."
+          
+          # Create namespace if not exists
+          kubectl apply -f kubernetes/namespace.yaml
+          kubectl label namespace ${{ env.KUBE_NAMESPACE }} environment=production --overwrite
+          
+          # Deploy secrets (production)
+          kubectl create secret generic mental-health-secrets \
+            --namespace=${{ env.KUBE_NAMESPACE }} \
+            --from-literal=DB_PASSWORD="${{ secrets.PROD_DB_PASSWORD }}" \
+            --from-literal=JWT_SECRET="${{ secrets.PROD_JWT_SECRET }}" \
+            --from-literal=REDIS_PASSWORD="${{ secrets.PROD_REDIS_PASSWORD }}" \
+            --from-literal=ENCRYPTION_KEY="${{ secrets.PROD_ENCRYPTION_KEY }}" \
+            --from-literal=CRISIS_OVERRIDE_KEY="${{ secrets.PROD_CRISIS_OVERRIDE_KEY }}" \
+            --from-literal=SENDGRID_API_KEY="${{ secrets.SENDGRID_API_KEY }}" \
+            --from-literal=TWILIO_ACCOUNT_SID="${{ secrets.TWILIO_ACCOUNT_SID }}" \
+            --from-literal=TWILIO_AUTH_TOKEN="${{ secrets.TWILIO_AUTH_TOKEN }}" \
+            --from-literal=OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            --from-literal=SENTRY_DSN="${{ secrets.SENTRY_DSN_PROD }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Deploy TLS certificates
+          kubectl apply -f kubernetes/certificates/
+          
+          # Deploy all components
+          kubectl apply -f kubernetes/configmaps/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl apply -f kubernetes/database/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl apply -f kubernetes/redis/ --namespace=${{ env.KUBE_NAMESPACE }}
+          
+          # Update production image tags
+          sed -i "s|mental-health-platform/backend:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}|g" kubernetes/backend/deployment.yaml
+          sed -i "s|mental-health-platform/frontend:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:${{ github.sha }}|g" kubernetes/frontend/deployment.yaml
+          
+          kubectl apply -f kubernetes/backend/ --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl apply -f kubernetes/frontend/ --namespace=${{ env.KUBE_NAMESPACE }}
+          
+          # Deploy monitoring
+          kubectl apply -f kubernetes/monitoring/ --namespace=${{ env.KUBE_NAMESPACE }}
+
+      - name: Wait for production deployment
+        run: |
+          echo "Waiting for production deployment to complete..."
+          kubectl rollout status statefulset/postgresql-primary --namespace=${{ env.KUBE_NAMESPACE }} --timeout=600s
+          kubectl rollout status deployment/mental-health-backend --namespace=${{ env.KUBE_NAMESPACE }} --timeout=600s
+          kubectl rollout status deployment/mental-health-frontend --namespace=${{ env.KUBE_NAMESPACE }} --timeout=600s
+
+      - name: Production health verification
+        run: |
+          echo "Verifying production deployment health..."
+          
+          # Wait for services to be fully ready
+          sleep 60
+          
+          # Test external endpoint
+          for i in {1..10}; do
+            if curl -f https://mentalhealthplatform.com/health; then
+              echo "Production health check passed"
+              break
+            else
+              echo "Health check attempt $i failed, retrying..."
+              sleep 30
+            fi
+          done
+
+      - name: Post-deployment crisis system validation
+        run: |
+          echo "Validating crisis systems in production..."
+          
+          # Test crisis detection endpoint
+          RESPONSE=$(curl -s -X POST https://api.mentalhealthplatform.com/api/crisis/test \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.CRISIS_TEST_TOKEN }}" \
+            -d '{"test": true}' \
+            -w "%{http_code}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -c 4)
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ Production crisis system validation passed"
+          else
+            echo "❌ Production crisis system validation failed"
+            exit 1
+          fi
+
+  # Post-deployment monitoring setup
+  setup-monitoring:
+    name: Setup Production Monitoring
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Set up Production Kubernetes context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_PRODUCTION }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Deploy monitoring stack
+        run: |
+          echo "Deploying production monitoring stack..."
+          kubectl apply -f kubernetes/monitoring/ --namespace=${{ env.KUBE_NAMESPACE }}
+
+      - name: Configure alerts
+        run: |
+          echo "Configuring production alerts..."
+          
+          # Configure critical alerts for mental health platform
+          kubectl apply -f - <<EOF
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: critical-alerts
+            namespace: ${{ env.KUBE_NAMESPACE }}
+          data:
+            alert-rules.yml: |
+              groups:
+              - name: mental-health-critical
+                rules:
+                - alert: CrisisSystemDown
+                  expr: up{job="crisis-detector"} == 0
+                  for: 30s
+                  labels:
+                    severity: critical
+                    team: crisis-response
+                  annotations:
+                    summary: "Crisis detection system is down"
+                    description: "The crisis detection system has been down for more than 30 seconds"
+                    runbook: "https://docs.mentalhealthplatform.com/runbooks/crisis-system-down"
+              
+              - alert: DatabaseConnectionsFull
+                expr: postgresql_connections_active / postgresql_connections_max > 0.9
+                for: 2m
+                labels:
+                  severity: critical
+                annotations:
+                  summary: "Database connection pool nearly exhausted"
+              
+              - alert: HighMemoryUsage
+                expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
+                for: 5m
+                labels:
+                  severity: warning
+                annotations:
+                  summary: "High memory usage detected"
+          EOF
+
+      - name: Verify monitoring deployment
+        run: |
+          echo "Verifying monitoring deployment..."
+          kubectl wait --for=condition=available --timeout=300s deployment/prometheus --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl wait --for=condition=available --timeout=300s deployment/grafana --namespace=${{ env.KUBE_NAMESPACE }}
+
+  # Notification job
+  notify:
+    name: Deployment Notification
+    runs-on: ubuntu-latest
+    needs: [deploy-production, setup-monitoring]
+    if: always()
+    
+    steps:
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "🎉 PRODUCTION DEPLOYMENT SUCCESSFUL!"
+          echo "✅ Mental Health Platform v${{ github.sha }} is now live"
+          echo "🔗 URL: https://mentalhealthplatform.com"
+          echo "📊 Monitoring: https://monitoring.mentalhealthplatform.com"
+
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ PRODUCTION DEPLOYMENT FAILED!"
+          echo "🚨 Immediate attention required for life-critical system"
+          echo "📋 Check deployment logs for details"
+
+      # Add Slack/PagerDuty notifications for critical failures
+      - name: Send critical alert on failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '🚨 CRITICAL: Mental Health Platform deployment FAILED. Immediate response required.'
+          webhook_url: ${{ secrets.CRITICAL_SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.CRITICAL_SLACK_WEBHOOK }}

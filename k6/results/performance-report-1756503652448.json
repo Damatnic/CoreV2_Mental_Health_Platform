@@ -1,0 +1,39 @@
+{
+  "timestamp": "2025-08-29T21:40:52.447Z",
+  "environment": "local",
+  "totalSuites": 1,
+  "summary": {
+    "totalTests": 2,
+    "passedTests": 0,
+    "failedTests": 2,
+    "successRate": "0.00"
+  },
+  "results": [
+    {
+      "suiteName": "smoke",
+      "suite": {
+        "name": "Smoke Tests",
+        "description": "Quick validation of core functionality",
+        "duration": "2m",
+        "vus": 2,
+        "tests": [
+          "authentication-load.js",
+          "crisis-services-load.js"
+        ]
+      },
+      "results": [
+        {
+          "testName": "authentication-load",
+          "status": "failed",
+          "error": "K6 test execution failed: Command failed: k6 run --duration 2m --vus 2 --out json=H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\results\\authentication-load-2025-08-29T21-40-52-422Z.json --summary-export H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\results\\authentication-load-2025-08-29T21-40-52-422Z-summary.json --env ENVIRONMENT=local --env BASE_URL=http://localhost:3000 --env WS_URL=ws://localhost:3000 --no-color H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\tests\\authentication-load.js\n'k6' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n"
+        },
+        {
+          "testName": "crisis-services-load",
+          "status": "failed",
+          "error": "K6 test execution failed: Command failed: k6 run --duration 2m --vus 2 --out json=H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\results\\crisis-services-load-2025-08-29T21-40-52-436Z.json --summary-export H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\results\\crisis-services-load-2025-08-29T21-40-52-436Z-summary.json --env ENVIRONMENT=local --env BASE_URL=http://localhost:3000 --env WS_URL=ws://localhost:3000 --no-color H:\\Astral Core\\CoreV2_Mental_Health_Platform\\k6\\tests\\crisis-services-load.js\n'k6' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n"
+        }
+      ],
+      "timestamp": "2025-08-29T21:40:52.447Z"
+    }
+  ]
+}

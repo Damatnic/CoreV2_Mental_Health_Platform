@@ -1,22 +1,15 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback, useMemo } from 'react';
 import { logger } from '../utils/logger';
+import authService, { User as AuthServiceUser, LoginCredentials, RegisterData, TwoFactorSetup } from '../services/auth/authService';
 
-// User interface
-export interface User {
-  id: string;
-  email: string;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  role: 'user' | 'helper' | 'admin' | 'moderator';
-  isVerified: boolean;
-  profile?: {
-    avatar?: string;
-    bio?: string;
-    preferences?: Record<string, any>;
-  };
+// Extended User interface for context
+export interface User extends Omit<AuthServiceUser, 'createdAt' | 'lastLoginAt' | 'accountLockedUntil' | 'lastPasswordChange' | 'passwordResetExpires' | 'emailVerificationExpires'> {
   createdAt: string;
-  updatedAt: string;
+  lastLoginAt?: string;
+  accountLockedUntil?: string;
+  lastPasswordChange?: string;
+  passwordResetExpires?: string;
+  emailVerificationExpires?: string;
 }
 
 // Authentication state interface
@@ -25,15 +18,43 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+  requiresTwoFactor: boolean;
+  sessionTimeRemaining: number;
 }
 
 // Authentication context interface
 export interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, password: string, userData?: Partial<User>) => Promise<boolean>;
+  // Core authentication
+  login: (email: string, password: string, rememberMe?: boolean, twoFactorCode?: string) => Promise<boolean>;
+  register: (data: RegisterData) => Promise<boolean>;
   logout: () => Promise<void>;
+  
+  // OAuth
+  loginWithGoogle: () => Promise<void>;
+  loginWithApple: () => Promise<void>;
+  handleOAuthCallback: (provider: string, code: string, state: string) => Promise<boolean>;
+  
+  // Two-factor authentication
+  completeTwoFactorAuth: (code: string) => Promise<boolean>;
+  setupTwoFactorAuth: () => Promise<TwoFactorSetup | null>;
+  disableTwoFactorAuth: (password: string) => Promise<boolean>;
+  
+  // Password management
+  changePassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
+  requestPasswordReset: (email: string) => Promise<boolean>;
+  resetPassword: (token: string, newPassword: string) => Promise<boolean>;
+  
+  // Email verification
+  verifyEmail: (token: string) => Promise<boolean>;
+  resendVerificationEmail: () => Promise<boolean>;
+  
+  // User management
   updateUser: (userData: Partial<User>) => Promise<boolean>;
+  refreshToken: () => Promise<boolean>;
+  
+  // Utility
   clearError: () => void;
+  checkSession: () => void;
 }
 
 // Create context with default values
@@ -44,209 +65,398 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+// Helper function to convert AuthServiceUser to User
+const convertUser = (authUser: AuthServiceUser | null): User | null => {
+  if (!authUser) return null;
+  
+  return {
+    ...authUser,
+    createdAt: authUser.createdAt instanceof Date ? authUser.createdAt.toISOString() : authUser.createdAt,
+    lastLoginAt: authUser.lastLoginAt instanceof Date ? authUser.lastLoginAt.toISOString() : authUser.lastLoginAt,
+    accountLockedUntil: authUser.accountLockedUntil instanceof Date ? authUser.accountLockedUntil.toISOString() : authUser.accountLockedUntil,
+    lastPasswordChange: authUser.lastPasswordChange instanceof Date ? authUser.lastPasswordChange.toISOString() : authUser.lastPasswordChange,
+    passwordResetExpires: authUser.passwordResetExpires instanceof Date ? authUser.passwordResetExpires.toISOString() : authUser.passwordResetExpires,
+    emailVerificationExpires: authUser.emailVerificationExpires instanceof Date ? authUser.emailVerificationExpires.toISOString() : authUser.emailVerificationExpires,
+  };
+};
+
 // Auth provider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
-  user: null,
+    user: null,
     loading: true,
     error: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    requiresTwoFactor: false,
+    sessionTimeRemaining: 0
   });
+
+  // Session time update interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setState(prev => ({
+        ...prev,
+        sessionTimeRemaining: authService.sessionTimeRemaining
+      }));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Initialize authentication state
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        logger.info('Initializing authentication state', undefined, 'AuthContext');
-        
-        // Check for existing session in localStorage
-        const storedUser = localStorage.getItem('user');
-        const storedToken = localStorage.getItem('authToken');
-        
-        if (storedUser && storedToken) {
-          const user = JSON.parse(storedUser);
-          
-          setState({
-            user,
-            loading: false,
-            error: null,
-            isAuthenticated: true
-          });
-          
-          logger.info('Authentication restored from storage', { userId: user?.id }, 'AuthContext');
-        } else {
-          setState(prev => ({ ...prev, loading: false }));
-        }
-      } catch (error) {
-        logger.error('Failed to initialize authentication', error, 'AuthContext');
-        setState(prev => ({ 
-          ...prev, 
-          loading: false, 
-          error: 'Failed to initialize authentication' 
+    const initializeAuth = () => {
+      // Set up event listeners
+      authService.on('auth:initialized', (isAuthenticated: boolean) => {
+        setState(prev => ({
+          ...prev,
+          isAuthenticated,
+          user: convertUser(authService.user),
+          loading: false
         }));
-      }
+      });
+
+      authService.on('auth:loading', (loading: boolean) => {
+        setState(prev => ({ ...prev, loading }));
+      });
+
+      authService.on('auth:login', (user: AuthServiceUser) => {
+        setState(prev => ({
+          ...prev,
+          user: convertUser(user),
+          isAuthenticated: true,
+          error: null,
+          requiresTwoFactor: false
+        }));
+        logger.info('User logged in', { userId: user.id }, 'AuthContext');
+      });
+
+      authService.on('auth:logout', () => {
+        setState(prev => ({
+          ...prev,
+          user: null,
+          isAuthenticated: false,
+          error: null
+        }));
+        logger.info('User logged out', undefined, 'AuthContext');
+      });
+
+      authService.on('auth:error', (error: Error) => {
+        setState(prev => ({
+          ...prev,
+          error: error.message,
+          loading: false
+        }));
+        logger.error('Authentication error', error, 'AuthContext');
+      });
+
+      authService.on('auth:2fa-required', () => {
+        setState(prev => ({
+          ...prev,
+          requiresTwoFactor: true,
+          loading: false
+        }));
+      });
+
+      authService.on('auth:token-refreshed', () => {
+        logger.info('Token refreshed', undefined, 'AuthContext');
+      });
+
+      authService.on('auth:session-expired', () => {
+        setState(prev => ({
+          ...prev,
+          error: 'Your session has expired. Please log in again.',
+          isAuthenticated: false,
+          user: null
+        }));
+        logger.warn('Session expired', undefined, 'AuthContext');
+      });
+
+      authService.on('auth:inactive', () => {
+        logger.info('User inactive', undefined, 'AuthContext');
+      });
+
+      authService.on('auth:profile-updated', (user: AuthServiceUser) => {
+        setState(prev => ({
+          ...prev,
+          user: convertUser(user)
+        }));
+      });
+
+      // Initial state from authService
+      setState({
+        user: convertUser(authService.user),
+        loading: authService.isLoading,
+        error: null,
+        isAuthenticated: authService.isAuthenticated,
+        requiresTwoFactor: authService.requiresTwoFactor,
+        sessionTimeRemaining: authService.sessionTimeRemaining
+      });
     };
 
     initializeAuth();
+
+    // Cleanup
+    return () => {
+      authService.removeAllListeners();
+    };
   }, []);
 
   // Login function
-  const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+  const login = useCallback(async (
+    email: string, 
+    password: string, 
+    rememberMe: boolean = false,
+    twoFactorCode?: string
+  ): Promise<boolean> => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState(prev => ({ ...prev, error: null }));
       
-      logger.info('Attempting login', { email }, 'AuthContext');
-      
-      // Mock login - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockUser: User = {
-        id: '1',
+      const credentials: LoginCredentials = {
         email,
-        username: email.split('@')[0],
-        role: 'user',
-        isVerified: true,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        password,
+        rememberMe,
+        twoFactorCode
       };
       
-      // Store in localStorage
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      localStorage.setItem('authToken', 'mock-token-123');
-      
-      setState({
-        user: mockUser,
-        loading: false,
-        error: null,
-        isAuthenticated: true
-      });
-      
-      logger.info('Login successful', { userId: mockUser.id }, 'AuthContext');
+      await authService.login(credentials);
       return true;
-    } catch (error) {
-      logger.error('Login failed', error, 'AuthContext');
+    } catch (error: any) {
       setState(prev => ({ 
         ...prev, 
-        loading: false, 
-        error: 'Login failed. Please try again.' 
+        error: error.message || 'Login failed'
       }));
       return false;
     }
   }, []);
 
   // Register function
-  const register = useCallback(async (
-    email: string, 
-    password: string, 
-    userData: Partial<User> = {}
-  ): Promise<boolean> => {
+  const register = useCallback(async (data: RegisterData): Promise<boolean> => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      
-      logger.info('Attempting registration', { email }, 'AuthContext');
-      
-      // Mock registration - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockUser: User = {
-        id: '1',
-        email,
-        username: userData.username || email.split('@')[0],
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        role: 'user',
-        isVerified: false,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        ...userData
-      };
-      
-      // Store in localStorage
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      localStorage.setItem('authToken', 'mock-token-123');
-      
-      setState({
-        user: mockUser,
-        loading: false,
-        error: null,
-        isAuthenticated: true
-      });
-      
-      logger.info('Registration successful', { userId: mockUser.id }, 'AuthContext');
+      setState(prev => ({ ...prev, error: null }));
+      await authService.register(data);
       return true;
-    } catch (error) {
-      logger.error('Registration failed', error, 'AuthContext');
+    } catch (error: any) {
       setState(prev => ({ 
         ...prev, 
-        loading: false, 
-        error: 'Registration failed. Please try again.' 
+        error: error.message || 'Registration failed'
       }));
       return false;
     }
   }, []);
 
+  // OAuth login functions
+  const loginWithGoogle = useCallback(async (): Promise<void> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.loginWithOAuth('google');
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Google login failed'
+      }));
+    }
+  }, []);
+
+  const loginWithApple = useCallback(async (): Promise<void> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.loginWithOAuth('apple');
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Apple login failed'
+      }));
+    }
+  }, []);
+
+  const handleOAuthCallback = useCallback(async (
+    provider: string, 
+    code: string, 
+    state: string
+  ): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null, loading: true }));
+      await authService.handleOAuthCallback(provider, code, state);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'OAuth authentication failed',
+        loading: false
+      }));
+      return false;
+    }
+  }, []);
+
+  // Two-factor authentication
+  const completeTwoFactorAuth = useCallback(async (code: string): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.completeTwoFactorAuth(code);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || '2FA verification failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  const setupTwoFactorAuth = useCallback(async (): Promise<TwoFactorSetup | null> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      return await authService.setupTwoFactorAuth();
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || '2FA setup failed'
+      }));
+      return null;
+    }
+  }, []);
+
+  const disableTwoFactorAuth = useCallback(async (password: string): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.disableTwoFactorAuth(password);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Failed to disable 2FA'
+      }));
+      return false;
+    }
+  }, []);
+
+  // Password management
+  const changePassword = useCallback(async (
+    currentPassword: string, 
+    newPassword: string
+  ): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.changePassword(currentPassword, newPassword);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Password change failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  const requestPasswordReset = useCallback(async (email: string): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.requestPasswordReset(email);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Password reset request failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  const resetPassword = useCallback(async (
+    token: string, 
+    newPassword: string
+  ): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.resetPassword(token, newPassword);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Password reset failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  // Email verification
+  const verifyEmail = useCallback(async (token: string): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.verifyEmail(token);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Email verification failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  const resendVerificationEmail = useCallback(async (): Promise<boolean> => {
+    if (!state.user?.email) return false;
+    
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.sendVerificationEmail(state.user.email);
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Failed to send verification email'
+      }));
+      return false;
+    }
+  }, [state.user?.email]);
+
   // Logout function
   const logout = useCallback(async (): Promise<void> => {
     try {
-      logger.info('Logging out', { userId: state.user?.id }, 'AuthContext');
-      
-      // Clear localStorage
-      localStorage.removeItem('user');
-      localStorage.removeItem('authToken');
-      
-      setState({
-        user: null,
-        loading: false,
-        error: null,
-        isAuthenticated: false
-      });
-      
-      logger.info('Logout successful', undefined, 'AuthContext');
-    } catch (error) {
-      logger.error('Logout failed', error, 'AuthContext');
-      // Still clear local state even if server logout fails
-      setState({
-        user: null,
-        loading: false,
-        error: null,
-        isAuthenticated: false
-      });
+      await authService.logout();
+    } catch (error: any) {
+      console.error('Logout error:', error);
     }
-  }, [state.user?.id]);
+  }, []);
 
   // Update user
   const updateUser = useCallback(async (userData: Partial<User>): Promise<boolean> => {
     try {
-      if (!state.user) return false;
-      
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      
-      // Mock update - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const updatedUser = { ...state.user, ...userData };
-      
-      // Update localStorage
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      
-      setState(prev => ({ 
-        ...prev, 
-        user: updatedUser, 
-        loading: false 
-      }));
-      
-      logger.info('User updated', { userId: updatedUser.id }, 'AuthContext');
+      setState(prev => ({ ...prev, error: null }));
+      await authService.updateProfile(userData as any);
       return true;
-    } catch (error) {
-      logger.error('User update failed', error, 'AuthContext');
+    } catch (error: any) {
       setState(prev => ({ 
         ...prev, 
-        loading: false, 
-        error: 'Failed to update profile' 
+        error: error.message || 'Profile update failed'
       }));
       return false;
     }
-  }, [state.user]);
+  }, []);
+
+  // Refresh token
+  const refreshToken = useCallback(async (): Promise<boolean> => {
+    try {
+      setState(prev => ({ ...prev, error: null }));
+      await authService.refreshAuthToken();
+      return true;
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        error: error.message || 'Token refresh failed'
+      }));
+      return false;
+    }
+  }, []);
+
+  // Check session
+  const checkSession = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      sessionTimeRemaining: authService.sessionTimeRemaining
+    }));
+  }, []);
 
   // Clear error
   const clearError = useCallback(() => {
@@ -259,14 +469,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     register,
     logout,
+    loginWithGoogle,
+    loginWithApple,
+    handleOAuthCallback,
+    completeTwoFactorAuth,
+    setupTwoFactorAuth,
+    disableTwoFactorAuth,
+    changePassword,
+    requestPasswordReset,
+    resetPassword,
+    verifyEmail,
+    resendVerificationEmail,
     updateUser,
+    refreshToken,
+    checkSession,
     clearError
   }), [
     state,
     login,
     register,
     logout,
+    loginWithGoogle,
+    loginWithApple,
+    handleOAuthCallback,
+    completeTwoFactorAuth,
+    setupTwoFactorAuth,
+    disableTwoFactorAuth,
+    changePassword,
+    requestPasswordReset,
+    resetPassword,
+    verifyEmail,
+    resendVerificationEmail,
     updateUser,
+    refreshToken,
+    checkSession,
     clearError
   ]);
 

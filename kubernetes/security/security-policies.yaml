@@ -1,0 +1,526 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mental-health-service-account
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: rbac
+automountServiceAccountToken: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: mental-health-platform
+  name: mental-health-role
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: rbac
+rules:
+# Allow reading ConfigMaps and Secrets needed by the application
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+# Allow reading service information for service discovery
+- apiGroups: [""]
+  resources: ["services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+# Allow reading pod information for health checks
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+# Allow creating events for audit logging
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mental-health-role-binding
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: rbac
+subjects:
+- kind: ServiceAccount
+  name: mental-health-service-account
+  namespace: mental-health-platform
+roleRef:
+  kind: Role
+  name: mental-health-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Pod Security Policy for HIPAA Compliance
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: mental-health-psp
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: policy
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities:
+    - NET_BIND_SERVICE
+    - CHOWN
+    - SETGID
+    - SETUID
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+    ranges:
+      - min: 1000
+        max: 65535
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  readOnlyRootFilesystem: false
+
+---
+# Network Policy for HIPAA Compliance - Strict Network Segmentation
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mental-health-network-policy
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: network
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+  
+  # Allow internal communication within the namespace
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: mental-health-platform
+    ports:
+    - protocol: TCP
+      port: 3001  # Backend API
+    - protocol: TCP
+      port: 3002  # WebSocket
+    - protocol: TCP
+      port: 5432  # PostgreSQL
+    - protocol: TCP
+      port: 6379  # Redis
+    - protocol: TCP
+      port: 8080  # Crisis detector
+    - protocol: TCP
+      port: 9090  # Prometheus
+    - protocol: TCP
+      port: 3000  # Grafana
+  
+  # Allow monitoring namespace access
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090  # Prometheus
+    - protocol: TCP
+      port: 8080  # Application metrics
+
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  
+  # Allow HTTPS to external services (APIs, webhooks)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+  
+  # Allow internal database communication
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+    ports:
+    - protocol: TCP
+      port: 5432
+  
+  # Allow internal cache communication
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  
+  # Allow communication to monitoring services
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+
+---
+# Database-specific Network Policy for enhanced security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgresql-network-policy
+  namespace: mental-health-platform
+  labels:
+    app: postgresql
+    component: security
+    tier: network
+spec:
+  podSelector:
+    matchLabels:
+      app: postgresql
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Only allow connections from application pods
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mental-health-platform
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 5432
+  
+  # Allow monitoring connections
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 9187  # PostgreSQL exporter
+
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow backup to external storage if needed
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+
+---
+# Redis-specific Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-network-policy
+  namespace: mental-health-platform
+  labels:
+    app: redis
+    component: security
+    tier: network
+spec:
+  podSelector:
+    matchLabels:
+      app: redis
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Only allow connections from application pods
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mental-health-platform
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 6379
+  
+  # Allow monitoring connections
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 9121  # Redis exporter
+
+  egress:
+  # Allow DNS resolution only
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+# HIPAA Compliance - Data Encryption at Rest ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: encryption-config
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: encryption
+data:
+  # Encryption configuration for HIPAA compliance
+  encryption.yaml: |
+    kind: EncryptionConfig
+    apiVersion: v1
+    resources:
+    - resources:
+      - secrets
+      providers:
+      - aescbc:
+          keys:
+          - name: key1
+            secret: REPLACE_WITH_32_BYTE_BASE64_ENCODED_KEY
+      - identity: {}
+    - resources:
+      - configmaps
+      providers:
+      - aescbc:
+          keys:
+          - name: key1
+            secret: REPLACE_WITH_32_BYTE_BASE64_ENCODED_KEY
+      - identity: {}
+
+---
+# Security Context Constraints (for OpenShift compatibility)
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: mental-health-scc
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: policy
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false
+allowedCapabilities:
+- NET_BIND_SERVICE
+- CHOWN
+- SETGID
+- SETUID
+defaultAddCapabilities: null
+fsGroup:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+priority: 10
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- ALL
+runAsUser:
+  type: MustRunAsNonRoot
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+users:
+- system:serviceaccount:mental-health-platform:mental-health-service-account
+
+---
+# Admission Controller Policy for HIPAA Compliance
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admission-policy
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: admission
+data:
+  policy.yaml: |
+    apiVersion: config.gatekeeper.sh/v1alpha1
+    kind: Config
+    metadata:
+      name: config
+      namespace: gatekeeper-system
+    spec:
+      match:
+        - excludedNamespaces: ["kube-system", "gatekeeper-system", "cert-manager"]
+          processes: ["*"]
+      validation:
+        traces:
+          - user:
+              kind:
+                group: "user"
+                version: "v1"
+                kind: "User"
+      parameters:
+        - name: "enforce-security-context"
+          value: "true"
+        - name: "require-non-root"
+          value: "true"
+        - name: "require-read-only-root-fs"
+          value: "false"  # Set to true for maximum security
+        - name: "allowed-capabilities"
+          value: "NET_BIND_SERVICE,CHOWN,SETGID,SETUID"
+
+---
+# OPA Gatekeeper constraint template for HIPAA compliance
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: hipaacompliancepods
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: policy
+spec:
+  crd:
+    spec:
+      names:
+        kind: HipaaCompliancePods
+      validation:
+        type: object
+        properties:
+          allowedImages:
+            type: array
+            items:
+              type: string
+          requiredLabels:
+            type: array
+            items:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package hipaacompliancepods
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not starts_with(container.image, "ghcr.io/mental-health-platform/")
+          not starts_with(container.image, "postgres:")
+          not starts_with(container.image, "redis:")
+          not starts_with(container.image, "nginx:")
+          not starts_with(container.image, "prom/")
+          msg := sprintf("Container image '%v' is not from approved registry", [container.image])
+        }
+        
+        violation[{"msg": msg}] {
+          input.review.object.spec.securityContext.runAsNonRoot != true
+          msg := "Pod must run as non-root user for HIPAA compliance"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          container.securityContext.allowPrivilegeEscalation == true
+          msg := "Containers must not allow privilege escalation for HIPAA compliance"
+        }
+        
+        violation[{"msg": msg}] {
+          required_label := input.parameters.requiredLabels[_]
+          not input.review.object.metadata.labels[required_label]
+          msg := sprintf("Missing required label: %v", [required_label])
+        }
+
+---
+# HIPAA compliance constraint
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: HipaaCompliancePods
+metadata:
+  name: hipaa-compliance-mental-health
+  namespace: mental-health-platform
+  labels:
+    app: mental-health-platform
+    component: security
+    tier: policy
+spec:
+  match:
+    - apiGroups: ["apps"]
+      kinds: ["Deployment", "StatefulSet", "DaemonSet"]
+      namespaces: ["mental-health-platform"]
+  parameters:
+    allowedImages:
+      - "ghcr.io/mental-health-platform/"
+      - "postgres:"
+      - "redis:"
+      - "nginx:"
+      - "prom/"
+      - "grafana/"
+    requiredLabels:
+      - "app"
+      - "component"
+      - "tier"

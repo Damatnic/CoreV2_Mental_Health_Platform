@@ -1,0 +1,108 @@
+# Multi-stage Dockerfile for Mental Health Platform Backend
+# Optimized for production deployment with HIPAA compliance and security
+
+# ================================
+# Build Stage
+# ================================
+FROM node:20-alpine AS builder
+
+# Set build arguments
+ARG NODE_ENV=production
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG CRISIS_DETECTION_ENABLED=true
+ARG HIPAA_COMPLIANCE=true
+
+# Add build metadata
+LABEL org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.version=$BUILD_VERSION \
+      org.opencontainers.image.title="Mental Health Platform Backend" \
+      org.opencontainers.image.description="HIPAA-compliant backend for crisis intervention and mental health support" \
+      org.opencontainers.image.vendor="Mental Health Platform Team" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.source="https://github.com/mental-health-platform/backend"
+
+# Create app directory with proper permissions
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
+WORKDIR /app
+
+# Copy package files first for better caching
+COPY --chown=nodejs:nodejs package*.json ./
+COPY --chown=nodejs:nodejs tsconfig.json ./
+COPY --chown=nodejs:nodejs tsconfig.source.json ./
+
+# Install dependencies with security optimizations
+RUN npm ci --only=production --no-audit --no-fund && \
+    npm cache clean --force
+
+# Copy source code
+COPY --chown=nodejs:nodejs src/ ./src/
+COPY --chown=nodejs:nodejs netlify/ ./netlify/
+
+# Build TypeScript to JavaScript
+RUN npm run build || npm run typecheck
+
+# ================================
+# Production Stage
+# ================================
+FROM node:20-alpine AS production
+
+# Install security updates and required packages
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache \
+        dumb-init \
+        curl \
+        ca-certificates \
+        tzdata && \
+    rm -rf /var/cache/apk/*
+
+# Create app user and group
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
+# Set working directory
+WORKDIR /app
+
+# Set environment variables
+ENV NODE_ENV=production \
+    PORT=3001 \
+    TZ=UTC \
+    CRISIS_DETECTION_ENABLED=$CRISIS_DETECTION_ENABLED \
+    HIPAA_COMPLIANCE=$HIPAA_COMPLIANCE
+
+# Copy built application from builder stage
+COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/src ./src
+COPY --from=builder --chown=nodejs:nodejs /app/netlify ./netlify
+COPY --from=builder --chown=nodejs:nodejs /app/package*.json ./
+
+# Create necessary directories with proper permissions
+RUN mkdir -p /app/logs /app/uploads /app/temp && \
+    chown -R nodejs:nodejs /app
+
+# Copy health check script
+COPY --chown=nodejs:nodejs scripts/health-check.js ./scripts/
+
+# Create health check endpoint
+RUN echo '#!/bin/sh\nnode scripts/health-check.js' > /usr/local/bin/health-check && \
+    chmod +x /usr/local/bin/health-check
+
+# Switch to non-root user
+USER nodejs
+
+# Expose port
+EXPOSE 3001
+
+# Add health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD health-check
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start the server
+CMD ["node", "netlify/functions/api.js"]
