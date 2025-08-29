@@ -147,7 +147,7 @@ export const mockTimersWithTracking = (): TimerTracker => {
     return id;
   }) as unknown as jest.MockedFunction<typeof setTimeout>;
 
-  const mockClearTimeout = jest.fn((id: string | number | NodeJS.Timeout | undefined) => {
+  const mockClearTimeout = jest.fn((id: string | number | ReturnType<typeof setTimeout> | undefined) => {
     const numId = typeof id === 'number' ? id : parseInt(String(id));
     const index = timeouts.findIndex(t => t.id === numId);
     if (index !== -1) {
@@ -161,7 +161,7 @@ export const mockTimersWithTracking = (): TimerTracker => {
     return id;
   }) as unknown as jest.MockedFunction<typeof setInterval>;
 
-  const mockClearInterval = jest.fn((id: string | number | NodeJS.Timeout | undefined) => {
+  const mockClearInterval = jest.fn((id: string | number | ReturnType<typeof setInterval> | undefined) => {
     const numId = typeof id === 'number' ? id : parseInt(String(id));
     const index = intervals.findIndex(i => i.id === numId);
     if (index !== -1) {

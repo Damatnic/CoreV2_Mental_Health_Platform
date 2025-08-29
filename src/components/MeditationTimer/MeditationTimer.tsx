@@ -13,7 +13,7 @@ const MeditationTimer: React.FC = () => {
   const [timeRemaining, setTimeRemaining] = useState(duration);
   const [isActive, setIsActive] = useState(false);
   const [selectedSound, setSelectedSound] = useState('rain');
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const presets = [
     { label: '3 min', value: 180 },

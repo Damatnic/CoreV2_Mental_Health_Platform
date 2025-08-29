@@ -148,9 +148,9 @@ export const CrisisSafetySystem: React.FC<CrisisSafetySystemProps> = ({
   const [lastHeartbeat, setLastHeartbeat] = useState<Date>(new Date());
   const [systemStatus, setSystemStatus] = useState<'online' | 'offline' | 'degraded'>('online');
 
-  const monitoringIntervalRef = useRef<NodeJS.Timeout>();
-  const heartbeatIntervalRef = useRef<NodeJS.Timeout>();
-  const alertTimeoutRef = useRef<NodeJS.Timeout>();
+  const monitoringIntervalRef = useRef<ReturnType<typeof setTimeout>>();
+  const heartbeatIntervalRef = useRef<ReturnType<typeof setTimeout>>();
+  const alertTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Initialize safety system
   useEffect(() => {

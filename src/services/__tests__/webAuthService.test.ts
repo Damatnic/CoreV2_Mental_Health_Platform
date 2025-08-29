@@ -17,7 +17,7 @@ interface AuthTokens {
 class WebAuthService {
   private currentUser: AuthUser | null = null;
   private tokens: AuthTokens | null = null;
-  private refreshTimer: NodeJS.Timeout | null = null;
+  private refreshTimer: ReturnType<typeof setTimeout> | null = null;
 
   async signIn(email: string, password: string): Promise<AuthUser> {
     // Validate input

@@ -32,7 +32,7 @@ interface TrendAnalysis {
 class ComprehensivePerformanceMonitorService {
   private metrics: PerformanceMetrics[] = [];
   private isMonitoring = false;
-  private monitoringInterval: NodeJS.Timeout | null = null;
+  private monitoringInterval: ReturnType<typeof setTimeout> | null = null;
   private readonly maxMetrics = 100;
   private readonly sampleRate = 1000; // ms
 

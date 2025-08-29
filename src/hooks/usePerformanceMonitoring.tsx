@@ -193,7 +193,7 @@ export function usePerformanceMonitoring(
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   
   // Refs
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const observersRef = useRef<{
     performanceObserver?: PerformanceObserver;
     mutationObserver?: MutationObserver;

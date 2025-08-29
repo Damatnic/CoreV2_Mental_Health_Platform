@@ -11,7 +11,7 @@ const usePerformanceMonitor = () => {
   });
   
   const [isMonitoring, setIsMonitoring] = React.useState(false);
-  const intervalRef = React.useRef<NodeJS.Timeout>();
+  const intervalRef = React.useRef<ReturnType<typeof setTimeout>>();
 
   const startMonitoring = React.useCallback(() => {
     setIsMonitoring(true);

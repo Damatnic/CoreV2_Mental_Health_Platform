@@ -273,8 +273,8 @@ export const useCrisisStressTesting = (
     error: null
   });
 
-  const testTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const autoTestIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const testTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoTestIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const runningTestsRef = useRef<Set<string>>(new Set());
 
   /**

@@ -1175,7 +1175,7 @@ class AccessibilityService {
     });
   }
 
-  private reauditTimeout: NodeJS.Timeout | null = null;
+  private reauditTimeout: ReturnType<typeof setTimeout> | null = null;
 
   private hasInteractiveElements(element: Element): boolean {
     const interactiveSelector = 'button, input, select, textarea, a[href], [tabindex], [role="button"]';

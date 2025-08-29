@@ -44,7 +44,7 @@ export const LazyMarkdown: React.FC<LazyMarkdownProps> = ({
   const [isSaving, setIsSaving] = useState(false);
   
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const autoSaveTimeoutRef = useRef<NodeJS.Timeout>();
+  const autoSaveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
 
 

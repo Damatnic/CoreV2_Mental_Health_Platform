@@ -126,7 +126,7 @@ export const useEnhancedCrisisDetection = (
     culturallyAppropriate: true
   });
 
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const analysisCountRef = useRef(0);
   const mlServiceRef = useRef<any>(null);
 

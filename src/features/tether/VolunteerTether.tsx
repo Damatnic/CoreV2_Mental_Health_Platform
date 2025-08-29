@@ -618,9 +618,9 @@ export const VolunteerTether: React.FC<VolunteerTetherProps> = ({
   
   // Refs for accessibility and emergency protocols
   const emergencyButtonRef = useRef<HTMLButtonElement>(null);
-  const crisisTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const crisisTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const supervisionAlertRef = useRef<HTMLDivElement>(null);
-  const sessionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const sessionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load enhanced volunteer profile and emergency protocols
   useEffect(() => {

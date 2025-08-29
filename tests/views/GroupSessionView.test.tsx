@@ -1,5 +1,5 @@
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../src/test-utils/testing-library-exports';
 import '@testing-library/jest-dom';
 import GroupSessionView from '../../src/views/GroupSessionView';
 

@@ -198,7 +198,7 @@ const DEFAULT_WARMING_STRATEGIES: CacheWarmingStrategy[] = [
 class CacheIntegrationServiceImpl implements CacheIntegrationService {
   private config: CacheIntegrationConfig = { ...DEFAULT_CONFIG };
   private isInitialized = false;
-  private maintenanceInterval?: NodeJS.Timeout;
+  private maintenanceInterval?: ReturnType<typeof setTimeout>;
   private predictiveCacheEntries = new Map<string, PredictiveCacheEntry>();
   private accessLog: Array<{ url: string; timestamp: Date; responseTime: number }> = [];
   private analytics: CacheAnalytics = {

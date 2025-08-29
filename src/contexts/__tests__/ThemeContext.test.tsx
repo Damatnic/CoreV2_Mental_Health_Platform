@@ -2,8 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, screen, act, waitFor, renderHook } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, act, waitFor, renderHook, userEvent } from '../../test-utils/testing-library-exports';
 import '@testing-library/jest-dom';
 import { ThemeProvider, useTheme, Theme, ThemeMode, ThemeContext } from '../ThemeContext';
 

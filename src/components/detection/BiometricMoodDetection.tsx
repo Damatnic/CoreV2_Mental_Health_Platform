@@ -156,7 +156,7 @@ export const BiometricMoodDetection: React.FC<BiometricMoodDetectionProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const detectionIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
   // Mock ML model references (in real implementation, would load actual models)

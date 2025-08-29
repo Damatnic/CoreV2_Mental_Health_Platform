@@ -107,7 +107,7 @@ export const GroundingExercise: React.FC<GroundingExerciseProps> = ({
   const [audioEnabled, setAudioEnabled] = useState(enableAudio);
   const [userInputs, setUserInputs] = useState<Record<string, string[]>>({});
   
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentStep = technique.steps[currentStepIndex];

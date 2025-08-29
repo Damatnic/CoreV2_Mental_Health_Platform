@@ -102,7 +102,7 @@ const FormInput: React.FC<FormInputProps> = ({
   const [touched, setTouched] = useState(false);
   const [internalValue, setInternalValue] = useState(value || '');
   const [validationError, setValidationError] = useState('');
-  const debounceTimer = useRef<NodeJS.Timeout>();
+  const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     setInternalValue(value || '');

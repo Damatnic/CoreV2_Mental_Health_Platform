@@ -196,7 +196,7 @@ export function useAccessibilityMonitoring(
   const [lastAudit, setLastAudit] = useState<Date | null>(null);
   
   // Refs
-  const auditIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const auditIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
   const focusTrapsRef = useRef<Set<() => void>>(new Set());
   const liveRegionRef = useRef<HTMLElement | null>(null);

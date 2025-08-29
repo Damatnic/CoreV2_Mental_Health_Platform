@@ -334,7 +334,7 @@ class ComprehensivePerformanceMonitor {
   private alerts: PerformanceAlert[] = [];
   private reports: PerformanceReport[] = [];
   private observers: Map<string, PerformanceObserver> = new Map();
-  private intervals: Map<string, NodeJS.Timeout> = new Map();
+  private intervals: Map<string, ReturnType<typeof setTimeout>> = new Map();
   private isInitialized = false;
   private userFlows: Map<string, UserFlowMetric> = new Map();
   private sessionStartTime = Date.now();

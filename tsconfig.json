@@ -30,7 +30,10 @@
       ]
     },
     "types": [
-      "vite/client"
+      "vite/client",
+      "jest",
+      "@testing-library/jest-dom",
+      "node"
     ],
     "allowJs": true,
     "checkJs": false,

@@ -38,7 +38,7 @@ const VideoChatView: React.FC<VideoChatViewProps> = ({
   const localStreamRef = useRef<MediaStream | null>(null);
   const remoteStreamRef = useRef<MediaStream | null>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
-  const callTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const callTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { showNotification } = useNotification();
 

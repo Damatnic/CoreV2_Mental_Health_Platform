@@ -1,0 +1,212 @@
+config:
+  target: "http://localhost:8888"
+  phases:
+    # Warm-up phase
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm-up"
+    
+    # Normal load
+    - duration: 300
+      arrivalRate: 20
+      name: "Normal Load"
+    
+    # Crisis simulation - sudden spike
+    - duration: 120
+      arrivalRate: 100
+      name: "Crisis Event Spike"
+    
+    # Sustained high load
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained Crisis Load"
+    
+    # Cool down
+    - duration: 60
+      arrivalRate: 10
+      name: "Cool Down"
+  
+  processor: "./crisis-processor.js"
+  
+  variables:
+    crisisKeywords:
+      - "I want to end my life"
+      - "thinking about suicide"
+      - "can't go on anymore"
+      - "planning to hurt myself"
+      - "no reason to live"
+    
+    normalMessages:
+      - "feeling anxious today"
+      - "had a rough day at work"
+      - "struggling with depression"
+      - "need someone to talk to"
+      - "feeling overwhelmed"
+  
+  defaults:
+    headers:
+      Content-Type: "application/json"
+      User-Agent: "Crisis-Load-Test/1.0"
+
+scenarios:
+  # Scenario 1: Crisis detection workflow
+  - name: "Crisis Detection Flow"
+    weight: 30
+    flow:
+      - post:
+          url: "/api/crisis/detect"
+          json:
+            message: "{{ crisisKeywords }}"
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            timestamp: "{{ $timestamp }}"
+          capture:
+            - json: "$.severity"
+              as: "severity"
+            - json: "$.sessionId"
+              as: "sessionId"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: severity
+      
+      - think: 2
+      
+      # If high severity, trigger emergency protocol
+      - post:
+          url: "/api/crisis/emergency"
+          ifTrue: "severity >= 8"
+          json:
+            sessionId: "{{ sessionId }}"
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            action: "activate_emergency_protocol"
+          expect:
+            - statusCode: 200
+            - hasProperty: protocolActivated
+      
+      # Activate safety plan
+      - post:
+          url: "/api/safety-plan/activate"
+          json:
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            triggeredBy: "crisis_detection"
+          expect:
+            - statusCode: 200
+            - contentType: json
+  
+  # Scenario 2: 988 Lifeline integration
+  - name: "988 Integration Test"
+    weight: 20
+    flow:
+      - post:
+          url: "/api/crisis/988/connect"
+          json:
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            location:
+              lat: "{{ $randomNumber(25, 49) }}.{{ $randomNumber(1000, 9999) }}"
+              lng: "-{{ $randomNumber(70, 125) }}.{{ $randomNumber(1000, 9999) }}"
+            urgency: "immediate"
+          capture:
+            - json: "$.connectionId"
+              as: "connectionId"
+          expect:
+            - statusCode: 200
+            - hasProperty: connectionId
+            - contentType: json
+      
+      - think: 5
+      
+      # Check connection status
+      - get:
+          url: "/api/crisis/988/status/{{ connectionId }}"
+          expect:
+            - statusCode: 200
+            - hasProperty: status
+  
+  # Scenario 3: Crisis counselor notification
+  - name: "Counselor Alert Flow"
+    weight: 15
+    flow:
+      - post:
+          url: "/api/crisis/counselor/alert"
+          json:
+            severity: "{{ $randomNumber(7, 10) }}"
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            message: "{{ crisisKeywords }}"
+            requiresImmediate: true
+          expect:
+            - statusCode: 200
+            - hasProperty: counselorsNotified
+      
+      - think: 1
+      
+      # Get available counselors
+      - get:
+          url: "/api/crisis/counselors/available"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: availableCount
+  
+  # Scenario 4: Normal message flow (baseline)
+  - name: "Normal Message Flow"
+    weight: 25
+    flow:
+      - post:
+          url: "/api/chat/message"
+          json:
+            message: "{{ normalMessages }}"
+            userId: "test-user-{{ $randomNumber(1, 10000) }}"
+            sessionId: "session-{{ $randomNumber(1, 1000) }}"
+          expect:
+            - statusCode: 200
+            - contentType: json
+      
+      - think: 3
+  
+  # Scenario 5: Crisis resource access
+  - name: "Crisis Resources Access"
+    weight: 10
+    flow:
+      - get:
+          url: "/api/crisis/resources"
+          qs:
+            location: "{{ $randomString(2) }}"
+            type: "hotline"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: resources
+      
+      - think: 2
+      
+      - get:
+          url: "/api/crisis/resources/emergency-contacts"
+          expect:
+            - statusCode: 200
+            - hasProperty: contacts
+
+# Ensure critical endpoints respond quickly
+ensure:
+  p95: 2000  # 95% of requests under 2 seconds
+  p99: 5000  # 99% of requests under 5 seconds
+  maxErrorRate: 0.01  # Less than 1% error rate
+
+# Custom metrics for crisis scenarios
+customMetrics:
+  - name: "Crisis Detection Time"
+    description: "Time to detect and respond to crisis"
+    unit: "ms"
+  
+  - name: "Emergency Protocol Activation"
+    description: "Time to activate emergency protocol"
+    unit: "ms"
+  
+  - name: "Counselor Response Time"
+    description: "Time for counselor to be notified"
+    unit: "ms"
+
+# Hooks for detailed reporting
+hooks:
+  beforeScenario: "logScenarioStart"
+  afterScenario: "logScenarioEnd"
+  afterResponse: "checkCrisisResponse"

@@ -52,7 +52,7 @@ export const AutoSaveIndicator: React.FC<AutoSaveIndicatorProps> = ({
 
   const [showDetails, setShowDetails] = useState(false);
   const [pulseAnimation, setPulseAnimation] = useState(false);
-  const detailsTimeoutRef = useRef<NodeJS.Timeout>();
+  const detailsTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Update state based on props
   useEffect(() => {
@@ -430,8 +430,8 @@ export const useAutoSave = (
   const [retryCount, setRetryCount] = useState(0);
 
   const lastDataRef = useRef(data);
-  const timeoutRef = useRef<NodeJS.Timeout>();
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const intervalRef = useRef<ReturnType<typeof setTimeout>>();
 
   const performSave = async (dataToSave: any, isRetry = false) => {
     if (isSaving && !isRetry) return;

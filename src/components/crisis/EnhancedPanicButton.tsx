@@ -86,7 +86,7 @@ export const EnhancedPanicButton: React.FC<EnhancedPanicButtonProps> = ({
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [lastActivation, setLastActivation] = useState<Date | null>(null);
 
-  const countdownRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const {

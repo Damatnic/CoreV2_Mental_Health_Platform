@@ -91,7 +91,7 @@ export const usePerformanceMonitor = (options: UsePerformanceMonitorOptions = {}
   });
 
   const observersRef = useRef<PerformanceObserver[]>([]);
-  const reportingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const reportingIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const metricsRef = useRef<PerformanceMetrics>({
     lcp: null,
     fid: null,

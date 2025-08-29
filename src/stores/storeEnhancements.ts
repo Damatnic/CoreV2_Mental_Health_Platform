@@ -305,7 +305,7 @@ export const withDebounce = <T extends (...args: any[]) => void>(
   fn: T,
   delay: number = 300
 ): T => {
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: ReturnType<typeof setTimeout>;
   
   return ((...args: Parameters<T>) => {
     clearTimeout(timeoutId);

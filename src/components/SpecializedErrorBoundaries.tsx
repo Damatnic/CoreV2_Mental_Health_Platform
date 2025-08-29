@@ -85,7 +85,7 @@ export class MentalHealthErrorBoundary extends React.Component<
   },
   MentalHealthErrorBoundaryState
 > {
-  private retryTimeoutId?: NodeJS.Timeout;
+  private retryTimeoutId?: ReturnType<typeof setTimeout>;
 
   constructor(props: any) {
     super(props);

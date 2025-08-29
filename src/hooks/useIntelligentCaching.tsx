@@ -82,7 +82,7 @@ export const IntelligentCacheProvider: React.FC<IntelligentCacheProviderProps> =
   const [, forceUpdate] = useState({});
   
   // Cleanup interval
-  const cleanupIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const cleanupIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Calculate cache score for eviction
   const calculateCacheScore = (entry: CacheEntry): number => {

@@ -142,7 +142,7 @@ export const usePrivacyAnalytics = (): UsePrivacyAnalyticsReturn => {
   
   const sessionId = useRef<string>('');
   const analyticsQueue = useRef<AnalyticsData[]>([]);
-  const batchTimer = useRef<NodeJS.Timeout | null>(null);
+  const batchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Initialize analytics service
   useEffect(() => {

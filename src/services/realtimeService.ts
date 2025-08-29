@@ -173,8 +173,8 @@ class RealtimeService {
     channelsActive: 0,
     dataTransferred: 0
   };
-  private heartbeatInterval?: NodeJS.Timeout;
-  private reconnectionTimeout?: NodeJS.Timeout;
+  private heartbeatInterval?: ReturnType<typeof setTimeout>;
+  private reconnectionTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(config: RealtimeConfig) {
     this.config = {

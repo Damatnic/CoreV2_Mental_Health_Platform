@@ -190,7 +190,7 @@ export class CrisisService extends EventEmitter {
   private config: CrisisServiceConfig;
   private activeCrises: Map<string, CrisisEvent> = new Map();
   private interventions: Map<string, CrisisIntervention[]> = new Map();
-  private monitoringTimers: Map<string, NodeJS.Timeout> = new Map();
+  private monitoringTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
 
   constructor(config: Partial<CrisisServiceConfig> = {}) {
     super();

@@ -74,8 +74,8 @@ export class RealtimeService extends EventEmitter {
   private subscriptions: Map<string, ChannelSubscription> = new Map();
   private messageQueue: RealtimeMessage[] = [];
   private reconnectAttempts = 0;
-  private heartbeatTimer?: NodeJS.Timeout;
-  private reconnectTimer?: NodeJS.Timeout;
+  private heartbeatTimer?: ReturnType<typeof setTimeout>;
+  private reconnectTimer?: ReturnType<typeof setTimeout>;
   private messageId = 0;
 
   constructor(config: RealtimeConfig) {

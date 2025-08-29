@@ -185,7 +185,7 @@ export function useSwipeGesture(config: UseSwipeGestureConfig = {}): UseSwipeGes
   
   // Refs
   const rafRef = useRef<number | null>(null);
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastMoveTimeRef = useRef(0);
   const gestureDataRef = useRef<SwipeEventData | null>(null);
   

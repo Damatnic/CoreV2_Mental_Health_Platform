@@ -205,7 +205,7 @@ export const useEnhancedOffline = (config: Partial<OfflineConfig> = {}): UseEnha
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const syncTimeoutRef = useRef<NodeJS.Timeout>();
+  const syncTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const initialized = useRef(false);
 
   // Derived state

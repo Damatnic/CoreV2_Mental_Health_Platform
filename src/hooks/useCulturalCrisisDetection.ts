@@ -185,7 +185,7 @@ export const useCulturalCrisisDetection = (
     error: null
   });
 
-  const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const analysisTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const culturalServiceRef = useRef<any>(null);
 
   /**

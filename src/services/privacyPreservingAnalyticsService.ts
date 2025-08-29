@@ -74,7 +74,7 @@ class PrivacyPreservingAnalyticsService {
   private sessionId: string;
   private anonymizedUserId: string;
   private userConsent: UserConsent | null = null;
-  private flushTimer: NodeJS.Timeout | null = null;
+  private flushTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly CONSENT_STORAGE_KEY = 'analytics_consent';
   private readonly EVENTS_STORAGE_KEY = 'analytics_events';
 

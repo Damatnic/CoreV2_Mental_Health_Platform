@@ -207,7 +207,7 @@ export const getAdaptiveLoadingConfig = (config: NetworkMonitorConfig = DEFAULT_
 export class NetworkMonitor {
   private config: NetworkMonitorConfig;
   private currentState: AdaptiveLoadingConfig;
-  private monitoringInterval?: NodeJS.Timeout;
+  private monitoringInterval?: ReturnType<typeof setTimeout>;
   private listeners: Array<(event: NetworkChangeEvent) => void> = [];
 
   constructor(config: Partial<NetworkMonitorConfig> = {}) {

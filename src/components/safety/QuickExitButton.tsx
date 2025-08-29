@@ -106,7 +106,7 @@ const QuickExitButton: React.FC<QuickExitButtonProps> = ({
   useEffect(() => {
     let keyPressCount = 0;
     let lastKeyPress = 0;
-    let resetTimer: NodeJS.Timeout | null = null;
+    let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
     const handleKeyPress = (e: KeyboardEvent): void => {
       const now = Date.now();

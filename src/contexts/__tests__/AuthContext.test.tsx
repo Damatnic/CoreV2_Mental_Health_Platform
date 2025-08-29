@@ -21,8 +21,7 @@
 
 import * as React from 'react';
 import { describe, it, expect, jest, beforeEach, afterEach, beforeAll, afterAll } from '@jest/globals';
-import { render, screen, act, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, act, waitFor, userEvent } from '../../test-utils/testing-library-exports';
 import '@testing-library/jest-dom';
 import '../../setupTests';
 

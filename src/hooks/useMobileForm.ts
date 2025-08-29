@@ -209,8 +209,8 @@ export function useMobileForm(config: FormConfig): UseMobileFormReturn {
   const [hasDraft, setHasDraft] = useState(false);
   
   // Refs
-  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const validationTimeoutRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const autoSaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const validationTimeoutRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const offlineQueueRef = useRef<FormData[]>([]);
   
   // Initialize form data with default values

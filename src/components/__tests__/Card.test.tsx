@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, jest } from '@jest/globals';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../test-utils/testing-library-exports';
 
 interface CardProps {
   title?: string;

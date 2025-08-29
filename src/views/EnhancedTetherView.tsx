@@ -170,7 +170,7 @@ const BreathingGuide: React.FC<BreathingGuideProps> = ({
   const [phase, setPhase] = useState<BreathingPhase>('inhale');
   const [progress, setProgress] = useState(0);
   const [cycleCount, setCycleCount] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const phaseStartRef = useRef<number>(Date.now());
 
   const getPhaseColor = (currentPhase: BreathingPhase): string => {

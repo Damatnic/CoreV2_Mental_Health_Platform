@@ -126,8 +126,8 @@ class AstralCoreWebSocketServiceImpl implements AstralCoreWebSocketService {
   private ws: WebSocket | null = null;
   private connectionState: ConnectionState = ConnectionState.DISCONNECTED;
   private reconnectAttempts = 0;
-  private reconnectTimer?: NodeJS.Timeout;
-  private heartbeatTimer?: NodeJS.Timeout;
+  private reconnectTimer?: ReturnType<typeof setTimeout>;
+  private heartbeatTimer?: ReturnType<typeof setTimeout>;
   private messageQueue: WebSocketMessage[] = [];
   private pendingAcks = new Map<string, { resolve: Function; reject: Function; timestamp: Date }>();
   private eventHandlers = new Map<keyof WebSocketEventHandlers, Function[]>();

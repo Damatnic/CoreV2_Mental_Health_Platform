@@ -66,7 +66,7 @@ export function useCrisisDetection(config: CrisisDetectionConfig = {}) {
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [lastAlertTime, setLastAlertTime] = useState<Date | null>(null);
-  const analysisTimeoutRef = useRef<NodeJS.Timeout>();
+  const analysisTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const analyzeContent = useCallback((indicators: CrisisIndicators): CrisisDetectionResult => {
     const reasons: string[] = [];

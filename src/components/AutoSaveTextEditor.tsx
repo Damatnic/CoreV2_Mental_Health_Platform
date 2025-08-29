@@ -26,7 +26,7 @@ const AutoSaveTextEditor: React.FC<AutoSaveTextEditorProps> = ({
   const [content, setContent] = useState(initialContent);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [saveTimeoutId, setSaveTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [saveTimeoutId, setSaveTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   const performSave = useCallback(async (textToSave: string) => {
     if (!onSave || textToSave === initialContent) return;

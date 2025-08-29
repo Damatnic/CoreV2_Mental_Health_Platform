@@ -1,0 +1,582 @@
+name: Mental Health Platform CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run crisis system tests every 6 hours
+    - cron: '0 */6 * * *'
+
+env:
+  NODE_VERSION: '20.19.0'
+  COVERAGE_THRESHOLD: 90
+
+jobs:
+  # Security and vulnerability scanning
+  security-scan:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Snyk Security Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+      
+      - name: Run npm audit
+        run: |
+          npm audit --audit-level=moderate
+          npm audit fix --force
+      
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'mental-health-platform'
+          path: '.'
+          format: 'HTML'
+      
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            snyk-report.json
+            dependency-check-report.html
+
+  # Code quality and linting
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint -- --format=json --output-file=eslint-report.json
+        continue-on-error: true
+      
+      - name: TypeScript type checking
+        run: npm run typecheck
+      
+      - name: Check for console.log statements
+        run: |
+          if grep -r "console.log" src/ --exclude-dir=__tests__ --exclude-dir=__mocks__; then
+            echo "Found console.log statements in production code"
+            exit 1
+          fi
+      
+      - name: SonarQube Analysis
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=mental-health-platform
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+  # Unit tests with coverage
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run unit tests (shard ${{ matrix.shard }}/4)
+        run: |
+          npm test -- --shard=${{ matrix.shard }}/4 --coverage --coverageReporters=json --coverageDirectory=coverage-${{ matrix.shard }}
+        env:
+          NODE_ENV: test
+          CI: true
+      
+      - name: Upload coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-${{ matrix.shard }}
+          path: coverage-${{ matrix.shard }}
+
+  # Crisis detection tests (CRITICAL)
+  crisis-detection-tests:
+    name: Crisis Detection System Tests
+    runs-on: ubuntu-latest
+    needs: [security-scan]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run crisis detection tests
+        run: |
+          npm test -- tests/crisis --coverage
+          npm test -- tests/integration/crisis*.test.ts
+          npm test -- tests/services/crisis*.test.ts
+        env:
+          NODE_ENV: test
+          CRISIS_TEST_MODE: true
+      
+      - name: Validate crisis keyword database
+        run: node scripts/validate-crisis-keywords.js
+      
+      - name: Test emergency escalation workflows
+        run: npm test -- tests/integration/emergency-features-988-integration.test.ts
+      
+      - name: Crisis response time validation
+        run: |
+          npm test -- --testNamePattern="response time" --verbose
+          if [ $? -ne 0 ]; then
+            echo "CRITICAL: Crisis response time tests failed!"
+            exit 1
+          fi
+
+  # Integration tests
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: mentalhealth_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run database migrations
+        run: npm run migrate:up
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/mentalhealth_test
+      
+      - name: Run integration tests
+        run: npm test -- tests/integration --coverage
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/mentalhealth_test
+      
+      - name: Test API endpoints
+        run: npm test -- tests/integration/api-endpoints.test.ts
+
+  # E2E tests
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [integration-tests]
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+        include:
+          - browser: chromium
+            profile: desktop
+          - browser: firefox
+            profile: desktop
+          - browser: webkit
+            profile: mobile
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps ${{ matrix.browser }}
+      
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Run E2E tests - ${{ matrix.browser }}
+        run: |
+          npx playwright test --project=${{ matrix.browser }}
+        env:
+          CI: true
+          TEST_PROFILE: ${{ matrix.profile }}
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-results-${{ matrix.browser }}
+          path: |
+            test-results/
+            playwright-report/
+
+  # Accessibility testing
+  accessibility-tests:
+    name: Accessibility Compliance Tests
+    runs-on: ubuntu-latest
+    needs: [e2e-tests]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Start application
+        run: |
+          npm run server &
+          sleep 10
+      
+      - name: Run Pa11y accessibility tests
+        run: |
+          npx pa11y-ci --sitemap http://localhost:8888/sitemap.xml \
+            --threshold 0 \
+            --standard WCAG2AAA \
+            --reporter cli \
+            --reporter json > accessibility-report.json
+      
+      - name: Run axe-core tests
+        run: npx playwright test tests/accessibility
+      
+      - name: Lighthouse accessibility audit
+        run: |
+          npx lighthouse http://localhost:8888 \
+            --only-categories=accessibility \
+            --output=json \
+            --output-path=./lighthouse-accessibility.json
+      
+      - name: Check accessibility score
+        run: |
+          score=$(jq '.categories.accessibility.score' lighthouse-accessibility.json)
+          if (( $(echo "$score < 0.95" | bc -l) )); then
+            echo "Accessibility score too low: $score"
+            exit 1
+          fi
+
+  # Performance testing
+  performance-tests:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build:production
+      
+      - name: Start application
+        run: |
+          npm run server &
+          sleep 10
+      
+      - name: Run Lighthouse performance audit
+        run: |
+          npx lighthouse http://localhost:8888 \
+            --only-categories=performance \
+            --output=json \
+            --output-path=./lighthouse-performance.json
+      
+      - name: Check performance metrics
+        run: |
+          # Check First Contentful Paint
+          fcp=$(jq '.audits."first-contentful-paint".numericValue' lighthouse-performance.json)
+          if (( $(echo "$fcp > 2000" | bc -l) )); then
+            echo "FCP too slow: ${fcp}ms (threshold: 2000ms)"
+            exit 1
+          fi
+          
+          # Check Time to Interactive
+          tti=$(jq '.audits."interactive".numericValue' lighthouse-performance.json)
+          if (( $(echo "$tti > 3500" | bc -l) )); then
+            echo "TTI too slow: ${tti}ms (threshold: 3500ms)"
+            exit 1
+          fi
+      
+      - name: Load testing for crisis scenarios
+        run: |
+          npm install -g artillery
+          artillery run tests/performance/crisis-load-test.yml
+
+  # Mobile testing
+  mobile-tests:
+    name: Mobile Responsiveness Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Run mobile tests
+        run: |
+          npx playwright test tests/mobile --project="Mobile Chrome"
+          npx playwright test tests/mobile --project="Mobile Safari"
+      
+      - name: Test touch targets
+        run: node scripts/validate-touch-targets.js
+      
+      - name: Test mobile keyboard handling
+        run: node scripts/validate-mobile-keyboard.js
+
+  # Build application
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: [code-quality, crisis-detection-tests]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build:production
+        env:
+          NODE_ENV: production
+          VITE_BUILD_TIME: ${{ github.run_id }}
+      
+      - name: Check bundle size
+        run: |
+          npm run build:analyze
+          max_size=500000  # 500KB
+          actual_size=$(stat -c%s dist/assets/*.js | awk '{s+=$1} END {print s}')
+          if [ $actual_size -gt $max_size ]; then
+            echo "Bundle size too large: $actual_size bytes (max: $max_size)"
+            exit 1
+          fi
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
+
+  # Coverage merge and report
+  coverage-report:
+    name: Coverage Report
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests, crisis-detection-tests]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          pattern: coverage-*
+          merge-multiple: true
+      
+      - name: Merge coverage reports
+        run: |
+          npm install -g nyc
+          nyc merge coverage-* coverage/merged
+          nyc report --reporter=lcov --reporter=text-summary
+      
+      - name: Check coverage threshold
+        run: |
+          coverage=$(nyc report --reporter=json-summary | jq '.total.lines.pct')
+          if (( $(echo "$coverage < ${{ env.COVERAGE_THRESHOLD }}" | bc -l) )); then
+            echo "Coverage below threshold: ${coverage}% (required: ${{ env.COVERAGE_THRESHOLD }}%)"
+            exit 1
+          fi
+      
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          flags: unittests
+          fail_ci_if_error: true
+
+  # Deploy to staging
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build, e2e-tests, accessibility-tests]
+    if: github.ref == 'refs/heads/develop'
+    environment:
+      name: staging
+      url: https://staging.astralcore.app
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
+      
+      - name: Deploy to Netlify Staging
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=dist --site=${{ secrets.NETLIFY_STAGING_SITE_ID }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      
+      - name: Run smoke tests
+        run: |
+          npm install -g newman
+          newman run tests/postman/smoke-tests.json \
+            --environment tests/postman/staging-env.json
+
+  # Deploy to production
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, performance-tests, mobile-tests]
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://astralcore.app
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
+      
+      - name: Pre-deployment validation
+        run: |
+          # Validate crisis detection system
+          node scripts/validate-crisis-system.js
+          
+          # Check database migrations
+          npm run migrate:status
+          
+          # Verify environment variables
+          node scripts/validate-env.js production
+      
+      - name: Deploy to Netlify Production
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir=dist --site=${{ secrets.NETLIFY_SITE_ID }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      
+      - name: Post-deployment verification
+        run: |
+          # Test critical endpoints
+          curl -f https://astralcore.app/api/health || exit 1
+          curl -f https://astralcore.app/api/crisis/status || exit 1
+          
+          # Run production smoke tests
+          npm install -g newman
+          newman run tests/postman/production-smoke.json \
+            --environment tests/postman/production-env.json
+      
+      - name: Notify deployment status
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Production deployment ${{ job.status }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  # Rollback on failure
+  rollback:
+    name: Rollback on Failure
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    if: failure()
+    steps:
+      - name: Rollback production deployment
+        run: |
+          echo "Rolling back to previous production version..."
+          # Netlify rollback command would go here
+      
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              text: "Production deployment rolled back due to failures",
+              color: "danger"
+            }
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}

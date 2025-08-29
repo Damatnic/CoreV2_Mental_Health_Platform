@@ -6,6 +6,7 @@
 import { Auth0Client, User as Auth0User, GetTokenSilentlyOptions } from '@auth0/auth0-spa-js';
 import { User, Helper, UserRole } from '../types';
 import { logger } from '../utils/logger';
+import { getEnv, isProduction } from '../utils/env';
 
 export interface AuthConfig {
   domain: string;
@@ -323,13 +324,13 @@ class Auth0Service {
 
 // Default configuration - should be overridden with environment variables
 const defaultConfig: AuthConfig = {
-  domain: process.env.VITE_AUTH0_DOMAIN || 'corev2-mental-health.auth0.com',
-  clientId: process.env.VITE_AUTH0_CLIENT_ID || '',
-  redirectUri: process.env.VITE_AUTH0_CALLBACK_URL || `${window.location.origin}/callback`,
-  audience: process.env.VITE_AUTH0_AUDIENCE,
+  domain: getEnv('AUTH0_DOMAIN', 'corev2-mental-health.auth0.com')!,
+  clientId: getEnv('AUTH0_CLIENT_ID', '')!,
+  redirectUri: getEnv('AUTH0_CALLBACK_URL', `${window.location.origin}/callback`)!,
+  audience: getEnv('AUTH0_AUDIENCE') as string | undefined,
   scope: 'openid profile email offline_access read:user_metadata update:user_metadata',
   useRefreshTokens: true,
-  cacheLocation: process.env.NODE_ENV === 'production' ? 'memory' : 'localstorage'
+  cacheLocation: isProduction() ? 'memory' : 'localstorage'
 };
 
 // Export singleton instance

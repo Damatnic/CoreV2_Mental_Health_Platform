@@ -113,9 +113,9 @@ export class AnonymousChatService extends EventEmitter {
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = 5;
   private reconnectDelay: number = 1000;
-  private heartbeatInterval?: NodeJS.Timeout;
+  private heartbeatInterval?: ReturnType<typeof setTimeout>;
   private typingUsers: Set<string> = new Set();
-  private typingTimeout: Map<string, NodeJS.Timeout> = new Map();
+  private typingTimeout: Map<string, ReturnType<typeof setTimeout>> = new Map();
 
   constructor(config: Partial<AnonymousChatConfig> = {}) {
     super();

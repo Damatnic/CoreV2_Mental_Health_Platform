@@ -478,7 +478,7 @@ export class ChunkLoadingOptimizer {
  */
 export class MobileMemoryOptimizer {
   private static memoryThreshold = 50; // MB
-  private static cleanupInterval: NodeJS.Timeout | null = null;
+  private static cleanupInterval: ReturnType<typeof setTimeout> | null = null;
 
   /**
    * Start memory monitoring

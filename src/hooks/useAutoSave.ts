@@ -126,9 +126,9 @@ export const useAutoSave = (
     saveStatus: 'idle'
   });
 
-  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const autoSaveIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoSaveIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentContentRef = useRef<string>(initialContent);
   const currentTitleRef = useRef<string>('');
   const currentMetadataRef = useRef<Record<string, any>>({});

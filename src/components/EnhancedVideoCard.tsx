@@ -66,7 +66,7 @@ export const EnhancedVideoCard: React.FC<EnhancedVideoCardProps> = ({
   const [isHovering, setIsHovering] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Format duration helper
   const formatDuration = (seconds: number): string => {

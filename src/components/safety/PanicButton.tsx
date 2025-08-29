@@ -90,7 +90,7 @@ const PanicButton: React.FC<PanicButtonProps> = ({
     let rapidClicks = 0;
     let scrollSpeed = 0;
     let lastScrollTime = Date.now();
-    let distressTimer: NodeJS.Timeout;
+    let distressTimer: ReturnType<typeof setTimeout>;
 
     const handleRapidClicks = (): void => {
       rapidClicks++;

@@ -99,7 +99,7 @@ export const TherapistTether: React.FC<TherapistTetherProps> = ({
 
   // Session timer
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     
     if (connection.status === 'connected') {
       timer = setInterval(() => {

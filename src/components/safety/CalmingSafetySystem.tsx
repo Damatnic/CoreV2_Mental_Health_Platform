@@ -76,7 +76,7 @@ export const CalmingSafetySystem: React.FC<CalmingSafetySystemProps> = ({
 
     let clickCount = 0;
     let keyPressCount = 0;
-    let resetTimer: NodeJS.Timeout;
+    let resetTimer: ReturnType<typeof setTimeout>;
 
     const detectPanic = (): void => {
       if (clickCount > 10 || keyPressCount > 20) {

@@ -80,7 +80,7 @@ export class IntegrationService extends EventEmitter {
   private integrations: Map<string, Integration> = new Map();
   private cache: Map<string, { data: any; expires: Date }> = new Map();
   private metrics: Map<string, any[]> = new Map();
-  private healthCheckInterval?: NodeJS.Timeout;
+  private healthCheckInterval?: ReturnType<typeof setTimeout>;
 
   constructor() {
     super();

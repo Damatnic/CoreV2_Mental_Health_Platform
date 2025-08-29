@@ -167,7 +167,7 @@ export function useSafeLocation(
   // Refs
   const watchIdRef = useRef<number | null>(null);
   const geofencesRef = useRef<Map<string, Geofence>>(new Map());
-  const cleanupIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const cleanupIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   // Anonymize location data
   const anonymizeLocation = useCallback((location: LocationData): SafeLocationData => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect } from '@jest/globals';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils/testing-library-exports';
 
 interface LoadingSkeletonProps {
   variant?: 'text' | 'circle' | 'rectangle' | 'card' | 'list';

@@ -289,8 +289,8 @@ class AstralCoreErrorService {
   private reports: ErrorReport[] = [];
   private isInitialized = false;
   private processingQueue: AstralError[] = [];
-  private processingInterval: NodeJS.Timeout | null = null;
-  private monitoringInterval: NodeJS.Timeout | null = null;
+  private processingInterval: ReturnType<typeof setTimeout> | null = null;
+  private monitoringInterval: ReturnType<typeof setTimeout> | null = null;
   private eventListeners: Array<(event: any) => void> = [];
   private errorBoundaryStack: string[] = [];
 

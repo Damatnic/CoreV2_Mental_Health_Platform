@@ -177,7 +177,7 @@ export const useViewport = (debounceMs = 100) => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const updateViewport = () => {
       clearTimeout(timeoutId);

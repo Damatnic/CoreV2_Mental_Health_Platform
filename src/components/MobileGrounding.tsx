@@ -103,8 +103,8 @@ export const MobileGrounding: React.FC<MobileGroundingProps> = ({
   const [userInputs, setUserInputs] = useState<string[]>([]);
   const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'exhale' | 'hold'>('inhale');
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const breathingRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const breathingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentStep = technique.steps[currentStepIndex];

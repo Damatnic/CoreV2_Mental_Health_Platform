@@ -85,7 +85,7 @@ export interface TokenRefreshResponse {
 export class SimpleAuthService {
   private token: string | null = null;
   private user: User | null = null;
-  private refreshTimer: NodeJS.Timeout | null = null;
+  private refreshTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly baseUrl = '/.netlify/functions/auth';
   private readonly tokenKey = 'auth_token';
   private readonly userKey = 'auth_user';

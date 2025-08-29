@@ -132,7 +132,7 @@ const PRIORITY_WEIGHTS: Record<SyncPriority, number> = {
 class BackgroundSyncServiceImpl implements BackgroundSyncService {
   private syncQueue: SyncRequest[] = [];
   private config: SyncConfiguration = { ...DEFAULT_CONFIG };
-  private syncInterval?: NodeJS.Timeout;
+  private syncInterval?: ReturnType<typeof setTimeout>;
   private isOnline = navigator.onLine;
   private syncCallbacks: ((result: SyncResult) => void)[] = [];
   private errorCallbacks: ((error: Error, request: SyncRequest) => void)[] = [];

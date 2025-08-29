@@ -320,7 +320,7 @@ export const useStaggerAnimation = (
   config: AnimationConfig = {}
 ) => {
   const [activeIndex, setActiveIndex] = useState(-1);
-  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+  const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const startStagger = useCallback(() => {
     // Clear existing timeouts

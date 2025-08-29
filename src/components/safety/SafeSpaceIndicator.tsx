@@ -81,7 +81,7 @@ export const SafeSpaceIndicator: React.FC<SafeSpaceIndicatorProps> = ({
     }, 4000);
 
     // Update interval for location
-    let updateTimer: NodeJS.Timeout;
+    let updateTimer: ReturnType<typeof setTimeout>;
     if (updateInterval > 0) {
       updateTimer = setInterval(() => {
         // Simulate location update

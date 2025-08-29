@@ -90,7 +90,7 @@ export const DEFAULT_MOBILE_CONFIG: MobileViewportConfig = {
 export class MobileViewportManager {
   private config: MobileViewportConfig;
   private listeners: Map<string, Set<Function>> = new Map();
-  private resizeTimeout: NodeJS.Timeout | null = null;
+  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private keyboardVisible = false;
   private initialViewportHeight = 0;
 

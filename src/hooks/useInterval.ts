@@ -40,7 +40,7 @@ export function useInterval(callback: Callback, delay: number | null) {
  * Hook for dynamic interval with start/stop controls
  */
 export function useDynamicInterval() {
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const start = (callback: Callback, delay: number) => {
     stop(); // Clear any existing interval

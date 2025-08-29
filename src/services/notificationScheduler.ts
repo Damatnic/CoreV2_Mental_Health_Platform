@@ -103,7 +103,7 @@ class NotificationSchedulerService {
   private schedules: Map<string, NotificationSchedule> = new Map();
   private preferences: Map<string, NotificationPreferences> = new Map();
   private history: NotificationHistory[] = [];
-  private activeTimers: Map<string, NodeJS.Timeout> = new Map();
+  private activeTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
   private readonly STORAGE_PREFIX = 'notification_';
   private readonly PREFS_STORAGE_KEY = 'notification_preferences';
   private readonly HISTORY_STORAGE_KEY = 'notification_history';

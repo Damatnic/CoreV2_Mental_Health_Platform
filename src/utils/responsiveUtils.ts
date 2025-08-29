@@ -296,7 +296,7 @@ export const onResponsiveResize = (
 ): (() => void) => {
   if (typeof window === 'undefined') return () => {};
   
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: ReturnType<typeof setTimeout>;
   let lastBreakpoint = getCurrentBreakpoint();
   
   const handleResize = () => {

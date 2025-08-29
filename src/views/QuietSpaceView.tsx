@@ -34,8 +34,8 @@ const QuietSpaceView: React.FC = () => {
   const [meditationTime, setMeditationTime] = useState(0);
   const [selectedDuration, setSelectedDuration] = useState(5);
   
-  const breathingTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const meditationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const breathingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const meditationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const { showNotification } = useNotification();

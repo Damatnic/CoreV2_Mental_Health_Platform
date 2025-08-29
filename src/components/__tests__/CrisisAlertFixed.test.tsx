@@ -1,7 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent, waitFor, act, userEvent } from '../../test-utils/testing-library-exports';
 import CrisisAlert from '../CrisisAlert';
 
 // Mock dependencies
@@ -298,7 +297,8 @@ describe('CrisisAlert Component', () => {
       const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
       
       // Mock service to throw error
-      const { crisisService } = require('../../services/crisisService');
+      const crisisModule = jest.requireMock('../../services/crisisService');
+      const { crisisService } = crisisModule as any;
       crisisService.getCrisisResources.mockRejectedValue(new Error('Network error'));
       
       render(<CrisisAlert {...mockProps} />);
@@ -312,7 +312,8 @@ describe('CrisisAlert Component', () => {
 
   describe('Integration', () => {
     it('should work with crisis detection service', async () => {
-      const { crisisService } = require('../../services/crisisService');
+      const crisisModule = jest.requireMock('../../services/crisisService');
+      const { crisisService } = crisisModule as any;
       crisisService.triggerAlert.mockResolvedValue({ success: true });
       
       const onGetHelp = jest.fn();
@@ -325,7 +326,8 @@ describe('CrisisAlert Component', () => {
     });
 
     it('should integrate with notification service', async () => {
-      const { showNotification } = require('../../utils/notifications');
+      const notificationsModule = jest.requireMock('../../utils/notifications');
+      const { showNotification } = notificationsModule as any;
       
       render(<CrisisAlert {...mockProps} severity="critical" />);
       

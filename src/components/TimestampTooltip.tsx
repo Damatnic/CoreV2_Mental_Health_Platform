@@ -87,8 +87,8 @@ export const TimestampTooltip: React.FC<TimestampTooltipProps> = ({
   const [relativeTime, setRelativeTime] = useState('');
   const triggerRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const touchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const touchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Convert timestamp to Date object

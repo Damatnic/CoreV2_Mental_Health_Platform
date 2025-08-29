@@ -1,7 +1,6 @@
 // React import not needed with modern JSX transform
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent, waitFor, userEvent } from '../../test-utils/testing-library-exports';
 import { Modal } from '../ui/Modal';
 import React from 'react';
 

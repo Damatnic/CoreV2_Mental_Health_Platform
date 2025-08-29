@@ -38,7 +38,7 @@ const MeditationTimer: React.FC<MeditationTimerProps> = ({
   const [showSettings, setShowSettings] = useState(false);
   const [sessionPhase, setSessionPhase] = useState<'starting' | 'active' | 'ending'>('starting');
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const backgroundAudioRef = useRef<HTMLAudioElement | null>(null);
 

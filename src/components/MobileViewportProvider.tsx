@@ -142,7 +142,7 @@ export const MobileViewportProvider: React.FC<MobileViewportProviderProps> = ({
 
   // Handle viewport changes
   useEffect(() => {
-    let resizeTimeout: NodeJS.Timeout;
+    let resizeTimeout: ReturnType<typeof setTimeout>;
 
     const handleResize = () => {
       clearTimeout(resizeTimeout);

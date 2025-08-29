@@ -166,9 +166,9 @@ const DEFAULT_CONFIG: AuthConfig = {
 export class AuthService extends EventEmitter {
   private config: AuthConfig;
   private state: AuthState;
-  private refreshTimer?: NodeJS.Timeout;
-  private sessionTimer?: NodeJS.Timeout;
-  private activityTimer?: NodeJS.Timeout;
+  private refreshTimer?: ReturnType<typeof setTimeout>;
+  private sessionTimer?: ReturnType<typeof setTimeout>;
+  private activityTimer?: ReturnType<typeof setTimeout>;
 
   constructor(config: Partial<AuthConfig> = {}) {
     super();

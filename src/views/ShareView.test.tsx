@@ -5,8 +5,7 @@
 
 import React from 'react';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent, waitFor, within, userEvent } from '../test-utils/testing-library-exports';
 import { BrowserRouter } from 'react-router-dom';
 
 // Mock navigator.share API

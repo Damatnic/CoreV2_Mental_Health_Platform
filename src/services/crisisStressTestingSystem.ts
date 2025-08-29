@@ -137,7 +137,7 @@ class CrisisStressTestingSystem {
   private activeTests: Map<string, TestMetrics> = new Map();
   private loadSimulators: Map<string, LoadSimulator> = new Map();
   private testHistory: TestResult[] = [];
-  private monitoringInterval: NodeJS.Timeout | null = null;
+  private monitoringInterval: ReturnType<typeof setTimeout> | null = null;
   private readonly MAX_CONCURRENT_TESTS = 5;
   private readonly DEFAULT_TEST_TIMEOUT = 300000; // 5 minutes
 

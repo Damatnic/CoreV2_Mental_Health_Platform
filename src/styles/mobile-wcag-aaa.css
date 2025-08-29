@@ -1,0 +1,701 @@
+/**
+ * Mobile WCAG AAA Compliance CSS
+ * Mental Health Platform - Highest Accessibility Standards
+ * 
+ * CRITICAL: All mobile interfaces must meet WCAG AAA standards
+ * for users in crisis situations who may have various disabilities
+ */
+
+/* ============================================
+   WCAG AAA COLOR SYSTEM
+   Minimum contrast ratios: 7:1 normal text, 4.5:1 large text
+   ============================================ */
+
+:root {
+  /* High Contrast Color Palette */
+  --wcag-aaa-text-primary: #000000;
+  --wcag-aaa-text-secondary: #1a1a1a;
+  --wcag-aaa-bg-primary: #ffffff;
+  --wcag-aaa-bg-secondary: #f5f5f5;
+  
+  /* Crisis Colors (AAA compliant) */
+  --wcag-aaa-crisis-red: #b91c1c;
+  --wcag-aaa-crisis-bg: #fef2f2;
+  --wcag-aaa-crisis-border: #991b1b;
+  
+  /* Success/Safety Colors */
+  --wcag-aaa-safe-green: #14532d;
+  --wcag-aaa-safe-bg: #f0fdf4;
+  --wcag-aaa-safe-border: #166534;
+  
+  /* Warning Colors */
+  --wcag-aaa-warning: #92400e;
+  --wcag-aaa-warning-bg: #fef3c7;
+  --wcag-aaa-warning-border: #92400e;
+  
+  /* Focus Indicators (Enhanced) */
+  --wcag-aaa-focus: #0066cc;
+  --wcag-aaa-focus-outline: 4px solid #0066cc;
+  --wcag-aaa-focus-offset: 3px;
+  --wcag-aaa-focus-shadow: 0 0 0 6px rgba(0, 102, 204, 0.3);
+  
+  /* Touch Target Sizes (WCAG AAA) */
+  --touch-min-aaa: 48px; /* Absolute minimum */
+  --touch-recommended: 60px; /* Recommended for mental health apps */
+  --touch-crisis: 72px; /* Crisis buttons */
+  --touch-spacing: 12px; /* Minimum spacing between targets */
+}
+
+/* Dark Mode AAA Compliant */
+[data-theme="dark"],
+.dark-mode {
+  --wcag-aaa-text-primary: #ffffff;
+  --wcag-aaa-text-secondary: #e5e5e5;
+  --wcag-aaa-bg-primary: #000000;
+  --wcag-aaa-bg-secondary: #1a1a1a;
+  
+  --wcag-aaa-crisis-red: #fca5a5;
+  --wcag-aaa-crisis-bg: #450a0a;
+  --wcag-aaa-crisis-border: #ef4444;
+  
+  --wcag-aaa-safe-green: #86efac;
+  --wcag-aaa-safe-bg: #052e16;
+  --wcag-aaa-safe-border: #4ade80;
+  
+  --wcag-aaa-warning: #fde047;
+  --wcag-aaa-warning-bg: #422006;
+  --wcag-aaa-warning-border: #facc15;
+  
+  --wcag-aaa-focus: #66b3ff;
+  --wcag-aaa-focus-shadow: 0 0 0 6px rgba(102, 179, 255, 0.3);
+}
+
+/* ============================================
+   MOBILE-FIRST RESPONSIVE FOUNDATION
+   ============================================ */
+
+/* Base mobile styles (320px and up) */
+* {
+  /* Ensure touch targets are accessible */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  /* Prevent zoom on input focus (iOS) */
+  -webkit-text-size-adjust: 100%;
+  
+  /* Smooth scrolling with reduced motion support */
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  /* Base typography for readability */
+  font-size: clamp(16px, 4vw, 18px);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  word-spacing: 0.12em;
+  
+  /* High contrast text */
+  color: var(--wcag-aaa-text-primary);
+  background-color: var(--wcag-aaa-bg-primary);
+  
+  /* Optimize for mobile viewing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================
+   ENHANCED TOUCH TARGETS
+   ============================================ */
+
+/* All interactive elements must meet minimum size */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[role="link"],
+[tabindex]:not([tabindex="-1"]) {
+  min-width: var(--touch-min-aaa);
+  min-height: var(--touch-min-aaa);
+  position: relative;
+  
+  /* Ensure adequate spacing */
+  margin: calc(var(--touch-spacing) / 2);
+}
+
+/* Crisis-specific buttons need larger targets */
+.crisis-button,
+.emergency-button,
+.panic-button,
+[data-crisis="true"] {
+  min-width: var(--touch-crisis) !important;
+  min-height: var(--touch-crisis) !important;
+  
+  /* Enhanced visual prominence */
+  font-size: clamp(18px, 4.5vw, 20px) !important;
+  font-weight: 700 !important;
+  
+  /* High contrast borders */
+  border: 3px solid var(--wcag-aaa-crisis-border) !important;
+  
+  /* Ensure visibility */
+  z-index: 9999;
+  position: relative;
+}
+
+/* Touch target expansion for small elements */
+.touch-expand::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100%, var(--touch-min-aaa));
+  height: max(100%, var(--touch-min-aaa));
+  z-index: 1;
+}
+
+/* ============================================
+   FOCUS MANAGEMENT & KEYBOARD NAVIGATION
+   ============================================ */
+
+/* Universal focus indicator */
+*:focus-visible {
+  outline: var(--wcag-aaa-focus-outline) !important;
+  outline-offset: var(--wcag-aaa-focus-offset) !important;
+  box-shadow: var(--wcag-aaa-focus-shadow) !important;
+  border-radius: 4px;
+  z-index: 10;
+  position: relative;
+}
+
+/* High contrast mode focus */
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline-width: 6px !important;
+    outline-offset: 4px !important;
+  }
+}
+
+/* Skip navigation for keyboard users */
+.skip-nav {
+  position: absolute;
+  top: -100vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--wcag-aaa-focus);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  font-size: 18px;
+  z-index: 10000;
+  text-decoration: none;
+  min-height: var(--touch-min-aaa);
+  display: flex;
+  align-items: center;
+}
+
+.skip-nav:focus {
+  top: 0;
+}
+
+/* Focus trap for modals */
+[data-focus-trap="true"] {
+  /* Ensure focus stays within component */
+  isolation: isolate;
+}
+
+/* ============================================
+   MOBILE FORM OPTIMIZATION
+   ============================================ */
+
+/* Form inputs with AAA compliance */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  /* Minimum size for touch */
+  min-height: var(--touch-recommended);
+  width: 100%;
+  
+  /* Readable text */
+  font-size: 16px !important; /* Prevents zoom on iOS */
+  line-height: 1.5;
+  
+  /* High contrast borders */
+  border: 2px solid var(--wcag-aaa-text-secondary);
+  border-radius: 8px;
+  padding: 12px 16px;
+  
+  /* Clear focus state */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--wcag-aaa-focus);
+  box-shadow: var(--wcag-aaa-focus-shadow);
+}
+
+/* Checkbox and radio with larger touch targets */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 28px !important;
+  height: 28px !important;
+  margin: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Label association for better touch targets */
+label {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-min-aaa);
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Error states with high contrast */
+.field-error,
+[aria-invalid="true"] {
+  border-color: var(--wcag-aaa-crisis-border) !important;
+  background-color: var(--wcag-aaa-crisis-bg) !important;
+}
+
+.error-message {
+  color: var(--wcag-aaa-crisis-red);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.error-message::before {
+  content: "⚠";
+  font-size: 18px;
+}
+
+/* ============================================
+   MOBILE NAVIGATION PATTERNS
+   ============================================ */
+
+/* Bottom navigation for thumb reach */
+.mobile-nav-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--wcag-aaa-bg-primary);
+  border-top: 2px solid var(--wcag-aaa-text-secondary);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px;
+  z-index: 1000;
+  
+  /* Safe area for devices with home indicators */
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+}
+
+.mobile-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-recommended);
+  padding: 8px;
+  text-decoration: none;
+  color: var(--wcag-aaa-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.mobile-nav-item:active {
+  background-color: var(--wcag-aaa-bg-secondary);
+}
+
+.mobile-nav-item svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+/* Hamburger menu for additional options */
+.mobile-menu-toggle {
+  width: var(--touch-recommended);
+  height: var(--touch-recommended);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: var(--wcag-aaa-text-primary);
+  border-radius: 2px;
+  transition: transform 0.2s;
+}
+
+/* ============================================
+   MOBILE MODAL & OVERLAY PATTERNS
+   ============================================ */
+
+/* Full-screen modals for mobile */
+.mobile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--wcag-aaa-bg-primary);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  
+  /* Prevent scroll behind modal */
+  overscroll-behavior: contain;
+}
+
+.mobile-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 2px solid var(--wcag-aaa-text-secondary);
+  min-height: 64px;
+}
+
+.mobile-modal-close {
+  width: var(--touch-recommended);
+  height: var(--touch-recommended);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid var(--wcag-aaa-text-secondary);
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mobile-modal-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+}
+
+/* ============================================
+   CRISIS MODE ENHANCEMENTS
+   ============================================ */
+
+/* Crisis mode activation */
+.crisis-mode-active {
+  /* Maximum contrast */
+  --wcag-aaa-text-primary: #000000 !important;
+  --wcag-aaa-bg-primary: #ffffff !important;
+  
+  /* Larger text */
+  font-size: 18px !important;
+  
+  /* Remove animations */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Crisis alert banner */
+.crisis-alert-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--wcag-aaa-crisis-red);
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 9999;
+  min-height: var(--touch-recommended);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.crisis-alert-mobile button {
+  background: white;
+  color: var(--wcag-aaa-crisis-red);
+  border: 2px solid white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  min-height: var(--touch-min-aaa);
+  min-width: 120px;
+}
+
+/* ============================================
+   VOICE & GESTURE CONTROLS
+   ============================================ */
+
+/* Voice activation indicator */
+.voice-active {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: var(--wcag-aaa-focus);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  z-index: 1000;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Swipe gesture areas */
+.swipe-area {
+  position: relative;
+  min-height: 100px;
+  touch-action: pan-x;
+}
+
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--wcag-aaa-text-secondary);
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Small phones (320px - 374px) */
+@media screen and (max-width: 374px) {
+  :root {
+    --touch-recommended: 56px;
+  }
+  
+  body {
+    font-size: 16px;
+  }
+  
+  .mobile-nav-item {
+    font-size: 11px;
+  }
+}
+
+/* Standard phones (375px - 413px) */
+@media screen and (min-width: 375px) and (max-width: 413px) {
+  :root {
+    --touch-recommended: 60px;
+  }
+}
+
+/* Large phones (414px - 767px) */
+@media screen and (min-width: 414px) and (max-width: 767px) {
+  :root {
+    --touch-recommended: 64px;
+  }
+  
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --touch-recommended: 68px;
+    --touch-crisis: 80px;
+  }
+  
+  body {
+    font-size: 18px;
+  }
+  
+  /* Two-column layouts for tablets */
+  .tablet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+/* ============================================
+   ORIENTATION HANDLING
+   ============================================ */
+
+/* Landscape optimization */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  /* Reduce vertical spacing */
+  :root {
+    --touch-recommended: 48px;
+  }
+  
+  /* Compact header */
+  .mobile-header {
+    min-height: 48px;
+    padding: 8px 16px;
+  }
+  
+  /* Side navigation in landscape */
+  .mobile-nav-bottom {
+    left: auto;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    flex-direction: column;
+    border-top: none;
+    border-left: 2px solid var(--wcag-aaa-text-secondary);
+  }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Reduce motion for better performance and accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hardware acceleration for smooth scrolling */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  transform: translateZ(0);
+}
+
+/* ============================================
+   SCREEN READER SUPPORT
+   ============================================ */
+
+/* Visually hidden but accessible */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Screen reader announcements */
+[role="status"],
+[role="alert"] {
+  position: relative;
+}
+
+[aria-live="polite"],
+[aria-live="assertive"] {
+  position: relative;
+}
+
+/* ============================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  * {
+    border-width: 2px !important;
+  }
+  
+  button,
+  input,
+  select,
+  textarea {
+    border: 3px solid currentColor !important;
+  }
+  
+  .crisis-button,
+  .emergency-button {
+    border-width: 4px !important;
+    font-weight: 900 !important;
+  }
+}
+
+/* Windows High Contrast Mode */
+@media screen and (-ms-high-contrast: active) {
+  * {
+    forced-color-adjust: none;
+  }
+  
+  button,
+  a {
+    border: 2px solid;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  /* Hide mobile-only elements */
+  .mobile-nav-bottom,
+  .mobile-menu-toggle,
+  .mobile-only {
+    display: none !important;
+  }
+  
+  /* Ensure readability */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: black;
+    background: white;
+  }
+}

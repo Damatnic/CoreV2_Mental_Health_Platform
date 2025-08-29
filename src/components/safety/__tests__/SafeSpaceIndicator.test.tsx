@@ -1,7 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent, waitFor, within, userEvent } from '../../../test-utils/testing-library-exports';
 import { SafeSpaceIndicator } from '../SafeSpaceIndicator';
 
 // Mock ResizeObserver

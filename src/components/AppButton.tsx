@@ -107,8 +107,8 @@ const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(({
   const [lastClickTime, setLastClickTime] = useState(0);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const successTimeoutRef = useRef<NodeJS.Timeout>();
-  const errorTimeoutRef = useRef<NodeJS.Timeout>();
+  const successTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const errorTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Use imperative handle to expose the ref
   useImperativeHandle(ref, () => buttonRef.current!);

@@ -50,7 +50,7 @@ export const EnhancedToast: React.FC<EnhancedToastProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastRef = useRef<HTMLDivElement>(null);
 
   // Auto-dismiss timer

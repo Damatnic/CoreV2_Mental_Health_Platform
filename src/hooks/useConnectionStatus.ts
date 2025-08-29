@@ -76,7 +76,7 @@ export const useConnectionStatus = (options: UseConnectionStatusOptions = {}): C
   }));
 
   const swRegistrationRef = useRef<ServiceWorkerRegistration | null>(null);
-  const syncIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const syncIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const performanceObserverRef = useRef<PerformanceObserver | null>(null);
 
   /**

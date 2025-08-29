@@ -17,7 +17,7 @@ const AstralTetherDemo: React.FC = () => {
     ];
 
     let currentPhaseIndex = 0;
-    let phaseTimer: NodeJS.Timeout;
+    let phaseTimer: ReturnType<typeof setTimeout>;
 
     const runPhase = () => {
       const current = phases[currentPhaseIndex];

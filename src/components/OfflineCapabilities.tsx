@@ -172,11 +172,11 @@ export const OfflineCapabilities: React.FC<OfflineCapabilitiesProps> = ({
   const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
-  const refreshTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   // Announcement for screen readers
   const [announcement, setAnnouncement] = useState<string>('');
-  const announcementTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ==================== FEATURES CONFIGURATION ====================
 

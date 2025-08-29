@@ -4,6 +4,8 @@
  * Manages environment configuration and runtime detection
  */
 
+import { getEnv, getEnvBoolean, getMode, isDevelopment, isProduction, isTest } from '../utils/env';
+
 interface EnvironmentConfig {
   production: boolean;
   development: boolean;
@@ -47,30 +49,30 @@ class EnvironmentService {
   }
 
   private loadConfiguration(): EnvironmentConfig {
-    const nodeEnv = process.env.NODE_ENV || 'development';
+    const mode = getMode();
     
     return {
-      production: nodeEnv === 'production',
-      development: nodeEnv === 'development',
-      testing: nodeEnv === 'test',
-      staging: nodeEnv === 'staging',
-      apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001/api',
-      wsUrl: process.env.REACT_APP_WS_URL || 'ws://localhost:3001',
-      authDomain: process.env.REACT_APP_AUTH_DOMAIN || 'localhost',
-      enableAnalytics: process.env.REACT_APP_ENABLE_ANALYTICS === 'true',
-      enableCrashReporting: process.env.REACT_APP_ENABLE_CRASH_REPORTING === 'true',
-      logLevel: (process.env.REACT_APP_LOG_LEVEL as any) || 'info',
+      production: isProduction(),
+      development: isDevelopment(),
+      testing: isTest(),
+      staging: mode === 'staging',
+      apiUrl: getEnv('API_URL', 'http://localhost:3001/api')!,
+      wsUrl: getEnv('WS_URL', 'ws://localhost:3001')!,
+      authDomain: getEnv('AUTH_DOMAIN', 'localhost')!,
+      enableAnalytics: getEnvBoolean('ENABLE_ANALYTICS', false),
+      enableCrashReporting: getEnvBoolean('ENABLE_CRASH_REPORTING', false),
+      logLevel: (getEnv('LOG_LEVEL', 'info') as any) || 'info',
       features: {
-        aiChat: process.env.REACT_APP_FEATURE_AI_CHAT !== 'false',
-        crisisDetection: process.env.REACT_APP_FEATURE_CRISIS_DETECTION !== 'false',
-        peerSupport: process.env.REACT_APP_FEATURE_PEER_SUPPORT !== 'false',
-        moodTracking: process.env.REACT_APP_FEATURE_MOOD_TRACKING !== 'false',
-        safetyPlanning: process.env.REACT_APP_FEATURE_SAFETY_PLANNING !== 'false',
-        therapistConnect: process.env.REACT_APP_FEATURE_THERAPIST_CONNECT === 'true',
-        groupTherapy: process.env.REACT_APP_FEATURE_GROUP_THERAPY === 'true',
-        emergencyContacts: process.env.REACT_APP_FEATURE_EMERGENCY_CONTACTS !== 'false',
-        offlineMode: process.env.REACT_APP_FEATURE_OFFLINE_MODE !== 'false',
-        pushNotifications: process.env.REACT_APP_FEATURE_PUSH_NOTIFICATIONS === 'true'
+        aiChat: getEnvBoolean('FEATURE_AI_CHAT', true),
+        crisisDetection: getEnvBoolean('FEATURE_CRISIS_DETECTION', true),
+        peerSupport: getEnvBoolean('FEATURE_PEER_SUPPORT', true),
+        moodTracking: getEnvBoolean('FEATURE_MOOD_TRACKING', true),
+        safetyPlanning: getEnvBoolean('FEATURE_SAFETY_PLANNING', true),
+        therapistConnect: getEnvBoolean('FEATURE_THERAPIST_CONNECT', false),
+        groupTherapy: getEnvBoolean('FEATURE_GROUP_THERAPY', false),
+        emergencyContacts: getEnvBoolean('FEATURE_EMERGENCY_CONTACTS', true),
+        offlineMode: getEnvBoolean('FEATURE_OFFLINE_MODE', true),
+        pushNotifications: getEnvBoolean('FEATURE_PUSH_NOTIFICATIONS', false)
       }
     };
   }

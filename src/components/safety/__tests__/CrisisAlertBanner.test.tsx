@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, jest } from '@jest/globals';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '../../../test-utils/testing-library-exports';
 
 interface CrisisAlertBannerProps {
   message?: string;

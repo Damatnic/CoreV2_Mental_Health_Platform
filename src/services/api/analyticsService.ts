@@ -88,7 +88,7 @@ export class AnalyticsService extends EventEmitter {
   private isInitialized: boolean = false;
   private batchSize: number = 50;
   private flushInterval: number = 30000; // 30 seconds
-  private flushTimer?: NodeJS.Timeout;
+  private flushTimer?: ReturnType<typeof setTimeout>;
   private offlineQueue: AnalyticsEvent[] = [];
   private isOnline: boolean = navigator.onLine;
 

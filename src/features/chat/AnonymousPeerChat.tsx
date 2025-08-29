@@ -68,7 +68,7 @@ export const AnonymousPeerChat: React.FC<AnonymousPeerChatProps> = ({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const typingTimeoutRef = useRef<NodeJS.Timeout>();
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Initialize chat connection
   useEffect(() => {

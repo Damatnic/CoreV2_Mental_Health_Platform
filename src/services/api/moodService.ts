@@ -139,7 +139,7 @@ export class MoodService extends EventEmitter {
   private config: MoodServiceConfig;
   private cache: Map<string, { data: any; expires: Date }> = new Map();
   private syncQueue: MoodEntry[] = [];
-  private syncTimer?: NodeJS.Timeout;
+  private syncTimer?: ReturnType<typeof setTimeout>;
 
   constructor(config: Partial<MoodServiceConfig> = {}) {
     super();

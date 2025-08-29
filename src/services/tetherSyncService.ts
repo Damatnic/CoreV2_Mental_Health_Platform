@@ -296,7 +296,7 @@ class TetherSyncServiceImpl implements TetherSyncService {
   private tetherSessions: Map<string, TetherSession> = new Map();
   private conflictResolution: SyncConflictResolution;
   private isOnline = navigator.onLine;
-  private syncInterval?: NodeJS.Timeout;
+  private syncInterval?: ReturnType<typeof setTimeout>;
   private currentUserId = 'current-user'; // Should be set by auth
   private encryptionKey?: string;
   private lastSyncTimestamp = new Map<string, number>();
