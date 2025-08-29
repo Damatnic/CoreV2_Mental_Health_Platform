@@ -117,7 +117,9 @@
     "workbox-build": "^7.3.0",
     "workbox-cli": "^2.1.3",
     "zod": "^3.23.8",
-    "zustand": "^4.5.7"
+    "zustand": "^4.5.7",
+    "speakeasy": "^2.0.0",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-constant-elements": "^7.27.1",
@@ -137,6 +139,8 @@
     "@types/pg": "^8.11.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/qrcode": "^1.5.5",
+    "@types/speakeasy": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
     "@vitejs/plugin-react-swc": "^4.0.0",
@@ -172,7 +176,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=20.19.0",
-    "npm": ">=10.0.0"
+    "node": ">=20.17.0",
+    "npm": ">=9.9.0"
   }
 }
