@@ -428,6 +428,28 @@ class PrivacyPreservingAnalyticsService {
     return this.config.dataRetentionDays <= 365 && this.hasUserConsent();
   }
 
+  private anonymizeData(data: any): any {
+    if (!data) return data;
+    
+    const anonymized: any = {};
+    
+    for (const [key, value] of Object.entries(data)) {
+      if (this.isSensitiveKey(key)) {
+        continue; // Skip sensitive keys
+      }
+      
+      if (typeof value === 'string') {
+        anonymized[key] = this.anonymizeString(value);
+      } else if (typeof value === 'object' && value !== null) {
+        anonymized[key] = this.anonymizeData(value);
+      } else {
+        anonymized[key] = value;
+      }
+    }
+    
+    return anonymized;
+  }
+
   public async setUserProperties(properties: Record<string, any>): Promise<void> {
     // Store user properties with anonymization
     const anonymizedProps = this.anonymizeData(properties);

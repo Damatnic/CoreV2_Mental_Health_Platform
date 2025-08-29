@@ -81,6 +81,62 @@ export interface CrisisState {
   }[];
 }
 
+// Accessibility state interface
+export interface AccessibilityState {
+  enabled: boolean;
+  screenReaderActive: boolean;
+  highContrast: boolean;
+  reducedMotion: boolean;
+  fontSize: 'small' | 'medium' | 'large' | 'extra-large';
+  colorBlindMode: 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia' | 'achromatopsia';
+  keyboardNavigation: boolean;
+  voiceControl: boolean;
+  focusIndicator: boolean;
+  customColors: {
+    primary?: string;
+    secondary?: string;
+    background?: string;
+    text?: string;
+  };
+  announcements: {
+    id: string;
+    message: string;
+    priority: 'polite' | 'assertive';
+    timestamp: number;
+  }[];
+}
+
+// Feedback state interface
+export interface FeedbackState {
+  submissions: {
+    id: string;
+    type: 'bug' | 'feature' | 'general' | 'crisis' | 'satisfaction';
+    message: string;
+    rating?: number;
+    category?: string;
+    anonymous: boolean;
+    userId?: string;
+    timestamp: number;
+    status: 'pending' | 'reviewing' | 'resolved' | 'dismissed';
+    response?: {
+      message: string;
+      respondedBy: string;
+      timestamp: number;
+    };
+  }[];
+  satisfaction: {
+    overall: number;
+    features: Record<string, number>;
+    lastUpdated: number;
+  };
+  activePrompt?: {
+    id: string;
+    type: string;
+    message: string;
+    options?: string[];
+  };
+}
+
 // Global application state interface
 interface GlobalState {
   // Authentication state
@@ -109,6 +165,12 @@ interface GlobalState {
   
   // Crisis state
   crisisState: CrisisState;
+  
+  // Accessibility state
+  accessibilityState: AccessibilityState;
+  
+  // Feedback state
+  feedbackState: FeedbackState;
   
   // Performance and metrics
   metrics: AppMetrics;
@@ -168,6 +230,24 @@ interface GlobalActions {
   resolveCrisis: () => void;
   addCrisisContact: (contact: CrisisState['contacts'][0]) => void;
   removeCrisisContact: (contactId: string) => void;
+  
+  // Accessibility management
+  updateAccessibilitySettings: (settings: Partial<AccessibilityState>) => void;
+  toggleAccessibility: (enabled: boolean) => void;
+  setScreenReaderActive: (active: boolean) => void;
+  setColorBlindMode: (mode: AccessibilityState['colorBlindMode']) => void;
+  setFontSize: (size: AccessibilityState['fontSize']) => void;
+  addAnnouncement: (message: string, priority?: 'polite' | 'assertive') => void;
+  clearAnnouncements: () => void;
+  
+  // Feedback management
+  submitFeedback: (feedback: Omit<FeedbackState['submissions'][0], 'id' | 'timestamp' | 'status'>) => string;
+  updateFeedbackStatus: (id: string, status: FeedbackState['submissions'][0]['status']) => void;
+  respondToFeedback: (id: string, response: string, respondedBy: string) => void;
+  updateSatisfaction: (overall?: number, feature?: { name: string; rating: number }) => void;
+  setActivePrompt: (prompt: FeedbackState['activePrompt']) => void;
+  dismissActivePrompt: () => void;
+  getFeedbackAnalytics: () => { total: number; pending: number; resolved: number; avgRating: number };
   
   // Performance and metrics
   updateMetrics: (metrics: Partial<AppMetrics>) => void;
@@ -286,6 +366,29 @@ export const useGlobalStore = create<GlobalState & GlobalActions>()(
           interventions: [],
           contacts: [],
           resources: DEFAULT_CRISIS_RESOURCES
+        },
+        
+        accessibilityState: {
+          enabled: false,
+          screenReaderActive: false,
+          highContrast: false,
+          reducedMotion: false,
+          fontSize: 'medium',
+          colorBlindMode: 'none',
+          keyboardNavigation: true,
+          voiceControl: false,
+          focusIndicator: true,
+          customColors: {},
+          announcements: []
+        },
+        
+        feedbackState: {
+          submissions: [],
+          satisfaction: {
+            overall: 0,
+            features: {},
+            lastUpdated: Date.now()
+          }
         },
         
         metrics: {
@@ -585,6 +688,208 @@ export const useGlobalStore = create<GlobalState & GlobalActions>()(
               contacts: state.crisisState.contacts.filter(c => c.id !== contactId)
             }
           }));
+        },
+
+        // Accessibility management
+        updateAccessibilitySettings: (settings) => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              ...settings
+            }
+          }));
+          
+          // Apply settings to document
+          const root = document.documentElement;
+          const { accessibilityState } = get();
+          
+          // Apply high contrast
+          root.classList.toggle('high-contrast', accessibilityState.highContrast);
+          
+          // Apply reduced motion
+          root.classList.toggle('reduced-motion', accessibilityState.reducedMotion);
+          
+          // Apply font size
+          root.setAttribute('data-font-size', accessibilityState.fontSize);
+          
+          // Apply color blind mode
+          root.setAttribute('data-color-blind-mode', accessibilityState.colorBlindMode);
+          
+          get().addDebugLog('info', 'accessibility', 'Accessibility settings updated', settings);
+        },
+
+        toggleAccessibility: (enabled) => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              enabled
+            }
+          }));
+        },
+
+        setScreenReaderActive: (active) => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              screenReaderActive: active
+            }
+          }));
+        },
+
+        setColorBlindMode: (mode) => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              colorBlindMode: mode
+            }
+          }));
+          document.documentElement.setAttribute('data-color-blind-mode', mode);
+        },
+
+        setFontSize: (size) => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              fontSize: size
+            }
+          }));
+          document.documentElement.setAttribute('data-font-size', size);
+        },
+
+        addAnnouncement: (message, priority = 'polite') => {
+          const announcement = {
+            id: `announcement_${Date.now()}`,
+            message,
+            priority,
+            timestamp: Date.now()
+          };
+          
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              announcements: [announcement, ...state.accessibilityState.announcements.slice(0, 49)]
+            }
+          }));
+        },
+
+        clearAnnouncements: () => {
+          set(state => ({
+            accessibilityState: {
+              ...state.accessibilityState,
+              announcements: []
+            }
+          }));
+        },
+
+        // Feedback management
+        submitFeedback: (feedback) => {
+          const id = `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          const submission = {
+            ...feedback,
+            id,
+            timestamp: Date.now(),
+            status: 'pending' as const
+          };
+          
+          set(state => ({
+            feedbackState: {
+              ...state.feedbackState,
+              submissions: [submission, ...state.feedbackState.submissions]
+            }
+          }));
+          
+          // Log feedback submission
+          get().addDebugLog('info', 'feedback', 'Feedback submitted', { id, type: feedback.type });
+          
+          // Show notification
+          get().addNotification({
+            type: 'success',
+            title: 'Feedback Received',
+            message: 'Thank you for your feedback. We appreciate your input!'
+          });
+          
+          return id;
+        },
+
+        updateFeedbackStatus: (id, status) => {
+          set(state => ({
+            feedbackState: {
+              ...state.feedbackState,
+              submissions: state.feedbackState.submissions.map(s =>
+                s.id === id ? { ...s, status } : s
+              )
+            }
+          }));
+        },
+
+        respondToFeedback: (id, response, respondedBy) => {
+          set(state => ({
+            feedbackState: {
+              ...state.feedbackState,
+              submissions: state.feedbackState.submissions.map(s =>
+                s.id === id 
+                  ? { 
+                      ...s, 
+                      status: 'resolved' as const,
+                      response: {
+                        message: response,
+                        respondedBy,
+                        timestamp: Date.now()
+                      }
+                    } 
+                  : s
+              )
+            }
+          }));
+        },
+
+        updateSatisfaction: (overall, feature) => {
+          set(state => {
+            const newState = { ...state.feedbackState };
+            
+            if (overall !== undefined) {
+              newState.satisfaction.overall = overall;
+            }
+            
+            if (feature) {
+              newState.satisfaction.features[feature.name] = feature.rating;
+            }
+            
+            newState.satisfaction.lastUpdated = Date.now();
+            
+            return { feedbackState: newState };
+          });
+        },
+
+        setActivePrompt: (prompt) => {
+          set(state => ({
+            feedbackState: {
+              ...state.feedbackState,
+              activePrompt: prompt
+            }
+          }));
+        },
+
+        dismissActivePrompt: () => {
+          set(state => ({
+            feedbackState: {
+              ...state.feedbackState,
+              activePrompt: undefined
+            }
+          }));
+        },
+
+        getFeedbackAnalytics: () => {
+          const { submissions } = get().feedbackState;
+          const total = submissions.length;
+          const pending = submissions.filter(s => s.status === 'pending').length;
+          const resolved = submissions.filter(s => s.status === 'resolved').length;
+          const ratings = submissions.filter(s => s.rating).map(s => s.rating!);
+          const avgRating = ratings.length > 0 
+            ? ratings.reduce((a, b) => a + b, 0) / ratings.length 
+            : 0;
+          
+          return { total, pending, resolved, avgRating };
         },
 
         // Performance and metrics
