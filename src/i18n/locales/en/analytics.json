@@ -1,0 +1,95 @@
+{
+  "analytics": {
+    "title": "Crisis Intervention Analytics",
+    "loading": "Loading analytics data...",
+    "error": {
+      "title": "Error Loading Analytics"
+    },
+    "actions": {
+      "refresh": "Refresh Data",
+      "retry": "Retry",
+      "generateReport": "Generate Report",
+      "generating": "Generating...",
+      "export": "Export Data",
+      "resetBudget": "Reset Privacy Budget"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "cultural": "Cultural Analysis",
+      "privacy": "Privacy & Compliance",
+      "report": "Effectiveness Report"
+    },
+    "metrics": {
+      "totalInterventions": "Total Interventions",
+      "totalInterventions.description": "Anonymous crisis interventions recorded with privacy protection",
+      "averageEffectiveness": "Average Effectiveness",
+      "averageEffectiveness.description": "Risk reduction percentage across all interventions",
+      "languagesSupported": "Languages Supported",
+      "languagesSupported.description": "Active language communities in crisis intervention",
+      "culturalContexts": "Cultural Contexts",
+      "culturalContexts.description": "Diverse cultural backgrounds served"
+    },
+    "distribution": {
+      "languages": "Language Distribution"
+    },
+    "effectiveness": {
+      "interventionTypes": "Intervention Type Effectiveness"
+    },
+    "cultural": {
+      "noData": "Insufficient data for cultural analysis. Minimum 10 interventions required per cultural group for privacy protection.",
+      "successRate": "Success Rate",
+      "riskReduction": "Risk Reduction",
+      "sessionDuration": "Avg Session Duration",
+      "followUpRate": "Follow-up Rate",
+      "satisfaction": "Satisfaction Score"
+    },
+    "privacy": {
+      "overview": "Privacy & Compliance Overview",
+      "budgetUsed": "Privacy Budget Used",
+      "dataPoints": "Data Points",
+      "retentionCompliance": "Retention Compliance",
+      "compliant": "Compliant",
+      "nonCompliant": "Non-Compliant",
+      "features": "Privacy Protection Features",
+      "differentialPrivacy": "Differential Privacy",
+      "differentialPrivacy.description": "Statistical noise added to all metrics to prevent individual identification",
+      "dataAnonymization": "Data Anonymization",
+      "dataAnonymization.description": "All user identifiers replaced with cryptographic hashes",
+      "autoExpiry": "Automatic Data Expiry",
+      "autoExpiry.description": "All intervention data automatically deleted after 90 days",
+      "minimumCohort": "Minimum Cohort Size",
+      "minimumCohort.description": "Analysis only performed on groups of 10+ individuals",
+      "adminControls": "Administrator Controls"
+    },
+    "report": {
+      "title": "Effectiveness Report",
+      "noData": "No report available. Generate a report to see detailed effectiveness analysis.",
+      "summary": "Executive Summary",
+      "culturalInsights": "Cultural Insights",
+      "recommendations": "Recommendations",
+      "limitations": "Privacy Limitations"
+    },
+    "sampleSize": "{{count}} interventions",
+    "confidenceInterval": "95% Confidence Interval:",
+    "units": {
+      "minutes": "min"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish",
+    "pt-BR": "Portuguese (Brazil)",
+    "pt": "Portuguese",
+    "ar": "Arabic",
+    "zh": "Chinese",
+    "vi": "Vietnamese",
+    "tl": "Tagalog"
+  },
+  "interventions": {
+    "ai-chat": "AI Chat Support",
+    "human-helper": "Human Helper",
+    "peer-support": "Peer Support",
+    "crisis-resources": "Crisis Resources",
+    "safety-plan": "Safety Plan"
+  }
+}

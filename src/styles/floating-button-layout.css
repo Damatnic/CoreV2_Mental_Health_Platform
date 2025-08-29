@@ -1,0 +1,446 @@
+/* =========================================
+   FLOATING BUTTON LAYOUT SYSTEM
+   Comprehensive positioning to prevent overlaps
+   ========================================= */
+
+/* 
+   LAYOUT GRID STRATEGY:
+   - Bottom-right corner: Primary action buttons (stacked vertically)
+   - Bottom-left corner: Status indicators
+   - Top-right corner: Settings/Accessibility
+   - Top-left corner: Crisis banner (when active)
+   
+   Z-INDEX HIERARCHY:
+   10002: Welcome screen/Critical modals
+   10001: Toasts/Notifications
+   10000: Modals
+   9999: Crisis Alert Banner
+   9998: Accessibility Settings Panel
+   9997: Get Help Now Button (always accessible)
+   9996: Accessibility Button
+   9995: Site Status Popup
+   9994: Floating Button Manager (FAB menu)
+   9993: Offline Status Indicator
+   9992: Google Badge
+   9991: Other floating elements
+*/
+
+:root {
+  /* Floating Button Positions */
+  --floating-margin: 24px;
+  --floating-margin-mobile: 16px;
+  --floating-button-size: 56px;
+  --floating-button-gap: 12px;
+
+  /* Z-Index System */
+  --z-welcome: 10002;
+  --z-toast: 10001;
+  --z-modal: 10000;
+  --z-crisis: 9999;
+  --z-accessibility-panel: 9998;
+  --z-help-button: 9997;
+  --z-accessibility-button: 9996;
+  --z-site-status: 9995;
+  --z-fab-menu: 9994;
+  --z-offline-status: 9993;
+  --z-google-badge: 9992;
+  --z-floating-other: 9991;
+}
+
+/* ========== BOTTOM-RIGHT CORNER: Primary Actions ========== */
+
+/* Get Help Now Button - Most Important, Always Visible */
+.help-now-button {
+  position: fixed !important;
+  bottom: calc(
+    var(--floating-margin) +
+      (var(--floating-button-size) + var(--floating-button-gap)) * 3
+  ) !important;
+  right: var(--floating-margin) !important;
+  z-index: var(--z-help-button) !important;
+  /* Elevated position to never be blocked */
+}
+
+/* Accessibility Button - Second Priority */
+.accessibility-floating-container {
+  position: fixed !important;
+  bottom: calc(
+    var(--floating-margin) +
+      (var(--floating-button-size) + var(--floating-button-gap)) * 2
+  ) !important;
+  right: var(--floating-margin) !important;
+  z-index: var(--z-accessibility-button) !important;
+}
+
+/* Accessibility Main Button Specific */
+.accessibility-main-button {
+  width: var(--floating-button-size) !important;
+  height: var(--floating-button-size) !important;
+}
+
+/* Floating Button Manager (FAB Menu) - Third Priority */
+.floating-button-manager {
+  position: fixed !important;
+  bottom: var(--floating-margin) !important;
+  right: var(--floating-margin) !important;
+  z-index: var(--z-fab-menu) !important;
+}
+
+/* FAB Main Button */
+.fab-main {
+  width: var(--floating-button-size) !important;
+  height: var(--floating-button-size) !important;
+}
+
+/* ========== BOTTOM-LEFT CORNER: Status Indicators ========== */
+
+/* Offline Status Indicator */
+.offline-status-indicator {
+  position: fixed !important;
+  bottom: var(--floating-margin) !important;
+  left: var(--floating-margin) !important;
+  right: auto !important;
+  z-index: var(--z-offline-status) !important;
+  max-width: 200px !important;
+}
+
+/* Site Status Popup */
+.site-status-popup,
+.status-popup,
+.connection-status-popup {
+  position: fixed !important;
+  bottom: calc(var(--floating-margin) + 60px) !important;
+  left: var(--floating-margin) !important;
+  right: auto !important;
+  z-index: var(--z-site-status) !important;
+  max-width: 280px !important;
+}
+
+/* Google Badge - Bottom Left, Below Status */
+.google-badge {
+  position: fixed !important;
+  bottom: calc(var(--floating-margin) + 140px) !important;
+  left: var(--floating-margin) !important;
+  z-index: var(--z-google-badge) !important;
+}
+
+/* ========== TOP AREA: Alerts and Banners ========== */
+
+/* Crisis Alert Banner - Top Center */
+.crisis-alert-banner {
+  position: fixed !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: var(--z-crisis) !important;
+  width: calc(100% - 48px) !important;
+  max-width: 600px !important;
+}
+
+/* ========== EXPANDED PANELS POSITIONING ========== */
+
+/* Accessibility Quick Panel - Opens above button */
+.accessibility-quick-panel {
+  position: absolute !important;
+  bottom: calc(
+    var(--floating-button-size) + var(--floating-button-gap)
+  ) !important;
+  right: 0 !important;
+  z-index: var(--z-accessibility-panel) !important;
+}
+
+/* FAB Menu - Opens above main button */
+.fab-menu {
+  position: absolute !important;
+  bottom: calc(
+    var(--floating-button-size) + var(--floating-button-gap)
+  ) !important;
+  right: 0 !important;
+  z-index: calc(var(--z-fab-menu) + 1) !important;
+}
+
+/* Help Modal - Opens as overlay */
+.help-modal {
+  position: fixed !important;
+  bottom: calc(
+    var(--floating-margin) +
+      (var(--floating-button-size) + var(--floating-button-gap)) * 4 + 20px
+  ) !important;
+  right: var(--floating-margin) !important;
+  z-index: calc(var(--z-help-button) + 1) !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+/* Stats Modal - Opens near FAB */
+.stats-modal {
+  position: fixed !important;
+  bottom: calc(
+    var(--floating-margin) + var(--floating-button-size) +
+      var(--floating-button-gap) + 20px
+  ) !important;
+  right: var(--floating-margin) !important;
+  z-index: calc(var(--z-fab-menu) + 2) !important;
+}
+
+/* ========== MOBILE RESPONSIVE LAYOUT ========== */
+
+@media (max-width: 768px) {
+  :root {
+    --floating-margin: 16px;
+    --floating-button-size: 48px;
+    --floating-button-gap: 8px;
+  }
+
+  /* Adjust Get Help Now Button */
+  .help-now-button {
+    bottom: calc(
+      var(--floating-margin) +
+        (var(--floating-button-size) + var(--floating-button-gap)) * 3
+    ) !important;
+    right: var(--floating-margin) !important;
+    padding: 10px 20px !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Adjust Accessibility Button Container */
+  .accessibility-floating-container {
+    bottom: calc(
+      var(--floating-margin) +
+        (var(--floating-button-size) + var(--floating-button-gap)) * 2
+    ) !important;
+    right: var(--floating-margin) !important;
+  }
+
+  /* Adjust FAB Manager */
+  .floating-button-manager {
+    bottom: var(--floating-margin) !important;
+    right: var(--floating-margin) !important;
+  }
+
+  /* Status indicators stack vertically on mobile */
+  .offline-status-indicator {
+    bottom: var(--floating-margin) !important;
+    left: var(--floating-margin) !important;
+    max-width: 150px !important;
+    font-size: 11px !important;
+  }
+
+  .site-status-popup,
+  .status-popup,
+  .connection-status-popup {
+    bottom: calc(var(--floating-margin) + 50px) !important;
+    left: var(--floating-margin) !important;
+    max-width: 200px !important;
+  }
+
+  .google-badge {
+    bottom: calc(var(--floating-margin) + 110px) !important;
+    left: var(--floating-margin) !important;
+    transform: scale(0.9) !important;
+    transform-origin: bottom left !important;
+  }
+
+  /* Panels take full width on mobile */
+  .accessibility-quick-panel,
+  .help-modal,
+  .stats-modal {
+    left: var(--floating-margin) !important;
+    right: var(--floating-margin) !important;
+    width: calc(100vw - var(--floating-margin) * 2) !important;
+    max-width: none !important;
+  }
+}
+
+/* ========== VERY SMALL SCREENS ========== */
+
+@media (max-width: 375px) {
+  :root {
+    --floating-margin: 12px;
+    --floating-button-size: 44px;
+    --floating-button-gap: 6px;
+  }
+
+  /* Hide Google Badge on very small screens */
+  .google-badge {
+    display: none !important;
+  }
+
+  /* Reduce status indicator sizes */
+  .offline-status-indicator,
+  .site-status-popup {
+    font-size: 10px !important;
+    padding: 6px 10px !important;
+  }
+}
+
+/* ========== LANDSCAPE ORIENTATION ========== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Stack buttons horizontally in landscape mode */
+  .help-now-button {
+    bottom: var(--floating-margin) !important;
+    right: calc(
+      var(--floating-margin) +
+        (var(--floating-button-size) + var(--floating-button-gap)) * 3
+    ) !important;
+  }
+
+  .accessibility-floating-container {
+    bottom: var(--floating-margin) !important;
+    right: calc(
+      var(--floating-margin) +
+        (var(--floating-button-size) + var(--floating-button-gap)) * 2
+    ) !important;
+  }
+
+  .floating-button-manager {
+    bottom: var(--floating-margin) !important;
+    right: var(--floating-margin) !important;
+  }
+}
+
+/* ========== INTERACTION STATES ========== */
+
+/* Ensure clickable areas don't overlap */
+.help-now-button,
+.accessibility-main-button,
+.fab-main,
+.offline-status-indicator,
+.site-status-popup {
+  pointer-events: all !important;
+}
+
+/* Container elements should not block clicks */
+.accessibility-floating-container
+  > *:not(.accessibility-main-button):not(.accessibility-quick-panel),
+.floating-button-manager > *:not(.fab-main):not(.fab-menu) {
+  pointer-events: none !important;
+}
+
+/* Active panels should be clickable */
+.accessibility-quick-panel.expanded,
+.fab-menu.expanded,
+.help-modal.open,
+.stats-modal.open {
+  pointer-events: all !important;
+}
+
+/* ========== ANIMATION ADJUSTMENTS ========== */
+
+/* Stagger animations to prevent visual conflicts */
+.help-now-button {
+  animation-delay: 0s !important;
+}
+
+.accessibility-main-button {
+  animation-delay: 0.1s !important;
+}
+
+.fab-main {
+  animation-delay: 0.2s !important;
+}
+
+.offline-status-indicator {
+  animation-delay: 0.3s !important;
+}
+
+/* ========== SCROLL BEHAVIOR ========== */
+
+/* Keep floating buttons fixed during scroll */
+.help-now-button,
+.accessibility-floating-container,
+.floating-button-manager,
+.offline-status-indicator,
+.site-status-popup,
+.google-badge {
+  position: fixed !important;
+  transform-style: preserve-3d !important;
+  will-change: transform !important;
+}
+
+/* ========== PRINT STYLES ========== */
+
+@media print {
+  .help-now-button,
+  .accessibility-floating-container,
+  .floating-button-manager,
+  .offline-status-indicator,
+  .site-status-popup,
+  .google-badge,
+  .crisis-alert-banner {
+    display: none !important;
+  }
+}
+
+/* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .help-now-button,
+  .accessibility-main-button,
+  .fab-main {
+    border: 2px solid currentColor !important;
+  }
+}
+
+/* Reduced motion adjustments */
+@media (prefers-reduced-motion: reduce) {
+  .help-now-button,
+  .accessibility-main-button,
+  .fab-main,
+  .offline-status-indicator {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+}
+
+/* ========== DARK MODE ADJUSTMENTS ========== */
+
+[data-theme="dark"] .offline-status-indicator,
+[data-theme="dark"] .site-status-popup {
+  background: linear-gradient(
+    135deg,
+    rgba(31, 41, 55, 0.98) 0%,
+    rgba(17, 24, 39, 0.95) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.5) !important;
+}
+
+/* ========== SAFETY MARGINS ========== */
+
+/* Ensure main content doesn't go under floating buttons */
+.main-content,
+.view-content {
+  padding-bottom: calc(
+    var(--floating-margin) +
+      (var(--floating-button-size) + var(--floating-button-gap)) * 4 + 20px
+  ) !important;
+  padding-right: calc(
+    var(--floating-margin) + var(--floating-button-size) + 20px
+  ) !important;
+}
+
+/* Chat input areas need extra clearance */
+.chat-input-area,
+.ai-chat-input-area {
+  padding-bottom: calc(
+    var(--floating-margin) +
+      (var(--floating-button-size) + var(--floating-button-gap)) * 4 + 40px
+  ) !important;
+}
+
+/* ========== FOCUS MANAGEMENT ========== */
+
+/* Clear focus indicators */
+.help-now-button:focus-visible,
+.accessibility-main-button:focus-visible,
+.fab-main:focus-visible {
+  outline: 3px solid var(--accent-primary) !important;
+  outline-offset: 3px !important;
+}
+
+/* Skip to main content link should be above everything */
+.skip-to-main {
+  z-index: calc(var(--z-welcome) + 1) !important;
+}

@@ -1,0 +1,157 @@
+/* Mood Theme Adapter Styles */
+
+.mood-theme-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mood-theme-indicator.transitioning {
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.theme-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 2px solid;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+  margin-bottom: 0.5rem;
+}
+
+.theme-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.5s ease;
+}
+
+.theme-message {
+  font-size: 0.75rem;
+  margin: 0;
+  padding-left: 1rem;
+  opacity: 0.9;
+  transition: color 0.5s ease;
+  font-style: italic;
+}
+
+/* Mood Theme Classes */
+body.mood-theme-joyful {
+  --accent-primary: #4caf50;
+  --accent-secondary: #81c784;
+}
+
+body.mood-theme-balanced {
+  --accent-primary: #2196f3;
+  --accent-secondary: #64b5f6;
+}
+
+body.mood-theme-calm {
+  --accent-primary: #9c27b0;
+  --accent-secondary: #ba68c8;
+}
+
+body.mood-theme-supportive {
+  --accent-primary: #ff9800;
+  --accent-secondary: #ffb74d;
+}
+
+body.mood-theme-gentle {
+  --accent-primary: #e91e63;
+  --accent-secondary: #f06292;
+}
+
+/* Elements that adapt to mood */
+.mood-adaptive {
+  transition:
+    background 0.5s ease,
+    border-color 0.5s ease;
+}
+
+.mood-adaptive-text {
+  transition: color 0.5s ease;
+}
+
+.mood-adaptive-border {
+  transition: border-color 0.5s ease;
+  border-color: var(--mood-primary, var(--accent-primary));
+}
+
+.mood-adaptive-bg {
+  transition: background 0.5s ease;
+  background: var(--mood-overlay, rgba(102, 126, 234, 0.05));
+}
+
+/* Apply mood colors to specific elements */
+body.mood-theme-joyful .btn-primary,
+body.mood-theme-joyful .breathing-button.start {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+}
+
+body.mood-theme-balanced .btn-primary,
+body.mood-theme-balanced .breathing-button.start {
+  background: linear-gradient(135deg, #2196f3 0%, #42a5f5 100%);
+}
+
+body.mood-theme-calm .btn-primary,
+body.mood-theme-calm .breathing-button.start {
+  background: linear-gradient(135deg, #9c27b0 0%, #ab47bc 100%);
+}
+
+body.mood-theme-supportive .btn-primary,
+body.mood-theme-supportive .breathing-button.start {
+  background: linear-gradient(135deg, #ff9800 0%, #ffa726 100%);
+}
+
+body.mood-theme-gentle .btn-primary,
+body.mood-theme-gentle .breathing-button.start {
+  background: linear-gradient(135deg, #e91e63 0%, #ec407a 100%);
+}
+
+/* Hide on mobile to save space */
+@media (max-width: 768px) {
+  .mood-theme-indicator {
+    bottom: 10px;
+    left: 10px;
+    transform: scale(0.85);
+  }
+
+  .theme-message {
+    display: none;
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .theme-badge {
+  background: rgba(34, 39, 46, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .theme-message {
+  color: #8b949e;
+}

@@ -1,0 +1,185 @@
+# Service Worker - CRITICAL MIME TYPE
+/service-worker.js
+  Content-Type: application/javascript
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+  Service-Worker-Allowed: /
+
+/sw.js
+  Content-Type: application/javascript
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+  Service-Worker-Allowed: /
+
+# PWA Manifest
+/manifest.json
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+
+# PWA Icons
+/icon-*.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+/icon.svg
+  Content-Type: image/svg+xml
+  Cache-Control: public, max-age=31536000, immutable
+
+# Version checking files - always fresh
+/version.json
+  Content-Type: application/json
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  X-Content-Type-Options: nosniff
+
+/version-check.js
+  Content-Type: application/javascript
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  X-Content-Type-Options: nosniff
+
+# Force CSS files to be text/css - MUST BE FIRST AND MOST SPECIFIC
+/assets/index-*.css
+  Content-Type: text/css
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# Main entry point files - HIGHEST PRIORITY
+/assets/js/index-*.js
+  Content-Type: application/javascript; charset=UTF-8
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# JavaScript files in subdirectories - CRITICAL FOR MODULE LOADING
+/assets/js/*.js
+  Content-Type: application/javascript; charset=UTF-8
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# CSS files in subdirectories
+/assets/css/*.css
+  Content-Type: text/css
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# All CSS files
+/assets/*.css
+  Content-Type: text/css
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# All JS files  
+/assets/*.js
+  Content-Type: application/javascript
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# All assets - general rules
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Block external script injection attempts - return as text/plain
+/index.js
+  Content-Type: text/plain
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+
+/constants.js
+  Content-Type: text/plain
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+
+/config.js
+  Content-Type: text/plain
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+
+/app.js
+  Content-Type: text/plain
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+
+# Security headers for all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+
+# Images
+/assets/*.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.jpg
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.svg
+  Content-Type: image/svg+xml
+  Cache-Control: public, max-age=31536000, immutable
+
+# Videos
+/Videos/*.mp4
+  Content-Type: video/mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+# Prevent HTML caching - FORCE FRESH LOADS
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+  X-Frame-Options: DENY
+  
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+  X-Frame-Options: DENY
+
+/
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+  X-Frame-Options: DENY
+
+# Offline fallback pages
+/offline.html
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  X-Frame-Options: DENY
+
+/offline-crisis.html
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  X-Frame-Options: DENY
+
+# Crisis resources - optimized for offline access
+/crisis-resources.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+
+/emergency-contacts.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+
+/offline-coping-strategies.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+
+# SEO and crawler guidance
+/robots.txt
+  Content-Type: text/plain
+  Cache-Control: public, max-age=3600
+
+# PWA installation and sharing
+/share/*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; frame-ancestors 'self'

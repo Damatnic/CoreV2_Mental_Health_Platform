@@ -1,0 +1,247 @@
+/**
+ * Touch Target Accessibility Fixes
+ * WCAG 2.1 AA Level: Minimum 44px touch targets for mobile accessibility
+ * https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
+ */
+
+:root {
+  /* Touch target variables for consistency */
+  --touch-target-min: 44px;
+  --touch-target-recommended: 48px;
+  --touch-spacing-min: 8px;
+}
+
+/* =================================================================
+   FORM CONTROLS - CRITICAL TOUCH TARGET FIXES
+   ================================================================= */
+
+/* Ensure all input elements meet minimum touch target requirements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+textarea,
+select,
+.form-control,
+.form-control-enhanced,
+.mobile-optimized,
+.app-input input,
+.app-textarea textarea {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min);
+  padding: max(12px, calc(var(--touch-target-min) - 20px) / 2) 16px;
+}
+
+/* Ensure touch spacing between form elements */
+.form-group,
+.form-group-enhanced {
+  margin-bottom: max(16px, var(--touch-spacing-min));
+}
+
+/* =================================================================
+   BUTTON TOUCH TARGETS
+   ================================================================= */
+
+/* All button elements - ensure proper touch targets */
+button,
+.btn,
+.button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"],
+.app-button {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min) !important;
+  padding: max(8px, calc(var(--touch-target-min) - 24px) / 2)
+    max(16px, calc(var(--touch-target-min) - 16px) / 2);
+}
+
+/* Small buttons that need touch target enhancement */
+.btn-sm,
+.button-small,
+.icon-button {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min) !important;
+  padding: calc(var(--touch-target-min) - 20px) / 2;
+}
+
+/* Icon-only buttons */
+.btn-icon,
+.icon-btn,
+[aria-label]:not([aria-label=""]):empty {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min) !important;
+  padding: calc(var(--touch-target-min) - 20px) / 2;
+}
+
+/* =================================================================
+   NAVIGATION TOUCH TARGETS
+   ================================================================= */
+
+/* Navigation links and menu items */
+.nav-link,
+.menu-item,
+.sidebar-item,
+.mobile-nav-item,
+.navigation-link,
+nav a,
+.nav a {
+  min-height: var(--touch-target-min) !important;
+  padding: max(8px, calc(var(--touch-target-min) - 20px) / 2) 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile sidebar navigation items */
+.mobile-sidebar .nav-item,
+.mobile-sidebar .menu-item {
+  min-height: var(--touch-target-min) !important;
+}
+
+/* =================================================================
+   CHECKBOX AND RADIO TOUCH TARGETS
+   ================================================================= */
+
+/* Checkbox and radio inputs with labels */
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  transform: scale(1.2); /* Visually larger for better touch */
+}
+
+/* Labels for checkboxes and radios should be touchable */
+input[type="checkbox"] + label,
+input[type="radio"] + label,
+.checkbox-label,
+.radio-label {
+  min-height: var(--touch-target-min);
+  padding: calc(var(--touch-target-min) - 20px) / 2 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* =================================================================
+   INTERACTIVE ELEMENT SPACING
+   ================================================================= */
+
+/* Ensure adequate spacing between interactive elements */
+button + button,
+.btn + .btn,
+.interactive-element + .interactive-element {
+  margin-left: var(--touch-spacing-min);
+}
+
+/* Vertical spacing for stacked interactive elements */
+.form-group + .form-group,
+.button-group-vertical button + button,
+.btn-group-vertical .btn + .btn {
+  margin-top: var(--touch-spacing-min);
+}
+
+/* =================================================================
+   MOBILE-SPECIFIC ENHANCEMENTS
+   ================================================================= */
+
+/* Mobile breakpoint optimizations */
+@media (max-width: 768px) {
+  /* Increase touch targets on mobile devices */
+  button,
+  .btn,
+  input,
+  textarea,
+  select,
+  .nav-link,
+  .menu-item {
+    min-height: var(--touch-target-recommended) !important;
+  }
+
+  /* Increase spacing on mobile */
+  .form-group,
+  .button-group button + button,
+  .btn-group .btn + .btn {
+    margin-bottom: 12px;
+    margin-left: 12px;
+  }
+
+  /* Mobile input focus enhancement */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    transform: none; /* Remove transforms that might interfere with touch */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* =================================================================
+   SMALL ELEMENT OVERRIDES
+   ================================================================= */
+
+/* Override any styles that make interactive elements too small */
+.small,
+.sm,
+.xs,
+.tiny {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min) !important;
+}
+
+/* Specific overrides for commonly small elements */
+.close,
+.close-button,
+.dismiss,
+.remove-button,
+.delete-button {
+  min-height: var(--touch-target-min) !important;
+  min-width: var(--touch-target-min) !important;
+  padding: calc(var(--touch-target-min) - 16px) / 2;
+}
+
+/* =================================================================
+   ACCESSIBILITY COMPLIANCE VALIDATION
+   ================================================================= */
+
+/* Visual debug helper for development (remove in production) */
+.debug-touch-targets * {
+  outline: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.debug-touch-targets
+  [style*="height"]:not([style*="44px"]):not([style*="48px"]) {
+  background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  button,
+  .btn,
+  input,
+  textarea,
+  select {
+    border-width: 2px;
+    min-height: calc(var(--touch-target-min) + 4px);
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .btn,
+  input,
+  textarea,
+  select,
+  .nav-link {
+    transition: none;
+    transform: none;
+  }
+}

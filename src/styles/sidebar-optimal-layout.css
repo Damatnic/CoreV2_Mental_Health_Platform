@@ -1,0 +1,414 @@
+/* =========================================
+   SIDEBAR OPTIMAL LAYOUT
+   Perfect text sizing without cutoff or wrapping
+   ========================================= */
+
+/* 
+   STRATEGY:
+   1. Slightly increase sidebar width to 300px (from 280px)
+   2. Use optimal font sizes for different label lengths
+   3. Add ellipsis ONLY for extremely long labels (edge cases)
+   4. Implement hover tooltips for full text
+   5. Smart responsive adjustments
+*/
+
+/* ========== BASE SIDEBAR WIDTH ========== */
+.sidebar {
+  width: 320px !important; /* Increased to fit "My Wellness Dashboard" */
+  min-width: 320px !important;
+  max-width: 320px !important;
+  transition: width 0.3s ease !important;
+}
+
+/* Remove gap - main content should start right after sidebar */
+.main-content,
+.view-content,
+.view-container,
+[class*="view"] {
+  margin-left: 320px !important; /* Match sidebar width exactly */
+  padding-left: 0 !important; /* Remove any left padding that creates gap */
+  position: relative !important;
+}
+
+/* Ensure views fill the space properly */
+.app-layout {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.app-layout > .sidebar {
+  flex-shrink: 0 !important;
+}
+
+.app-layout > .main-content {
+  flex: 1 !important;
+  width: calc(100% - 320px) !important;
+}
+
+/* ========== NAV ITEM OPTIMAL LAYOUT ========== */
+.nav-item {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0.125rem 0 !important; /* Tight vertical spacing */
+  padding: 0 !important; /* No horizontal padding on li */
+}
+
+.nav-link {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.75rem 1rem !important; /* Balanced padding */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  gap: 0.75rem !important; /* Space between icon and text */
+  min-height: 40px !important; /* Consistent height */
+  position: relative !important;
+  overflow: hidden !important; /* Hide overflow */
+}
+
+/* ========== ICON SIZING ========== */
+.nav-icon,
+.nav-link svg {
+  flex-shrink: 0 !important; /* Prevent icon from shrinking */
+  width: 18px !important; /* Slightly smaller icons */
+  height: 18px !important;
+  min-width: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ========== LABEL OPTIMIZATION ========== */
+.nav-label {
+  flex: 1 !important;
+  text-align: left !important;
+  white-space: nowrap !important; /* Prevent wrapping */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* Show ellipsis if needed */
+  font-size: 0.9375rem !important; /* 15px - optimal size */
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.005em !important; /* Very slight tightening */
+  padding-right: 8px !important; /* More right padding to prevent cutoff */
+  min-width: 0 !important; /* Allow flex shrinking */
+  max-width: calc(100% - 30px) !important; /* Account for icon and spacing */
+}
+
+/* ========== SPECIAL HANDLING FOR LONG LABELS ========== */
+/* Specific optimization for "My Wellness Dashboard" and other long labels */
+button[class*="nav-link"]:has(.nav-label:contains("Wellness Dashboard")),
+button[class*="nav-link"]:has(.nav-label:contains("Moderation History")) {
+  /* Container adjustments for long labels */
+}
+
+/* Target the specific problematic label */
+.nav-label {
+  /* Default settings work for most */
+}
+
+/* Special case for "My Wellness Dashboard" - most problematic */
+.nav-item:has(button[class*="starkeeper-dashboard"]) .nav-label,
+.nav-item:first-of-type .nav-label {
+  font-size: 0.875rem !important; /* 14px */
+  letter-spacing: -0.025em !important; /* Tighter spacing */
+  padding-right: 10px !important; /* Extra padding */
+}
+
+/* ========== SECTION HEADERS ========== */
+.nav-section-header,
+.nav-section-title,
+.section-title {
+  padding: 0.625rem 1rem 0.25rem !important;
+  margin: 0.75rem 0 0.25rem !important;
+  font-size: 0.6875rem !important; /* 11px */
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  opacity: 0.7 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ========== BADGE POSITIONING ========== */
+.notification-dot,
+.nav-badge {
+  position: absolute !important;
+  right: 1rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  flex-shrink: 0 !important;
+}
+
+/* ========== SIDEBAR NAV CONTAINER ========== */
+.sidebar-nav {
+  padding: 0.5rem 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* ========== HOVER STATES WITH TOOLTIPS ========== */
+.nav-link {
+  position: relative !important;
+}
+
+/* Create tooltip for full text on hover */
+.nav-link:hover::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(31, 41, 55, 0.95);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Only show tooltip if text is actually truncated */
+.nav-label {
+  position: relative;
+}
+
+/* Check if text overflows and needs tooltip */
+@supports (overflow: clip) {
+  .nav-link:hover .nav-label {
+    overflow: clip !important;
+  }
+}
+
+/* ========== RESPONSIVE ADJUSTMENTS ========== */
+
+/* Medium screens */
+@media (max-width: 1400px) and (min-width: 1024px) {
+  .sidebar {
+    width: 300px !important; /* Still need space for long labels */
+    min-width: 300px !important;
+    max-width: 300px !important;
+  }
+
+  .main-content,
+  .view-content,
+  .view-container,
+  [class*="view"] {
+    margin-left: 300px !important;
+  }
+
+  .app-layout > .main-content {
+    width: calc(100% - 300px) !important;
+  }
+
+  .nav-label {
+    font-size: 0.875rem !important; /* 14px */
+    letter-spacing: -0.015em !important;
+  }
+
+  /* All labels get smaller font on medium screens */
+  .nav-link .nav-label {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Small screens / tablets */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .sidebar {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+  }
+
+  .main-content,
+  .view-content {
+    margin-left: 260px !important;
+  }
+
+  .nav-label {
+    font-size: 0.8125rem !important; /* 13px */
+    letter-spacing: -0.02em !important;
+  }
+
+  .nav-link {
+    padding: 0.625rem 0.875rem !important; /* Smaller padding */
+  }
+
+  .nav-icon,
+  .nav-link svg {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+  }
+}
+
+/* Mobile - different approach */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px !important; /* Fixed width for mobile drawer */
+    position: fixed !important;
+    left: -280px !important; /* Hidden by default */
+    top: 0 !important;
+    bottom: 0 !important;
+    z-index: 1000 !important;
+    transition: left 0.3s ease !important;
+  }
+
+  .sidebar.open {
+    left: 0 !important; /* Slide in when open */
+  }
+
+  .main-content,
+  .view-content {
+    margin-left: 0 !important; /* No margin on mobile */
+  }
+
+  /* On mobile, we can allow slightly more space */
+  .nav-label {
+    font-size: 0.9375rem !important; /* Back to 15px */
+    white-space: normal !important; /* Allow wrapping on mobile */
+    line-height: 1.4 !important;
+    max-width: 200px !important; /* Limit width */
+  }
+
+  .nav-link {
+    padding: 0.875rem 1rem !important;
+    min-height: 48px !important; /* Touch-friendly */
+  }
+}
+
+/* ========== COLLAPSED SIDEBAR MODE ========== */
+.sidebar.collapsed {
+  width: 70px !important;
+  min-width: 70px !important;
+  max-width: 70px !important;
+}
+
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .nav-section-header,
+.sidebar.collapsed .sidebar-footer {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-link {
+  justify-content: center !important;
+  padding: 0.75rem !important;
+}
+
+.sidebar.collapsed .nav-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Tooltip for collapsed sidebar */
+.sidebar.collapsed .nav-link:hover::after {
+  content: attr(aria-label);
+  left: calc(100% + 5px);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* ========== DARK MODE ADJUSTMENTS ========== */
+[data-theme="dark"] .nav-link:hover::after {
+  background: rgba(17, 24, 39, 0.95);
+  border-color: rgba(71, 85, 105, 0.3);
+}
+
+/* ========== ANIMATION AND TRANSITIONS ========== */
+.nav-link {
+  transition: all 0.2s ease !important;
+}
+
+.nav-link:hover {
+  background: rgba(167, 139, 250, 0.08) !important;
+  padding-left: 1.125rem !important; /* Slight indent on hover */
+}
+
+.nav-link.active {
+  background: linear-gradient(
+    90deg,
+    rgba(167, 139, 250, 0.15) 0%,
+    rgba(167, 139, 250, 0.05) 100%
+  ) !important;
+  border-left: 3px solid #7c3aed !important;
+  padding-left: calc(1rem - 3px) !important; /* Adjust for border */
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(167, 139, 250, 0.2) !important;
+  border-radius: 3px !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* ========== FOOTER ADJUSTMENTS ========== */
+.sidebar-footer {
+  padding: 1rem !important;
+  border-top: 1px solid rgba(167, 139, 250, 0.1) !important;
+  margin-top: auto !important;
+}
+
+.online-status {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ========== ACCESSIBILITY ========== */
+
+/* Focus indicators */
+.nav-link:focus-visible {
+  outline: 2px solid #7c3aed !important;
+  outline-offset: -2px !important;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .nav-link {
+    border: 1px solid transparent !important;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    border-color: currentColor !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .sidebar {
+    transition: none !important;
+  }
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+  .sidebar {
+    display: none !important;
+  }
+
+  .main-content,
+  .view-content {
+    margin-left: 0 !important;
+  }
+}

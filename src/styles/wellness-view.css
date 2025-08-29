@@ -1,0 +1,624 @@
+/* Wellness View - Tranquil and Beautiful Wellness Tracking */
+
+.wellness-view {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    rgba(230, 243, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(230, 250, 230, 0.3) 100%
+  );
+  padding: 2rem;
+  animation: gentleGradientShift 20s ease-in-out infinite;
+}
+
+@keyframes gentleGradientShift {
+  0%,
+  100% {
+    background: linear-gradient(
+      180deg,
+      rgba(230, 243, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(230, 250, 230, 0.3) 100%
+    );
+  }
+  50% {
+    background: linear-gradient(
+      180deg,
+      rgba(230, 250, 230, 0.3) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(230, 243, 255, 0.3) 100%
+    );
+  }
+}
+
+/* Tab Navigation */
+.wellness-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.wellness-tab {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.wellness-tab::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #98ff98 0%, #87ceeb 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.wellness-tab:hover {
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.wellness-tab.active {
+  background: linear-gradient(135deg, #98ff98 0%, #87ceeb 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(152, 255, 152, 0.3);
+}
+
+/* Daily Check-in Section */
+.check-in-section {
+  animation: fadeInUp 0.6s ease;
+}
+
+.mood-selector {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.mood-emoji-btn {
+  flex: 1;
+  padding: 1rem;
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.mood-emoji-btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(135, 206, 235, 0.3);
+  border-color: rgba(135, 206, 235, 0.5);
+}
+
+.mood-emoji-btn.selected {
+  background: linear-gradient(135deg, #87ceeb 0%, #98ff98 100%);
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+  transform: scale(1.1);
+}
+
+.mood-emoji-btn.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #4ade80;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(74, 222, 128, 0.4);
+}
+
+/* Wellness Sliders */
+.wellness-slider {
+  width: 100%;
+  margin: 1rem 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    #fee2e2 0%,
+    #fef3c7 25%,
+    #e0e7ff 50%,
+    #cffafe 75%,
+    #d1fae5 100%
+  );
+  outline: none;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.wellness-slider:hover {
+  opacity: 1;
+}
+
+.wellness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.wellness-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.wellness-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Tags Section */
+.wellness-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.wellness-tag {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(135, 206, 235, 0.3);
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wellness-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.2);
+  border-color: rgba(135, 206, 235, 0.5);
+  color: var(--text-primary);
+}
+
+.wellness-tag.selected {
+  background: linear-gradient(135deg, #87ceeb 0%, #98ff98 100%);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+}
+
+/* Wellness Chart */
+.wellness-chart {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  margin: 2rem 0;
+  min-height: 300px;
+}
+
+.chart-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  padding-right: 0.5rem;
+}
+
+.chart-bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.chart-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 60px;
+}
+
+.chart-bar-wrapper {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chart-bar {
+  width: 80%;
+  background: linear-gradient(
+    180deg,
+    rgba(135, 206, 235, 0.8) 0%,
+    rgba(152, 255, 152, 0.8) 100%
+  );
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.chart-bar:hover {
+  transform: scaleX(1.1);
+  filter: brightness(1.1);
+}
+
+.chart-label {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Habits Section */
+.habits-section {
+  animation: fadeInUp 0.6s ease;
+}
+
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.habit-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.habit-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #87ceeb 0%, #98ff98 100%);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.habit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(135, 206, 235, 0.15);
+  border-color: rgba(135, 206, 235, 0.4);
+}
+
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.habit-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.habit-frequency {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background: rgba(135, 206, 235, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+}
+
+.habit-streak {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.habit-streak-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.habit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.habit-action-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.habit-action-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(135, 206, 235, 0.1) 0%,
+    rgba(152, 255, 152, 0.1) 100%
+  );
+  border-color: rgba(135, 206, 235, 0.5);
+  transform: translateY(-1px);
+}
+
+.habit-action-btn.primary {
+  background: linear-gradient(135deg, #87ceeb 0%, #98ff98 100%);
+  border-color: transparent;
+  color: white;
+}
+
+.habit-action-btn.primary:hover {
+  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+}
+
+/* Add Habit Modal */
+.add-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(135, 206, 235, 0.5);
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.1);
+  background: white;
+}
+
+/* History Section */
+.history-section {
+  animation: fadeInUp 0.6s ease;
+}
+
+.history-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.history-timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #87ceeb 0%, #98ff98 100%);
+}
+
+.history-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  animation: slideInLeft 0.5s ease;
+}
+
+.history-item::before {
+  content: "";
+  position: absolute;
+  left: -2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #87ceeb 0%, #98ff98 100%);
+  box-shadow: 0 0 0 4px rgba(135, 206, 235, 0.2);
+}
+
+.history-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(135, 206, 235, 0.1);
+}
+
+.history-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.history-mood {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.history-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.history-metric {
+  padding: 0.5rem;
+  background: rgba(135, 206, 235, 0.05);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.history-metric-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.history-metric-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 0.25rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .wellness-view {
+  background: linear-gradient(
+    180deg,
+    rgba(34, 39, 46, 0.3) 0%,
+    rgba(22, 27, 34, 0.5) 50%,
+    rgba(28, 33, 40, 0.3) 100%
+  );
+}
+
+[data-theme="dark"] .wellness-tabs {
+  background: rgba(34, 39, 46, 0.8);
+}
+
+[data-theme="dark"] .mood-emoji-btn,
+[data-theme="dark"] .wellness-tag,
+[data-theme="dark"] .habit-card,
+[data-theme="dark"] .history-item {
+  background: rgba(34, 39, 46, 0.9);
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+[data-theme="dark"] .wellness-chart {
+  background: rgba(34, 39, 46, 0.9);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .wellness-view {
+    padding: 1rem;
+  }
+
+  .wellness-tabs {
+    flex-direction: column;
+  }
+
+  .mood-selector {
+    flex-wrap: wrap;
+  }
+
+  .mood-emoji-btn {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .habits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wellness-chart {
+    padding: 1rem;
+    flex-direction: column;
+  }
+
+  .chart-bars {
+    height: 200px;
+  }
+}

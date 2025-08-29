@@ -1,0 +1,61 @@
+
+/* Enhanced focus indicators for accessibility */
+/* Critical for mental health app - users need clear navigation */
+
+*:focus {
+  outline: 3px solid #4A90E2 !important;
+  outline-offset: 2px !important;
+}
+
+/* Specific focus styles for different elements */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #4A90E2 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2) !important;
+}
+
+/* Crisis-related elements need stronger focus */
+.crisis-button:focus,
+.emergency-contact:focus,
+[aria-label*="crisis"]:focus,
+[aria-label*="emergency"]:focus {
+  outline: 4px solid #FF4444 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(255, 68, 68, 0.3) !important;
+}
+
+/* Focus-visible for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid #4A90E2 !important;
+  outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  *:focus {
+    outline-width: 4px !important;
+    outline-style: solid !important;
+  }
+}
+
+/* Skip link focus */
+.skip-navigation:focus {
+  position: fixed !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 10000 !important;
+  padding: 15px !important;
+  background: #000 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+  font-weight: bold !important;
+}

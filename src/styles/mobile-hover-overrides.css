@@ -1,0 +1,230 @@
+/* Critical Mobile Hover State Overrides */
+
+/* This file specifically targets and overrides hover states that are problematic on mobile */
+
+@media (max-width: 768px) {
+  /* 
+   * STRATEGY: On mobile, hover states are ineffective and can cause sticky states.
+   * We override them to either: 
+   * 1. Remove the effect entirely (transform: none)
+   * 2. Apply the same effect only on :active/:focus-visible
+   * 3. Use reduced motion for accessibility
+   */
+
+  /* ========== BUTTONS - Core Interactive Elements ========== */
+
+  /* Primary buttons - most important */
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-danger:hover,
+  .btn-success:hover,
+  .btn-ghost:hover {
+    transform: none !important; /* Override all hover transforms */
+  }
+
+  /* Filter buttons */
+  .filter-buttons .btn:not(.active):hover,
+  .filter-buttons button:not(.active):hover {
+    transform: none !important;
+    background-color: var(--bg-tertiary);
+  }
+
+  /* ========== CARDS - Content Containers ========== */
+
+  /* All card hover effects disabled on mobile */
+  .card:hover,
+  .post-card:not(.skeleton):hover,
+  .resource-card:hover,
+  .pattern-card:hover {
+    transform: none !important;
+    /* Keep subtle shadow but remove movement */
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.12);
+  }
+
+  /* Dark theme card overrides */
+  [data-theme="dark"] .post-card:not(.skeleton):hover {
+    border-color: var(--border-color); /* Reset to default */
+    transform: none !important;
+  }
+
+  /* ========== NAVIGATION ELEMENTS ========== */
+
+  /* Navigation links already handled in nav-link mobile styles */
+  .nav-link:hover {
+    transform: none !important;
+  }
+
+  /* ========== INTERACTIVE COMPONENTS ========== */
+
+  /* Settings and account items */
+  .setting-item:hover,
+  .settings-section:hover,
+  .account-action-item:hover {
+    transform: none !important;
+  }
+
+  .account-action-item.danger:hover {
+    transform: none !important;
+  }
+
+  /* AI Chat suggestions */
+  .ai-chat-suggestion:hover {
+    transform: none !important;
+  }
+
+  /* Suggestion chips */
+  .suggestion-chip:hover {
+    transform: none !important;
+  }
+
+  /* ========== CRISIS COMPONENTS - Critical UX ========== */
+
+  /* All crisis-related hover effects removed for reliable mobile interaction */
+  .crisis-alert-close:hover,
+  .crisis-action-primary:hover,
+  .crisis-action-secondary:hover,
+  .crisis-emergency-btn:hover,
+  .crisis-emergency-btn.priority:hover,
+  .crisis-close-btn:hover,
+  .crisis-call-btn:hover,
+  .crisis-help-trigger:hover,
+  .crisis-resource-item:hover,
+  .crisis-more-link:hover {
+    transform: none !important;
+  }
+
+  /* Crisis help trigger special case */
+  .crisis-help-trigger:hover::before {
+    transform: none !important;
+  }
+
+  /* ========== WELLNESS COMPONENTS ========== */
+
+  .wellness-action-btn:hover,
+  .safety-tip:hover {
+    transform: none !important;
+  }
+
+  /* ========== UTILITY ELEMENTS ========== */
+
+  /* Links - general */
+  a:hover {
+    transform: none !important;
+  }
+
+  /* Privacy links */
+  .privacy-link:hover {
+    transform: none !important;
+  }
+
+  .privacy-link:hover::after {
+    transform: none !important;
+  }
+
+  /* Modal close button - already handled but ensuring override */
+  .modal-close-btn:hover {
+    transform: none !important;
+  }
+
+  /* AI chat back button */
+  .ai-chat-back-btn:hover {
+    transform: none !important;
+  }
+
+  /* Welcome/onboarding buttons */
+  .welcome-continue-btn:hover,
+  .retry-button:hover {
+    transform: none !important;
+  }
+
+  /* Radio groups */
+  .radio-group:hover {
+    transform: none !important;
+  }
+
+  /* ========== SCROLLBAR HOVER STATES ========== */
+
+  /* Scrollbar hover states work fine on mobile - keep them */
+  .sidebar::-webkit-scrollbar-thumb:hover,
+  .sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(102, 126, 234, 0.6);
+  }
+
+  /* ========== RESOURCE CARD SPECIAL HANDLING ========== */
+
+  .resource-card:hover .resource-arrow {
+    transform: none !important;
+  }
+
+  /* ========== FORM ELEMENTS ========== */
+
+  .form-group a:hover,
+  .form-group-checkbox a:hover {
+    transform: none !important;
+  }
+}
+
+/* ========== ACCESSIBILITY: REDUCED MOTION ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* For users who prefer reduced motion, disable ALL hover transforms */
+  *:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ========== FOCUS-VISIBLE ENHANCEMENT ========== */
+
+/* Ensure focus-visible works well for keyboard users on all platforms */
+.btn:focus-visible,
+.card:focus-visible,
+.nav-link:focus-visible,
+.setting-item:focus-visible,
+.resource-card:focus-visible,
+.crisis-action-primary:focus-visible,
+.crisis-action-secondary:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  /* Use subtle scale only for keyboard focus */
+  transform: scale(1.02);
+}
+
+/* ========== TOUCH DEVICE DETECTION ========== */
+
+/* Additional hover overrides for any touch-capable device */
+@media (hover: none) and (pointer: coarse) {
+  /* This targets touch-only devices more precisely */
+
+  /* Disable ALL hover transforms on touch devices */
+  *:hover {
+    transform: none !important;
+  }
+
+  /* But allow active states to work */
+  *:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+}
+
+/* ========== HOVER CAPABILITY DETECTION ========== */
+
+/* Only apply hover effects on devices that can actually hover */
+@media (hover: hover) and (pointer: fine) {
+  /* This targets mouse/trackpad devices - hover effects work here */
+
+  /* Re-enable hover effects for desktop/laptop users */
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+
+  .nav-link:hover {
+    transform: translateX(4px);
+  }
+}

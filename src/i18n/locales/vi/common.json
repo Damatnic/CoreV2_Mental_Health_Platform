@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Astral Core",
+    "tagline": "Không gian an toàn của bạn cho hỗ trợ sức khỏe tâm thần",
+    "loading": "Đang tải không gian an toàn của bạn...",
+    "error": "Có lỗi xảy ra. Vui lòng thử lại.",
+    "offline": "Bạn đang ngoại tuyến. Tài nguyên khủng hoảng vẫn có sẵn."
+  },
+  "navigation": {
+    "share": "Chia sẻ",
+    "my_activity": "Hoạt động của tôi",
+    "ai_chat": "Trò chuyện với AI",
+    "my_safety_plan": "Kế hoạch an toàn của tôi",
+    "community_feed": "Bảng tin cộng đồng",
+    "reflections": "Suy ngẫm",
+    "get_help_now": "Nhận trợ giúp ngay",
+    "quiet_space": "Không gian yên tĩnh",
+    "wellness_videos": "Video chăm sóc sức khỏe",
+    "guidelines": "Hướng dẫn",
+    "settings": "Cài đặt",
+    "crisis_resources": "Tài nguyên khủng hoảng"
+  },
+  "crisis": {
+    "immediate_help": "Cần trợ giúp ngay lập tức?",
+    "call_988": "Gọi 1800-1567 để hỗ trợ khủng hoảng",
+    "you_matter": "Bạn rất quan trọng. Bạn không đơn độc.",
+    "help_available": "Trợ giúp có sẵn 24/7"
+  },
+  "common": {
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "yes": "Có",
+    "no": "Không",
+    "loading": "Đang tải...",
+    "help": "Trợ giúp",
+    "support": "Hỗ trợ"
+  },
+  "mental_health": {
+    "categories": {
+      "anxiety": "Lo âu",
+      "depression": "Trầm cảm",
+      "stress": "Căng thẳng",
+      "trauma": "Chấn thương",
+      "family": "Gia đình",
+      "crisis": "Hỗ trợ khủng hoảng"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "pt-BR": "Português (Brasil)",
+    "pt-PT": "Português (Portugal)",
+    "ar": "العربية",
+    "zh": "中文",
+    "vi": "Tiếng Việt",
+    "tl": "Tagalog"
+  }
+}

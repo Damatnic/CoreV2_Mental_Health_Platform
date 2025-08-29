@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Astral Core</title>
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-primary-dark: #5a67d8;
+            --color-surface: #ffffff;
+            --color-text: #2d3748;
+            --color-text-secondary: #718096;
+            --color-border: #e2e8f0;
+            --color-success: #48bb78;
+            --color-warning: #ed8936;
+            --color-error: #f56565;
+            
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-surface: #1a202c;
+                --color-text: #f7fafc;
+                --color-text-secondary: #a0aec0;
+                --color-border: #4a5568;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-surface);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+        }
+        
+        .offline-container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            background: var(--color-surface);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-border);
+        }
+        
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-xl);
+            background: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .offline-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+        }
+        
+        .offline-message {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.7;
+        }
+        
+        .offline-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .offline-button {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .offline-button:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .offline-button.secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+        
+        .offline-button.secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .connection-status.offline {
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--color-error);
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+        
+        .connection-status.online {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+        
+        .connection-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .offline-features {
+            text-align: left;
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .offline-features h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+        
+        .offline-features ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .offline-features li {
+            padding: var(--spacing-xs) 0;
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+        
+        .offline-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+        
+        .retry-section {
+            border-top: 1px solid var(--color-border);
+            padding-top: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .retry-info {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        @media (max-width: 640px) {
+            .offline-container {
+                padding: var(--spacing-xl);
+                margin: var(--spacing-md);
+            }
+            
+            .offline-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .offline-title {
+                font-size: 1.5rem;
+            }
+            
+            .offline-message {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .connection-indicator {
+                animation: none;
+            }
+            
+            .offline-button {
+                transition: none;
+            }
+        }
+        
+        @media (prefers-contrast: high) {
+            .offline-container {
+                border: 2px solid var(--color-text);
+            }
+            
+            .offline-button {
+                border: 2px solid currentColor;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon" id="connectionIcon">
+            📶
+        </div>
+        
+        <h1 class="offline-title">You're Offline</h1>
+        
+        <div class="connection-status offline" id="connectionStatus">
+            <div class="connection-indicator"></div>
+            <span>No internet connection</span>
+        </div>
+        
+        <p class="offline-message">
+            Don't worry! You can still access many features of Astral Core while offline. 
+            Your data will sync automatically when you're back online.
+        </p>
+        
+        <div class="offline-features">
+            <h3>Available Offline:</h3>
+            <ul>
+                <li>Crisis resources and emergency contacts</li>
+                <li>Cached wellness content and coping strategies</li>
+                <li>Previously loaded community posts</li>
+                <li>Mood tracking (will sync later)</li>
+                <li>Safety planning tools</li>
+            </ul>
+        </div>
+        
+        <div class="offline-actions">
+            <button class="offline-button" onclick="window.location.reload()">
+                Try Again
+            </button>
+            <a href="/crisis" class="offline-button secondary">
+                Crisis Resources
+            </a>
+        </div>
+        
+        <div class="retry-section">
+            <p class="retry-info">
+                We'll automatically retry when your connection returns. 
+                No need to refresh the page.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Connection monitoring
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            const iconElement = document.getElementById('connectionIcon');
+            
+            if (navigator.onLine) {
+                statusElement.className = 'connection-status online';
+                statusElement.innerHTML = '<div class="connection-indicator"></div><span>Back online! Refreshing...</span>';
+                iconElement.textContent = '✅';
+                
+                // Auto-reload when back online
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                statusElement.className = 'connection-status offline';
+                statusElement.innerHTML = '<div class="connection-indicator"></div><span>No internet connection</span>';
+                iconElement.textContent = '📶';
+            }
+        }
+        
+        // Listen for connection changes
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Check connection on load
+        updateConnectionStatus();
+        
+        // Periodic connection check (fallback)
+        setInterval(() => {
+            fetch('/api/ping', { 
+                method: 'HEAD',
+                cache: 'no-cache',
+                signal: AbortSignal.timeout(5000)
+            })
+            .then(() => {
+                if (!navigator.onLine) {
+                    // Connection detected but navigator.onLine is wrong
+                    window.location.reload();
+                }
+            })
+            .catch(() => {
+                // Expected when offline
+            });
+        }, 30000); // Check every 30 seconds
+        
+        // Accessibility: Announce status changes to screen readers
+        let lastStatus = navigator.onLine;
+        setInterval(() => {
+            if (navigator.onLine !== lastStatus) {
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.textContent = navigator.onLine ? 'Connection restored' : 'Connection lost';
+                announcement.style.position = 'absolute';
+                announcement.style.left = '-10000px';
+                document.body.appendChild(announcement);
+                
+                setTimeout(() => {
+                    document.body.removeChild(announcement);
+                }, 1000);
+                
+                lastStatus = navigator.onLine;
+            }
+        }, 1000);
+        
+        // Service Worker messaging
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                const { type } = event.data;
+                
+                if (type === 'CACHE_UPDATED') {
+                    // Show notification that cached content was updated
+                    console.log('Cache updated with new content');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

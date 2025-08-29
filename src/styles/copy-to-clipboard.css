@@ -1,0 +1,348 @@
+/* ==========================================================================
+   COPY TO CLIPBOARD COMPONENT STYLES
+   Accessible copy button with visual feedback
+   ========================================================================== */
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: var(--touch-target-min, 44px);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.copy-btn:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-color: var(--accent-primary);
+}
+
+.copy-btn:active,
+.copy-btn-pressed {
+  transform: translateY(0) scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.copy-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Copy Icon */
+.copy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.copy-btn:hover .copy-icon {
+  transform: scale(1.1);
+}
+
+/* Success State */
+.copy-btn-success {
+  background: var(--accent-success);
+  border-color: var(--accent-success);
+  color: white;
+  animation: copy-success 0.3s ease;
+}
+
+.copy-btn-success:hover {
+  background: var(--accent-success);
+  transform: translateY(0);
+}
+
+.copy-btn-success .copy-icon {
+  animation: copy-success-icon 0.5s ease;
+}
+
+@keyframes copy-success {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes copy-success-icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Error State */
+.copy-btn-error {
+  background: var(--accent-danger);
+  border-color: var(--accent-danger);
+  color: white;
+  animation: copy-error 0.5s ease;
+}
+
+.copy-btn-error:hover {
+  background: var(--accent-danger);
+}
+
+@keyframes copy-error {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+/* Copy Text */
+.copy-text {
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+
+/* Compact Copy Button */
+.copy-btn-compact {
+  padding: 6px 8px;
+  font-size: 12px;
+  min-height: 32px;
+  gap: 4px;
+}
+
+.copy-btn-compact .copy-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Icon Only Copy Button */
+.copy-btn-icon-only {
+  padding: 8px;
+  min-width: var(--touch-target-min, 44px);
+  justify-content: center;
+}
+
+.copy-btn-icon-only .copy-text {
+  display: none;
+}
+
+/* Large Copy Button */
+.copy-btn-large {
+  padding: 12px 16px;
+  font-size: 16px;
+  min-height: var(--touch-target-comfortable, 48px);
+  gap: 10px;
+}
+
+.copy-btn-large .copy-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Copy Button in Different Contexts */
+.copy-btn-inline {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 8px;
+  padding: 4px 6px;
+  min-height: 28px;
+  font-size: 12px;
+  border-radius: var(--border-radius-sm);
+}
+
+.copy-btn-card {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  min-width: 36px;
+  min-height: 36px;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.card:hover .copy-btn-card,
+.copy-btn-card:focus-visible {
+  opacity: 1;
+}
+
+/* Dark Theme Adjustments */
+[data-theme="dark"] .copy-btn-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile-Specific Adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .copy-btn:hover {
+    background: var(--surface-secondary);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .copy-btn:active {
+    background: var(--surface-hover);
+    transform: scale(0.98);
+  }
+
+  .copy-btn-card {
+    opacity: 1; /* Always visible on touch devices */
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .copy-btn {
+    border: 2px solid;
+    font-weight: 600;
+  }
+
+  .copy-btn-success {
+    background: #000;
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .copy-btn-error {
+    background: #fff;
+    border-color: #000;
+    color: #000;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .copy-btn,
+  .copy-icon,
+  .copy-text {
+    transition: none;
+  }
+
+  .copy-btn-success,
+  .copy-btn-error {
+    animation: none;
+  }
+
+  .copy-btn:hover {
+    transform: none;
+  }
+
+  .copy-btn:active {
+    transform: none;
+  }
+}
+
+/* Tooltip-like behavior for copy status */
+.copy-btn::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-overlay);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+  margin-bottom: 4px;
+}
+
+.copy-btn:hover::after,
+.copy-btn:focus-visible::after {
+  opacity: 1;
+}
+
+/* Screen Reader Announcements */
+.sr-announcement {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Copy button within form groups */
+.form-group .copy-btn {
+  margin-left: 8px;
+}
+
+.input-group .copy-btn {
+  border-left: none;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+}
+
+/* Copy button variants */
+.copy-btn-primary {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
+.copy-btn-primary:hover {
+  background: var(--accent-primary-dark);
+  border-color: var(--accent-primary-dark);
+}
+
+.copy-btn-secondary {
+  background: var(--surface-secondary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.copy-btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 4px;
+}
+
+.copy-btn-ghost:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}

@@ -1,0 +1,282 @@
+/* Community Wellness Indicator Styles */
+
+.community-wellness-card {
+  background: linear-gradient(
+    135deg,
+    rgba(230, 243, 255, 0.95) 0%,
+    rgba(255, 238, 248, 0.95) 100%
+  );
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(135, 206, 235, 0.1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  animation: fadeInScale 0.5s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.wellness-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.wellness-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.wellness-icon {
+  width: 24px;
+  height: 24px;
+  color: #667eea;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.wellness-mood {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.mood-indicator {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+.wellness-message {
+  color: #5a6c7d;
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.wellness-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.wellness-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.wellness-stat:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.stat-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wellness-pulse {
+  position: absolute;
+  top: 50%;
+  right: -50px;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+}
+
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  animation: pulseRing 4s ease-out infinite;
+}
+
+.pulse-ring-1 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 0s;
+}
+
+.pulse-ring-2 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 1s;
+}
+
+.pulse-ring-3 {
+  width: 200px;
+  height: 200px;
+  animation-delay: 2s;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Dark Mode */
+[data-theme="dark"] .community-wellness-card {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.95) 0%,
+    rgba(28, 33, 40, 0.95) 100%
+  );
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+[data-theme="dark"] .wellness-title {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .wellness-message {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .wellness-stat {
+  background: rgba(34, 39, 46, 0.6);
+}
+
+[data-theme="dark"] .wellness-stat:hover {
+  background: rgba(34, 39, 46, 0.9);
+}
+
+[data-theme="dark"] .stat-value {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .pulse-ring {
+  border-color: rgba(88, 166, 255, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .community-wellness-card {
+    padding: 1rem;
+  }
+
+  .wellness-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .wellness-stat {
+    padding: 0.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .wellness-pulse {
+    display: none;
+  }
+}

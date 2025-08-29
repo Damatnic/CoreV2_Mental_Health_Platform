@@ -1,0 +1,125 @@
+/* AI Chat Status Component Styles */
+
+.ai-chat-status-component {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ai-status-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.ai-status-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.ai-status-text {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ai-status-refresh {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.ai-status-refresh:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.ai-status-refresh:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-status-refresh .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ai-status-providers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ai-status-provider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.provider-name {
+  font-weight: 500;
+  color: var(--text-primary);
+  min-width: 80px;
+}
+
+.provider-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  color: var(--text-secondary);
+}
+
+.provider-status svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.provider-latency {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.ai-status-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.ai-status-footer svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Color Variables */
+:root {
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}

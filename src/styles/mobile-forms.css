@@ -1,0 +1,660 @@
+/**
+ * Mobile Form Optimization CSS
+ * 
+ * Comprehensive mobile-first form styling with:
+ * - Touch-friendly input sizing (44px+ targets)
+ * - Floating label animations
+ * - Enhanced validation feedback
+ * - Mobile-specific input optimizations
+ * - Smooth animations and transitions
+ * - Accessibility compliance
+ */
+
+/* Mobile Form Container */
+.mobile-form-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  background: transparent;
+}
+
+/* Mobile Form Input Container */
+.mobile-form-input-container {
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.mobile-form-input-container.floating-label {
+  margin-top: 12px;
+}
+
+/* Mobile Input Wrapper */
+.mobile-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Base Mobile Form Input */
+.mobile-form-input {
+  width: 100%;
+  min-height: 48px; /* Touch-friendly target size */
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px !important; /* Prevent iOS zoom */
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Floating Label Adjustment */
+.mobile-form-input-container.floating-label .mobile-form-input {
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+/* Input Focus States */
+.mobile-form-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+  background-color: var(--bg-secondary);
+}
+
+/* Input States */
+.mobile-form-input.valid {
+  border-color: var(--success-color);
+}
+
+.mobile-form-input.error {
+  border-color: var(--danger-color);
+  box-shadow: 0 0 0 3px rgba(var(--danger-color-rgb), 0.1);
+}
+
+/* Container States */
+.mobile-form-input-container.focused .mobile-form-input {
+  border-color: var(--primary-color);
+  background-color: var(--bg-secondary);
+}
+
+.mobile-form-input-container.valid .mobile-form-input {
+  border-color: var(--success-color);
+}
+
+.mobile-form-input-container.error .mobile-form-input {
+  border-color: var(--danger-color);
+}
+
+/* Static Labels */
+.mobile-static-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Floating Labels */
+.mobile-floating-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-primary);
+  padding: 0 4px;
+  font-size: 16px;
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  white-space: nowrap;
+  max-width: calc(100% - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-floating-label.active {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.mobile-form-input-container.error .mobile-floating-label.active {
+  color: var(--danger-color);
+}
+
+.mobile-form-input-container.valid .mobile-floating-label.active {
+  color: var(--success-color);
+}
+
+/* Required Asterisk */
+.required-asterisk {
+  color: var(--danger-color);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* Validation Icon */
+.mobile-validation-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.validation-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.validation-success {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.validation-error {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--danger-color);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Help Text */
+.mobile-input-help {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  padding-left: 4px;
+}
+
+/* Error Messages */
+.mobile-input-errors {
+  margin-top: 6px;
+  padding-left: 4px;
+}
+
+.mobile-input-error {
+  display: flex;
+  align-items: center;
+  color: var(--danger-color);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 2px;
+  animation: slideInError 0.2s ease-out forwards;
+}
+
+.mobile-input-error:before {
+  content: "⚠";
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+@keyframes slideInError {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TextArea Specific Styles */
+.mobile-form-textarea-container {
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.mobile-form-textarea-container.floating-label {
+  margin-top: 12px;
+}
+
+.mobile-textarea-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.mobile-form-textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px !important;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  resize: vertical;
+}
+
+.mobile-form-textarea-container.floating-label .mobile-form-textarea {
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+.mobile-form-textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+  background-color: var(--bg-secondary);
+}
+
+.mobile-form-textarea.error {
+  border-color: var(--danger-color);
+}
+
+.mobile-form-textarea.valid {
+  border-color: var(--success-color);
+}
+
+/* Character Count */
+.mobile-character-count {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+  padding-right: 4px;
+}
+
+.mobile-character-count span {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.mobile-character-count span.warning {
+  color: var(--warning-color);
+  font-weight: 600;
+}
+
+/* Select Specific Styles */
+.mobile-form-select-container {
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.mobile-form-select-container.floating-label {
+  margin-top: 12px;
+}
+
+.mobile-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-form-select {
+  width: 100%;
+  min-height: 48px;
+  padding: 16px 48px 16px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px !important;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.mobile-form-select-container.floating-label .mobile-form-select {
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+.mobile-form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+  background-color: var(--bg-secondary);
+}
+
+.mobile-form-select.error {
+  border-color: var(--danger-color);
+}
+
+.mobile-form-select.valid {
+  border-color: var(--success-color);
+}
+
+/* Custom Select Arrow */
+.mobile-select-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-secondary);
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.mobile-form-select-container.focused .mobile-select-arrow {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--primary-color);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .mobile-form-input-container {
+    margin-bottom: 20px;
+  }
+
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    min-height: 44px; /* iOS minimum touch target */
+    font-size: 16px !important; /* Prevent zoom */
+    border-width: 2px;
+  }
+
+  .mobile-floating-label {
+    font-size: 15px;
+  }
+
+  .mobile-floating-label.active {
+    font-size: 11px;
+  }
+
+  /* Improve touch targets for small screens */
+  .mobile-validation-icon {
+    width: 28px;
+    height: 28px;
+    right: 12px;
+  }
+
+  .mobile-select-arrow {
+    right: 12px;
+  }
+}
+
+/* Small phone screens */
+@media (max-width: 374px) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .mobile-form-input-container.floating-label .mobile-form-input,
+  .mobile-form-textarea-container.floating-label .mobile-form-textarea,
+  .mobile-form-select-container.floating-label .mobile-form-select {
+    padding-top: 22px;
+    padding-bottom: 6px;
+  }
+
+  .mobile-floating-label {
+    left: 14px;
+    font-size: 14px;
+  }
+
+  .mobile-floating-label.active {
+    font-size: 10px;
+  }
+}
+
+/* Large mobile screens */
+@media (min-width: 428px) and (max-width: 768px) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .mobile-form-input-container.floating-label .mobile-form-input,
+  .mobile-form-textarea-container.floating-label .mobile-form-textarea,
+  .mobile-form-select-container.floating-label .mobile-form-select {
+    padding-top: 26px;
+    padding-bottom: 10px;
+  }
+
+  .mobile-floating-label {
+    left: 18px;
+    font-size: 17px;
+  }
+
+  .mobile-floating-label.active {
+    font-size: 13px;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .mobile-floating-label {
+    background: var(--bg-primary);
+  }
+
+  .mobile-form-input:focus,
+  .mobile-form-textarea:focus,
+  .mobile-form-select:focus {
+    background-color: var(--bg-secondary);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    border-width: 3px;
+  }
+
+  .mobile-form-input:focus,
+  .mobile-form-textarea:focus,
+  .mobile-form-select:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.2);
+  }
+
+  .mobile-input-error {
+    font-weight: 700;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select,
+  .mobile-floating-label,
+  .mobile-select-arrow {
+    transition: none;
+  }
+
+  .validation-spinner {
+    animation: none;
+  }
+
+  .mobile-input-error {
+    animation: none;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.mobile-form-input:focus-visible,
+.mobile-form-textarea:focus-visible,
+.mobile-form-select:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    border: 2px solid var(--print-border, #000000);
+    background: var(--print-background, transparent);
+    box-shadow: none;
+  }
+
+  .mobile-validation-icon,
+  .mobile-select-arrow {
+    display: none;
+  }
+
+  .mobile-input-errors {
+    color: #000;
+  }
+}
+
+/* Touch feedback states */
+.mobile-form-input:active,
+.mobile-form-textarea:active,
+.mobile-form-select:active {
+  transform: scale(0.999);
+}
+
+/* Haptic feedback class for enhanced mobile interaction */
+.mobile-form-input.haptic-feedback:focus,
+.mobile-form-textarea.haptic-feedback:focus,
+.mobile-form-select.haptic-feedback:focus {
+  animation: hapticPulse 0.1s ease-out;
+}
+
+@keyframes hapticPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.002);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    -webkit-appearance: none;
+    appearance: none;
+    transform: translateZ(0); /* Force hardware acceleration */
+  }
+
+  .mobile-form-select {
+    background-image: none;
+  }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .mobile-form-input,
+  .mobile-form-textarea,
+  .mobile-form-select {
+    background-clip: padding-box;
+  }
+}
+
+/* Form grid layouts for larger mobile screens */
+@media (min-width: 480px) and (max-width: 768px) {
+  .mobile-form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .mobile-form-row .mobile-form-input-container,
+  .mobile-form-row .mobile-form-select-container {
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .mobile-form-row .mobile-form-input-container.half-width,
+  .mobile-form-row .mobile-form-select-container.half-width {
+    flex: 0 1 calc(50% - 8px);
+  }
+}
+
+/* Accessibility enhancements */
+.mobile-form-input[aria-invalid="true"],
+.mobile-form-textarea[aria-invalid="true"],
+.mobile-form-select[aria-invalid="true"] {
+  border-color: var(--danger-color);
+}
+
+.mobile-form-input:required,
+.mobile-form-textarea:required,
+.mobile-form-select:required {
+  box-shadow: none; /* Remove browser default required styling */
+}
+
+/* Loading states */
+.mobile-form-input-container.loading .mobile-form-input,
+.mobile-form-textarea-container.loading .mobile-form-textarea,
+.mobile-form-select-container.loading .mobile-form-select {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.mobile-form-input-container.loading .mobile-validation-icon {
+  display: flex;
+}
+
+.mobile-form-input-container.loading .validation-spinner {
+  display: block;
+}

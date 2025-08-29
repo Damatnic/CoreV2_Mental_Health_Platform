@@ -1,0 +1,424 @@
+/* Breathing Widget Styles - Calming and Elegant */
+
+.breathing-widget-card {
+  background: linear-gradient(
+    135deg,
+    rgba(230, 243, 255, 0.95) 0%,
+    rgba(255, 238, 248, 0.95) 100%
+  );
+  border: 1px solid rgba(135, 206, 235, 0.2);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(135, 206, 235, 0.1);
+  transition: all 0.3s ease;
+}
+
+.breathing-widget-card:hover {
+  box-shadow: 0 15px 50px rgba(135, 206, 235, 0.15);
+}
+
+/* Header */
+.breathing-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.breathing-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.breathing-icon {
+  width: 28px;
+  height: 28px;
+  color: #e74c3c;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.breathing-subtitle {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Instructions */
+.breathing-instructions {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+/* Pattern Selector */
+.pattern-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pattern-option {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.pattern-option:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-option.selected {
+  background: white;
+  border-color: #3498db;
+  box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2);
+}
+
+.pattern-name {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.pattern-timing {
+  color: #3498db;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+  font-family: "Courier New", monospace;
+}
+
+.pattern-description {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  line-height: 1.4;
+}
+
+/* Visualization */
+.breathing-visualization {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.breathing-circle-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breathing-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+  position: absolute;
+}
+
+.breathing-circle.inhale {
+  animation: breatheGlow 4s ease-in-out infinite;
+}
+
+.breathing-circle.exhale {
+  animation: breatheGlow 8s ease-in-out infinite;
+}
+
+@keyframes breatheGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(52, 152, 219, 0.3);
+  }
+}
+
+.breathing-circle-inner {
+  text-align: center;
+  color: white;
+}
+
+.phase-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cycle-count {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Progress Ring */
+.breathing-progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(1);
+}
+
+.progress-ring-fill {
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+/* Tips */
+.breathing-tips {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.tip-text {
+  color: #7f8c8d;
+  font-size: 1rem;
+  font-style: italic;
+  margin: 0;
+  min-height: 1.5rem;
+}
+
+/* Controls */
+.breathing-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.breathing-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.breathing-button.start {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.breathing-button.start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.breathing-button.stop {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.breathing-button.stop:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+}
+
+.breathing-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Stats */
+.breathing-stats {
+  display: flex;
+  gap: 1rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-icon {
+  width: 16px;
+  height: 16px;
+  color: #e74c3c;
+}
+
+/* Embedded Mini Widget */
+.breathing-widget-embedded {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.breathing-mini {
+  position: relative;
+}
+
+.breathing-mini-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.breathing-mini-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.breathing-mini-icon {
+  width: 28px;
+  height: 28px;
+  color: white;
+  z-index: 2;
+  position: relative;
+}
+
+.breathing-mini-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: miniPulse 2s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+@keyframes miniPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.3;
+  }
+}
+
+.breathing-mini-text {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(44, 62, 80, 0.95);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .breathing-widget-card {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.95) 0%,
+    rgba(28, 33, 40, 0.95) 100%
+  );
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+[data-theme="dark"] .breathing-title {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .pattern-option {
+  background: rgba(34, 39, 46, 0.8);
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .pattern-option:hover {
+  background: rgba(34, 39, 46, 0.95);
+}
+
+[data-theme="dark"] .pattern-option.selected {
+  background: rgba(88, 166, 255, 0.1);
+  border-color: #58a6ff;
+}
+
+[data-theme="dark"] .pattern-name {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .tip-text,
+[data-theme="dark"] .breathing-subtitle,
+[data-theme="dark"] .pattern-description {
+  color: #768390;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .breathing-widget-card {
+    padding: 1.5rem;
+  }
+
+  .pattern-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .breathing-circle-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .breathing-circle {
+    width: 160px;
+    height: 160px;
+  }
+
+  .breathing-progress-ring {
+    width: 250px;
+    height: 250px;
+  }
+
+  .breathing-progress-ring circle {
+    r: 115;
+    cx: 125;
+    cy: 125;
+  }
+}

@@ -1,0 +1,83 @@
+# robots.txt for Astral Core Mental Health Platform
+# This site provides mental health support and should be indexed responsibly
+
+User-agent: *
+
+# Allow indexing of main public pages
+Allow: /
+Allow: /about
+Allow: /help
+Allow: /community-guidelines
+Allow: /legal
+Allow: /privacy
+
+# Block sensitive and private areas
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /chat/
+Disallow: /ai-chat/
+Disallow: /helper-dashboard/
+Disallow: /moderation/
+Disallow: /sessions/
+Disallow: /video-chat/
+Disallow: /settings/
+
+# Block API endpoints and functions
+Disallow: /api/
+Disallow: /.netlify/
+Disallow: /.well-known/
+Disallow: /assets/
+
+# Block offline and service worker files
+Disallow: /sw.js
+Disallow: /service-worker.js
+Disallow: /workbox-*
+Disallow: /offline.html
+
+# Block development and backup files
+Disallow: /*.json$
+Disallow: /*.log$
+Disallow: /*.bak$
+Disallow: /*~$
+Disallow: /backups/
+Disallow: /temp/
+Disallow: /tmp/
+
+# Block video files from direct indexing
+Disallow: /Videos/
+Disallow: /*.mp4$
+Disallow: /*.webm$
+Disallow: /*.mov$
+
+# Special rules for health-focused crawlers
+User-agent: HealthBot
+User-agent: MedicalCrawler
+Allow: /crisis-resources
+Allow: /emergency-contacts
+Allow: /help
+
+# Block aggressive crawlers that might impact server performance
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Disallow: /
+
+# Allow social media crawlers for better sharing
+User-agent: facebookexternalhit/*
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://astral-core-react.netlify.app/sitemap.xml
+
+# Cache directive for robots.txt itself
+# Cache-Control: public, max-age=3600

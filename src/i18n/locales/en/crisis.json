@@ -1,0 +1,258 @@
+{
+  "emergency": {
+    "title": "Crisis Support",
+    "subtitle": "You are not alone. Help is available 24/7.",
+    "immediate_danger": "If you are in immediate danger, call 911 or go to your nearest emergency room.",
+    "call_988": {
+      "title": "Call 988 Suicide & Crisis Lifeline",
+      "description": "Free and confidential support 24/7 for people in distress and their loved ones.",
+      "number": "988",
+      "action": "Call Now"
+    },
+    "text_crisis": {
+      "title": "Crisis Text Line",
+      "description": "Text with a trained crisis counselor 24/7 from anywhere in the US.",
+      "text": "Text HOME to 741741",
+      "action": "Text Now"
+    },
+    "chat_online": {
+      "title": "Online Crisis Chat",
+      "description": "Chat online with a trained crisis counselor.",
+      "action": "Chat Now"
+    },
+    "emergency_contacts": {
+      "title": "Emergency Contacts",
+      "police": "Police: 911",
+      "fire": "Fire Department: 911",
+      "ambulance": "Ambulance: 911",
+      "poison_control": "Poison Control: 1-800-222-1222"
+    }
+  },
+  "support": {
+    "you_matter": "You matter.",
+    "not_alone": "You are not alone.",
+    "help_available": "Help is available.",
+    "safe_space": "This is a safe space.",
+    "confidential": "Your conversations are confidential.",
+    "no_judgment": "No judgment here.",
+    "take_time": "Take your time.",
+    "breathe": "Remember to breathe.",
+    "one_step": "One step at a time.",
+    "tomorrow_different": "Tomorrow can be different.",
+    "strength_within": "You have strength within you.",
+    "reach_out": "It's okay to reach out for help."
+  },
+  "safety_plan": {
+    "title": "Crisis Safety Plan",
+    "description": "A personalized plan to help you stay safe during a crisis.",
+    "step1": {
+      "title": "Step 1: Warning Signs",
+      "description": "Recognize your personal warning signs that a crisis may be developing.",
+      "examples": "Examples: feeling hopeless, isolation, increased substance use, sleep changes"
+    },
+    "step2": {
+      "title": "Step 2: Internal Coping Strategies",
+      "description": "Things you can do on your own to help yourself feel better.",
+      "examples": "Examples: listen to music, take a walk, practice deep breathing, journal"
+    },
+    "step3": {
+      "title": "Step 3: Social Contacts for Distraction",
+      "description": "People and social settings that can help distract from the crisis.",
+      "examples": "Examples: friends, family members, social activities, support groups"
+    },
+    "step4": {
+      "title": "Step 4: Contacts for Help",
+      "description": "People you can ask for help during a crisis.",
+      "examples": "Examples: family members, friends, mental health professionals, crisis lines"
+    },
+    "step5": {
+      "title": "Step 5: Professional Contacts",
+      "description": "Mental health professionals and agencies to contact during a crisis.",
+      "examples": "Examples: therapist, psychiatrist, crisis center, emergency room"
+    },
+    "step6": {
+      "title": "Step 6: Making the Environment Safe",
+      "description": "Ways to remove or restrict access to lethal means.",
+      "examples": "Examples: remove firearms, medications, sharp objects; ask someone to keep them"
+    },
+    "step7": {
+      "title": "Step 7: Reasons for Living",
+      "description": "Things that are important to you and give your life meaning.",
+      "examples": "Examples: family, friends, pets, goals, spiritual beliefs, future plans"
+    }
+  },
+  "resources": {
+    "hotlines": {
+      "title": "Crisis Hotlines",
+      "suicide_prevention": "Suicide Prevention Lifeline",
+      "crisis_text": "Crisis Text Line",
+      "domestic_violence": "National Domestic Violence Hotline",
+      "substance_abuse": "SAMHSA National Helpline",
+      "lgbt_crisis": "LGBT National Crisis Hotline",
+      "veterans": "Veterans Crisis Line",
+      "teens": "Teen Line",
+      "eating_disorders": "National Eating Disorders Association"
+    },
+    "online_resources": {
+      "title": "Online Resources",
+      "mental_health_america": "Mental Health America",
+      "nami": "National Alliance on Mental Illness",
+      "crisis_chat": "Crisis Chat Services",
+      "therapy_apps": "Mental Health Apps",
+      "support_groups": "Online Support Groups"
+    },
+    "local_resources": {
+      "title": "Local Resources",
+      "hospitals": "Local Emergency Rooms",
+      "mental_health_centers": "Community Mental Health Centers",
+      "therapists": "Local Therapists",
+      "support_groups": "Local Support Groups",
+      "crisis_centers": "Local Crisis Centers"
+    }
+  },
+  "coping": {
+    "title": "Coping Strategies",
+    "breathing": {
+      "title": "Deep Breathing",
+      "description": "Slow, deep breathing can help calm your mind and body.",
+      "steps": [
+        "Breathe in slowly through your nose for 4 counts",
+        "Hold your breath for 4 counts",
+        "Breathe out slowly through your mouth for 6 counts",
+        "Repeat until you feel calmer"
+      ]
+    },
+    "grounding": {
+      "title": "5-4-3-2-1 Grounding Technique",
+      "description": "Use your senses to ground yourself in the present moment.",
+      "steps": [
+        "5 things you can see",
+        "4 things you can touch",
+        "3 things you can hear",
+        "2 things you can smell",
+        "1 thing you can taste"
+      ]
+    },
+    "distraction": {
+      "title": "Healthy Distractions",
+      "activities": [
+        "Listen to calming music",
+        "Watch a funny video",
+        "Call a friend or family member",
+        "Take a warm shower or bath",
+        "Go for a walk outside",
+        "Practice a hobby",
+        "Write in a journal",
+        "Do some light exercise"
+      ]
+    },
+    "self_care": {
+      "title": "Self-Care Activities",
+      "immediate": [
+        "Drink a glass of water",
+        "Eat a healthy snack",
+        "Get some fresh air",
+        "Listen to music",
+        "Practice deep breathing"
+      ],
+      "short_term": [
+        "Take a warm bath",
+        "Call a supportive friend",
+        "Watch a comforting movie",
+        "Practice meditation",
+        "Do gentle exercise"
+      ],
+      "long_term": [
+        "Maintain regular sleep schedule",
+        "Eat nutritious meals",
+        "Exercise regularly",
+        "Stay connected with loved ones",
+        "Practice stress management"
+      ]
+    }
+  },
+  "messages": {
+    "crisis_detected": "We're here for you. It sounds like you might be going through a difficult time.",
+    "help_available": "Professional help is available 24/7. You don't have to face this alone.",
+    "safety_first": "Your safety is our priority. Please consider reaching out for immediate help if you're in danger.",
+    "not_therapist": "Remember: This platform provides peer support, not professional therapy.",
+    "emergency_services": "If this is a medical emergency, please call 911 or go to your nearest emergency room.",
+    "confidential_support": "All crisis support conversations are confidential and secure.",
+    "family_context": "Consider involving trusted family members who can provide additional support.",
+    "community_context": "Your community and cultural supports can be valuable resources during this time.",
+    "professional_context": "Professional mental health services are available and recommended for ongoing support.",
+    "low_risk_response": "I understand you're going through a difficult time. Consider reaching out to friends, family, or a counselor who can provide support.",
+    "moderate_risk_response": "It sounds like you're experiencing significant distress. Please consider speaking with a mental health professional or calling a crisis helpline for support.",
+    "high_risk_response": "I'm very concerned about your wellbeing. Please reach out for immediate support from a crisis counselor, trusted friend, or family member.",
+    "urgent_risk_response": "This appears to be a mental health emergency. Please contact emergency services, a crisis hotline, or go to your nearest emergency room immediately."
+  },
+  "crisis_detection_dashboard": "Crisis Detection Dashboard",
+  "dashboard": {
+    "current_status": "Current Status",
+    "risk_level": "Risk Level",
+    "emotional_state": "Emotional State",
+    "urgency": "Intervention Urgency",
+    "emotional_trend": "Emotional Trend",
+    "risk_prediction": "Risk Prediction",
+    "predicted_24h_risk": "Predicted 24h Risk",
+    "model_performance": "Model Performance",
+    "recommended_interventions": "Recommended Interventions",
+    "priority": "Priority",
+    "effective": "Effective",
+    "no_interventions_needed": "No interventions needed at this time",
+    "view_detailed_analysis": "View Detailed Analysis",
+    "detailed_analysis": "Detailed Analysis",
+    "no_emotional_data": "No emotional data available yet",
+    "insufficient_prediction_data": "Insufficient data for prediction"
+  },
+  "test": {
+    "enter_text_to_analyze": "Enter text to analyze for crisis indicators...",
+    "analyze_text": "Analyze Text"
+  },
+  "alert": {
+    "none_risk_detected": "No Crisis Risk Detected",
+    "low_risk_detected": "Low Crisis Risk Detected",
+    "medium_risk_detected": "Medium Crisis Risk Detected",
+    "high_risk_detected": "High Crisis Risk Detected",
+    "critical_risk_detected": "Critical Crisis Risk Detected",
+    "immediate_risk_detected": "Immediate Crisis Risk - Emergency",
+    "risk_level_description": "Current risk level: {{level}}%",
+    "recommended_actions": "Recommended Actions"
+  },
+  "trend": {
+    "improving": "Improving",
+    "deteriorating": "Deteriorating",
+    "stable": "Stable",
+    "increasing": "Increasing",
+    "decreasing": "Decreasing",
+    "insufficient_data": "Insufficient Data"
+  },
+  "urgency": {
+    "none": "None",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "immediate": "Immediate"
+  },
+  "metrics": {
+    "accuracy": "Accuracy",
+    "confidence": "Confidence",
+    "total_analyses": "Total Analyses"
+  },
+  "analysis": {
+    "psychological_assessment": "Psychological Assessment",
+    "behavioral_patterns": "Behavioral Patterns",
+    "bias_adjustments": "Cultural & Bias Adjustments",
+    "no_bias_adjustments": "No bias adjustments were applied"
+  },
+  "assessment": {
+    "depression": "Depression Indicators",
+    "anxiety": "Anxiety Indicators",
+    "suicidal_ideation": "Suicidal Ideation"
+  },
+  "patterns": {
+    "communication_style": "Communication Style",
+    "help_seeking": "Help-Seeking Behavior",
+    "triggers": "Escalation Triggers"
+  }
+}

@@ -1,0 +1,110 @@
+/* CoreV2 Mental Health Platform - Main App Styles */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Mobile overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+  }
+}
+
+/* Theme support */
+.theme-light {
+  --primary-color: #2563eb;
+  --background-color: #ffffff;
+  --text-color: #1f2937;
+  --border-color: #e5e7eb;
+}
+
+.theme-dark {
+  --primary-color: #3b82f6;
+  --background-color: #1f2937;
+  --text-color: #f9fafb;
+  --border-color: #374151;
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color, #ffffff);
+  color: var(--text-color, #1f2937);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--primary-color, #2563eb);
+  outline-offset: 2px;
+}
+
+/* Button reset */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+/* Link styles */
+a {
+  color: var(--primary-color, #2563eb);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

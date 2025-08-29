@@ -1,0 +1,188 @@
+/**
+ * Z-Index Management System
+ * Centralized z-index values to prevent layering conflicts
+ * 
+ * Scale:
+ * -1 to 0:     Background decorative elements
+ * 1-10:        Base content layers
+ * 100-200:     Sticky elements (headers, footers)
+ * 1000-2000:   Dropdowns and tooltips
+ * 3000-4000:   Fixed overlays and sidebars
+ * 5000-6000:   Modal backdrops
+ * 7000-8000:   Modals
+ * 9000-9500:   Toast notifications
+ * 9500-9999:   Critical UI (crisis alerts)
+ * 10000:       Dev tools and emergency overlays
+ */
+
+:root {
+  /* Background layers */
+  --z-background-decoration: -1;
+  --z-background: 0;
+
+  /* Content layers */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-elevated: 20;
+
+  /* Sticky elements */
+  --z-sticky: 100;
+  --z-header: 150;
+  --z-sidebar: 200;
+
+  /* Overlays */
+  --z-dropdown: 1000;
+  --z-tooltip: 1100;
+  --z-popover: 1200;
+
+  /* Fixed elements */
+  --z-fixed-overlay: 3000;
+  --z-drawer: 3100;
+  --z-fab: 3200;
+
+  /* Modal system */
+  --z-modal-backdrop: 5000;
+  --z-modal: 7000;
+  --z-modal-content: 7100;
+
+  /* Notifications */
+  --z-toast: 9000;
+  --z-alert: 9100;
+  --z-snackbar: 9200;
+
+  /* Critical UI */
+  --z-crisis-alert: 9500;
+  --z-help-button: 9600;
+  --z-accessibility-controls: 9700;
+  --z-emergency-modal: 9800;
+
+  /* Development */
+  --z-dev-tools: 10000;
+}
+
+/* Apply z-index to common components */
+
+/* Backgrounds */
+.background-decoration {
+  z-index: var(--z-background-decoration) !important;
+}
+
+/* Content */
+.card {
+  z-index: var(--z-base);
+}
+
+.card:hover {
+  z-index: var(--z-raised);
+}
+
+/* Headers and Navigation */
+.header,
+.navbar {
+  z-index: var(--z-header) !important;
+}
+
+.sidebar {
+  z-index: var(--z-sidebar) !important;
+}
+
+/* Dropdowns and Tooltips */
+.dropdown,
+.dropdown-menu {
+  z-index: var(--z-dropdown) !important;
+}
+
+.tooltip {
+  z-index: var(--z-tooltip) !important;
+}
+
+.popover {
+  z-index: var(--z-popover) !important;
+}
+
+/* Fixed Elements */
+.drawer {
+  z-index: var(--z-drawer) !important;
+}
+
+.fab,
+.floating-action-button {
+  z-index: var(--z-fab) !important;
+}
+
+/* Modals */
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop) !important;
+}
+
+.modal {
+  z-index: var(--z-modal) !important;
+}
+
+.modal-content {
+  z-index: var(--z-modal-content) !important;
+}
+
+/* Notifications */
+.toast-container {
+  z-index: var(--z-toast) !important;
+}
+
+.alert-banner {
+  z-index: var(--z-alert) !important;
+}
+
+.snackbar {
+  z-index: var(--z-snackbar) !important;
+}
+
+/* Crisis and Emergency UI */
+.crisis-alert,
+.crisis-banner {
+  z-index: var(--z-crisis-alert) !important;
+}
+
+.help-now-button,
+.emergency-button {
+  z-index: var(--z-help-button) !important;
+}
+
+.accessibility-button,
+.accessibility-panel {
+  z-index: var(--z-accessibility-controls) !important;
+}
+
+/* Specific component overrides */
+.tether-view::before {
+  z-index: var(--z-background-decoration) !important;
+}
+
+.feed-view .post-card {
+  z-index: var(--z-base);
+}
+
+.feed-view .post-card:hover {
+  z-index: var(--z-raised);
+}
+
+.ai-chat-modal {
+  z-index: var(--z-modal) !important;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .mobile-sidebar {
+    z-index: var(--z-drawer) !important;
+  }
+
+  .mobile-overlay {
+    z-index: calc(var(--z-drawer) - 1) !important;
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] {
+  /* Dark mode might need slight adjustments for visibility */
+  --z-raised: 15;
+  --z-elevated: 25;
+}

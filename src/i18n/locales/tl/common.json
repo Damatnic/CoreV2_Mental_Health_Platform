@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Astral Core",
+    "tagline": "Ang inyong ligtas na lugar para sa suportang pangkalusugan ng isip",
+    "loading": "Naglo-load ng inyong ligtas na lugar...",
+    "error": "May nangyaring mali. Pakisubukan ulit.",
+    "offline": "Offline kayo. Ang mga resources para sa krisis ay nananatiling available."
+  },
+  "navigation": {
+    "share": "Ibahagi",
+    "my_activity": "Aking Aktibidad",
+    "ai_chat": "Makipag-chat sa AI",
+    "my_safety_plan": "Aking Safety Plan",
+    "community_feed": "Community Feed",
+    "reflections": "Mga Pagmumuni",
+    "get_help_now": "Kumuha ng Tulong Ngayon",
+    "quiet_space": "Tahimik na Lugar",
+    "wellness_videos": "Mga Wellness Videos",
+    "guidelines": "Mga Gabay",
+    "settings": "Mga Setting",
+    "crisis_resources": "Mga Resources para sa Krisis"
+  },
+  "crisis": {
+    "immediate_help": "Kailangan ng agarang tulong?",
+    "call_988": "Tumawag sa 2919 para sa Crisis Support",
+    "you_matter": "Mahalaga kayo. Hindi kayo nag-iisa.",
+    "help_available": "Meron pong tulong 24/7"
+  },
+  "common": {
+    "submit": "Ipasa",
+    "cancel": "Kanselahin",
+    "save": "I-save",
+    "edit": "I-edit",
+    "delete": "Burahin",
+    "yes": "Oo",
+    "no": "Hindi",
+    "loading": "Naglo-load...",
+    "help": "Tulong",
+    "support": "Suporta"
+  },
+  "mental_health": {
+    "categories": {
+      "anxiety": "Pagkabalisa",
+      "depression": "Kalungkutan",
+      "stress": "Stress",
+      "trauma": "Trauma",
+      "family": "Pamilya",
+      "crisis": "Crisis Support"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "pt-BR": "Português (Brasil)",
+    "pt-PT": "Português (Portugal)",
+    "ar": "العربية",
+    "zh": "中文",
+    "vi": "Tiếng Việt",
+    "tl": "Tagalog"
+  }
+}

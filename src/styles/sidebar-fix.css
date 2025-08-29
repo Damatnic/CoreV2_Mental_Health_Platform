@@ -1,0 +1,396 @@
+/* Sidebar Display Fix - Single sidebar that adapts to screen size */
+
+/* Base layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Sidebar styles for desktop */
+@media (min-width: 769px) {
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    min-width: 0;
+  }
+
+  /* Hide any mobile navigation elements on desktop */
+  .mobile-nav,
+  .mobile-bottom-nav,
+  .mobile-sidebar-toggle,
+  .mobile-sidebar-nav {
+    display: none !important;
+  }
+}
+
+/* Sidebar styles for mobile */
+@media (max-width: 768px) {
+  .app-layout {
+    display: block;
+    padding-bottom: 60px; /* Space for bottom nav */
+  }
+
+  /* Transform sidebar to mobile bottom nav */
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    border-right: none;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  /* Adjust sidebar content for mobile */
+  .sidebar .sidebar-nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar .sidebar-nav-item {
+    flex: 0 0 auto;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  /* Hide text labels on mobile, show only icons */
+  .sidebar .sidebar-nav-item span,
+  .sidebar .sidebar-nav-item .nav-text {
+    display: none !important;
+  }
+
+  /* Ensure icons are visible and properly sized */
+  .sidebar .sidebar-nav-item svg,
+  .sidebar .sidebar-nav-item .nav-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  /* Hide desktop-only elements on mobile */
+  .sidebar .sidebar-header,
+  .sidebar .sidebar-footer,
+  .sidebar .helper-count,
+  .sidebar .xp-bar,
+  .sidebar .sidebar-title,
+  .sidebar .user-info {
+    display: none !important;
+  }
+
+  .main-content {
+    width: 100%;
+    min-height: calc(100vh - 60px);
+  }
+}
+
+/* Remove any duplicate sidebar components */
+.desktop-sidebar,
+.mobile-sidebar-nav,
+.MobileSidebarNav {
+  display: none !important;
+}
+
+/* Button Styling Fixes */
+.btn,
+.app-button,
+.btn-enhanced,
+button[class*="btn"] {
+  /* Reset conflicting styles */
+  all: unset;
+
+  /* Apply consistent button styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  gap: 0.5rem;
+  min-height: 44px;
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+/* Button size variants */
+.btn-xs,
+.btn.xs,
+.app-button.xs {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  min-height: 32px;
+}
+
+.btn-sm,
+.btn.sm,
+.app-button.sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  min-height: 36px;
+}
+
+.btn-md,
+.btn.md,
+.app-button.md {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  min-height: 44px;
+}
+
+.btn-lg,
+.btn.lg,
+.app-button.lg {
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+  min-height: 48px;
+}
+
+.btn-xl,
+.btn.xl,
+.app-button.xl {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.15rem;
+  min-height: 56px;
+}
+
+/* Primary button variant */
+.btn-primary,
+.btn.primary,
+.app-button.primary,
+.btn-enhanced.primary {
+  background: var(--accent-primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover,
+.btn.primary:hover,
+.app-button.primary:hover,
+.btn-enhanced.primary:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-primary:active,
+.btn.primary:active,
+.app-button.primary:active,
+.btn-enhanced.primary:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(52, 152, 219, 0.3);
+}
+
+/* Secondary button variant */
+.btn-secondary,
+.btn.secondary,
+.app-button.secondary,
+.btn-enhanced.secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover,
+.btn.secondary:hover,
+.app-button.secondary:hover,
+.btn-enhanced.secondary:hover {
+  background: var(--bg-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ghost button variant */
+.btn-ghost,
+.btn.ghost,
+.app-button.ghost,
+.btn-enhanced.ghost {
+  background: transparent;
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+.btn-ghost:hover,
+.btn.ghost:hover,
+.app-button.ghost:hover,
+.btn-enhanced.ghost:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Danger button variant */
+.btn-danger,
+.btn.danger,
+.app-button.danger,
+.btn-enhanced.danger {
+  background: var(--accent-danger);
+  color: white;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-danger:hover,
+.btn.danger:hover,
+.app-button.danger:hover,
+.btn-enhanced.danger:hover {
+  background: var(--accent-danger-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+/* Success button variant */
+.btn-success,
+.btn.success,
+.app-button.success,
+.btn-enhanced.success {
+  background: var(--accent-success);
+  color: white;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+}
+
+.btn-success:hover,
+.btn.success:hover,
+.app-button.success:hover,
+.btn-enhanced.success:hover {
+  background: var(--accent-success-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+/* Disabled state */
+.btn:disabled,
+.app-button:disabled,
+.btn-enhanced:disabled,
+.btn[disabled],
+.app-button[disabled],
+.btn-enhanced[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
+/* Loading state */
+.btn.loading,
+.app-button.loading,
+.btn-enhanced.loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading::after,
+.app-button.loading::after,
+.btn-enhanced.loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: button-loading-spinner 0.6s linear infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Focus visible for accessibility */
+.btn:focus-visible,
+.app-button:focus-visible,
+.btn-enhanced:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Icon only buttons */
+.btn.icon-only,
+.app-button.icon-only,
+.btn-enhanced.icon-only {
+  padding: 0.75rem;
+  min-width: 44px;
+  aspect-ratio: 1;
+}
+
+/* Ensure buttons don't break layout */
+.btn svg,
+.app-button svg,
+.btn-enhanced svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Remove any default browser button styles */
+button.btn,
+button.app-button,
+button.btn-enhanced {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+
+/* Mobile-specific button adjustments */
+@media (max-width: 768px) {
+  .btn,
+  .app-button,
+  .btn-enhanced {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .btn-sm,
+  .app-button.sm,
+  .btn-enhanced.sm {
+    min-height: 44px;
+  }
+}

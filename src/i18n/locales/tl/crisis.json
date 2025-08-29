@@ -1,0 +1,154 @@
+{
+  "emergency": {
+    "title": "Crisis Support",
+    "subtitle": "Hindi kayo nag-iisa. Meron pong tulong 24/7.",
+    "immediate_danger": "Kung kayo ay nasa agarang panganib, tumawag sa 911 o pumunta sa pinakamalapit na emergency room.",
+    "call_988": {
+      "title": "Tumawag sa 2919 Crisis Hotline",
+      "description": "Libreng at confidential na suporta 24/7 para sa mga taong nasa krisis.",
+      "number": "2919",
+      "action": "Tumawag Ngayon"
+    },
+    "additional_resources": {
+      "hopeline": {
+        "title": "Hopeline Philippines",
+        "number": "(02) 804-4673",
+        "mobile": "0917-558-4673",
+        "description": "24/7 suicide prevention hotline"
+      },
+      "ncmh_crisis": {
+        "title": "NCMH Crisis Hotline",
+        "number": "0917-899-8727",
+        "description": "National Center for Mental Health"
+      },
+      "in_touch": {
+        "title": "In Touch Crisis Line",
+        "number": "(02) 8893-7603",
+        "description": "24/7 emotional support"
+      },
+      "bantay_bata": {
+        "title": "Bantay Bata 163",
+        "number": "163",
+        "description": "Child protection hotline"
+      }
+    }
+  },
+  "cultural_support": {
+    "bayanihan_spirit": {
+      "title": "Bayanihan at Pakikipagkapwa",
+      "description": "Ang komunidad ay handang tumulong",
+      "community_help": "Tulong ng barangay",
+      "neighbor_support": "Suporta ng kapitbahay",
+      "collective_strength": "Lakas ng pagkakaisa",
+      "shared_burden": "Pagdadamayan sa hirap"
+    },
+    "family_centered": {
+      "title": "Suporta ng Pamilya",
+      "kapamilya": "Ang pamilya mo ay nandito",
+      "extended_family": "Kamag-anak na maaasahan",
+      "family_council": "Payo ng nakatatanda",
+      "utang_na_loob": "Pagpapahalaga sa pamilya",
+      "family_honor": "Pangangalaga sa dangal"
+    },
+    "spiritual_healing": {
+      "title": "Espirituwal na Gabay",
+      "prayer_power": "Lakas ng panalangin",
+      "novena": "Nobena para sa kapayapaan",
+      "church_support": "Suporta ng simbahan",
+      "priest_counseling": "Payo ng pari",
+      "faith_community": "Samahan sa pananampalataya",
+      "devotion": "Debosyon at pag-asa"
+    },
+    "traditional_practices": {
+      "title": "Tradisyonal na Paraan",
+      "albularyo": "Albularyo/Manghihilot",
+      "herbal_healing": "Halamang gamot",
+      "hilot_massage": "Hilot para sa ginhawa",
+      "spiritual_cleansing": "Paglilinis ng espiritu",
+      "community_elder": "Karunungan ng matatanda"
+    },
+    "hiya_management": {
+      "title": "Pag-iwas sa Kahihiyan",
+      "discrete_help": "Tahimik na tulong",
+      "face_saving": "Pag-ingat sa reputasyon",
+      "private_matters": "Pribadong usapin",
+      "gradual_disclosure": "Unti-unting pagbubukas"
+    }
+  },
+  "support": {
+    "you_matter": "Mahalaga kayo.",
+    "not_alone": "Hindi kayo nag-iisa.",
+    "help_available": "May tulong na makakakuha.",
+    "safe_space": "Ligtas na lugar ito.",
+    "take_time": "Dahan-dahan lang.",
+    "breathe": "Huminga ng malalim.",
+    "family_context": "Isaalang-alang ang pagdamay sa mga pinagkakatiwalaang miyembro ng pamilya na maaaring magbigay ng karagdagang suporta.",
+    "god_with_you": "Kasama mo ang Diyos.",
+    "tomorrow_hope": "May pag-asa bukas.",
+    "bahala_na": "Bahala na, kakayanin.",
+    "ginhawa_coming": "Darating ang ginhawa.",
+    "kapwa_support": "Nandito ang kapwa mo.",
+    "malakas_ka": "Malakas ka, kakayanin mo."
+  },
+  "messages": {
+    "crisis_detected": "Nandito kami para sa inyo. Mukhang dumadaan kayo sa mahirap na panahon.",
+    "help_available": "Maraming paraan para makakuha ng tulong, kasama ang pribado at tahimik na suporta.",
+    "family_context": "Kung handa na kayo, makipag-usap sa pinagkakatiwalaang kamag-anak o humingi ng payo sa nakatatanda.",
+    "spiritual_support": "Hanapin ang lakas sa panalangin, simbahan, o sa inyong pananampalataya.",
+    "community_help": "Ang barangay at komunidad ay handang tumulong sa paraang komportable para sa inyo.",
+    "traditional_approach": "May mga tradisyonal na paraan din na maaaring makatulong sa inyong kalagayan.",
+    "preserve_dignity": "Nauunawaan namin ang kahalagahan ng hiya at dangal ng pamilya.",
+    "gradual_healing": "Hindi kailangang madaliin - unti-unti, magiging maayos din."
+  },
+  "coping_strategies": {
+    "title": "Mga Paraan ng Pagkaya",
+    "prayer_novena": "Mag-novena o rosaryo",
+    "family_gathering": "Makipagkuwentuhan sa pamilya",
+    "bayanihan_activity": "Sumali sa bayanihan",
+    "church_attendance": "Magsimba regular",
+    "pakikipagkwentuhan": "Magkwentuhan sa kumpare/kumare",
+    "nature_relaxation": "Magpahinga sa kalikasan",
+    "music_videoke": "Mag-videoke para sa saya",
+    "traditional_healing": "Magpahilot o albularyo",
+    "community_fiesta": "Sumali sa pistang bayan"
+  },
+  "professional_help": {
+    "title": "Propesyonal na Tulong",
+    "psychiatrist": "Psychiatrist/Doktor",
+    "psychologist": "Psychologist",
+    "counselor": "Counselor o Therapist",
+    "social_worker": "Social Worker",
+    "barangay_health": "Barangay Health Center",
+    "municipal_health": "Municipal Health Office",
+    "doh_facilities": "DOH Mental Health Facilities",
+    "online_counseling": "Online na konsultasyon"
+  },
+  "resources": {
+    "hotlines": {
+      "title": "Mga Hotline",
+      "crisis_hotline": "Crisis Hotline",
+      "suicide_prevention": "Suicide Prevention",
+      "mental_health": "Mental Health Support",
+      "youth_helpline": "Kabataang Hotline",
+      "women_desk": "VAWC Women's Desk",
+      "child_protection": "Child Protection"
+    },
+    "local_resources": {
+      "title": "Lokal na Tulong",
+      "barangay_captain": "Kapitan ng Barangay",
+      "health_center": "Health Center",
+      "social_services": "DSWD Office",
+      "church_programs": "Church Programs",
+      "ngo_support": "NGO Support Groups"
+    }
+  },
+  "bahala_na": {
+    "title": "Pag-asa at Lakas ng Loob",
+    "resilience": "Ang Filipino ay matatag",
+    "hope_message": "Sa hirap at ginhawa, magkasama",
+    "collective_strength": "Mas malakas tayo kapag sama-sama",
+    "faith_anchor": "Hawak ng Diyos ang bukas",
+    "family_bond": "Ang pamilya ang sandigan",
+    "tomorrow_promise": "May magandang bukas na naghihintay"
+  }
+}

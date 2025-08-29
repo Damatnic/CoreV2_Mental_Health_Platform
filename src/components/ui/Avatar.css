@@ -1,0 +1,475 @@
+/**
+ * Avatar Component Styles
+ * Beautiful, accessible avatar system
+ */
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-neutral-200);
+  color: white;
+  font-weight: var(--font-weight-medium);
+  user-select: none;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+/* ===== Size Variants ===== */
+
+.avatar--xs {
+  width: 24px;
+  height: 24px;
+  font-size: var(--text-xs);
+}
+
+.avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-sm);
+}
+
+.avatar--md {
+  width: 40px;
+  height: 40px;
+  font-size: var(--text-sm);
+}
+
+.avatar--lg {
+  width: 48px;
+  height: 48px;
+  font-size: var(--text-base);
+}
+
+.avatar--xl {
+  width: 64px;
+  height: 64px;
+  font-size: var(--text-lg);
+}
+
+.avatar--2xl {
+  width: 80px;
+  height: 80px;
+  font-size: var(--text-xl);
+}
+
+/* ===== Shape Variants ===== */
+
+.avatar--circle {
+  border-radius: var(--radius-full);
+}
+
+.avatar--rounded {
+  border-radius: var(--radius-lg);
+}
+
+.avatar--square {
+  border-radius: var(--radius-base);
+}
+
+/* ===== Interactive States ===== */
+
+.avatar--clickable {
+  cursor: pointer;
+}
+
+.avatar--clickable:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.avatar--clickable:active {
+  transform: scale(0.95);
+}
+
+.avatar--clickable:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* ===== Avatar Elements ===== */
+
+.avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.avatar__initials {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.avatar__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.avatar:hover .avatar__content {
+  opacity: 1;
+}
+
+.avatar__skeleton {
+  position: absolute;
+  inset: 0;
+  background: var(--color-neutral-200);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ===== Status Indicator ===== */
+
+.avatar--has-status {
+  position: relative;
+}
+
+.avatar__status {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  min-width: 8px;
+  min-height: 8px;
+  border: 2px solid var(--color-bg-elevated);
+  border-radius: var(--radius-full);
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);
+}
+
+.avatar__status--online {
+  background: var(--color-success);
+}
+
+.avatar__status--offline {
+  background: var(--color-neutral-400);
+}
+
+.avatar__status--away {
+  background: var(--color-warning);
+}
+
+.avatar__status--busy {
+  background: var(--color-error);
+}
+
+.avatar__status--custom {
+  /* Custom color will be applied via inline style */
+}
+
+/* ===== Avatar Group ===== */
+
+.avatar-group {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.avatar-group--tight .avatar-group__item {
+  margin-right: -8px;
+}
+
+.avatar-group--normal .avatar-group__item {
+  margin-right: -4px;
+}
+
+.avatar-group--loose .avatar-group__item {
+  margin-right: 4px;
+}
+
+.avatar-group__item {
+  border: 2px solid var(--color-bg-elevated);
+  position: relative;
+  z-index: 1;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.avatar-group__item:hover {
+  z-index: 2;
+  transform: scale(1.1);
+}
+
+.avatar-group__overflow {
+  background: var(--color-neutral-500) !important;
+  color: white;
+  font-size: 0.75em;
+  z-index: 0;
+}
+
+/* ===== Avatar Badge ===== */
+
+.avatar-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-badge__badge {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-1);
+  background: var(--color-error);
+  color: white;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-bg-elevated);
+  line-height: 1;
+}
+
+.avatar-badge__badge--top-right {
+  top: 0;
+  right: 0;
+  transform: translate(25%, -25%);
+}
+
+.avatar-badge__badge--top-left {
+  top: 0;
+  left: 0;
+  transform: translate(-25%, -25%);
+}
+
+.avatar-badge__badge--bottom-right {
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);
+}
+
+.avatar-badge__badge--bottom-left {
+  bottom: 0;
+  left: 0;
+  transform: translate(-25%, 25%);
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 767px) {
+  .avatar--xl {
+    width: 56px;
+    height: 56px;
+    font-size: var(--text-base);
+  }
+
+  .avatar--2xl {
+    width: 72px;
+    height: 72px;
+    font-size: var(--text-lg);
+  }
+
+  .avatar-group--tight .avatar-group__item {
+    margin-right: -6px;
+  }
+
+  .avatar-group--normal .avatar-group__item {
+    margin-right: -2px;
+  }
+}
+
+/* ===== Dark Mode Support ===== */
+
+[data-theme="dark"] {
+  .avatar {
+    background: var(--color-neutral-700);
+  }
+
+  .avatar__skeleton {
+    background: var(--color-neutral-600);
+  }
+
+  .avatar__content {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .avatar__status {
+    border-color: var(--color-bg-elevated);
+  }
+
+  .avatar-group__item {
+    border-color: var(--color-bg-elevated);
+  }
+
+  .avatar-badge__badge {
+    border-color: var(--color-bg-elevated);
+  }
+}
+
+/* ===== High Contrast Mode ===== */
+
+@media (prefers-contrast: high) {
+  .avatar {
+    border: 2px solid var(--color-text-primary);
+  }
+
+  .avatar__status {
+    border-width: 3px;
+  }
+
+  .avatar-group__item {
+    border-width: 3px;
+  }
+
+  .avatar-badge__badge {
+    border-width: 3px;
+  }
+
+  .avatar--clickable:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* ===== Reduced Motion Support ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar,
+  .avatar__image,
+  .avatar__content,
+  .avatar-group__item {
+    transition: none;
+  }
+
+  .avatar--clickable:hover,
+  .avatar-group__item:hover {
+    transform: none;
+  }
+
+  .avatar__skeleton {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+/* ===== Print Styles ===== */
+
+@media print {
+  .avatar {
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc !important;
+  }
+
+  .avatar__status,
+  .avatar-badge__badge {
+    display: none;
+  }
+
+  .avatar--clickable {
+    cursor: default;
+  }
+}
+
+/* ===== Accessibility Enhancements ===== */
+
+.avatar[role="button"] {
+  cursor: pointer;
+}
+
+.avatar[role="img"] {
+  cursor: default;
+}
+
+/* ===== Special Avatar Variants ===== */
+
+.avatar--therapeutic {
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar--therapeutic:hover {
+  box-shadow: var(--shadow-md), var(--shadow-glow-primary);
+}
+
+.avatar--glass {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.avatar--crisis {
+  background: var(--color-crisis);
+  animation: avatar-crisis-pulse 2s ease-in-out infinite;
+}
+
+@keyframes avatar-crisis-pulse {
+  0%,
+  100% {
+    box-shadow: var(--shadow-sm);
+  }
+  50% {
+    box-shadow: var(--shadow-md), var(--shadow-glow-crisis);
+  }
+}
+
+/* ===== Loading State ===== */
+
+.avatar--loading {
+  background: var(--color-neutral-200);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.avatar--loading .avatar__image,
+.avatar--loading .avatar__initials {
+  opacity: 0;
+}
+
+[data-theme="dark"] .avatar--loading {
+  background: var(--color-neutral-700);
+}
+
+/* ===== Custom Border Colors ===== */
+
+.avatar[style*="border-color"] {
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* ===== Tooltip Integration ===== */
+
+.avatar[data-tooltip] {
+  position: relative;
+}
+
+.avatar[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-neutral-900);
+  color: white;
+  font-size: var(--text-xs);
+  border-radius: var(--radius-base);
+  white-space: nowrap;
+  z-index: var(--z-tooltip);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .avatar[data-tooltip]:hover::after {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+}

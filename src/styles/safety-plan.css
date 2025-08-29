@@ -1,0 +1,479 @@
+/* Safety Plan View - Calming Blue/Purple Theme (No Yellow) */
+
+.safety-plan-view {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    rgba(219, 234, 254, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(233, 213, 255, 0.3) 100%
+  );
+  padding: 2rem;
+  animation: gentleFadeIn 0.8s ease;
+}
+
+.safety-plan-container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.safety-plan-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(219, 234, 254, 0.5) 100%
+  );
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.15);
+}
+
+.safety-plan-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.safety-plan-title svg {
+  width: 40px;
+  height: 40px;
+  color: #60a5fa;
+}
+
+.safety-plan-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  opacity: 0.9;
+}
+
+/* Emergency Contacts Section */
+.emergency-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 246, 255, 0.9) 0%,
+    rgba(243, 232, 255, 0.9) 100%
+  );
+  border-radius: 16px;
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  box-shadow: 0 2px 12px rgba(147, 197, 253, 0.1);
+}
+
+.emergency-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(147, 197, 253, 0.2);
+}
+
+.emergency-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 3px 10px rgba(96, 165, 250, 0.3);
+}
+
+.emergency-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4c51bf;
+}
+
+.hotline-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.hotline-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  border: 1px solid rgba(147, 197, 253, 0.15);
+  transition: all 0.3s ease;
+}
+
+.hotline-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.2);
+  border-color: rgba(147, 197, 253, 0.3);
+}
+
+.hotline-info {
+  flex: 1;
+}
+
+.hotline-name {
+  font-weight: 600;
+  color: #4c51bf;
+  margin-bottom: 0.25rem;
+}
+
+.hotline-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.hotline-contact {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(96, 165, 250, 0.3);
+}
+
+.hotline-contact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
+}
+
+/* Safety Plan Sections */
+.safety-plan-section {
+  margin-bottom: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(239, 246, 255, 0.5) 100%
+  );
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(147, 197, 253, 0.15);
+  transition: all 0.3s ease;
+}
+
+.safety-plan-section:hover {
+  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.12);
+  border-color: rgba(147, 197, 253, 0.25);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.1) 0%,
+    rgba(167, 139, 250, 0.1) 100%
+  );
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #60a5fa;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4c51bf;
+  flex: 1;
+}
+
+.section-content {
+  padding: 0.5rem 0;
+}
+
+/* Textarea Styling */
+.safety-plan-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(147, 197, 253, 0.2);
+  border-radius: 12px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.safety-plan-textarea:focus {
+  outline: none;
+  background: white;
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.safety-plan-textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* Read-only Content */
+.section-text {
+  padding: 1rem;
+  background: rgba(239, 246, 255, 0.3);
+  border-radius: 8px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  border: 1px solid rgba(147, 197, 253, 0.1);
+}
+
+/* Suggestions */
+.suggestions-container {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(219, 234, 254, 0.2) 0%,
+    rgba(233, 213, 255, 0.2) 100%
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(147, 197, 253, 0.15);
+}
+
+.suggestions-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4c51bf;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.suggestion-chip {
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.suggestion-chip:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.1) 0%,
+    rgba(167, 139, 250, 0.1) 100%
+  );
+  border-color: rgba(96, 165, 250, 0.4);
+  color: #4c51bf;
+  transform: translateY(-1px);
+}
+
+/* Action Buttons */
+.safety-plan-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(219, 234, 254, 0.5) 100%
+  );
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(147, 197, 253, 0.1);
+}
+
+.safety-plan-btn {
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.safety-plan-btn.primary {
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+}
+
+.safety-plan-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
+}
+
+.safety-plan-btn.secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: #4c51bf;
+  border: 2px solid rgba(96, 165, 250, 0.3);
+}
+
+.safety-plan-btn.secondary:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.05) 0%,
+    rgba(167, 139, 250, 0.05) 100%
+  );
+  border-color: rgba(96, 165, 250, 0.5);
+  transform: translateY(-1px);
+}
+
+.safety-plan-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Loading State */
+.safety-plan-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1.5rem;
+}
+
+.safety-plan-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(147, 197, 253, 0.2);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Empty State */
+.safety-plan-empty {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 246, 255, 0.5) 0%,
+    rgba(243, 232, 255, 0.5) 100%
+  );
+  border-radius: 16px;
+  border: 2px dashed rgba(147, 197, 253, 0.3);
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.1) 0%,
+    rgba(167, 139, 250, 0.1) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #60a5fa;
+  font-size: 2rem;
+}
+
+.empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4c51bf;
+  margin-bottom: 0.5rem;
+}
+
+.empty-text {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .safety-plan-view {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 58, 138, 0.1) 0%,
+    rgba(22, 27, 34, 0.5) 50%,
+    rgba(76, 29, 149, 0.1) 100%
+  );
+}
+
+[data-theme="dark"] .safety-plan-section,
+[data-theme="dark"] .emergency-section {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.98) 0%,
+    rgba(30, 58, 138, 0.3) 100%
+  );
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+[data-theme="dark"] .safety-plan-textarea {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(96, 165, 250, 0.3);
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .section-text {
+  background: rgba(30, 58, 138, 0.2);
+  border-color: rgba(96, 165, 250, 0.2);
+  color: #e2e8f0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .safety-plan-view {
+    padding: 1rem;
+  }
+
+  .safety-plan-title {
+    font-size: 2rem;
+  }
+
+  .suggestions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .safety-plan-actions {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .safety-plan-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

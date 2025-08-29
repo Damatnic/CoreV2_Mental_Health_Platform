@@ -1,0 +1,467 @@
+/**
+ * Global Alignment Fixes
+ * Ensures proper centering and alignment of all page content
+ */
+
+/* ======================================
+   Root Layout Fixes
+   ====================================== */
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/* ======================================
+   Main Content Alignment
+   ====================================== */
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Content container for proper centering */
+.main-content > * {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* View containers should be centered */
+.view-container,
+[class*="view"] {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* ======================================
+   Card & Content Block Alignment
+   ====================================== */
+
+.card,
+.content-card,
+[class*="card"] {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+/* Full-width cards */
+.card-full,
+.full-width-card {
+  max-width: 100%;
+}
+
+/* ======================================
+   Fixed Position Elements
+   ====================================== */
+
+/* Accessibility Button - Top Right Corner */
+.accessibility-button {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid white !important;
+}
+
+.accessibility-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.accessibility-button svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* Google Badge - Bottom Left Corner */
+.google-badge,
+.floating-google-badge {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  z-index: 1000 !important;
+  background: white !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 12px !important;
+  color: #5f6368 !important;
+  transition: all 0.3s ease !important;
+}
+
+.google-badge:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Offline Status Indicator - Bottom Right Corner */
+.offline-status-indicator,
+.network-banner {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 1000 !important;
+  background: white !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 14px !important;
+}
+
+.offline-status-indicator.offline {
+  background: #fee !important;
+  color: #c00 !important;
+  border: 1px solid #fcc !important;
+}
+
+.offline-status-indicator.online {
+  background: #efe !important;
+  color: #060 !important;
+  border: 1px solid #cfc !important;
+}
+
+/* ======================================
+   Form Alignment
+   ====================================== */
+
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.form-input,
+.form-textarea,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ======================================
+   Text Alignment
+   ====================================== */
+
+/* Ensure text content is left-aligned by default */
+p,
+div,
+span,
+li {
+  text-align: left;
+}
+
+/* Center specific elements */
+.text-center,
+.center-text {
+  text-align: center !important;
+}
+
+.text-right,
+.right-text {
+  text-align: right !important;
+}
+
+/* ======================================
+   Header & Navigation Alignment
+   ====================================== */
+
+.view-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.view-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.view-subtitle,
+.view-subheader {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* ======================================
+   Sidebar Positioning
+   ====================================== */
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+}
+
+/* ======================================
+   Modal Centering
+   ====================================== */
+
+.modal-overlay {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  inset: 0 !important;
+}
+
+.modal-panel,
+.modal-content {
+  margin: auto !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+}
+
+/* ======================================
+   Button Alignment
+   ====================================== */
+
+.button-group,
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.button-group.left,
+.btn-group.left {
+  justify-content: flex-start;
+}
+
+.button-group.right,
+.btn-group.right {
+  justify-content: flex-end;
+}
+
+/* ======================================
+   Mobile Responsive Alignment
+   ====================================== */
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .view-container,
+  [class*="view"] {
+    padding: 0 0.5rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Adjust fixed element positions for mobile */
+  .accessibility-button {
+    top: 10px !important;
+    right: 10px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .google-badge,
+  .floating-google-badge {
+    bottom: 70px !important;
+    left: 10px !important;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+
+  .offline-status-indicator,
+  .network-banner {
+    bottom: 70px !important;
+    right: 10px !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Stack cards on mobile */
+  .card-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ======================================
+   Fix Right-Aligned Content
+   ====================================== */
+
+/* Reset any unintended right alignment */
+* {
+  margin-left: initial;
+  margin-right: initial;
+}
+
+/* Ensure content doesn't stick to edges */
+.content-wrapper,
+.page-wrapper {
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ======================================
+   Loading States Alignment
+   ====================================== */
+
+.loading-spinner,
+.skeleton,
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 2rem auto;
+}
+
+/* ======================================
+   Empty States Alignment
+   ====================================== */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  width: 100%;
+}
+
+/* ======================================
+   Crisis Banner Positioning
+   ====================================== */
+
+.crisis-banner,
+.crisis-alert-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 10000 !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Push content down when crisis banner is visible */
+.crisis-banner-active .main-content {
+  padding-top: 80px;
+}
+
+/* ======================================
+   Toast Notifications Positioning
+   ====================================== */
+
+.toast-container {
+  position: fixed !important;
+  top: 80px !important;
+  right: 20px !important;
+  z-index: 9000 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  pointer-events: none !important;
+}
+
+.toast {
+  pointer-events: auto !important;
+  margin-left: auto !important;
+}
+
+/* ======================================
+   Z-Index Management
+   ====================================== */
+
+/* Ensure proper layering */
+.crisis-banner {
+  z-index: 10000 !important;
+}
+.accessibility-button {
+  z-index: 9999 !important;
+}
+.toast-container {
+  z-index: 9000 !important;
+}
+.modal-overlay {
+  z-index: 8000 !important;
+}
+.sidebar {
+  z-index: 1000 !important;
+}
+.google-badge {
+  z-index: 999 !important;
+}
+.offline-status-indicator {
+  z-index: 999 !important;
+}

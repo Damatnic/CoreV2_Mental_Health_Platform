@@ -1,0 +1,853 @@
+/**
+ * Master Design System
+ * 
+ * Apple-level design quality for mental health platform
+ * Complete visual overhaul with therapeutic aesthetics
+ * 
+ * Import Order:
+ * 1. Base design system (tokens, variables)
+ * 2. Therapeutic foundations 
+ * 3. Glassmorphism & micro-interactions
+ * 4. Mental health components
+ * 5. Hero sections & layouts
+ * 6. Mobile-first responsive
+ * 7. Master overrides & enhancements
+ */
+
+/* ======================================
+   Import Core Design Systems
+   ====================================== */
+
+/* Core design tokens and base styles */
+@import "./design-system.css";
+@import "./enhanced-design-system.css";
+
+/* Therapeutic design foundation */
+@import "./therapeutic-design-system.css";
+
+/* Modern glass effects and interactions */
+@import "./glassmorphism-microinteractions.css";
+
+/* Mental health specific components */
+@import "./mental-health-components.css";
+
+/* Hero sections and page layouts */
+@import "./hero-layouts.css";
+
+/* Mobile-first responsive design */
+@import "./mobile-first-responsive.css";
+
+/* Utility classes */
+@import "./utilities.css";
+
+/* ======================================
+   Master Design System Enhancements
+   ====================================== */
+
+:root {
+  /* ======================================
+     Enhanced Therapeutic Variables
+     ====================================== */
+
+  /* Calming color palette with extended variations */
+  --master-ocean-gradient: linear-gradient(
+    135deg,
+    #e0f2fe 0%,
+    #b3e5fc 25%,
+    #81d4fa 50%,
+    #4fc3f7 75%,
+    #29b6f6 100%
+  );
+  --master-sage-gradient: linear-gradient(
+    135deg,
+    #e8f5e8 0%,
+    #c8e6c9 25%,
+    #a5d6a7 50%,
+    #81c784 75%,
+    #66bb6a 100%
+  );
+  --master-sunset-gradient: linear-gradient(
+    135deg,
+    #fff3e0 0%,
+    #ffe0b2 25%,
+    #ffcc80 50%,
+    #ffb74d 75%,
+    #ffa726 100%
+  );
+  --master-aurora-gradient: linear-gradient(
+    135deg,
+    #e0f2fe 0%,
+    #e8f5e8 33%,
+    #fff3e0 66%,
+    #fce4ec 100%
+  );
+
+  /* Advanced glassmorphism effects */
+  --master-glass-ultra: rgba(255, 255, 255, 0.4);
+  --master-glass-medium: rgba(255, 255, 255, 0.25);
+  --master-glass-subtle: rgba(255, 255, 255, 0.15);
+  --master-glass-minimal: rgba(255, 255, 255, 0.08);
+
+  /* Therapeutic depth system */
+  --master-depth-floating:
+    0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --master-depth-lifted:
+    0 8px 24px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --master-depth-elevated:
+    0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --master-depth-soaring:
+    0 32px 64px rgba(0, 0, 0, 0.12), 0 16px 32px rgba(0, 0, 0, 0.08);
+
+  /* Healing glow effects */
+  --master-glow-calm:
+    0 0 40px rgba(14, 165, 233, 0.15), 0 0 20px rgba(14, 165, 233, 0.1);
+  --master-glow-healing:
+    0 0 40px rgba(34, 197, 94, 0.15), 0 0 20px rgba(34, 197, 94, 0.1);
+  --master-glow-warmth:
+    0 0 40px rgba(249, 115, 22, 0.15), 0 0 20px rgba(249, 115, 22, 0.1);
+  --master-glow-aurora:
+    0 0 60px rgba(14, 165, 233, 0.1), 0 0 30px rgba(34, 197, 94, 0.08),
+    0 0 15px rgba(249, 115, 22, 0.06);
+
+  /* Advanced animation curves */
+  --master-ease-therapeutic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --master-ease-gentle-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --master-ease-soft-back: cubic-bezier(0.68, -0.3, 0.32, 1);
+  --master-ease-natural: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======================================
+   Master Global Styles
+   ====================================== */
+
+/* Enhanced smooth scrolling with better performance */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: common-ligatures;
+}
+
+/* Optimized body with therapeutic background */
+body {
+  font-family: var(--font-therapeutic);
+  background:
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(14, 165, 233, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(34, 197, 94, 0.05) 0%,
+      transparent 50%
+    ),
+    var(--gradient-therapeutic-calm);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+  color: var(--therapeutic-stone-800);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="25" cy="25" r="0.3" fill="rgba(0,0,0,0.01)"/><circle cx="75" cy="75" r="0.4" fill="rgba(255,255,255,0.015)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ======================================
+   Master Component Enhancements
+   ====================================== */
+
+/* Enhanced card system with perfect therapeutic feel */
+.master-card {
+  background: var(--master-glass-medium);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--glass-border-light);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: var(--master-depth-lifted);
+  transition: all 0.4s var(--master-ease-therapeutic);
+  position: relative;
+  overflow: hidden;
+}
+
+.master-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.master-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--master-aurora-gradient);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s var(--master-ease-therapeutic);
+}
+
+.master-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--master-depth-elevated), var(--master-glow-aurora);
+  background: var(--master-glass-ultra);
+}
+
+.master-card:hover::before {
+  opacity: 1;
+}
+
+.master-card:hover::after {
+  opacity: 0.1;
+}
+
+/* Master button system with perfect therapeutic interactions */
+.master-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  font-family: var(--font-therapeutic);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s var(--master-ease-therapeutic);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  min-height: 48px;
+  background: var(--master-glass-medium);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--therapeutic-stone-800);
+  box-shadow: var(--master-depth-floating);
+}
+
+.master-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s var(--master-ease-gentle-bounce);
+  pointer-events: none;
+}
+
+.master-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--master-depth-lifted);
+  background: var(--master-glass-ultra);
+}
+
+.master-btn:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.master-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* Therapeutic button variants */
+.master-btn-primary {
+  background: var(--gradient-therapeutic-ocean);
+  color: white;
+  box-shadow: var(--master-depth-floating), var(--master-glow-calm);
+}
+
+.master-btn-primary:hover {
+  box-shadow: var(--master-depth-lifted), var(--master-glow-calm);
+}
+
+.master-btn-healing {
+  background: var(--gradient-therapeutic-sage);
+  color: white;
+  box-shadow: var(--master-depth-floating), var(--master-glow-healing);
+}
+
+.master-btn-healing:hover {
+  box-shadow: var(--master-depth-lifted), var(--master-glow-healing);
+}
+
+.master-btn-warmth {
+  background: var(--gradient-therapeutic-sunset);
+  color: white;
+  box-shadow: var(--master-depth-floating), var(--master-glow-warmth);
+}
+
+.master-btn-warmth:hover {
+  box-shadow: var(--master-depth-lifted), var(--master-glow-warmth);
+}
+
+/* ======================================
+   Master Typography Enhancements
+   ====================================== */
+
+.master-heading-hero {
+  font-family: var(--font-therapeutic-display);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  background: var(--master-aurora-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.master-heading-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--gradient-therapeutic-aurora);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.master-heading-section {
+  font-family: var(--font-therapeutic-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--therapeutic-stone-900);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.master-text-therapeutic {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.8;
+  color: var(--therapeutic-stone-700);
+  margin-bottom: 1.5rem;
+  max-width: 65ch;
+}
+
+/* ======================================
+   Master Animation Library
+   ====================================== */
+
+/* Therapeutic entrance animations */
+@keyframes master-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes master-scale-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes master-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes master-gentle-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes master-therapeutic-pulse {
+  0%,
+  100% {
+    box-shadow: var(--master-depth-floating);
+  }
+  50% {
+    box-shadow: var(--master-depth-floating), var(--master-glow-aurora);
+  }
+}
+
+@keyframes master-aurora-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Animation utility classes */
+.master-animate-fade-up {
+  animation: master-fade-in-up 0.8s var(--master-ease-therapeutic);
+}
+
+.master-animate-scale-in {
+  animation: master-scale-fade-in 0.6s var(--master-ease-gentle-bounce);
+}
+
+.master-animate-slide-right {
+  animation: master-slide-in-right 0.7s var(--master-ease-therapeutic);
+}
+
+.master-animate-bounce {
+  animation: master-gentle-bounce 2s ease-in-out infinite;
+}
+
+.master-animate-pulse {
+  animation: master-therapeutic-pulse 3s ease-in-out infinite;
+}
+
+.master-animate-aurora {
+  background-size: 200% 200%;
+  animation: master-aurora-flow 8s ease-in-out infinite;
+}
+
+/* ======================================
+   Master Layout System
+   ====================================== */
+
+.master-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.master-section {
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.master-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(14, 165, 233, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(34, 197, 94, 0.03) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.master-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+.master-grid-1 {
+  grid-template-columns: 1fr;
+}
+.master-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.master-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.master-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.master-grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* ======================================
+   Master Responsive Behavior
+   ====================================== */
+
+@media (max-width: 1024px) {
+  .master-container {
+    padding: 0 1.5rem;
+  }
+
+  .master-section {
+    padding: 4rem 0;
+  }
+
+  .master-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .master-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .master-container {
+    padding: 0 1rem;
+  }
+
+  .master-section {
+    padding: 3rem 0;
+  }
+
+  .master-card {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .master-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  .master-grid-2,
+  .master-grid-3,
+  .master-grid-4 {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .master-grid-auto {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .master-container {
+    padding: 0 0.75rem;
+  }
+
+  .master-section {
+    padding: 2rem 0;
+  }
+
+  .master-card {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .master-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    width: 100%;
+  }
+}
+
+/* ======================================
+   Master Accessibility Features
+   ====================================== */
+
+/* Enhanced focus indicators */
+.master-focus-ring:focus-visible {
+  outline: 3px solid var(--therapeutic-ocean-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* High contrast mode enhancements */
+@media (prefers-contrast: high) {
+  .master-card,
+  .master-btn {
+    border: 2px solid;
+    border-color: currentColor;
+  }
+
+  .master-heading-hero,
+  .master-heading-section {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #000;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .master-card:hover,
+  .master-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  body {
+    background:
+      radial-gradient(
+        circle at 25% 25%,
+        rgba(14, 165, 233, 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        rgba(34, 197, 94, 0.08) 0%,
+        transparent 50%
+      ),
+      linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  }
+
+  .master-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .master-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .master-heading-section {
+    color: #fff;
+  }
+
+  .master-text-therapeutic {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* ======================================
+   Master Print Styles
+   ====================================== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .master-card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .master-btn {
+    background: white !important;
+    border: 1px solid #000 !important;
+    color: black !important;
+  }
+
+  .master-heading-hero,
+  .master-heading-section {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: black !important;
+  }
+}
+
+/* ======================================
+   Master Performance Optimizations
+   ====================================== */
+
+/* GPU acceleration for smooth animations */
+.master-card,
+.master-btn,
+.master-animate-fade-up,
+.master-animate-scale-in,
+.master-animate-slide-right {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Optimize rendering performance */
+.master-section::before {
+  will-change: auto;
+  contain: layout style paint;
+}
+
+/* ======================================
+   Master Utility Classes
+   ====================================== */
+
+.master-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.master-text-center {
+  text-align: center;
+}
+.master-text-left {
+  text-align: left;
+}
+.master-text-right {
+  text-align: right;
+}
+
+.master-mb-sm {
+  margin-bottom: 1rem;
+}
+.master-mb-md {
+  margin-bottom: 1.5rem;
+}
+.master-mb-lg {
+  margin-bottom: 2rem;
+}
+.master-mb-xl {
+  margin-bottom: 3rem;
+}
+
+.master-mt-sm {
+  margin-top: 1rem;
+}
+.master-mt-md {
+  margin-top: 1.5rem;
+}
+.master-mt-lg {
+  margin-top: 2rem;
+}
+.master-mt-xl {
+  margin-top: 3rem;
+}
+
+/* ======================================
+   Master Theme Variations
+   ====================================== */
+
+.theme-master-calm {
+  --primary-color: var(--therapeutic-ocean-500);
+  --secondary-color: var(--therapeutic-sage-400);
+  --accent-color: var(--therapeutic-sunset-300);
+  --background-gradient: var(--master-ocean-gradient);
+}
+
+.theme-master-healing {
+  --primary-color: var(--therapeutic-sage-500);
+  --secondary-color: var(--therapeutic-ocean-400);
+  --accent-color: var(--therapeutic-sunset-400);
+  --background-gradient: var(--master-sage-gradient);
+}
+
+.theme-master-warmth {
+  --primary-color: var(--therapeutic-sunset-500);
+  --secondary-color: var(--therapeutic-sage-400);
+  --accent-color: var(--therapeutic-ocean-400);
+  --background-gradient: var(--master-sunset-gradient);
+}
+
+/* Apply to root when theme class is present */
+.theme-master-calm,
+.theme-master-healing,
+.theme-master-warmth {
+  background: var(--background-gradient);
+  transition: background 1s var(--master-ease-therapeutic);
+}
+
+/* ======================================
+   Component Integration Overrides
+   ====================================== */
+
+/* Ensure existing components inherit the new design system */
+.card,
+.card-enhanced,
+.card-glass {
+  @extend .master-card;
+}
+
+.btn,
+.btn-therapeutic,
+.app-button {
+  @extend .master-btn;
+}
+
+.btn-primary,
+.btn-therapeutic-primary,
+.app-button-primary {
+  @extend .master-btn-primary;
+}
+
+/* Override any conflicting styles from existing CSS files */
+.card.master-override {
+  background: var(--master-glass-medium) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  border: 1px solid var(--glass-border-light) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--master-depth-lifted) !important;
+}
+
+.btn.master-override {
+  background: var(--master-glass-medium) !important;
+  backdrop-filter: blur(20px) !important;
+  border: none !important;
+  border-radius: 16px !important;
+  transition: all 0.3s var(--master-ease-therapeutic) !important;
+}

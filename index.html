@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <title>Astral Core | Anonymous Mental Health Support</title>
+    <!-- Build: 2025-01-08-2036 -->
+    <meta name="build-timestamp" content="1" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Astral Core" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/index.css" />
+    
+    <!-- Emergency fix for double navigation and styling -->
+    <style>
+      /* Force hide duplicate mobile navigation on desktop */
+      @media (min-width: 769px) {
+        .mobile-sidebar-nav {
+          display: none !important;
+        }
+      }
+      
+      /* Force hide desktop navigation on mobile */
+      @media (max-width: 768px) {
+        .desktop-sidebar {
+          display: none !important;
+        }
+      }
+      
+      /* Ensure proper layout structure */
+      .app-layout {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+      }
+      
+      .desktop-sidebar {
+        flex-shrink: 0;
+        width: 250px;
+      }
+      
+      .main-content {
+        flex: 1;
+        overflow-y: auto;
+      }
+    </style>
+    
+    <!-- Version check temporarily disabled to fix React error -->
+    <!-- <script src="/version-check.js" async></script> -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Service worker removed - no longer needed -->
+  </body>
+</html>

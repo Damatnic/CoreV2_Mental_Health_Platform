@@ -1,0 +1,370 @@
+/* SafetyFirstDesign.css - Calming Visual System for Mental Health Support */
+/* Every color, animation, and transition is designed to promote calm and safety */
+
+:root {
+  /* Calming color palette - soft blue-greens inspired by nature */
+  --safety-primary: #b2dfdb;
+  --safety-secondary: #e0f2f1;
+  --safety-accent: #80cbc4;
+  --safety-light: #f1f8f7;
+  --safety-dark: #4a7c7e;
+
+  /* Gentle earth tones for grounding */
+  --earth-sand: #f5e6d3;
+  --earth-sage: #a8c09a;
+  --earth-sky: #cfe8f3;
+
+  /* Hope and positivity colors */
+  --hope-sunrise: #ffecb3;
+  --hope-lavender: #e1bee7;
+
+  /* Emergency color (used sparingly) */
+  --emergency-red: #ef5350;
+
+  /* Timing for therapeutic animations */
+  --breathe-in: 4s;
+  --breathe-hold: 7s;
+  --breathe-out: 8s;
+  --transition-gentle: 0.3s ease-in-out;
+  --transition-slow: 0.6s ease-out;
+}
+
+/* Global calming styles */
+body {
+  background: linear-gradient(
+    135deg,
+    var(--safety-secondary) 0%,
+    var(--safety-primary) 100%
+  );
+  min-height: 100vh;
+  transition: background var(--transition-slow);
+}
+
+/* Breathing animation keyframes - 4-7-8 pattern */
+@keyframes breatheIn {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes breatheHold {
+  0%,
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes breatheOut {
+  0% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* Breathing indicator */
+.breathing-guide {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--safety-accent),
+    var(--safety-primary)
+  );
+  animation:
+    breatheIn var(--breathe-in) ease-in-out,
+    breatheHold var(--breathe-hold) ease-in-out var(--breathe-in),
+    breatheOut var(--breathe-out) ease-in-out
+      calc(var(--breathe-in) + var(--breathe-hold));
+  animation-iteration-count: infinite;
+  animation-delay:
+    0s, var(--breathe-in), calc(var(--breathe-in) + var(--breathe-hold));
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(178, 223, 219, 0.4);
+}
+
+/* Water ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(178, 223, 219, 0.3), transparent);
+  animation: ripple 2s ease-out infinite;
+}
+
+/* Floating leaf animation */
+@keyframes leafFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+.nature-element {
+  animation: leafFloat 6s ease-in-out infinite;
+}
+
+/* Gentle pulse for interactive elements */
+@keyframes gentlePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(178, 223, 219, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(178, 223, 219, 0);
+  }
+}
+
+/* Button styles - soft and inviting */
+.safety-button {
+  background: linear-gradient(
+    135deg,
+    var(--safety-primary),
+    var(--safety-accent)
+  );
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  color: var(--safety-dark);
+  font-weight: 500;
+  transition: all var(--transition-gentle);
+  box-shadow: 0 4px 15px rgba(178, 223, 219, 0.3);
+}
+
+.safety-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(178, 223, 219, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--safety-accent),
+    var(--safety-primary)
+  );
+}
+
+.safety-button:active {
+  transform: translateY(0);
+}
+
+/* Emergency button - visible but not alarming */
+.emergency-button {
+  background: linear-gradient(
+    135deg,
+    var(--hope-sunrise),
+    var(--emergency-red)
+  );
+  color: white;
+  font-weight: bold;
+  animation: gentlePulse 2s infinite;
+}
+
+/* Card styles with soft shadows */
+.safety-card {
+  background: linear-gradient(145deg, var(--safety-light), white);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow:
+    0 10px 30px rgba(178, 223, 219, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all var(--transition-gentle);
+}
+
+.safety-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 15px 40px rgba(178, 223, 219, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Text styles for readability and calm */
+.safety-text {
+  color: var(--safety-dark);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.comfort-message {
+  color: var(--safety-dark);
+  font-size: 18px;
+  font-weight: 300;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--safety-light),
+    transparent
+  );
+}
+
+/* Modal overlay - soft and non-threatening */
+.safety-modal-overlay {
+  background: rgba(224, 242, 241, 0.95);
+  backdrop-filter: blur(10px);
+  transition: opacity var(--transition-gentle);
+}
+
+.safety-modal {
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(178, 223, 219, 0.3);
+  border: 2px solid var(--safety-primary);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Loading states - encouraging */
+.loading-message {
+  color: var(--safety-accent);
+  font-size: 20px;
+  text-align: center;
+  animation: breatheIn 2s ease-in-out infinite alternate;
+}
+
+.loading-spinner {
+  border: 3px solid var(--safety-light);
+  border-top: 3px solid var(--safety-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Success states - celebratory but gentle */
+.success-message {
+  background: linear-gradient(135deg, var(--hope-sunrise), var(--earth-sage));
+  color: var(--safety-dark);
+  padding: 15px 25px;
+  border-radius: 20px;
+  animation: celebrate 0.5s ease-out;
+}
+
+@keyframes celebrate {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Error states - gentle and reassuring */
+.error-message {
+  background: linear-gradient(135deg, var(--hope-lavender), var(--earth-sky));
+  color: var(--safety-dark);
+  padding: 15px 25px;
+  border-radius: 20px;
+  border-left: 4px solid var(--safety-accent);
+}
+
+/* Scrollbar styling - subtle and smooth */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--safety-light);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--safety-primary), var(--safety-accent));
+  border-radius: 10px;
+  border: 2px solid var(--safety-light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--safety-accent), var(--safety-primary));
+}
+
+/* Focus styles - clear but gentle */
+*:focus {
+  outline: 3px solid var(--safety-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode adjustments for evening use */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --safety-primary: #4a7c7e;
+    --safety-secondary: #2c5f5f;
+    --safety-accent: #5a9a9c;
+    --safety-light: #1a3a3a;
+    --safety-dark: #e0f2f1;
+  }
+
+  body {
+    background: linear-gradient(
+      135deg,
+      var(--safety-secondary) 0%,
+      var(--safety-primary) 100%
+    );
+  }
+
+  .safety-card {
+    background: linear-gradient(145deg, var(--safety-light), #0d2626);
+  }
+}

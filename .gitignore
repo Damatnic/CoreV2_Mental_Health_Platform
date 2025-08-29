@@ -1,0 +1,90 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Environment files (keep .env.example)
+.env
+.env.local
+.env.production
+.env.sentry
+development.env
+production.env
+staging.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.early.coverage/
+*.lcov
+
+# Netlify
+.netlify/
+
+# Testing
+.jest/
+
+# Backup and temporary files
+.conservative-backup/
+.error-scanner-backups/
+.master-scanner-backup/
+*.backup
+*.tmp
+
+# Reports (keep deployment and important documentation)
+*_REPORT.json
+CURRENT_ERROR_SCAN_REPORT_*.md
+CRITICAL_HOOKS_RUNTIME_REPORT.json
+HOOK_INTEGRATION_TEST_REPORT.json
+count-errors.log
+current-count.log
+current-status.log
+progress-check*.log
+type-check*.log
+Errors.txt
+remaining_errors.txt
+typescript-errors.txt
+
+# Tool-specific files
+.claude/
+nul
+
+# Keep important documentation
+!README.md
+!LICENSE
+!CONTRIBUTING.md
+!MINIMAL_VIABLE_DEPLOYMENT.md

@@ -1,0 +1,34 @@
+# API redirects
+/api/* /.netlify/functions/:splat 200
+
+# JavaScript files - highest priority to prevent MIME type issues
+/assets/js/* /assets/js/:splat 200!
+
+# CSS files - ensure proper serving
+/assets/css/* /assets/css/:splat 200!
+
+# All other assets - don't redirect
+/assets/* /assets/:splat 200!
+
+# Static files in public directory
+/manifest.json /manifest.json 200!
+/icon.svg /icon.svg 200!
+/icon-192.png /icon-192.png 200!
+/icon-512.png /icon-512.png 200!
+/robots.txt /robots.txt 200!
+/sitemap.xml /sitemap.xml 200!
+
+# Video files
+/Videos/* /Videos/:splat 200!
+
+# Service worker - return 404 instead of index.html
+/service-worker.js /404.html 404
+
+# Block common external script injection attempts
+/index.js /404.html 404
+/constants.js /404.html 404
+/config.js /404.html 404
+/app.js /404.html 404
+
+# SPA fallback for all other routes
+/* /index.html 200

@@ -1,0 +1,35 @@
+{
+  "immediate_danger": [
+    "suicide",
+    "kill myself",
+    "end it all",
+    "can't go on",
+    "better off dead",
+    "no reason to live",
+    "want to die"
+  ],
+  "self_harm": [
+    "cut myself",
+    "hurt myself",
+    "self harm",
+    "self-harm",
+    "burn myself",
+    "punish myself"
+  ],
+  "crisis_situation": [
+    "emergency",
+    "help me",
+    "crisis",
+    "can't cope",
+    "breaking down",
+    "falling apart",
+    "losing control"
+  ],
+  "substance_abuse": [
+    "overdose",
+    "too many pills",
+    "drinking too much",
+    "can't stop using",
+    "addiction crisis"
+  ]
+}

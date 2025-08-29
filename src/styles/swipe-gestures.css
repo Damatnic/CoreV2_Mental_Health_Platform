@@ -1,0 +1,422 @@
+/* Swipe Gesture Styles */
+/* Enhanced mobile swipe interactions with visual feedback */
+
+/* Base swipe animation classes */
+.swipe-container {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease-out;
+}
+
+.swipe-tracking {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Swipe visual feedback */
+.swipe-feedback {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.swipe-feedback.swipe-left {
+  right: 0;
+  background: linear-gradient(270deg, var(--danger-color), transparent);
+}
+
+.swipe-feedback.swipe-right {
+  left: 0;
+  background: linear-gradient(90deg, var(--success-color), transparent);
+}
+
+.swipe-feedback.swipe-up {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  width: auto;
+  background: linear-gradient(180deg, var(--primary-color), transparent);
+}
+
+.swipe-feedback.swipe-down {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  width: auto;
+  background: linear-gradient(0deg, var(--secondary-color), transparent);
+}
+
+.swipe-feedback.active {
+  opacity: 1;
+}
+
+.swipe-feedback .swipe-icon {
+  color: white;
+  font-size: 24px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* PostCard swipe states */
+.post-card-container.swipe-support {
+  transform: translateX(-20px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--success-rgb), 0.1)
+  );
+}
+
+.post-card-container.swipe-accept {
+  transform: translateX(20px);
+  background: linear-gradient(
+    270deg,
+    transparent,
+    rgba(var(--primary-rgb), 0.1)
+  );
+}
+
+.post-card-container.swipe-report {
+  transform: translateX(-20px);
+  background: linear-gradient(90deg, transparent, rgba(var(--danger-rgb), 0.1));
+}
+
+/* Navigation swipe states */
+.nav-container.swipe-menu {
+  transform: translateX(20px);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container.swipe-back {
+  transform: translateX(-20px);
+  opacity: 0.8;
+}
+
+/* Chat message swipe states */
+.chat-message.swipe-reply {
+  transform: translateX(30px);
+  background: linear-gradient(
+    270deg,
+    transparent,
+    rgba(var(--primary-rgb), 0.1)
+  );
+}
+
+.chat-message.swipe-react {
+  transform: translateX(-30px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--secondary-rgb), 0.1)
+  );
+}
+
+/* Feed refresh indicator */
+.pull-to-refresh {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  border-radius: 50%;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.pull-to-refresh.active {
+  top: 20px;
+  animation: pull-bounce 0.3s ease;
+}
+
+.pull-to-refresh.refreshing {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pull-bounce {
+  0% {
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+/* Sidebar swipe panel */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-overlay.swipe-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background: var(--background-color);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.sidebar-panel.swipe-active {
+  transform: translateX(300px);
+}
+
+/* Video player swipe controls */
+.video-container.swipe-seek-forward {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.video-container.swipe-seek-backward {
+  transform: scale(0.95);
+  filter: brightness(0.9);
+}
+
+.video-swipe-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 10;
+  pointer-events: none;
+  animation: swipe-feedback-appear 0.8s ease;
+}
+
+@keyframes swipe-feedback-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.video-swipe-feedback.forward {
+  background: rgba(0, 150, 255, 0.9);
+}
+
+.video-swipe-feedback.backward {
+  background: rgba(255, 150, 0, 0.9);
+}
+
+.video-swipe-feedback.muted,
+.video-swipe-feedback.unmuted {
+  background: rgba(100, 100, 100, 0.9);
+}
+
+/* Modal swipe-to-dismiss */
+.modal-overlay.swipe-dismiss {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.swipe-dismiss {
+  transform: translateY(20px) scale(0.95);
+  opacity: 0.8;
+}
+
+.modal-swipe-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 16px;
+}
+
+.swipe-indicator {
+  width: 40px;
+  height: 4px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* Hide swipe hint on desktop */
+@media (hover: hover) and (pointer: fine) {
+  .modal-swipe-hint {
+    display: none;
+  }
+}
+
+/* Swipe action buttons */
+.swipe-actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+}
+
+.swipe-actions.left {
+  right: 100%;
+  padding-right: 20px;
+}
+
+.swipe-actions.right {
+  left: 100%;
+  padding-left: 20px;
+}
+
+.swipe-actions.active {
+  opacity: 1;
+}
+
+.swipe-action-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.swipe-action-btn:hover {
+  transform: scale(1.1);
+}
+
+.swipe-action-btn.support {
+  background: var(--success-color);
+}
+
+.swipe-action-btn.report {
+  background: var(--danger-color);
+}
+
+.swipe-action-btn.reply {
+  background: var(--primary-color);
+}
+
+.swipe-action-btn.react {
+  background: var(--secondary-color);
+}
+
+/* Haptic feedback classes for devices that support it */
+@media (hover: none) and (pointer: coarse) {
+  .swipe-container:active {
+    /* Indicates touch interaction for haptic-enabled devices */
+    --haptic-light: vibrate(10);
+  }
+
+  .swipe-feedback.active {
+    /* Stronger haptic for swipe activation */
+    --haptic-medium: vibrate(20);
+  }
+}
+
+/* Accessibility improvements */
+.swipe-container:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.swipe-action-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .swipe-container,
+  .swipe-feedback,
+  .swipe-actions,
+  .sidebar-panel,
+  .sidebar-overlay,
+  .pull-to-refresh {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .swipe-feedback {
+    background: var(--text-color);
+    color: var(--background-color);
+  }
+
+  .swipe-action-btn {
+    border: 2px solid var(--text-color);
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .swipe-feedback {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1));
+  }
+
+  .sidebar-panel {
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  }
+}

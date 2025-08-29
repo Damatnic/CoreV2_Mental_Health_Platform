@@ -1,0 +1,557 @@
+/**
+ * Enhanced Form Validation Styles
+ * 
+ * Comprehensive form validation system with clear error states, accessible messaging,
+ * animated feedback, and improved user experience.
+ */
+
+/* ==========================================================================
+   FORM VALIDATION FOUNDATION
+   ========================================================================== */
+
+/* Base form group styles */
+.form-group {
+  position: relative;
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.form-group.has-label {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+
+/* Enhanced form labels */
+.form-label {
+  display: block;
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin-bottom: var(--space-2, 0.5rem);
+  line-height: var(--line-height-tight, 1.25);
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--accent-danger, #ef4444);
+  font-weight: 500;
+}
+
+/* Form input base styles */
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: var(--space-3, 0.75rem);
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-normal, 1.5);
+  color: var(--text-primary, #1f2937);
+  background-color: var(--bg-primary, #ffffff);
+  border: 2px solid var(--border-color, #d1d5db);
+  border-radius: var(--radius-md, 0.5rem);
+  transition: all var(--animation-duration-normal, 250ms)
+    var(--animation-easing-swift, cubic-bezier(0.4, 0, 0.2, 1));
+
+  /* Accessibility and mobile optimization */
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Focus states */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-primary, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: scale(1.01);
+}
+
+/* ==========================================================================
+   VALIDATION STATES
+   ========================================================================== */
+
+/* Success state */
+.form-group.success .form-input,
+.form-group.success .form-textarea,
+.form-group.success .form-select {
+  border-color: var(--accent-success, #10b981);
+  background-color: rgba(16, 185, 129, 0.05);
+  padding-right: 3rem; /* Space for icon */
+}
+
+.form-group.success .form-input:focus,
+.form-group.success .form-textarea:focus,
+.form-group.success .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Error state */
+.form-group.error .form-input,
+.form-group.error .form-textarea,
+.form-group.error .form-select {
+  border-color: var(--accent-danger, #ef4444);
+  background-color: rgba(239, 68, 68, 0.05);
+  padding-right: 3rem; /* Space for icon */
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.form-group.error .form-input:focus,
+.form-group.error .form-textarea:focus,
+.form-group.error .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Warning state */
+.form-group.warning .form-input,
+.form-group.warning .form-textarea,
+.form-group.warning .form-select {
+  border-color: var(--accent-warning, #f59e0b);
+  background-color: rgba(245, 158, 11, 0.05);
+  padding-right: 3rem; /* Space for icon */
+}
+
+.form-group.warning .form-input:focus,
+.form-group.warning .form-textarea:focus,
+.form-group.warning .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Disabled state */
+.form-input:disabled,
+.form-textarea:disabled,
+.form-select:disabled {
+  background-color: var(--bg-tertiary, #f8fafc);
+  color: var(--text-tertiary, #9ca3af);
+  border-color: var(--border-color-light, #e5e7eb);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   VALIDATION ICONS
+   ========================================================================== */
+
+.form-validation-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.form-group.has-label .form-validation-icon {
+  top: calc(50% + 12px); /* Adjust for label */
+}
+
+.form-group.success .form-validation-icon {
+  color: var(--accent-success, #10b981);
+}
+
+.form-group.error .form-validation-icon {
+  color: var(--accent-danger, #ef4444);
+}
+
+.form-group.warning .form-validation-icon {
+  color: var(--accent-warning, #f59e0b);
+}
+
+/* ==========================================================================
+   VALIDATION MESSAGES
+   ========================================================================== */
+
+.form-message {
+  margin-top: var(--space-2, 0.5rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: var(--line-height-normal, 1.5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 0.5rem);
+
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(-8px);
+  max-height: 0;
+  overflow: hidden;
+  transition: all var(--animation-duration-normal, 250ms)
+    var(--animation-easing-swift, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.form-message.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px; /* Generous max-height for transition */
+}
+
+.form-message-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px; /* Align with text */
+}
+
+.form-message-text {
+  flex: 1;
+}
+
+/* Message types */
+.form-message.success {
+  color: var(--accent-success, #10b981);
+}
+
+.form-message.error {
+  color: var(--accent-danger, #ef4444);
+}
+
+.form-message.warning {
+  color: var(--accent-warning, #f59e0b);
+}
+
+.form-message.info {
+  color: var(--accent-primary, #3b82f6);
+}
+
+/* Multiple messages */
+.form-messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+/* ==========================================================================
+   REAL-TIME VALIDATION FEEDBACK
+   ========================================================================== */
+
+/* Character counter */
+.form-character-count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-1, 0.25rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-secondary, #6b7280);
+}
+
+.form-character-count.near-limit {
+  color: var(--accent-warning, #f59e0b);
+}
+
+.form-character-count.over-limit {
+  color: var(--accent-danger, #ef4444);
+  font-weight: 500;
+}
+
+/* Password strength indicator */
+.password-strength {
+  margin-top: var(--space-2, 0.5rem);
+}
+
+.password-strength-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--bg-tertiary, #f1f5f9);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: var(--space-2, 0.5rem);
+}
+
+.password-strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: all var(--animation-duration-normal, 250ms)
+    var(--animation-easing-swift, cubic-bezier(0.4, 0, 0.2, 1));
+  border-radius: inherit;
+}
+
+.password-strength-fill.weak {
+  width: 25%;
+  background-color: var(--accent-danger, #ef4444);
+}
+
+.password-strength-fill.fair {
+  width: 50%;
+  background-color: var(--accent-warning, #f59e0b);
+}
+
+.password-strength-fill.good {
+  width: 75%;
+  background-color: var(--accent-info, #06b6d4);
+}
+
+.password-strength-fill.strong {
+  width: 100%;
+  background-color: var(--accent-success, #10b981);
+}
+
+.password-strength-text {
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: 500;
+}
+
+.password-strength-text.weak {
+  color: var(--accent-danger, #ef4444);
+}
+
+.password-strength-text.fair {
+  color: var(--accent-warning, #f59e0b);
+}
+
+.password-strength-text.good {
+  color: var(--accent-info, #06b6d4);
+}
+
+.password-strength-text.strong {
+  color: var(--accent-success, #10b981);
+}
+
+/* ==========================================================================
+   FORM VALIDATION ANIMATIONS
+   ========================================================================== */
+
+/* Shake animation for errors */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* Success checkmark animation */
+.success-checkmark {
+  animation: successPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Error icon shake */
+.error-icon {
+  animation: errorShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Pulse animation for loading validation */
+.validation-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ==========================================================================
+   FLOATING LABELS
+   ========================================================================== */
+
+.form-group.floating-label {
+  position: relative;
+}
+
+.form-group.floating-label .form-label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  background: var(--bg-primary, #ffffff);
+  padding: 0 4px;
+  color: var(--text-secondary, #6b7280);
+  pointer-events: none;
+  transition: all var(--animation-duration-normal, 250ms)
+    var(--animation-easing-swift, cubic-bezier(0.4, 0, 0.2, 1));
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+.form-group.floating-label .form-input:focus + .form-label,
+.form-group.floating-label .form-input:not(:placeholder-shown) + .form-label,
+.form-group.floating-label.has-value .form-label {
+  top: 0;
+  transform: translateY(-50%) scale(0.85);
+  color: var(--accent-primary, #3b82f6);
+  font-weight: 500;
+}
+
+.form-group.floating-label.error .form-input:focus + .form-label,
+.form-group.floating-label.error.has-value .form-label {
+  color: var(--accent-danger, #ef4444);
+}
+
+.form-group.floating-label.success .form-input:focus + .form-label,
+.form-group.floating-label.success.has-value .form-label {
+  color: var(--accent-success, #10b981);
+}
+
+/* ==========================================================================
+   FORM GROUPS & LAYOUT
+   ========================================================================== */
+
+/* Inline form groups */
+.form-group-inline {
+  display: flex;
+  gap: var(--space-3, 0.75rem);
+  align-items: flex-end;
+}
+
+.form-group-inline .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Form sections */
+.form-section {
+  margin-bottom: var(--space-8, 2rem);
+  padding-bottom: var(--space-6, 1.5rem);
+  border-bottom: 1px solid var(--border-color-light, #e5e7eb);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.form-section-title {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.form-section-description {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: var(--space-6, 1.5rem);
+  line-height: var(--line-height-relaxed, 1.75);
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .form-input,
+  .form-textarea,
+  .form-select {
+    border-width: 3px;
+  }
+
+  .form-group.error .form-input,
+  .form-group.error .form-textarea,
+  .form-group.error .form-select {
+    border-color: #ff0000;
+  }
+
+  .form-group.success .form-input,
+  .form-group.success .form-textarea,
+  .form-group.success .form-select {
+    border-color: #008000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .form-input,
+  .form-textarea,
+  .form-select,
+  .form-message,
+  .form-label,
+  .password-strength-fill {
+    transition: none;
+  }
+
+  .form-group.error .form-input,
+  .form-group.error .form-textarea,
+  .form-group.error .form-select {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   MOBILE OPTIMIZATIONS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .form-group-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: var(--space-4, 1rem);
+  }
+
+  .form-validation-icon {
+    right: 16px;
+  }
+}

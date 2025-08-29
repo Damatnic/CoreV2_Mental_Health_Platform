@@ -1,0 +1,501 @@
+/* ==========================================================================
+   ENHANCED FOCUS INDICATORS & KEYBOARD NAVIGATION
+   Comprehensive keyboard accessibility with visual focus enhancements
+   ========================================================================== */
+
+/* Focus Management Variables */
+:root {
+  --focus-outline-width: 3px;
+  --focus-outline-offset: 2px;
+  --focus-outline-color: var(--accent-primary);
+  --focus-ring-color: rgba(66, 153, 225, 0.15);
+  --focus-transition: outline-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Remove default focus styles - we'll replace with better ones */
+*:focus {
+  outline: none;
+}
+
+/* Enhanced Focus Visible Styles */
+:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 calc(var(--focus-outline-width) + 2px)
+    var(--focus-ring-color);
+  transition: var(--focus-transition);
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+/* Button Focus Enhancements */
+button:focus-visible,
+.btn:focus-visible,
+[role="button"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 2px) var(--focus-ring-color),
+    var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  transform: translateY(-1px);
+  z-index: 10;
+  position: relative;
+}
+
+/* Primary Button Focus - Enhanced */
+.btn-primary:focus-visible {
+  outline-color: var(--wcag-white, #ffffff);
+  box-shadow:
+    0 0 0 3px var(--accent-primary),
+    0 0 0 6px rgba(255, 255, 255, 0.8),
+    var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+/* Secondary Button Focus */
+.btn-secondary:focus-visible {
+  outline-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background-color: var(--surface-hover);
+}
+
+/* Danger Button Focus */
+.btn-danger:focus-visible {
+  outline-color: var(--wcag-white, #ffffff);
+  box-shadow:
+    0 0 0 3px var(--accent-danger),
+    0 0 0 6px rgba(255, 255, 255, 0.8),
+    var(--shadow-lg);
+}
+
+/* Link Focus Enhancements */
+a:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--focus-ring-color);
+  border-radius: var(--border-radius-sm);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Navigation Link Focus */
+.nav-link:focus-visible {
+  background-color: var(--surface-hover);
+  transform: translateX(4px);
+  border-left: 4px solid var(--accent-primary);
+  outline-offset: 4px;
+}
+
+/* Form Control Focus Enhancements */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) var(--focus-ring-color),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: var(--surface-primary);
+}
+
+/* Input Error State Focus */
+input.error:focus-visible,
+textarea.error:focus-visible {
+  outline-color: var(--accent-danger);
+  border-color: var(--accent-danger);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) rgba(231, 76, 60, 0.15),
+    inset 0 1px 2px rgba(231, 76, 60, 0.1);
+}
+
+/* Input Success State Focus */
+input.success:focus-visible,
+textarea.success:focus-visible {
+  outline-color: var(--accent-success);
+  border-color: var(--accent-success);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) rgba(39, 174, 96, 0.15),
+    inset 0 1px 2px rgba(39, 174, 96, 0.1);
+}
+
+/* Card Focus Enhancements */
+.card:focus-visible,
+.post-card:focus-visible,
+.message-card:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 2px) var(--focus-ring-color),
+    var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
+  z-index: 10;
+  position: relative;
+}
+
+/* Modal Focus Management */
+.modal-content:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: calc(var(--focus-outline-offset) + 4px);
+  box-shadow:
+    var(--shadow-2xl, 0 25px 50px -12px rgba(0, 0, 0, 0.25)),
+    0 0 0 calc(var(--focus-outline-width) + 6px) var(--focus-ring-color);
+}
+
+.modal-close-btn:focus-visible {
+  outline: var(--focus-outline-width) solid #ffffff;
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--accent-primary);
+  color: white;
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 2px) var(--accent-primary),
+    0 0 0 calc(var(--focus-outline-width) + 4px) rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* Tab Navigation Enhancement */
+.tab-button:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  transform: translateY(-2px);
+  z-index: 10;
+  position: relative;
+}
+
+.tab-button.active:focus-visible {
+  outline-color: var(--wcag-white, #ffffff);
+  background-color: var(--accent-primary);
+  color: var(--wcag-white, white);
+  box-shadow:
+    0 0 0 3px var(--accent-primary),
+    0 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Icon Button Focus */
+.icon-btn:focus-visible,
+.btn-icon-only:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 2px) var(--focus-ring-color),
+    var(--shadow-md);
+}
+
+/* Skip Navigation Links Enhancement */
+.skip-nav:focus-visible,
+.skip-link:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 6px var(--accent-primary),
+    0 0 0 9px rgba(255, 255, 255, 0.8),
+    var(--shadow-xl);
+  transform: scale(1.05);
+  z-index: 10000;
+}
+
+/* Checkbox and Radio Focus */
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 calc(var(--focus-outline-width) + 2px)
+    var(--focus-ring-color);
+  transform: scale(1.1);
+}
+
+/* Select Dropdown Focus */
+select:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) var(--focus-ring-color),
+    var(--shadow-md);
+  background-color: var(--surface-primary);
+}
+
+/* Custom Dropdown Focus */
+.dropdown-toggle:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) var(--focus-ring-color),
+    var(--shadow-md);
+  background-color: var(--surface-hover);
+}
+
+/* Slider Focus Enhancement */
+input[type="range"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: calc(var(--focus-outline-offset) + 4px);
+}
+
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 3px var(--accent-primary),
+    0 0 0 6px rgba(66, 153, 225, 0.3),
+    var(--shadow-lg);
+  transform: scale(1.2);
+}
+
+input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 3px var(--accent-primary),
+    0 0 0 6px rgba(66, 153, 225, 0.3),
+    var(--shadow-lg);
+  transform: scale(1.2);
+}
+
+/* Progress Bar Focus */
+progress:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 calc(var(--focus-outline-width) + 2px)
+    var(--focus-ring-color);
+}
+
+/* Details/Summary Focus */
+summary:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  border-radius: var(--border-radius-md);
+  padding: 8px 12px;
+  margin: -8px -12px;
+}
+
+/* Search Input Focus */
+input[type="search"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 calc(var(--focus-outline-width) + 1px) var(--focus-ring-color),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--surface-primary);
+}
+
+/* File Input Focus */
+input[type="file"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--border-radius-md);
+}
+
+/* Video Controls Focus */
+video:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: calc(var(--focus-outline-offset) + 4px);
+  border-radius: var(--border-radius-lg);
+}
+
+/* Table Focus Navigation */
+table:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+th:focus-visible,
+td:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  position: relative;
+  z-index: 10;
+}
+
+/* List Item Focus */
+li[tabindex]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  border-radius: var(--border-radius-md);
+  transform: translateX(4px);
+}
+
+/* Disclosure Focus */
+[aria-expanded]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--surface-hover);
+  box-shadow: 0 0 0 calc(var(--focus-outline-width) + 2px)
+    var(--focus-ring-color);
+}
+
+/* Menu Item Focus */
+[role="menuitem"]:focus-visible,
+[role="menuitemcheckbox"]:focus-visible,
+[role="menuitemradio"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  background-color: var(--accent-primary);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* High Contrast Mode Focus Enhancement */
+@media (prefers-contrast: high) {
+  :focus-visible {
+    outline: 4px solid #ffff00;
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 7px #000000,
+      0 0 0 10px #ffff00;
+  }
+
+  .btn-primary:focus-visible {
+    outline: 4px solid #ffff00;
+    background: var(--wcag-black, #000000);
+    color: var(--wcag-white, #ffffff);
+    border: 2px solid var(--wcag-white, #ffffff);
+  }
+
+  .modal-close-btn:focus-visible {
+    outline: 4px solid #ffff00;
+    background: var(--wcag-black, #000000);
+    color: var(--wcag-white, #ffffff);
+  }
+}
+
+/* Dark Theme Focus Adjustments */
+[data-theme="dark"] {
+  --focus-outline-color: #90cdf4;
+  --focus-ring-color: rgba(144, 205, 244, 0.15);
+}
+
+[data-theme="dark"] .btn-primary:focus-visible {
+  outline-color: var(--wcag-white, #ffffff);
+  box-shadow:
+    0 0 0 3px var(--accent-primary),
+    0 0 0 6px rgba(255, 255, 255, 0.9),
+    var(--shadow-lg);
+}
+
+/* Reduced Motion Focus */
+@media (prefers-reduced-motion: reduce) {
+  :focus-visible {
+    transition: none;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .card:focus-visible,
+  .modal-close-btn:focus-visible,
+  .icon-btn:focus-visible {
+    transform: none !important;
+  }
+}
+
+/* Mobile Focus Enhancements */
+@media (max-width: 768px) {
+  :focus-visible {
+    outline-width: 4px;
+    outline-offset: 3px;
+  }
+
+  .btn:focus-visible {
+    outline-width: 4px;
+    transform: none;
+    box-shadow:
+      0 0 0 calc(4px + 2px) var(--focus-ring-color),
+      var(--shadow-lg);
+  }
+
+  .nav-link:focus-visible {
+    transform: none;
+    border-left: 6px solid var(--accent-primary);
+    background-color: var(--surface-hover);
+  }
+}
+
+/* Large Touch Devices Focus */
+@media (min-width: 768px) and (max-width: 1024px) and (pointer: coarse) {
+  :focus-visible {
+    outline-width: 4px;
+    outline-offset: 4px;
+  }
+
+  .btn:focus-visible {
+    outline-width: 4px;
+    box-shadow:
+      0 0 0 calc(4px + 3px) var(--focus-ring-color),
+      var(--shadow-xl);
+  }
+}
+
+/* Keyboard Navigation Hints */
+.keyboard-hint {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-overlay);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  margin-bottom: 8px;
+}
+
+*:focus-visible .keyboard-hint {
+  opacity: 1;
+}
+
+/* Focus Ring Animation */
+@keyframes focus-ring-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 var(--focus-outline-width) var(--focus-outline-color),
+      0 0 0 calc(var(--focus-outline-width) + 3px) var(--focus-ring-color);
+  }
+  50% {
+    box-shadow:
+      0 0 0 var(--focus-outline-width) var(--focus-outline-color),
+      0 0 0 calc(var(--focus-outline-width) + 6px) var(--focus-ring-color);
+  }
+}
+
+/* Critical Action Focus Animation */
+.btn-danger:focus-visible,
+.emergency-button:focus-visible,
+.crisis-button:focus-visible {
+  animation: focus-ring-pulse 1.5s ease-in-out infinite;
+}
+
+/* Screen Reader Focus Announcements */
+.focus-announcement {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Disable focus ring pulse for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-danger:focus-visible,
+  .emergency-button:focus-visible,
+  .crisis-button:focus-visible {
+    animation: none;
+  }
+}
+
+/* Print Styles - Remove Focus Styles */
+@media print {
+  *:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background-color: transparent !important;
+  }
+}

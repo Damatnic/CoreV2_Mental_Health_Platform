@@ -1,0 +1,100 @@
+{
+  "emergency": {
+    "title": "危机支持",
+    "subtitle": "您并不孤单。24小时全天候提供帮助。",
+    "immediate_danger": "如果您处于直接危险中，请拨打120或前往最近的急诊室。",
+    "call_988": {
+      "title": "拨打400-161-9995危机干预热线",
+      "description": "为处于危机中的人及其亲友提供24小时免费保密支持。",
+      "number": "400-161-9995",
+      "action": "立即拨打"
+    },
+    "additional_resources": {
+      "beijing_crisis": {
+        "title": "北京心理危机热线",
+        "number": "010-82951332",
+        "description": "北京专业心理危机干预"
+      },
+      "shanghai_crisis": {
+        "title": "上海心理援助热线",
+        "number": "021-62785533",
+        "description": "上海24小时心理援助"
+      },
+      "guangzhou_crisis": {
+        "title": "广州心理援助热线",
+        "number": "020-81899120",
+        "description": "广州心理健康服务"
+      },
+      "online_counseling": {
+        "title": "在线心理咨询",
+        "description": "匿名保密的在线支持",
+        "action": "开始聊天"
+      }
+    }
+  },
+  "cultural_support": {
+    "face_saving": {
+      "title": "保护隐私与尊严",
+      "description": "我们理解维护面子的重要性。所有支持都是保密的。",
+      "private_options": "提供私密的帮助选项"
+    },
+    "family_harmony": {
+      "title": "家庭和谐支持",
+      "description": "在保持家庭和谐的同时获得帮助",
+      "family_counseling": "家庭咨询服务",
+      "mediation": "家庭调解支持"
+    },
+    "traditional_healing": {
+      "title": "身心调理",
+      "description": "结合传统与现代的身心健康方法",
+      "tcm_support": "中医情志调理",
+      "qigong": "气功与太极练习",
+      "meditation": "禅修与正念"
+    },
+    "somatic_expression": {
+      "physical_symptoms": "如果您感到：",
+      "chest_tightness": "胸闷、心慌",
+      "sleep_issues": "失眠、多梦",
+      "appetite_changes": "食欲改变",
+      "fatigue": "疲劳、无力",
+      "message": "这些身体症状可能与情绪压力有关，寻求帮助是明智的选择。"
+    }
+  },
+  "support": {
+    "you_matter": "您很重要。",
+    "not_alone": "您并不孤单。",
+    "help_available": "有帮助可获得。",
+    "safe_space": "这是一个安全空间。",
+    "take_time": "慢慢来。",
+    "breathe": "记得呼吸。",
+    "strength_wisdom": "困难是暂时的，您有内在的力量。",
+    "harmony_balance": "寻求内心的平衡与和谐。",
+    "collective_support": "家人和朋友都关心您。",
+    "gradual_healing": "康复是一个渐进的过程。"
+  },
+  "messages": {
+    "crisis_detected": "我们注意到您可能需要一些支持。请记住，寻求帮助是勇敢的表现。",
+    "help_available": "有多种方式可以获得帮助，包括保密的在线支持。",
+    "family_context": "如果您愿意，可以考虑与信任的家人分享，或者先寻求专业的私密咨询。",
+    "discrete_support": "我们提供谨慎的支持选项，保护您的隐私。",
+    "physical_wellbeing": "关注身体健康也很重要，考虑通过中医调理或运动来改善状态。",
+    "gradual_approach": "不必急于改变，可以从小步骤开始，比如改善睡眠或饮食。"
+  },
+  "coping_strategies": {
+    "title": "文化适应的应对方法",
+    "qigong_practice": "每日气功练习，调节气血平衡",
+    "tea_meditation": "茶道冥想，静心养神",
+    "calligraphy": "书法练习，抒发情感",
+    "nature_walks": "亲近自然，散步调心",
+    "family_meals": "与家人共餐，增进联系",
+    "ancestor_wisdom": "思考祖先智慧，获得力量"
+  },
+  "professional_help": {
+    "title": "专业支持选项",
+    "hospital_psychiatry": "综合医院精神科",
+    "tcm_emotional": "中医情志科",
+    "psychological_counseling": "心理咨询中心",
+    "online_anonymous": "在线匿名咨询",
+    "community_mental_health": "社区心理健康服务站"
+  }
+}

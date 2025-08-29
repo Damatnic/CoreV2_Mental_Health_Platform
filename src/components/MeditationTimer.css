@@ -1,0 +1,371 @@
+/* Meditation Timer Styles */
+
+.meditation-timer-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(250, 245, 255, 0.98) 100%
+  );
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 50px rgba(102, 126, 234, 0.1);
+  margin-bottom: 2rem;
+}
+
+.timer-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.timer-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+}
+
+.timer-subtitle {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Time Presets */
+.time-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.preset-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.75rem;
+  background: white;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.preset-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+.preset-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: transparent;
+  color: white;
+}
+
+.preset-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.preset-description {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Timer Display */
+.timer-display-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.timer-circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.timer-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+}
+
+.timer-circle-progress {
+  transition: stroke-dasharray 1s linear;
+}
+
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.timer-time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  font-family: "Courier New", monospace;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.timer-guidance {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  font-style: italic;
+  max-width: 150px;
+  line-height: 1.3;
+  animation: fadeInOut 5s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Ambient Sounds */
+.ambient-sounds {
+  background: rgba(102, 126, 234, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sounds-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+}
+
+.sounds-icon {
+  width: 20px;
+  height: 20px;
+  color: #667eea;
+}
+
+.sound-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.5rem;
+}
+
+.sound-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0.5rem;
+  background: white;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.sound-btn:hover:not(:disabled) {
+  background: rgba(102, 126, 234, 0.05);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.sound-btn.active {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  border-color: #667eea;
+}
+
+.sound-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sound-emoji {
+  font-size: 1.5rem;
+}
+
+.sound-name {
+  font-size: 0.75rem;
+  color: #5a6c7d;
+  text-align: center;
+}
+
+/* Timer Controls */
+.timer-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.timer-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.timer-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.timer-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.timer-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.timer-btn.secondary {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.timer-btn.secondary:hover {
+  background: rgba(102, 126, 234, 0.05);
+}
+
+/* Settings */
+.timer-settings {
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.setting-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #5a6c7d;
+  font-size: 0.9rem;
+}
+
+.setting-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .meditation-timer-card {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.98) 0%,
+    rgba(28, 33, 40, 0.98) 100%
+  );
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+[data-theme="dark"] .timer-title {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .timer-subtitle {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .preset-btn {
+  background: rgba(34, 39, 46, 0.8);
+  border-color: rgba(88, 166, 255, 0.2);
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .preset-btn:hover {
+  background: rgba(34, 39, 46, 1);
+  border-color: rgba(88, 166, 255, 0.4);
+}
+
+[data-theme="dark"] .timer-time {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .timer-guidance {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .sounds-title {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .sound-btn {
+  background: rgba(34, 39, 46, 0.8);
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+[data-theme="dark"] .sound-name {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .setting-toggle {
+  color: #8b949e;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .meditation-timer-card {
+    padding: 1.5rem;
+  }
+
+  .time-presets {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .timer-circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  .timer-time {
+    font-size: 2rem;
+  }
+
+  .sound-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

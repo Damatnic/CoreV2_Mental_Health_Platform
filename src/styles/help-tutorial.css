@@ -1,0 +1,762 @@
+/**
+ * Help & Tutorial System Styles
+ * Comprehensive styling for help panels, tutorials, tooltips, and shortcuts
+ */
+
+/* Help Trigger Button */
+.help-trigger {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.help-trigger:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.help-trigger:focus {
+  outline: 2px solid var(--focus-color, #ffa500);
+  outline-offset: 2px;
+}
+
+/* Help Panel */
+.help-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 400px;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.help-panel__header {
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(
+    --primary-gradient,
+    linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+  );
+  color: white;
+}
+
+.help-panel__header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.help-panel__close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.help-panel__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.help-panel__search {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.help-panel__search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.help-panel__search input:focus {
+  outline: none;
+  border-color: var(--primary-color, #4a90e2);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+.help-panel__categories {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.help-category {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.help-category:hover {
+  background: #f5f5f5;
+}
+
+.help-category.active {
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border-color: var(--primary-color, #4a90e2);
+}
+
+.help-panel__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Help Topics */
+.help-topic {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+}
+
+.help-topic:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.help-topic h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.help-topic p {
+  margin: 0 0 12px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.help-topic button {
+  padding: 6px 12px;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.help-topic button:hover {
+  background: var(--primary-hover, #357abd);
+}
+
+.help-no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.help-no-results p:first-child {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.help-featured h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+/* Tutorial Cards */
+.tutorial-list {
+  margin-bottom: 30px;
+}
+
+.tutorial-card {
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.tutorial-card h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.tutorial-card p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.tutorial-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #888;
+}
+
+.tutorial-card button {
+  padding: 8px 16px;
+  background: var(--success-color, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tutorial-card button:hover {
+  background: var(--success-hover, #45a049);
+}
+
+/* Quick Links */
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quick-links button {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-links button:hover {
+  background: #f5f5f5;
+  transform: translateX(5px);
+}
+
+/* Tutorial Overlay */
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.tutorial-highlight {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+}
+
+.tutorial-popup {
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  pointer-events: auto;
+  animation: fadeInScale 0.3s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tutorial-popup--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tutorial-popup--top {
+  bottom: calc(100% + 10px);
+}
+
+.tutorial-popup--bottom {
+  top: calc(100% + 10px);
+}
+
+.tutorial-popup--left {
+  right: calc(100% + 10px);
+}
+
+.tutorial-popup--right {
+  left: calc(100% + 10px);
+}
+
+.tutorial-header {
+  padding: 15px 15px 10px;
+  position: relative;
+}
+
+.tutorial-progress {
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.tutorial-progress__bar {
+  height: 100%;
+  background: var(
+    --primary-gradient,
+    linear-gradient(90deg, #4a90e2 0%, #357abd 100%)
+  );
+  transition: width 0.3s ease;
+}
+
+.tutorial-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.tutorial-close:hover {
+  background: #e0e0e0;
+}
+
+.tutorial-content {
+  padding: 0 20px 15px;
+}
+
+.tutorial-content h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.tutorial-content p {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tutorial-action {
+  padding: 8px 16px;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tutorial-action:hover {
+  background: var(--primary-hover, #357abd);
+}
+
+.tutorial-navigation {
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.tutorial-navigation button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tutorial-navigation button:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.tutorial-navigation button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tutorial-next {
+  background: var(--primary-color, #4a90e2) !important;
+  color: white !important;
+  border-color: var(--primary-color, #4a90e2) !important;
+}
+
+.tutorial-next:hover {
+  background: var(--primary-hover, #357abd) !important;
+}
+
+.tutorial-skip {
+  background: transparent !important;
+  color: #666 !important;
+  border: none !important;
+  text-decoration: underline;
+}
+
+.tutorial-step-counter {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Keyboard Shortcuts Modal */
+.shortcuts-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.shortcuts-modal__content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  max-height: 80vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.shortcuts-modal__header {
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shortcuts-modal__header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.shortcuts-modal__header button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortcuts-modal__body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.shortcuts-category {
+  margin-bottom: 25px;
+}
+
+.shortcuts-category h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.shortcuts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+.shortcut-keys {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.shortcut-keys kbd {
+  padding: 4px 8px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.shortcut-action {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Help Tooltip */
+.help-tooltip {
+  position: absolute;
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 2200;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease;
+}
+
+.help-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #333;
+}
+
+/* Help Button Component */
+.help-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.help-button:hover {
+  background: var(--primary-hover, #357abd);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.help-button__icon {
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Loading State */
+.help-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2300;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .help-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tutorial-popup {
+    max-width: calc(100vw - 40px);
+    margin: 20px;
+  }
+
+  .shortcuts-modal__content {
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 40px);
+  }
+
+  .help-trigger {
+    bottom: 70px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .help-panel,
+  .tutorial-popup,
+  .shortcuts-modal,
+  .help-tooltip {
+    animation: none;
+  }
+
+  .tutorial-progress__bar {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .help-panel,
+  .tutorial-popup,
+  .shortcuts-modal__content {
+    border: 2px solid #000;
+  }
+
+  .help-trigger {
+    border: 2px solid #fff;
+  }
+
+  .tutorial-progress__bar {
+    background: #000;
+  }
+
+  kbd {
+    border: 2px solid #000;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .help-panel,
+  .tutorial-popup,
+  .shortcuts-modal__content {
+    background: #1a1a1a;
+    color: #e0e0e0;
+  }
+
+  .help-panel__header {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  }
+
+  .help-topic,
+  .tutorial-card,
+  .quick-links button {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+  }
+
+  .help-topic:hover,
+  .tutorial-card:hover,
+  .quick-links button:hover {
+    background: #333;
+  }
+
+  .help-tooltip {
+    background: #e0e0e0;
+    color: #1a1a1a;
+  }
+
+  .help-tooltip::after {
+    border-top-color: #e0e0e0;
+  }
+
+  .shortcut-item {
+    background: #2a2a2a;
+  }
+
+  .shortcut-keys kbd {
+    background: #333;
+    border-color: #555;
+    color: #e0e0e0;
+  }
+}

@@ -1,0 +1,91 @@
+/* Calming Background Styles */
+
+.calming-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.calming-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.background-overlay.theme-ocean {
+  background: linear-gradient(
+    180deg,
+    rgba(135, 206, 235, 0.2) 0%,
+    rgba(70, 130, 180, 0.3) 50%,
+    rgba(25, 25, 112, 0.2) 100%
+  );
+}
+
+.background-overlay.theme-forest {
+  background: linear-gradient(
+    180deg,
+    rgba(144, 238, 144, 0.2) 0%,
+    rgba(34, 139, 34, 0.3) 50%,
+    rgba(0, 100, 0, 0.2) 100%
+  );
+}
+
+.background-overlay.theme-sky {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(135, 206, 250, 0.3) 50%,
+    rgba(100, 149, 237, 0.2) 100%
+  );
+}
+
+.background-overlay.theme-aurora {
+  background: linear-gradient(
+    135deg,
+    rgba(138, 43, 226, 0.1) 0%,
+    rgba(0, 191, 255, 0.1) 25%,
+    rgba(50, 205, 50, 0.1) 50%,
+    rgba(255, 215, 0, 0.1) 75%,
+    rgba(255, 69, 0, 0.1) 100%
+  );
+  animation: auroraShift 20s ease-in-out infinite;
+}
+
+@keyframes auroraShift {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(180deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .background-overlay {
+    opacity: 0.2;
+  }
+}
+
+/* Dark mode support */
+[data-theme="dark"] .background-overlay {
+  opacity: 0.15;
+  filter: brightness(0.5);
+}

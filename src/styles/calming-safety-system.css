@@ -1,0 +1,570 @@
+/**
+ * Calming Safety System
+ * Critical life-saving design elements for mental health support
+ * Every pixel designed to promote safety, calm, and hope
+ */
+
+:root {
+  /* ======================================
+     LIFE-SAVING COLOR PALETTE
+     Scientifically proven calming colors
+     ====================================== */
+
+  /* Ocean Blues - Primary calming colors (reduce anxiety) */
+  --calm-ocean-light: #e3f2fd;
+  --calm-ocean-soft: #90caf9;
+  --calm-ocean-main: #42a5f5;
+  --calm-ocean-deep: #1e88e5;
+
+  /* Sage Greens - Growth and healing */
+  --calm-sage-light: #e8f5e9;
+  --calm-sage-soft: #a5d6a7;
+  --calm-sage-main: #66bb6a;
+  --calm-sage-deep: #43a047;
+
+  /* Lavender - Tranquility and peace */
+  --calm-lavender-light: #f3e5f5;
+  --calm-lavender-soft: #ce93d8;
+  --calm-lavender-main: #ab47bc;
+  --calm-lavender-deep: #8e24aa;
+
+  /* Warm Support - Non-threatening warmth */
+  --calm-support-light: #fff3e0;
+  --calm-support-soft: #ffcc80;
+  --calm-support-main: #ffa726;
+  --calm-support-deep: #fb8c00;
+
+  /* Crisis Colors - Gentle urgency without panic */
+  --crisis-soft: #ffebee;
+  --crisis-gentle: #ef9a9a;
+  --crisis-attention: #ef5350;
+  --crisis-urgent: #e53935;
+
+  /* Hope Colors - Inspiration and positivity */
+  --hope-dawn: #fff9c4;
+  --hope-sunrise: #fff176;
+  --hope-daylight: #ffeb3b;
+  --hope-sunshine: #fdd835;
+
+  /* ======================================
+     CALMING GRADIENTS
+     ====================================== */
+
+  --gradient-peaceful-sky: linear-gradient(
+    135deg,
+    #e3f2fd 0%,
+    #bbdefb 50%,
+    #90caf9 100%
+  );
+
+  --gradient-healing-nature: linear-gradient(
+    135deg,
+    #e8f5e9 0%,
+    #c8e6c9 50%,
+    #a5d6a7 100%
+  );
+
+  --gradient-warm-embrace: linear-gradient(
+    135deg,
+    #fff3e0 0%,
+    #ffe0b2 50%,
+    #ffcc80 100%
+  );
+
+  --gradient-hope-horizon: linear-gradient(
+    135deg,
+    #fff9c4 0%,
+    #fff59d 50%,
+    #fff176 100%
+  );
+
+  --gradient-twilight-calm: linear-gradient(
+    135deg,
+    #f3e5f5 0%,
+    #e1bee7 50%,
+    #ce93d8 100%
+  );
+}
+
+/* ======================================
+   BREATHING ANIMATION SYSTEM
+   ====================================== */
+
+@keyframes breatheIn {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes gentlePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(66, 165, 245, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(66, 165, 245, 0);
+  }
+}
+
+@keyframes floatGently {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmerHope {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ======================================
+   CRITICAL SAFETY COMPONENTS
+   ====================================== */
+
+/* Quick Exit Button - ALWAYS VISIBLE */
+.quick-exit-enhanced {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+  background: var(--crisis-attention) !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 50px !important;
+  border: 3px solid white !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 20px rgba(229, 57, 53, 0.4) !important;
+  transition: all 0.2s ease !important;
+  animation: gentlePulse 2s infinite !important;
+}
+
+.quick-exit-enhanced:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 30px rgba(229, 57, 53, 0.6) !important;
+  background: var(--crisis-urgent) !important;
+}
+
+/* Crisis Help Floating Button */
+.crisis-help-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999998;
+  background: var(--gradient-warm-embrace);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 30px rgba(255, 167, 38, 0.4);
+  cursor: pointer;
+  animation: floatGently 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.crisis-help-float:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 40px rgba(255, 167, 38, 0.6);
+}
+
+.crisis-help-float::before {
+  content: "💝";
+  font-size: 32px;
+}
+
+/* Breathing Indicator */
+.breathing-indicator {
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-peaceful-sky);
+  border-radius: 50%;
+  animation: breatheIn 4s ease-in-out infinite;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(66, 165, 245, 0.3);
+  z-index: 999997;
+}
+
+.breathing-indicator::after {
+  content: "🫁";
+  font-size: 24px;
+}
+
+/* ======================================
+   CALMING MESSAGE SYSTEM
+   ====================================== */
+
+.calming-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 999996;
+}
+
+.calming-message.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.calming-message h3 {
+  color: var(--calm-ocean-deep);
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.calming-message p {
+  color: var(--calm-sage-deep);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.calming-message button {
+  background: var(--gradient-hope-horizon);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.calming-message button:hover {
+  transform: scale(1.05);
+}
+
+/* ======================================
+   GROUNDING EXERCISES BAR
+   ====================================== */
+
+.grounding-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--gradient-healing-nature);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999995;
+}
+
+.grounding-exercise {
+  background: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grounding-exercise:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.grounding-exercise span {
+  font-size: 20px;
+}
+
+/* ======================================
+   HOPE MESSAGES
+   ====================================== */
+
+.hope-message {
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-hope-horizon);
+  padding: 15px 30px;
+  border-radius: 30px;
+  color: var(--calm-ocean-deep);
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(253, 216, 53, 0.4);
+  animation: floatGently 4s ease-in-out infinite;
+  z-index: 999994;
+}
+
+.hope-message::before {
+  content: "✨ ";
+}
+
+.hope-message::after {
+  content: " ✨";
+}
+
+/* ======================================
+   SAFE SPACE INDICATORS
+   ====================================== */
+
+.safe-space-badge {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: var(--gradient-twilight-calm);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(142, 36, 170, 0.3);
+  z-index: 999993;
+}
+
+.safe-space-badge::before {
+  content: "🛡️";
+  font-size: 20px;
+}
+
+/* ======================================
+   ACCESSIBILITY ENHANCEMENTS
+   ====================================== */
+
+/* Large touch targets for crisis situations */
+.crisis-button-large {
+  min-width: 200px !important;
+  min-height: 60px !important;
+  font-size: 18px !important;
+  padding: 15px 30px !important;
+  border-radius: 30px !important;
+  background: var(--gradient-warm-embrace) !important;
+  border: 3px solid white !important;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.crisis-button-large:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* High contrast mode for tears/blurred vision */
+.high-contrast-crisis {
+  background: white !important;
+  color: black !important;
+  border: 4px solid black !important;
+  font-weight: bold !important;
+  font-size: 20px !important;
+}
+
+/* ======================================
+   BACKGROUND AMBIENCE
+   ====================================== */
+
+body.calm-mode {
+  background: var(--gradient-peaceful-sky);
+  position: relative;
+}
+
+body.calm-mode::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: shimmerHope 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ======================================
+   THERAPEUTIC TRANSITIONS
+   ====================================== */
+
+* {
+  transition: all 0.3s ease !important;
+}
+
+.fade-in-hope {
+  animation: fadeInHope 1s ease forwards;
+}
+
+@keyframes fadeInHope {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================
+   MINDFULNESS PROMPTS
+   ====================================== */
+
+.mindfulness-prompt {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 20px 40px;
+  border-radius: 30px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  text-align: center;
+  z-index: 999992;
+}
+
+.mindfulness-prompt h4 {
+  color: var(--calm-ocean-deep);
+  margin-bottom: 10px;
+}
+
+.mindfulness-prompt p {
+  color: var(--calm-sage-deep);
+  line-height: 1.8;
+}
+
+/* ======================================
+   PANIC PREVENTION OVERLAY
+   ====================================== */
+
+.panic-prevention-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(227, 242, 253, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999991;
+  backdrop-filter: blur(10px);
+}
+
+.panic-prevention-content {
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+}
+
+.panic-prevention-content h2 {
+  color: var(--calm-ocean-deep);
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.panic-prevention-content .breathing-guide {
+  font-size: 48px;
+  color: var(--calm-sage-main);
+  margin: 30px 0;
+  animation: breatheIn 4s ease-in-out infinite;
+}
+
+/* ======================================
+   RESPONSIVE CRISIS DESIGN
+   ====================================== */
+
+@media (max-width: 768px) {
+  .quick-exit-enhanced {
+    top: 10px !important;
+    right: 10px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+
+  .crisis-help-float {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .breathing-indicator {
+    top: 70px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .grounding-bar {
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .grounding-exercise {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
+/* ======================================
+   PRINT STYLES FOR SAFETY PLANS
+   ====================================== */
+
+@media print {
+  .quick-exit-enhanced,
+  .crisis-help-float,
+  .breathing-indicator,
+  .grounding-bar {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .safety-plan-content {
+    page-break-inside: avoid;
+  }
+}

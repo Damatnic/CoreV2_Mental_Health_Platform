@@ -1,0 +1,482 @@
+/* Mobile Touch Optimization CSS */
+
+/* Touch target minimum sizes */
+:root {
+  --touch-target-min: 44px;
+  --touch-target-recommended: 48px;
+  --touch-spacing-min: 8px;
+}
+
+/* Base touch optimizations for all interactive elements */
+.touch-optimized {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Enhanced touch target for recommended size */
+.touch-enhanced {
+  min-height: var(--touch-target-recommended);
+  min-width: var(--touch-target-recommended);
+}
+
+/* Touch feedback states */
+.touch-feedback {
+  transition:
+    transform 0.1s ease-out,
+    background-color 0.1s ease-out;
+}
+
+.touch-feedback:active {
+  transform: scale(0.95);
+  transition: transform 0.05s ease-out;
+}
+
+/* Touch ripple effect */
+.touch-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.touch-ripple::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s ease-out,
+    height 0.3s ease-out;
+  pointer-events: none;
+}
+
+.touch-ripple:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+/* Mobile-specific button enhancements */
+@media (max-width: 768px) {
+  .btn {
+    min-height: var(--touch-target-recommended);
+    min-width: var(--touch-target-min);
+    padding: 12px 20px;
+    margin: 4px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Replace hover states with active/focus states for mobile */
+  .btn:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn:active,
+  .btn:focus-visible {
+    transform: scale(0.96);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition:
+      transform 0.1s ease-out,
+      box-shadow 0.1s ease-out;
+  }
+
+  /* Button variant mobile optimizations */
+  .btn-primary:hover {
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
+    transform: none;
+    filter: none;
+  }
+
+  .btn-primary:active,
+  .btn-primary:focus-visible {
+    background: var(--gradient-primary);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transform: scale(0.96);
+    filter: brightness(0.95);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-color);
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .btn-secondary:active,
+  .btn-secondary:focus-visible {
+    border-color: var(--text-secondary);
+    background-color: color-mix(
+      in srgb,
+      var(--text-secondary) 15%,
+      transparent
+    );
+    transform: scale(0.96);
+  }
+
+  .btn-danger:hover {
+    background-color: var(--accent-danger);
+    transform: none;
+  }
+
+  .btn-danger:active,
+  .btn-danger:focus-visible {
+    background-color: var(--accent-danger-hover);
+    transform: scale(0.96);
+  }
+
+  .btn-success:hover {
+    background-color: var(--accent-success);
+    transform: none;
+  }
+
+  .btn-success:active,
+  .btn-success:focus-visible {
+    background-color: var(--accent-success-hover);
+    transform: scale(0.96);
+  }
+
+  .btn-ghost:hover {
+    background-color: transparent;
+    transform: none;
+  }
+
+  .btn-ghost:active,
+  .btn-ghost:focus-visible {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    transform: scale(0.96);
+  }
+
+  /* Card hover states → active states */
+  .card:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.12);
+  }
+
+  .card:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+    transition:
+      transform 0.1s ease-out,
+      box-shadow 0.1s ease-out;
+  }
+
+  /* Post card hover → active */
+  .post-card:not(.skeleton):hover {
+    transform: none;
+    box-shadow: 0 8px 24px rgba(44, 62, 80, 0.15);
+  }
+
+  .post-card:not(.skeleton):active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Resource card hover → active */
+  .resource-card:hover {
+    transform: none;
+    box-shadow: 0 8px 24px rgba(44, 62, 80, 0.15);
+  }
+
+  .resource-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Pattern card hover → active */
+  .pattern-card:hover {
+    transform: none;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+  }
+
+  .pattern-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.25);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Setting items hover → active */
+  .setting-item:hover {
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .setting-item:active {
+    background-color: color-mix(
+      in srgb,
+      var(--text-secondary) 10%,
+      transparent
+    );
+    transform: scale(0.98);
+  }
+
+  /* Account action items hover → active */
+  .account-action-item:hover {
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .account-action-item:active {
+    background-color: color-mix(
+      in srgb,
+      var(--text-secondary) 10%,
+      transparent
+    );
+    transform: scale(0.98);
+  }
+
+  .account-action-item.danger:hover {
+    background-color: color-mix(in srgb, var(--accent-danger) 10%, transparent);
+    color: var(--accent-danger);
+    transform: none;
+  }
+
+  .account-action-item.danger:active {
+    background-color: color-mix(in srgb, var(--accent-danger) 15%, transparent);
+    transform: scale(0.98);
+  }
+
+  /* AI chat suggestions hover → active */
+  .ai-chat-suggestion:hover {
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .ai-chat-suggestion:active {
+    background-color: color-mix(
+      in srgb,
+      var(--accent-primary) 10%,
+      transparent
+    );
+    color: var(--accent-primary);
+    transform: scale(0.98);
+  }
+
+  /* Crisis components hover → active */
+  .crisis-alert-close:hover,
+  .crisis-action-primary:hover,
+  .crisis-action-secondary:hover,
+  .crisis-emergency-btn:hover,
+  .crisis-close-btn:hover,
+  .crisis-call-btn:hover {
+    transform: none;
+  }
+
+  .crisis-alert-close:active,
+  .crisis-action-primary:active,
+  .crisis-action-secondary:active,
+  .crisis-emergency-btn:active,
+  .crisis-close-btn:active,
+  .crisis-call-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Suggestion chips hover → active */
+  .suggestion-chip:hover {
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .suggestion-chip:active {
+    background-color: color-mix(
+      in srgb,
+      var(--accent-primary) 15%,
+      transparent
+    );
+    color: var(--accent-primary);
+    transform: scale(0.96);
+  }
+
+  /* Wellness action buttons hover → active */
+  .wellness-action-btn:hover {
+    transform: none;
+  }
+
+  .wellness-action-btn:active {
+    transform: scale(0.96);
+    background-color: color-mix(
+      in srgb,
+      var(--accent-primary) 15%,
+      transparent
+    );
+  }
+
+  /* General link hover → active */
+  a:hover {
+    transform: none;
+  }
+
+  a:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Privacy links hover → active */
+  .privacy-link:hover {
+    transform: none;
+  }
+
+  .privacy-link:active {
+    color: var(--accent-primary);
+    transform: scale(0.98);
+  }
+
+  /* Filter buttons hover → active */
+  .filter-buttons .btn:not(.active):hover,
+  .filter-buttons button:not(.active):hover {
+    background-color: var(--bg-tertiary);
+    transform: none;
+  }
+
+  .filter-buttons .btn:not(.active):active,
+  .filter-buttons button:not(.active):active {
+    background-color: color-mix(
+      in srgb,
+      var(--accent-primary) 10%,
+      transparent
+    );
+    transform: scale(0.96);
+  }
+
+  /* Safety tips hover → active */
+  .safety-tip:hover {
+    transform: none;
+  }
+
+  .safety-tip:active {
+    transform: scale(0.98);
+    background-color: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  }
+}
+
+/* Touch spacing helpers */
+.touch-spacing-sm {
+  margin: var(--touch-spacing-min);
+}
+
+.touch-spacing-md {
+  margin: calc(var(--touch-spacing-min) * 1.5);
+}
+
+.touch-spacing-lg {
+  margin: calc(var(--touch-spacing-min) * 2);
+}
+
+/* Touch-friendly input styling */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    min-height: var(--touch-target-min);
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding: 12px 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Touch-friendly form elements */
+  .form-control {
+    min-height: var(--touch-target-min);
+    font-size: 16px !important;
+  }
+
+  /* Touch-friendly checkboxes and radios */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+    margin: var(--touch-spacing-min);
+  }
+
+  /* Touch-friendly links */
+  a {
+    min-height: var(--touch-target-min);
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 4px;
+    margin: 2px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Touch-friendly navigation */
+  .nav-link,
+  .menu-item {
+    min-height: var(--touch-target-recommended);
+    padding: 12px 16px;
+    margin: 2px 0;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .nav-link:active,
+  .menu-item:active {
+    background-color: color-mix(in srgb, var(--text-primary) 10%, transparent);
+    transform: scale(0.98);
+  }
+}
+
+/* Touch gesture support classes */
+.swipe-container {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.swipe-horizontal {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.swipe-vertical {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-swipe {
+  touch-action: none;
+}
+
+/* Accessibility improvements for touch */
+@media (prefers-reduced-motion: reduce) {
+  .touch-feedback,
+  .touch-ripple,
+  .btn {
+    transition: none;
+  }
+
+  .touch-feedback:active,
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* Focus visible improvements for touch */
+.btn:focus-visible,
+.touch-optimized:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Dark theme optimizations */
+[data-theme="dark"] {
+  .touch-ripple::before {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-primary:active,
+  .btn-primary:focus-visible {
+    box-shadow: 0 2px 8px rgba(88, 166, 255, 0.3);
+  }
+}

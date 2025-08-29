@@ -1,0 +1,456 @@
+/* ==========================================================================
+   MOBILE ACCESSIBILITY & TOUCH TARGETS
+   Mobile-first design system ensuring all interactive elements meet
+   WCAG 2.1 AA touch target size requirements (44px minimum)
+   ========================================================================== */
+
+/* Touch Target Standards */
+:root {
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
+  --touch-target-large: 56px;
+  --mobile-tap-highlight: rgba(0, 123, 255, 0.15);
+}
+
+/* Global Touch Target Enforcement */
+button,
+.btn,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.touch-target {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: max(12px, (var(--touch-target-min) - 1.5em) / 2) 16px;
+  position: relative;
+  touch-action: manipulation; /* Disable double-tap zoom */
+  -webkit-tap-highlight-color: var(--mobile-tap-highlight);
+}
+
+/* Enhanced Touch Targets for Important Actions */
+.btn-primary,
+.btn-danger,
+.chat-send-btn,
+.modal-close-btn,
+.crisis-button {
+  min-height: var(--touch-target-comfortable);
+  min-width: var(--touch-target-comfortable);
+}
+
+/* Large Touch Targets for Critical Actions */
+.emergency-button,
+.crisis-alert-button,
+.helper-call-button {
+  min-height: var(--touch-target-large);
+  min-width: var(--touch-target-large);
+}
+
+/* Icon Buttons - Ensure Proper Touch Area */
+.icon-btn,
+.btn-icon-only {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+/* Small Icon Buttons Still Meet Requirements */
+.btn-sm.icon-btn {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: 10px;
+}
+
+/* Links in Navigation and Cards */
+.nav-link,
+.card-link,
+.post-action-link {
+  min-height: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: var(--border-radius-md);
+  transition: background-color 0.15s ease;
+}
+
+/* Mobile-Friendly Hover States */
+/* Replace :hover with :active for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover,
+  .nav-link:hover,
+  .card:hover {
+    background-color: inherit; /* Remove hover effects on touch */
+  }
+
+  .btn:active,
+  .nav-link:active,
+  .card:active {
+    background-color: var(--surface-hover);
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+  }
+
+  .btn-primary:active {
+    background-color: var(--accent-primary-dark);
+  }
+
+  .btn-secondary:active {
+    background-color: var(--surface-hover);
+  }
+}
+
+/* Mobile Form Controls */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  min-height: var(--touch-target-min);
+  font-size: 16px; /* Prevent zoom on iOS */
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  border: 2px solid var(--border-color);
+  transition: border-color 0.15s ease;
+  touch-action: manipulation;
+}
+
+/* Focus States for Keyboard Navigation */
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-color: var(--accent-primary);
+}
+
+/* Skip Navigation Links */
+.skip-nav {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent-primary);
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+
+.skip-nav:focus {
+  top: 0;
+}
+
+/* Mobile Chat Input Positioning */
+.chat-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-primary);
+  border-top: 1px solid var(--border-color);
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-input-container .form-group {
+  margin: 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.chat-input-container input,
+.chat-input-container textarea {
+  flex: 1;
+  margin: 0;
+  min-height: var(--touch-target-min);
+  max-height: 120px;
+  resize: none;
+}
+
+.chat-send-btn {
+  flex-shrink: 0;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  border-radius: 50%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loading Spinner Improvements */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  position: relative;
+}
+
+.loading-spinner::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Card Touch Targets */
+.card,
+.post-card,
+.chat-message {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: var(--border-radius-lg);
+  position: relative;
+}
+
+.card-action,
+.post-action,
+.message-action {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  transition: background-color 0.15s ease;
+}
+
+/* Modal Touch Targets */
+.modal-close-btn {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: var(--surface-secondary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Tab Navigation */
+.tab-button {
+  min-height: var(--touch-target-min);
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-primary);
+  border-radius: 3px 3px 0 0;
+}
+
+/* Notification Badges */
+.notification-badge {
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+/* Swipe Gesture Visual Feedback */
+.swipe-feedback {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.swipe-feedback.left {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--accent-success) 0%,
+    transparent 100%
+  );
+}
+
+.swipe-feedback.right {
+  right: 0;
+  background: linear-gradient(
+    -90deg,
+    var(--accent-danger) 0%,
+    transparent 100%
+  );
+}
+
+.swipe-feedback.active {
+  opacity: 0.8;
+}
+
+/* Screen Reader Announcements */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-announcement {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Color Contrast Improvements for Dark Mode */
+[data-theme="dark"] {
+  --text-primary: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --border-color: #4a5568;
+  --surface-hover: #2d3748;
+  --accent-primary: #4299e1;
+  --accent-primary-dark: #3182ce;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  button,
+  .btn,
+  input,
+  textarea {
+    border: 2px solid;
+  }
+
+  .btn-primary {
+    background: #000;
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .btn-secondary {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .loading-spinner::after {
+    animation: none;
+    border: 3px solid var(--accent-primary);
+  }
+}
+
+/* Mobile Landscape Optimizations */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .chat-input-container {
+    position: relative;
+    box-shadow: none;
+  }
+}
+
+/* Large Touch Devices (Tablets) */
+@media (min-width: 768px) and (max-width: 1024px) and (pointer: coarse) {
+  .btn,
+  button {
+    min-height: var(--touch-target-comfortable);
+    padding: 14px 20px;
+  }
+
+  .nav-link {
+    padding: 16px 20px;
+  }
+}
+
+/* Small Screen Optimizations */
+@media (max-width: 480px) {
+  .btn-group .btn {
+    flex: 1;
+    min-width: auto;
+  }
+
+  .modal-content {
+    margin: 8px;
+    max-width: calc(100vw - 16px);
+  }
+
+  .chat-input-container {
+    padding: 8px 12px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .chat-input-container,
+  .floating-button,
+  .modal-overlay {
+    display: none !important;
+  }
+}

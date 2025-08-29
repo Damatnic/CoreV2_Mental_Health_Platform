@@ -1,0 +1,685 @@
+/**
+ * Smooth Transitions & Micro-Interactions
+ * 
+ * Enhanced user experience through carefully crafted animations, transitions,
+ * and micro-interactions that provide feedback and improve perceived performance.
+ */
+
+/* ==========================================================================
+   ANIMATION FOUNDATION
+   ========================================================================== */
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Enhanced animation variables */
+:root {
+  --animation-duration-fast: 150ms;
+  --animation-duration-normal: 250ms;
+  --animation-duration-slow: 350ms;
+  --animation-duration-slower: 500ms;
+
+  --animation-easing-swift: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-easing-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --animation-easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ==========================================================================
+   BUTTON MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* Enhanced button feedback */
+.btn,
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+  transform-origin: center;
+}
+
+/* Ripple effect on button press */
+.btn::after,
+.btn-enhanced::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition:
+    width var(--animation-duration-normal) var(--animation-easing-swift),
+    height var(--animation-duration-normal) var(--animation-easing-swift);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.btn:active::after,
+.btn-enhanced:active::after {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+  transition:
+    width var(--animation-duration-slow) var(--animation-easing-swift),
+    height var(--animation-duration-slow) var(--animation-easing-swift),
+    opacity var(--animation-duration-fast) ease-out;
+}
+
+/* Button hover animations */
+.btn:hover,
+.btn-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active,
+.btn-enhanced:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform var(--animation-duration-fast)
+    var(--animation-easing-swift);
+}
+
+/* Icon button animations */
+.btn-icon-only:hover .icon,
+.btn-enhanced.icon-only:hover .icon {
+  transform: scale(1.1) rotate(5deg);
+  transition: transform var(--animation-duration-normal)
+    var(--animation-easing-bounce);
+}
+
+/* ==========================================================================
+   FORM INTERACTIONS
+   ========================================================================== */
+
+/* Input focus animations */
+input,
+textarea,
+select {
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+  position: relative;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-primary, #3b82f6);
+}
+
+/* Floating label animation */
+.form-group {
+  position: relative;
+}
+
+.form-group.floating-label label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  background: var(--bg-primary, #ffffff);
+  padding: 0 4px;
+  color: var(--text-secondary, #6b7280);
+  pointer-events: none;
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+  z-index: 1;
+}
+
+.form-group.floating-label input:focus + label,
+.form-group.floating-label input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%) scale(0.85);
+  color: var(--accent-primary, #3b82f6);
+  font-weight: 500;
+}
+
+/* Form validation animations */
+.form-group.error input,
+.form-group.error textarea {
+  border-color: var(--accent-danger, #ef4444);
+  animation: shake var(--animation-duration-slow) var(--animation-easing-swift);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.form-error-message {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+}
+
+.form-group.error .form-error-message {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   CARD ANIMATIONS
+   ========================================================================== */
+
+/* Card hover effects */
+.card {
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+  transform-origin: center bottom;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card entrance animations */
+.card-enter {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+/* Staggered card animations */
+.card-list .card {
+  animation: slideInUp var(--animation-duration-slow)
+    var(--animation-easing-swift) both;
+}
+
+.card-list .card:nth-child(1) {
+  animation-delay: 0ms;
+}
+.card-list .card:nth-child(2) {
+  animation-delay: 100ms;
+}
+.card-list .card:nth-child(3) {
+  animation-delay: 200ms;
+}
+.card-list .card:nth-child(4) {
+  animation-delay: 300ms;
+}
+.card-list .card:nth-child(5) {
+  animation-delay: 400ms;
+}
+.card-list .card:nth-child(n + 6) {
+  animation-delay: 500ms;
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   LOADING ANIMATIONS
+   ========================================================================== */
+
+/* Enhanced loading spinner */
+.loading-spinner-enhanced {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.loading-spinner-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--accent-primary, #3b82f6);
+  border-right: 2px solid var(--accent-primary, #3b82f6);
+  border-radius: 50%;
+  animation: spin var(--animation-duration-slower) linear infinite;
+}
+
+.loading-spinner-enhanced::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border: 1px solid transparent;
+  border-top: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 50%;
+  animation: spin var(--animation-duration-slower) linear infinite reverse;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse loading animation */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ==========================================================================
+   MODAL ANIMATIONS
+   ========================================================================== */
+
+/* Modal entrance/exit */
+.modal-overlay {
+  opacity: 0;
+  transition: opacity var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+.modal-overlay.open {
+  opacity: 1;
+}
+
+.modal-content {
+  transform: scale(0.9) translateY(-20px);
+  opacity: 0;
+  transition: all var(--animation-duration-normal)
+    var(--animation-easing-bounce);
+}
+
+.modal-overlay.open .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   NOTIFICATION ANIMATIONS
+   ========================================================================== */
+
+/* Toast notifications */
+.toast {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.hide {
+  transform: translateX(100%) scale(0.9);
+  opacity: 0;
+  transition: all var(--animation-duration-fast) var(--animation-easing-swift);
+}
+
+/* Alert animations */
+.alert {
+  animation: slideInDown var(--animation-duration-slow)
+    var(--animation-easing-bounce);
+}
+
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   PAGE TRANSITION ANIMATIONS
+   ========================================================================== */
+
+/* Page entrance animations */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all var(--animation-duration-slow) var(--animation-easing-swift);
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--animation-duration-normal) var(--animation-easing-swift);
+}
+
+/* ==========================================================================
+   INTERACTIVE ELEMENT ANIMATIONS
+   ========================================================================== */
+
+/* Checkbox and radio animations */
+input[type="checkbox"],
+input[type="radio"] {
+  transition: all var(--animation-duration-fast) var(--animation-easing-swift);
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  transform: scale(1.1);
+  animation: checkBounce var(--animation-duration-normal)
+    var(--animation-easing-bounce);
+}
+
+@keyframes checkBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* Tab animations */
+.tab-button {
+  position: relative;
+  transition: color var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+.tab-button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-primary, #3b82f6);
+  transition: width var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+.tab-button.active::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   SCROLL ANIMATIONS
+   ========================================================================== */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fade in on scroll */
+.fade-in-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all var(--animation-duration-slow) var(--animation-easing-swift);
+}
+
+.fade-in-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SUCCESS & ERROR STATES
+   ========================================================================== */
+
+/* Success animation */
+.success-checkmark {
+  animation: successPop var(--animation-duration-slow)
+    var(--animation-easing-bounce);
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Error shake animation */
+.error-shake {
+  animation: errorShake var(--animation-duration-slower)
+    var(--animation-easing-swift);
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-8px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+/* ==========================================================================
+   UTILITY ANIMATIONS
+   ========================================================================== */
+
+/* Bounce animation */
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -10px, 0);
+  }
+  70% {
+    transform: translate3d(0, -5px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* Fade animations */
+.fade-in {
+  animation: fadeIn var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+.fade-out {
+  animation: fadeOut var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Scale animations */
+.scale-in {
+  animation: scaleIn var(--animation-duration-normal)
+    var(--animation-easing-bounce);
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Slide animations */
+.slide-in-left {
+  animation: slideInLeft var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+.slide-in-right {
+  animation: slideInRight var(--animation-duration-normal)
+    var(--animation-easing-swift);
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   MOBILE-SPECIFIC ANIMATIONS
+   ========================================================================== */
+
+/* Reduce animations on mobile for performance */
+@media (max-width: 768px) {
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn:hover,
+  .btn-enhanced:hover {
+    transform: none;
+  }
+
+  /* Keep touch feedback */
+  .btn:active,
+  .btn-enhanced:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn:hover,
+  .btn-enhanced:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Enhanced touch feedback */
+  .btn:active,
+  .btn-enhanced:active {
+    transform: scale(0.95);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

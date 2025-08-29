@@ -1,0 +1,474 @@
+/* TimestampTooltip.css - Mobile-first responsive timestamp tooltip styles */
+
+/* Container and base styles */
+.timestamp-tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Trigger button styles */
+.timestamp-tooltip-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline;
+  line-height: inherit;
+  text-align: inherit;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  /* Mobile-first touch target */
+  min-height: 44px;
+  min-width: 44px;
+
+  /* Focus styles for accessibility */
+  &:focus {
+    outline: 2px solid var(--focus-color, #0066cc);
+    outline-offset: 2px;
+  }
+
+  /* Focus visible for keyboard navigation */
+  &:focus-visible {
+    outline: 2px solid var(--focus-color, #0066cc);
+    outline-offset: 2px;
+  }
+
+  /* Hover styles for desktop */
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--hover-bg, rgba(0, 0, 0, 0.05));
+      color: var(--hover-color, #0066cc);
+    }
+  }
+
+  /* Active state */
+  &:active {
+    transform: translateY(1px);
+  }
+
+  /* When tooltip is visible */
+  &--active {
+    background-color: var(--active-bg, rgba(0, 102, 204, 0.1));
+    color: var(--active-color, #0066cc);
+  }
+}
+
+/* Tooltip container */
+.timestamp-tooltip {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--tooltip-bg, #333);
+  color: var(--tooltip-color, #fff);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  max-width: 280px;
+  min-width: 120px;
+  word-wrap: break-word;
+  hyphens: auto;
+
+  /* Mobile optimizations */
+  @media (max-width: 767px) {
+    font-size: 16px; /* Larger text for mobile readability */
+    padding: 12px 16px;
+    max-width: calc(100vw - 32px);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Visible state */
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Position variants */
+  &--top {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+
+    &.timestamp-tooltip--visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Mobile positioning adjustments */
+    @media (max-width: 767px) {
+      bottom: calc(100% + 12px);
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(-8px);
+
+      &.timestamp-tooltip--visible {
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  }
+
+  &--bottom {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+
+    &.timestamp-tooltip--visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 767px) {
+      top: calc(100% + 12px);
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(8px);
+
+      &.timestamp-tooltip--visible {
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  }
+
+  &--left {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-8px);
+
+    &.timestamp-tooltip--visible {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    @media (max-width: 767px) {
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%) translateX(-8px);
+
+      &.timestamp-tooltip--visible {
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+  }
+
+  &--right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+
+    &.timestamp-tooltip--visible {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    @media (max-width: 767px) {
+      left: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%) translateX(8px);
+
+      &.timestamp-tooltip--visible {
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+  }
+
+  &--auto {
+    /* Auto positioning handled by JavaScript */
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+
+    &.timestamp-tooltip--visible {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
+
+/* Tooltip content */
+.timestamp-tooltip__content {
+  text-align: center;
+  white-space: nowrap;
+
+  @media (max-width: 767px) {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+/* Tooltip arrow */
+.timestamp-tooltip__arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+
+  @media (max-width: 767px) {
+    border-width: 8px;
+  }
+}
+
+/* Arrow positioning for each direction */
+.timestamp-tooltip--top .timestamp-tooltip__arrow {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--tooltip-bg, #333);
+  border-bottom: none;
+}
+
+.timestamp-tooltip--bottom .timestamp-tooltip__arrow {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--tooltip-bg, #333);
+  border-top: none;
+}
+
+.timestamp-tooltip--left .timestamp-tooltip__arrow {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: var(--tooltip-bg, #333);
+  border-right: none;
+}
+
+.timestamp-tooltip--right .timestamp-tooltip__arrow {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: var(--tooltip-bg, #333);
+  border-left: none;
+}
+
+.timestamp-tooltip--auto .timestamp-tooltip__arrow {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--tooltip-bg, #333);
+  border-bottom: none;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .timestamp-tooltip-trigger {
+    --hover-bg: rgba(255, 255, 255, 0.1);
+    --hover-color: #66b3ff;
+    --active-bg: rgba(102, 179, 255, 0.2);
+    --active-color: #66b3ff;
+    --focus-color: #66b3ff;
+  }
+
+  .timestamp-tooltip {
+    --tooltip-bg: #1a1a1a;
+    --tooltip-color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 767px) {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .timestamp-tooltip--top .timestamp-tooltip__arrow {
+    border-top-color: #1a1a1a;
+  }
+
+  .timestamp-tooltip--bottom .timestamp-tooltip__arrow {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .timestamp-tooltip--left .timestamp-tooltip__arrow {
+    border-left-color: #1a1a1a;
+  }
+
+  .timestamp-tooltip--right .timestamp-tooltip__arrow {
+    border-right-color: #1a1a1a;
+  }
+
+  .timestamp-tooltip--auto .timestamp-tooltip__arrow {
+    border-top-color: #1a1a1a;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .timestamp-tooltip-trigger {
+    --hover-bg: ButtonFace;
+    --hover-color: ButtonText;
+    --active-bg: Highlight;
+    --active-color: HighlightText;
+    --focus-color: Highlight;
+    border: 2px solid ButtonText;
+  }
+
+  .timestamp-tooltip {
+    --tooltip-bg: InfoBackground;
+    --tooltip-color: InfoText;
+    border: 2px solid InfoText;
+  }
+
+  .timestamp-tooltip__arrow {
+    display: none; /* Hide arrow in high contrast for clarity */
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .timestamp-tooltip-trigger,
+  .timestamp-tooltip {
+    transition: none;
+  }
+
+  .timestamp-tooltip-trigger:active {
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .timestamp-tooltip {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: none;
+    color: inherit;
+    box-shadow: none;
+    border: 1px solid #000;
+    margin-left: 0.5em;
+    display: inline;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .timestamp-tooltip__arrow {
+    display: none;
+  }
+
+  .timestamp-tooltip__content::before {
+    content: " (";
+  }
+
+  .timestamp-tooltip__content::after {
+    content: ")";
+  }
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Animation keyframes for mobile feedback */
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tooltipFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Mobile-specific animations */
+@media (max-width: 767px) {
+  .timestamp-tooltip--visible {
+    animation: tooltipFadeIn 0.2s ease-out forwards;
+  }
+
+  .timestamp-tooltip:not(.timestamp-tooltip--visible) {
+    animation: tooltipFadeOut 0.15s ease-in forwards;
+  }
+}
+
+/* Focus indicators for better keyboard navigation */
+.timestamp-tooltip-trigger:focus-within {
+  outline: 2px solid var(--focus-color, #0066cc);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for very long timestamps on mobile */
+@media (max-width: 767px) {
+  .timestamp-tooltip__content {
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--tooltip-color, #fff) transparent;
+  }
+
+  .timestamp-tooltip__content::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .timestamp-tooltip__content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .timestamp-tooltip__content::-webkit-scrollbar-thumb {
+    background-color: var(--tooltip-color, #fff);
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+}
+
+/* RTL (Right-to-Left) language support */
+[dir="rtl"] .timestamp-tooltip--left {
+  left: calc(100% + 8px);
+  right: auto;
+  transform: translateY(-50%) translateX(8px);
+}
+
+[dir="rtl"] .timestamp-tooltip--left.timestamp-tooltip--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+[dir="rtl"] .timestamp-tooltip--right {
+  right: calc(100% + 8px);
+  left: auto;
+  transform: translateY(-50%) translateX(-8px);
+}
+
+[dir="rtl"] .timestamp-tooltip--right.timestamp-tooltip--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+[dir="rtl"] .timestamp-tooltip--left .timestamp-tooltip__arrow {
+  right: 100%;
+  left: auto;
+  border-right-color: var(--tooltip-bg, #333);
+  border-left: none;
+}
+
+[dir="rtl"] .timestamp-tooltip--right .timestamp-tooltip__arrow {
+  left: 100%;
+  right: auto;
+  border-left-color: var(--tooltip-bg, #333);
+  border-right: none;
+}

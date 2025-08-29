@@ -1,0 +1,360 @@
+/* Crisis Help Widget Styles */
+.crisis-help-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+}
+
+/* Floating Button */
+.crisis-help-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+  transition: all 0.3s ease;
+  animation: subtle-float 3s ease-in-out infinite;
+}
+
+.crisis-help-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 107, 107, 0.4);
+}
+
+.crisis-help-widget.pulse .crisis-help-button {
+  animation: pulse-alert 2s ease-in-out;
+}
+
+.crisis-icon {
+  font-size: 20px;
+}
+
+.crisis-text {
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Expanded Panel */
+.crisis-help-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  max-height: 600px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+.crisis-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crisis-header h2 {
+  color: white;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 18px;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Content */
+.crisis-content {
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Urgency Selector */
+.urgency-selector {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.urgency-question {
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.urgency-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.urgency-btn {
+  padding: 10px 16px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.urgency-btn.low {
+  color: #059669;
+}
+
+.urgency-btn.low.active,
+.urgency-btn.low:hover {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #059669;
+}
+
+.urgency-btn.medium {
+  color: #d97706;
+}
+
+.urgency-btn.medium.active,
+.urgency-btn.medium:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #d97706;
+}
+
+.urgency-btn.high {
+  color: #dc2626;
+}
+
+.urgency-btn.high.active,
+.urgency-btn.high:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+/* Resources List */
+.resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.resource-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.resource-card:hover {
+  background: #f3f4f6;
+  transform: translateX(-2px);
+}
+
+.resource-card.emergency {
+  background: #fee2e2;
+}
+
+.resource-card.emergency:hover {
+  background: #fecaca;
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.resource-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.availability {
+  background: #10b981;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.resource-description {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+}
+
+.resource-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.call-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.call-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.text-btn {
+  background: #8b5cf6;
+  color: white;
+}
+
+.text-btn:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+
+/* Footer */
+.crisis-footer {
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.safety-note,
+.emergency-note {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+.safety-note {
+  color: #4b5563;
+}
+
+.emergency-note {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-alert {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25%,
+  75% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .crisis-help-panel {
+    width: calc(100vw - 20px);
+    right: 10px;
+    bottom: 10px;
+    max-height: 80vh;
+  }
+
+  .urgency-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .crisis-help-button {
+    padding: 10px 20px;
+  }
+}
+
+/* Accessibility */
+.crisis-help-widget:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+.crisis-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.crisis-content::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.crisis-content::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 3px;
+}
+
+.crisis-content::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}

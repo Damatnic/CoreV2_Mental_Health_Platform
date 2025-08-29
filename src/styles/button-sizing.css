@@ -1,0 +1,414 @@
+/**
+ * Button Sizing Standardization
+ * 
+ * Consistent button sizes and spacing across all components with accessibility compliance.
+ * Standardizes legacy btn-sm/btn-lg classes with enhanced button system sizing.
+ */
+
+/* ==========================================================================
+   BUTTON SIZE STANDARDIZATION
+   ========================================================================== */
+
+/* Base button sizing ensures 44px minimum touch target for WCAG compliance */
+.btn,
+.btn-enhanced {
+  /* Default medium size */
+  min-height: 44px;
+  padding: var(--space-3, 0.75rem) var(--space-6, 1.5rem);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  line-height: var(--line-height-tight, 1.25);
+  gap: var(--space-2, 0.5rem);
+  border-radius: var(--radius-lg, 0.75rem);
+
+  /* Consistent spacing for icons */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-align: center;
+
+  /* Enhanced touch feedback */
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
+  transition: all var(--duration-200, 200ms)
+    var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
+}
+
+/* ==========================================================================
+   BUTTON SIZE VARIANTS
+   ========================================================================== */
+
+/* Extra Small Buttons - Use sparingly, primarily for dense UI areas */
+.btn-xs,
+.btn-enhanced.xs {
+  min-height: 32px;
+  padding: var(--space-1-5, 0.375rem) var(--space-3, 0.75rem);
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: 500;
+  gap: var(--space-1, 0.25rem);
+  border-radius: var(--radius-base, 0.375rem);
+}
+
+/* Small Buttons - Common for secondary actions */
+.btn-sm,
+.btn-enhanced.sm {
+  min-height: 36px;
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  gap: var(--space-1-5, 0.375rem);
+  border-radius: var(--radius-md, 0.5rem);
+}
+
+/* Medium Buttons - Default size for most actions */
+.btn-md,
+.btn-enhanced.md {
+  min-height: 44px;
+  padding: var(--space-3, 0.75rem) var(--space-6, 1.5rem);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  gap: var(--space-2, 0.5rem);
+  border-radius: var(--radius-lg, 0.75rem);
+}
+
+/* Large Buttons - Primary CTAs and important actions */
+.btn-lg,
+.btn-enhanced.lg {
+  min-height: 52px;
+  padding: var(--space-4, 1rem) var(--space-8, 2rem);
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: 600;
+  gap: var(--space-2-5, 0.625rem);
+  border-radius: var(--radius-xl, 1rem);
+}
+
+/* Extra Large Buttons - Hero CTAs and landing page buttons */
+.btn-xl,
+.btn-enhanced.xl {
+  min-height: 60px;
+  padding: var(--space-5, 1.25rem) var(--space-10, 2.5rem);
+  font-size: var(--font-size-xl, 1.25rem);
+  font-weight: 700;
+  gap: var(--space-3, 0.75rem);
+  border-radius: var(--radius-2xl, 1.5rem);
+}
+
+/* ==========================================================================
+   ICON BUTTON VARIATIONS
+   ========================================================================== */
+
+/* Icon-only buttons with square dimensions */
+.btn-icon-only {
+  aspect-ratio: 1;
+  padding: 0;
+  justify-content: center;
+}
+
+.btn-icon-only.btn-xs {
+  width: 32px;
+  min-height: 32px;
+}
+
+.btn-icon-only.btn-sm {
+  width: 36px;
+  min-height: 36px;
+}
+
+.btn-icon-only.btn-md,
+.btn-icon-only {
+  width: 44px;
+  min-height: 44px;
+}
+
+.btn-icon-only.btn-lg {
+  width: 52px;
+  min-height: 52px;
+}
+
+.btn-icon-only.btn-xl {
+  width: 60px;
+  min-height: 60px;
+}
+
+/* ==========================================================================
+   BUTTON GROUP SPACING
+   ========================================================================== */
+
+/* Consistent spacing in button groups */
+.btn-group {
+  display: flex;
+  gap: var(--space-2, 0.5rem);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-group.gap-sm {
+  gap: var(--space-1, 0.25rem);
+}
+
+.btn-group.gap-md {
+  gap: var(--space-3, 0.75rem);
+}
+
+.btn-group.gap-lg {
+  gap: var(--space-4, 1rem);
+}
+
+/* Stack buttons vertically on mobile for better touch targets */
+@media (max-width: 640px) {
+  .btn-group.stack-mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .btn-group.stack-mobile .btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & MOBILE OPTIMIZATIONS
+   ========================================================================== */
+
+/* Ensure all buttons meet touch target requirements */
+@media (hover: none) and (pointer: coarse) {
+  .btn-xs {
+    min-height: 40px; /* Slightly larger on touch devices */
+    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  }
+
+  .btn-sm {
+    min-height: 44px; /* Meet touch target on mobile */
+    padding: var(--space-2-5, 0.625rem) var(--space-4, 1rem);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn,
+  .btn-enhanced {
+    border: 2px solid currentColor;
+    font-weight: 700;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-enhanced {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   BUTTON SPACING CONTEXTS
+   ========================================================================== */
+
+/* Form button spacing */
+.form-actions {
+  display: flex;
+  gap: var(--space-3, 0.75rem);
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: var(--space-6, 1.5rem);
+  padding-top: var(--space-4, 1rem);
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.form-actions.justify-start {
+  justify-content: flex-start;
+}
+
+.form-actions.justify-center {
+  justify-content: center;
+}
+
+.form-actions.justify-between {
+  justify-content: space-between;
+}
+
+/* Card action button spacing */
+.card-actions {
+  display: flex;
+  gap: var(--space-2, 0.5rem);
+  align-items: center;
+  margin-top: var(--space-4, 1rem);
+  padding-top: var(--space-3, 0.75rem);
+}
+
+.card-actions.justify-end {
+  justify-content: flex-end;
+}
+
+.card-actions.justify-center {
+  justify-content: center;
+}
+
+/* Header action button spacing */
+.header-actions {
+  display: flex;
+  gap: var(--space-2, 0.5rem);
+  align-items: center;
+}
+
+/* Toolbar button spacing */
+.toolbar {
+  display: flex;
+  gap: var(--space-1, 0.25rem);
+  align-items: center;
+  padding: var(--space-2, 0.5rem);
+  background-color: var(--bg-tertiary, #f8fafc);
+  border-radius: var(--radius-md, 0.5rem);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+/* ==========================================================================
+   LEGACY COMPATIBILITY
+   ========================================================================== */
+
+/* Ensure legacy button classes work with new sizing system */
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-light,
+.btn-dark,
+.btn-ghost {
+  /* Inherit sizing from base .btn class and ensure consistent styling */
+  min-height: inherit;
+  padding: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  gap: inherit;
+  border-radius: inherit;
+}
+
+/* Support for nested icons in buttons */
+.btn .icon,
+.btn-enhanced .icon {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+}
+
+.btn-sm .icon,
+.btn-enhanced.sm .icon {
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.btn-lg .icon,
+.btn-enhanced.lg .icon {
+  width: 1.125em;
+  height: 1.125em;
+}
+
+.btn-xl .icon,
+.btn-enhanced.xl .icon {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* ==========================================================================
+   BUTTON LOADING STATES
+   ========================================================================== */
+
+/* Consistent loading spinner sizing */
+.btn .loading-spinner,
+.btn-enhanced .loading-spinner {
+  width: 1em;
+  height: 1em;
+}
+
+.btn-sm .loading-spinner,
+.btn-enhanced.sm .loading-spinner {
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.btn-lg .loading-spinner,
+.btn-enhanced.lg .loading-spinner {
+  width: 1.125em;
+  height: 1.125em;
+}
+
+.btn-xl .loading-spinner,
+.btn-enhanced.xl .loading-spinner {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* ==========================================================================
+   BUTTON FOCUS STATES
+   ========================================================================== */
+
+/* Consistent focus indicators that scale with button size */
+.btn:focus-visible,
+.btn-enhanced:focus-visible {
+  outline: 3px solid var(--accent-primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+.btn-sm:focus-visible,
+.btn-enhanced.sm:focus-visible {
+  outline-width: 2px;
+  outline-offset: 1px;
+}
+
+.btn-lg:focus-visible,
+.btn-enhanced.lg:focus-visible,
+.btn-xl:focus-visible,
+.btn-enhanced.xl:focus-visible {
+  outline-width: 4px;
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   MOBILE TOUCH TARGET COMPLIANCE (WCAG 2.1 AA)
+   ========================================================================== */
+
+/* Ensure all buttons meet 44px minimum touch target on mobile devices */
+@media (max-width: 768px) {
+  .btn-xs,
+  .btn-enhanced.xs {
+    min-height: 44px !important;
+    padding: 12px 16px !important; /* Increased padding */
+  }
+
+  .btn-sm,
+  .btn-enhanced.sm {
+    min-height: 44px !important;
+    padding: 12px 16px !important; /* Increased padding */
+  }
+
+  .btn-icon-only.btn-xs {
+    width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .btn-icon-only.btn-sm {
+    width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* High contrast and accessibility overrides */
+@media (prefers-contrast: high) {
+  .btn,
+  .btn-enhanced {
+    border-width: 2px;
+    font-weight: 700;
+  }
+
+  .btn-xs,
+  .btn-sm,
+  .btn-enhanced.xs,
+  .btn-enhanced.sm {
+    min-height: 44px !important;
+  }
+}

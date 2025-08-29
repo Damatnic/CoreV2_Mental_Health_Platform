@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral Core - Bundle Analysis Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        h2 { color: #555; margin-top: 30px; }
+        .metric { display: inline-block; margin: 10px 20px 10px 0; padding: 15px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #667eea; }
+        .metric.good { border-left-color: #28a745; }
+        .metric.warning { border-left-color: #ffc107; }
+        .metric.error { border-left-color: #dc3545; }
+        .metric-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-value { font-size: 20px; font-weight: bold; color: #333; }
+        .recommendations { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 6px; margin: 20px 0; }
+        .recommendation { margin: 8px 0; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .bundle-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .bundle-table th, .bundle-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .bundle-table th { background: #f8f9fa; }
+        .crisis-critical { background: #ffebee; }
+        .score { font-size: 24px; font-weight: bold; padding: 20px; text-align: center; border-radius: 50%; width: 60px; height: 60px; line-height: 60px; display: inline-block; margin: 10px; }
+        .score.good { background: #d4edda; color: #155724; }
+        .score.warning { background: #fff3cd; color: #856404; }
+        .score.error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Astral Core Bundle Analysis Report</h1>
+        <p><strong>Generated:</strong> 2025-08-14T23:57:12.515Z</p>
+        
+        <h2>📊 Bundle Summary</h2>
+        <div class="metric error">
+            <div class="metric-label">Total Size</div>
+            <div class="metric-value">1478KB</div>
+        </div>
+        <div class="metric warning">
+            <div class="metric-label">JavaScript</div>
+            <div class="metric-value">1316KB</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Gzipped</div>
+            <div class="metric-value">440KB</div>
+        </div>
+        
+        <h2>⚡ Performance Metrics</h2>
+        <div class="metric good">
+            <div class="metric-label">3G Load Time</div>
+            <div class="metric-value">587ms</div>
+        </div>
+        <div class="metric good">
+            <div class="metric-label">Est. LCP</div>
+            <div class="metric-value">1187ms</div>
+        </div>
+        <div class="metric good">
+            <div class="metric-label">Est. FID</div>
+            <div class="metric-value">96ms</div>
+        </div>
+        
+        <h2>🚨 Crisis Optimization</h2>
+        <div class="score error">
+            25
+        </div>
+        <div class="metric good">
+            <div class="metric-label">Crisis Load Time (3G)</div>
+            <div class="metric-value">450ms</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Crisis Bundle Size</div>
+            <div class="metric-value">1135KB</div>
+        </div>
+        
+        <h2>📱 Mobile Optimization</h2>
+        <div class="score error">
+            45
+        </div>
+        
+        <h2>📦 Bundle Details</h2>
+        <table class="bundle-table">
+            <thead>
+                <tr>
+                    <th>Bundle</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Gzipped</th>
+                    <th>Priority</th>
+                    <th>Crisis</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\AdminDashboardRoute-C6ncjXx3.js</td>
+                        <td>main</td>
+                        <td>0KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\analytics-CaRf5C7Q.js</td>
+                        <td>main</td>
+                        <td>3KB</td>
+                        <td>1KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\ChatRoute-DOh-d-ZM.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-BayeSpY8.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-BnX3_-w0.js</td>
+                        <td>main</td>
+                        <td>2KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-BrZeGmZg.js</td>
+                        <td>main</td>
+                        <td>6KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-D7AnflGw.js</td>
+                        <td>main</td>
+                        <td>2KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-DEMkF5t1.js</td>
+                        <td>main</td>
+                        <td>5KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-DKFTM35m.js</td>
+                        <td>main</td>
+                        <td>7KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\common-OZ5K9vL3.js</td>
+                        <td>main</td>
+                        <td>6KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\components-D8ktqJn6.js</td>
+                        <td>dynamic-import</td>
+                        <td>179KB</td>
+                        <td>54KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-BGs72Qx5.js</td>
+                        <td>crisis-critical</td>
+                        <td>9KB</td>
+                        <td>3KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-BiyP1DTw.js</td>
+                        <td>crisis-critical</td>
+                        <td>10KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-Bw2az5gW.js</td>
+                        <td>crisis-critical</td>
+                        <td>5KB</td>
+                        <td>1KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-CDthWAAC.js</td>
+                        <td>crisis-critical</td>
+                        <td>6KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-CglBvZ1P.js</td>
+                        <td>crisis-critical</td>
+                        <td>5KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-core-BWH9qvQv.js</td>
+                        <td>crisis-critical</td>
+                        <td>15KB</td>
+                        <td>4KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-Dl-I-nMI.js</td>
+                        <td>crisis-critical</td>
+                        <td>3KB</td>
+                        <td>1KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\crisis-QPAR2coK.js</td>
+                        <td>crisis-critical</td>
+                        <td>7KB</td>
+                        <td>2KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\HelperApplicationRoute-Co8jMuN3.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\HelperDashboardRoute-CkrjVOLZ.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\HelperProfileRoute-CtzQGHVu.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\HelperTrainingRoute-DMuXSr-r.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\index-CVJsQqtj.js</td>
+                        <td>dynamic-import</td>
+                        <td>18KB</td>
+                        <td>5KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\js\react-vendor-DorG7s9p.js</td>
+                        <td>vendor</td>
+                        <td>176KB</td>
+                        <td>53KB</td>
+                        <td>medium</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\js\state-vendor-AKRFqxZc.js</td>
+                        <td>vendor</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>medium</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\js\stores-CfgjVkVh.js</td>
+                        <td>main</td>
+                        <td>11KB</td>
+                        <td>3KB</td>
+                        <td>high</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\utils-CUKR3Uw3.js</td>
+                        <td>main</td>
+                        <td>269KB</td>
+                        <td>80KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\vendor-CWQiW4Wo.js</td>
+                        <td>vendor</td>
+                        <td>330KB</td>
+                        <td>99KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\js\views-DR1mJjQe.js</td>
+                        <td>main</td>
+                        <td>207KB</td>
+                        <td>62KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>performance-loader.js</td>
+                        <td>main</td>
+                        <td>2KB</td>
+                        <td>0KB</td>
+                        <td>high</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>sw-notifications.js</td>
+                        <td>main</td>
+                        <td>14KB</td>
+                        <td>4KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>sw.js</td>
+                        <td>main</td>
+                        <td>1KB</td>
+                        <td>0KB</td>
+                        <td>high</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>version-check.js</td>
+                        <td>main</td>
+                        <td>4KB</td>
+                        <td>1KB</td>
+                        <td>high</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>workbox-config.js</td>
+                        <td>main</td>
+                        <td>10KB</td>
+                        <td>3KB</td>
+                        <td>critical</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\css\components-Cj8jejuK.css</td>
+                        <td>styles</td>
+                        <td>46KB</td>
+                        <td>14KB</td>
+                        <td>undefined</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="crisis-critical">
+                        <td>assets\css\crisis-core-D0oKhwaF.css</td>
+                        <td>styles</td>
+                        <td>14KB</td>
+                        <td>4KB</td>
+                        <td>undefined</td>
+                        <td>🚨</td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\css\index-C6uHO2b8.css</td>
+                        <td>styles</td>
+                        <td>59KB</td>
+                        <td>18KB</td>
+                        <td>undefined</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>assets\css\views-zwbYvQHV.css</td>
+                        <td>styles</td>
+                        <td>38KB</td>
+                        <td>11KB</td>
+                        <td>undefined</td>
+                        <td></td>
+                    </tr>
+                
+                    <tr class="">
+                        <td>index.css</td>
+                        <td>styles</td>
+                        <td>3KB</td>
+                        <td>1KB</td>
+                        <td>undefined</td>
+                        <td></td>
+                    </tr>
+                
+            </tbody>
+        </table>
+        
+        <h2>💡 Recommendations</h2>
+        <div class="recommendations">
+            
+                <div class="recommendation">• Vendor bundle assets\js\vendor-CWQiW4Wo.js is 330KB - consider splitting</div>
+            
+                <div class="recommendation">• Multiple React bundles detected - ensure proper vendor chunk splitting</div>
+            
+                <div class="recommendation">• Crisis bundles exceed 150KB - consider code splitting</div>
+            
+                <div class="recommendation">• Too many crisis bundles - consider combining critical resources</div>
+            
+                <div class="recommendation">• Some crisis resources not marked as critical priority</div>
+            
+                <div class="recommendation">• Total bundle size (1478KB) exceeds mobile budget (500KB)</div>
+            
+                <div class="recommendation">• JavaScript bundle too large for mobile - implement code splitting</div>
+            
+                <div class="recommendation">• Main bundle too large - split into smaller chunks</div>
+            
+        </div>
+        
+        <p><em>Report generated by Enhanced Bundle Analyzer for Astral Core Mental Health Platform</em></p>
+    </div>
+</body>
+</html>

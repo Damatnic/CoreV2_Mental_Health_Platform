@@ -1,0 +1,205 @@
+/**
+ * Mobile Demo Login Enhancements
+ * Ensures demo login buttons are perfectly optimized for mobile touch interaction
+ */
+
+/* Demo login container mobile optimization */
+@media (max-width: 768px) {
+  /* Demo login section mobile styling */
+  .auth-card {
+    margin: 10px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  /* Demo login container */
+  .demo-login-container {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .demo-login-title {
+    margin: 0 0 16px 0;
+    text-align: center;
+    color: #6c757d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .demo-login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Enhanced demo button styling for mobile */
+  .demo-login-btn {
+    min-height: 54px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    border-width: 2px !important;
+    transition: all 0.2s ease !important;
+
+    /* Prevent zoom on tap */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Enhanced visual feedback */
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Active state for better mobile feedback */
+  .demo-login-btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Starkeeper button */
+  .demo-login-btn.starkeeper {
+    background-color: #e3f2fd !important;
+    color: #1565c0 !important;
+    border-color: #1565c0 !important;
+  }
+
+  .demo-login-btn.starkeeper:active {
+    background-color: #bbdefb !important;
+  }
+
+  /* Constellation Guide button */
+  .demo-login-btn.guide {
+    background-color: #e8f5e8 !important;
+    color: #2e7d32 !important;
+    border-color: #2e7d32 !important;
+  }
+
+  .demo-login-btn.guide:active {
+    background-color: #c8e6c9 !important;
+  }
+
+  /* Admin button */
+  .demo-login-btn.admin {
+    background-color: #fff3e0 !important;
+    color: #f57c00 !important;
+    border-color: #f57c00 !important;
+  }
+
+  .demo-login-btn.admin:active {
+    background-color: #ffe0b2 !important;
+  }
+
+  /* Ripple effect for better mobile feedback */
+  .demo-login-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.3s,
+      height 0.3s;
+  }
+
+  .demo-login-btn:active::after {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Auth separator mobile optimization */
+  .auth-separator {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* Social login buttons mobile optimization */
+  .social-login-buttons {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+  }
+
+  .btn-social {
+    min-height: 48px !important;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Main auth button mobile optimization */
+  .btn-full-width {
+    width: 100%;
+    min-height: 52px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* Portrait phone specific adjustments */
+@media (max-width: 480px) {
+  .auth-card {
+    margin: 5px;
+    padding: 12px;
+  }
+
+  .demo-login-container {
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+
+  .demo-login-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .demo-login-buttons {
+    gap: 12px;
+  }
+
+  .demo-login-btn {
+    min-height: 52px !important;
+    font-size: 15px !important;
+    padding: 12px 16px !important;
+  }
+}
+
+/* High DPI mobile displays */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi) {
+  .demo-login-btn {
+    border-width: 1.5px;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .demo-login-container {
+    padding: 10px;
+    margin-bottom: 16px;
+  }
+
+  .demo-login-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .demo-login-btn {
+    flex: 1;
+    min-width: 0;
+    margin: 0 2px;
+    font-size: 14px !important;
+    padding: 10px 8px !important;
+  }
+}

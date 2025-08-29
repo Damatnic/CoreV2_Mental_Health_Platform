@@ -1,0 +1,607 @@
+/* Self-Care Reminders Styles */
+.self-care-reminders {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.reminders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.reminders-header h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.notification-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.notification-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Category Filters */
+.category-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #4b5563;
+}
+
+.filter-btn:hover {
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: #1f2937;
+  color: white;
+  border-color: #1f2937;
+}
+
+.filter-btn.physical.active {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+.filter-btn.mental.active {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+}
+
+.filter-btn.social.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.filter-btn.spiritual.active {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.filter-btn.practical.active {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+/* Activities Grid */
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.activity-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid;
+  transition: all 0.3s;
+}
+
+.activity-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.activity-card.completed {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  opacity: 0.9;
+}
+
+.activity-header {
+  display: flex;
+  align-items: start;
+  gap: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.activity-icon {
+  font-size: 32px;
+  min-width: 40px;
+}
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.activity-info p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.streak-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Activity Meta */
+.activity-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.frequency-badge {
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: capitalize;
+}
+
+.last-completed {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Activity Actions */
+.activity-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.complete-btn,
+.reminder-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.complete-btn {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  color: white;
+}
+
+.complete-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.complete-btn:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.reminder-btn {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.reminder-btn:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* Reminder List */
+.reminder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.reminder-time {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.reminder-days {
+  flex: 1;
+  color: #6b7280;
+}
+
+.reminder-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.toggle-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.toggle-btn.enabled {
+  background: #34d399;
+}
+
+.toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.delete-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Reminder Modal */
+.reminder-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-content h3 {
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  color: #1f2937;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.form-group input[type="time"] {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.form-group input[type="time"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.days-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.day-btn {
+  padding: 10px 15px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #6b7280;
+}
+
+.day-btn:hover {
+  border-color: #3b82f6;
+}
+
+.day-btn.selected {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.cancel-btn,
+.save-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancel-btn {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .reminders-header h2 {
+    color: #f3f4f6;
+  }
+
+  .filter-btn {
+    background: #1f2937;
+    border-color: #374151;
+    color: #9ca3af;
+  }
+
+  .filter-btn:hover {
+    border-color: #6b7280;
+  }
+
+  .activity-card {
+    background: #1f2937;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .activity-card.completed {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  }
+
+  .activity-info h3 {
+    color: #f3f4f6;
+  }
+
+  .activity-info p,
+  .last-completed {
+    color: #9ca3af;
+  }
+
+  .frequency-badge {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .activity-meta {
+    border-top-color: #374151;
+    border-bottom-color: #374151;
+  }
+
+  .reminder-btn {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .reminder-btn:hover {
+    background: #4b5563;
+  }
+
+  .reminder-item {
+    background: #374151;
+  }
+
+  .reminder-time {
+    color: #f3f4f6;
+  }
+
+  .reminder-days {
+    color: #9ca3af;
+  }
+
+  .toggle-btn {
+    background: #4b5563;
+  }
+
+  .modal-content {
+    background: #1f2937;
+  }
+
+  .modal-content h3 {
+    color: #f3f4f6;
+  }
+
+  .form-group label {
+    color: #d1d5db;
+  }
+
+  .form-group input[type="time"] {
+    background: #111827;
+    border-color: #374151;
+    color: #f3f4f6;
+  }
+
+  .day-btn {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+  }
+
+  .cancel-btn {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .cancel-btn:hover {
+    background: #4b5563;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .self-care-reminders {
+    padding: 20px;
+  }
+
+  .reminders-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .reminders-header h2 {
+    font-size: 24px;
+  }
+
+  .notification-btn {
+    width: 100%;
+  }
+
+  .category-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+  }
+
+  .activities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-header {
+    flex-wrap: wrap;
+  }
+
+  .streak-badge {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .activity-actions {
+    flex-direction: column;
+  }
+
+  .days-selector {
+    justify-content: space-between;
+  }
+
+  .day-btn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}

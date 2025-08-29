@@ -1,0 +1,536 @@
+/* Notification Preferences Styles */
+
+.notification-preferences {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.preferences-header {
+  margin-bottom: 2rem;
+}
+
+.preferences-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.preferences-header h2 svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-primary);
+}
+
+.preferences-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Permission Status */
+.permission-status {
+  margin-bottom: 2rem;
+}
+
+.status-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+}
+
+.status-card > svg {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.status-card.denied {
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+}
+
+.status-card.denied svg {
+  color: var(--color-danger);
+}
+
+.status-card.default {
+  background: var(--color-info-light);
+  border-color: var(--color-info);
+}
+
+.status-card.default svg {
+  color: var(--color-info);
+}
+
+.status-card.granted {
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+}
+
+.status-card.granted svg {
+  color: var(--color-success);
+}
+
+.status-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+.status-card p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.status-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-pressed);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-danger-dark);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Preferences Section */
+.preferences-section {
+  margin-bottom: 2.5rem;
+}
+
+.preferences-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.section-description {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-add {
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-add:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.btn-add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Preference List */
+.preference-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.preference-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.preference-item:hover {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pref-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-hover);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.pref-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.pref-content {
+  flex: 1;
+}
+
+.pref-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.pref-header label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.priority-badge {
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.priority-badge.high {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.pref-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Toggle Switch */
+input[type="checkbox"] {
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  appearance: none;
+  background: var(--surface-hover);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--color-primary);
+}
+
+input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="checkbox"]:checked::after {
+  transform: translateX(1.5rem);
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Quiet Hours */
+.quiet-hours-card {
+  padding: 1.25rem;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.quiet-hours-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.quiet-hours-toggle label {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.quiet-hours-times {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.time-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.time-input label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.time-input input[type="time"] {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.quiet-hours-note {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Schedule List */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.schedule-item {
+  padding: 1rem;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.schedule-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.schedule-label {
+  flex: 1;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.btn-remove {
+  padding: 0.375rem;
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-remove:hover:not(:disabled) {
+  background: var(--color-danger);
+  color: white;
+}
+
+.btn-remove svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.schedule-details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.schedule-details input[type="time"] {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.schedule-days {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.day-btn {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border-color);
+  background: var(--background);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.day-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.day-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.schedule-message {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+/* Footer */
+.preferences-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.privacy-note {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .notification-preferences {
+    padding: 1rem;
+  }
+
+  .preferences-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .status-card {
+    flex-direction: column;
+  }
+
+  .status-card > svg {
+    margin-top: 0;
+  }
+
+  .quiet-hours-times {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .schedule-details {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .schedule-days {
+    justify-content: space-between;
+  }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+  .status-card.denied {
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .status-card.default {
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .status-card.granted {
+    background: rgba(34, 197, 94, 0.1);
+  }
+
+  input[type="time"],
+  .schedule-label,
+  .schedule-message {
+    background: var(--surface-background);
+  }
+}

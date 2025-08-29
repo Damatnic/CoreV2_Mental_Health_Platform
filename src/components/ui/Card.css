@@ -1,0 +1,483 @@
+/**
+ * Card Component Styles
+ * Beautiful, accessible card system with therapeutic design
+ */
+
+.card {
+  /* Reset */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  /* Base styles */
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-normal) var(--ease-therapeutic);
+  overflow: hidden;
+
+  /* Ensure content doesn't overflow */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ===== Size Variants ===== */
+
+.card--sm {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+}
+
+.card--md {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+}
+
+.card--lg {
+  padding: var(--space-8);
+  border-radius: var(--radius-2xl);
+}
+
+.card--xl {
+  padding: var(--space-10);
+  border-radius: var(--radius-3xl);
+}
+
+/* ===== Variant Styles ===== */
+
+/* Default Card */
+.card--default {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Elevated Card */
+.card--elevated {
+  background: var(--color-bg-elevated);
+  border: none;
+  box-shadow: var(--shadow-lg);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
+}
+
+/* Outlined Card */
+.card--outlined {
+  background: transparent;
+  border: 2px solid var(--color-border-primary);
+  box-shadow: none;
+}
+
+.card--outlined:hover {
+  border-color: var(--color-border-secondary);
+  background: var(--color-bg-secondary);
+}
+
+/* Glass Card */
+.card--glass {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--glass:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Interactive Card */
+.card--interactive {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card--interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.card--interactive:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Therapeutic Card */
+.card--therapeutic {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-50) 0%,
+    var(--color-secondary-50) 50%,
+    var(--color-accent-50) 100%
+  );
+  border: 1px solid var(--color-primary-200);
+  box-shadow: var(--shadow-md);
+}
+
+.card--therapeutic:hover {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-primary);
+}
+
+/* ===== Special Effects ===== */
+
+/* Glow Effect */
+.card--glow {
+  box-shadow: var(--shadow-md), var(--shadow-glow-primary);
+}
+
+.card--glow:hover {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-primary);
+}
+
+/* Animation Effects */
+.card--animate-float {
+  animation: card-float 6s ease-in-out infinite;
+}
+
+@keyframes card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.card--animate-breathe {
+  animation: card-breathe 4s ease-in-out infinite;
+}
+
+@keyframes card-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-sm);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.card--animate-glow {
+  animation: card-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes card-glow {
+  from {
+    box-shadow: var(--shadow-sm);
+  }
+  to {
+    box-shadow: var(--shadow-md), var(--shadow-glow-primary);
+  }
+}
+
+/* ===== Gradient Variants ===== */
+
+.card--gradient-calm {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-100) 0%,
+    var(--color-primary-50) 100%
+  );
+  border-color: var(--color-primary-200);
+}
+
+.card--gradient-wellness {
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary-100) 0%,
+    var(--color-secondary-50) 100%
+  );
+  border-color: var(--color-secondary-200);
+}
+
+.card--gradient-sunset {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-100) 0%,
+    var(--color-accent-50) 100%
+  );
+  border-color: var(--color-accent-200);
+}
+
+.card--gradient-aurora {
+  background: var(--gradient-aurora);
+  border-color: var(--color-primary-200);
+}
+
+.card__gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.card:hover .card__gradient-overlay {
+  opacity: 1;
+}
+
+/* ===== Card Sub-components ===== */
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-primary);
+}
+
+/* ===== Ripple Effect for Interactive Cards ===== */
+
+.card__ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.card--interactive:active .card__ripple {
+  opacity: 1;
+}
+
+.card--interactive:active .card__ripple::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: card-ripple 0.6s ease-out;
+}
+
+@keyframes card-ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* ===== Responsive Adjustments ===== */
+
+@media (max-width: 767px) {
+  .card--sm {
+    padding: var(--space-3);
+  }
+
+  .card--md {
+    padding: var(--space-4);
+  }
+
+  .card--lg {
+    padding: var(--space-6);
+  }
+
+  .card--xl {
+    padding: var(--space-8);
+  }
+
+  .card__header {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+  }
+
+  .card__footer {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+  }
+}
+
+/* ===== Dark Mode Adjustments ===== */
+
+[data-theme="dark"] {
+  .card--default {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-border-primary);
+  }
+
+  .card--outlined {
+    border-color: var(--color-border-primary);
+  }
+
+  .card--outlined:hover {
+    border-color: var(--color-border-secondary);
+    background: var(--color-bg-secondary);
+  }
+
+  .card--glass {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .card--glass:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .card--therapeutic {
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.1) 0%,
+      rgba(34, 197, 94, 0.1) 50%,
+      rgba(249, 115, 22, 0.1) 100%
+    );
+    border-color: rgba(14, 165, 233, 0.3);
+  }
+
+  .card--gradient-calm {
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.15) 0%,
+      rgba(14, 165, 233, 0.05) 100%
+    );
+    border-color: rgba(14, 165, 233, 0.3);
+  }
+
+  .card--gradient-wellness {
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.15) 0%,
+      rgba(34, 197, 94, 0.05) 100%
+    );
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .card--gradient-sunset {
+    background: linear-gradient(
+      135deg,
+      rgba(249, 115, 22, 0.15) 0%,
+      rgba(249, 115, 22, 0.05) 100%
+    );
+    border-color: rgba(249, 115, 22, 0.3);
+  }
+
+  .card__header {
+    border-color: var(--color-border-primary);
+  }
+
+  .card__footer {
+    border-color: var(--color-border-primary);
+  }
+
+  .card--interactive:active .card__ripple::before {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ===== High Contrast Mode ===== */
+
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+    border-color: var(--color-text-primary);
+  }
+
+  .card--outlined {
+    border-width: 3px;
+  }
+
+  .card--glass {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-border-primary);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .card__header,
+  .card__footer {
+    border-color: var(--color-text-primary);
+  }
+}
+
+/* ===== Reduced Motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:hover,
+  .card--elevated:hover,
+  .card--interactive:hover {
+    transform: none;
+  }
+
+  .card--animate-float,
+  .card--animate-breathe,
+  .card--animate-glow {
+    animation: none;
+  }
+
+  .card__ripple::before {
+    animation: none;
+  }
+}
+
+/* ===== Print Styles ===== */
+
+@media print {
+  .card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .card--interactive {
+    cursor: default;
+  }
+
+  .card__ripple {
+    display: none;
+  }
+}

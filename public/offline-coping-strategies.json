@@ -1,0 +1,360 @@
+{
+  "lastUpdated": "2025-01-04T00:00:00Z",
+  "version": "1.0.0",
+  "copingStrategies": [
+    {
+      "id": "grounding-5-4-3-2-1",
+      "name": "5-4-3-2-1 Grounding Technique",
+      "category": "grounding",
+      "difficulty": "easy",
+      "duration": "2-5 minutes",
+      "description": "A sensory grounding technique to help you stay present and calm anxiety",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Name 5 things you can see around you",
+          "detail": "Look around and identify 5 specific objects. Say them out loud or in your mind."
+        },
+        {
+          "step": 2,
+          "instruction": "Name 4 things you can touch",
+          "detail": "Feel 4 different textures or objects around you. Notice their temperature, roughness, or softness."
+        },
+        {
+          "step": 3,
+          "instruction": "Name 3 things you can hear",
+          "detail": "Listen for 3 different sounds in your environment. This could be traffic, birds, your own breathing."
+        },
+        {
+          "step": 4,
+          "instruction": "Name 2 things you can smell",
+          "detail": "Notice 2 different scents around you. If you can't smell anything, remember 2 of your favorite scents."
+        },
+        {
+          "step": 5,
+          "instruction": "Name 1 thing you can taste",
+          "detail": "Notice any taste in your mouth, or think of your favorite taste."
+        }
+      ],
+      "benefits": ["reduces anxiety", "grounds in present moment", "easy to remember"],
+      "situations": ["panic attacks", "anxiety", "dissociation", "overwhelm"],
+      "accessibility": {
+        "visualImpairment": "Can be adapted to focus more on other senses",
+        "hearingImpairment": "Visual and tactile elements remain effective",
+        "mobilityLimitations": "No physical movement required"
+      }
+    },
+    {
+      "id": "box-breathing",
+      "name": "Box Breathing (4-4-4-4)",
+      "category": "breathing",
+      "difficulty": "easy",
+      "duration": "2-10 minutes",
+      "description": "A structured breathing technique used by Navy SEALs and meditation practitioners",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Breathe in slowly for 4 counts",
+          "detail": "Inhale through your nose, filling your lungs completely. Count: 1... 2... 3... 4..."
+        },
+        {
+          "step": 2,
+          "instruction": "Hold your breath for 4 counts",
+          "detail": "Keep the air in your lungs. Count: 1... 2... 3... 4..."
+        },
+        {
+          "step": 3,
+          "instruction": "Breathe out slowly for 4 counts",
+          "detail": "Exhale through your mouth, emptying your lungs completely. Count: 1... 2... 3... 4..."
+        },
+        {
+          "step": 4,
+          "instruction": "Hold empty for 4 counts",
+          "detail": "Keep your lungs empty. Count: 1... 2... 3... 4..."
+        },
+        {
+          "step": 5,
+          "instruction": "Repeat 4-8 cycles",
+          "detail": "Continue this pattern. You can adjust the count if 4 feels too long or short."
+        }
+      ],
+      "benefits": ["calms nervous system", "reduces stress hormones", "improves focus"],
+      "situations": ["stress", "anxiety", "before sleep", "anger management"],
+      "variations": [
+        {
+          "name": "4-7-8 Breathing",
+          "description": "Inhale for 4, hold for 7, exhale for 8. Good for sleep."
+        },
+        {
+          "name": "Shorter Box",
+          "description": "Use 3-3-3-3 if 4 counts feel too long."
+        }
+      ]
+    },
+    {
+      "id": "stop-technique",
+      "name": "STOP Technique",
+      "category": "mindfulness",
+      "difficulty": "easy",
+      "duration": "1-3 minutes",
+      "description": "A quick mindfulness practice to interrupt negative thought patterns",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "STOP what you're doing",
+          "detail": "Literally pause whatever activity you're engaged in. This breaks the cycle."
+        },
+        {
+          "step": 2,
+          "instruction": "TAKE a deep breath",
+          "detail": "Take one slow, deep breath. This activates your parasympathetic nervous system."
+        },
+        {
+          "step": 3,
+          "instruction": "OBSERVE your thoughts and feelings",
+          "detail": "Notice what's happening in your mind and body without judgment. What are you thinking? What are you feeling?"
+        },
+        {
+          "step": 4,
+          "instruction": "PROCEED with intention and awareness",
+          "detail": "Continue with whatever you were doing, but with greater awareness and intention."
+        }
+      ],
+      "benefits": ["breaks negative cycles", "increases awareness", "prevents reactive behavior"],
+      "situations": ["overwhelming thoughts", "emotional reactivity", "stress", "decision making"]
+    },
+    {
+      "id": "safe-space-visualization",
+      "name": "Safe Space Visualization",
+      "category": "visualization",
+      "difficulty": "medium",
+      "duration": "5-15 minutes",
+      "description": "Create a mental sanctuary where you feel completely safe and peaceful",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Find a comfortable position and close your eyes",
+          "detail": "Sit or lie down comfortably. If closing your eyes feels unsafe, soften your gaze downward."
+        },
+        {
+          "step": 2,
+          "instruction": "Take several deep, calming breaths",
+          "detail": "Allow your breathing to slow and deepen naturally."
+        },
+        {
+          "step": 3,
+          "instruction": "Imagine a place where you feel completely safe",
+          "detail": "This could be real or imaginary - a beach, forest, childhood bedroom, or fantasy location."
+        },
+        {
+          "step": 4,
+          "instruction": "Add details using all your senses",
+          "detail": "What do you see? Hear? Smell? Feel? Make it as vivid as possible."
+        },
+        {
+          "step": 5,
+          "instruction": "Notice the feeling of safety and peace",
+          "detail": "Allow yourself to fully experience the calm, secure feeling of this space."
+        },
+        {
+          "step": 6,
+          "instruction": "Know you can return here anytime",
+          "detail": "Remember that this safe space is always available to you in your mind."
+        }
+      ],
+      "benefits": ["creates sense of safety", "reduces anxiety", "provides mental refuge"],
+      "situations": ["trauma responses", "anxiety", "feeling unsafe", "need for comfort"]
+    },
+    {
+      "id": "progressive-muscle-relaxation",
+      "name": "Progressive Muscle Relaxation",
+      "category": "physical",
+      "difficulty": "medium",
+      "duration": "10-20 minutes",
+      "description": "Systematically tense and relax muscle groups to release physical tension",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Start with your toes",
+          "detail": "Tense your toe muscles for 5 seconds, then release and notice the relaxation."
+        },
+        {
+          "step": 2,
+          "instruction": "Work up through your feet and calves",
+          "detail": "Tense each muscle group for 5 seconds, then release."
+        },
+        {
+          "step": 3,
+          "instruction": "Continue with thighs and glutes",
+          "detail": "Tense, hold for 5 seconds, then release and notice the contrast."
+        },
+        {
+          "step": 4,
+          "instruction": "Move to abdomen and chest",
+          "detail": "Tense your core muscles, hold, then release."
+        },
+        {
+          "step": 5,
+          "instruction": "Work through arms and hands",
+          "detail": "Make fists, tense your arms, hold, then release."
+        },
+        {
+          "step": 6,
+          "instruction": "Finish with shoulders, neck, and face",
+          "detail": "Scrunch up your face, tense your neck and shoulders, then release everything."
+        }
+      ],
+      "benefits": ["releases physical tension", "promotes relaxation", "improves body awareness"],
+      "situations": ["physical tension", "stress", "insomnia", "anxiety"]
+    },
+    {
+      "id": "cognitive-reframing",
+      "name": "Cognitive Reframing",
+      "category": "cognitive",
+      "difficulty": "medium",
+      "duration": "5-10 minutes",
+      "description": "Challenge and reframe negative or distorted thoughts",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Identify the negative thought",
+          "detail": "What exactly is going through your mind? Write it down if helpful."
+        },
+        {
+          "step": 2,
+          "instruction": "Ask: Is this thought realistic?",
+          "detail": "Consider the evidence for and against this thought."
+        },
+        {
+          "step": 3,
+          "instruction": "Ask: Is this thought helpful?",
+          "detail": "Even if true, is thinking this way helping or hurting you?"
+        },
+        {
+          "step": 4,
+          "instruction": "Consider alternative perspectives",
+          "detail": "What would you tell a friend in this situation? What else could be true?"
+        },
+        {
+          "step": 5,
+          "instruction": "Create a balanced thought",
+          "detail": "Develop a more balanced, realistic, and helpful way of thinking about the situation."
+        }
+      ],
+      "benefits": ["reduces negative thinking", "improves mood", "increases rational thinking"],
+      "situations": ["negative self-talk", "catastrophizing", "depression", "anxiety"]
+    },
+    {
+      "id": "emotional-check-in",
+      "name": "Emotional Check-In",
+      "category": "emotional_awareness",
+      "difficulty": "easy",
+      "duration": "2-5 minutes",
+      "description": "Tune into your current emotional state with compassion",
+      "steps": [
+        {
+          "step": 1,
+          "instruction": "Pause and take a breath",
+          "detail": "Create a moment of stillness to turn inward."
+        },
+        {
+          "step": 2,
+          "instruction": "Ask: What am I feeling right now?",
+          "detail": "Name the emotion(s). It's okay if there are multiple or if you're not sure."
+        },
+        {
+          "step": 3,
+          "instruction": "Where do I feel this in my body?",
+          "detail": "Notice physical sensations - tight chest, clenched jaw, heavy shoulders."
+        },
+        {
+          "step": 4,
+          "instruction": "What does this emotion need?",
+          "detail": "Consider what might help - comfort, movement, expression, rest."
+        },
+        {
+          "step": 5,
+          "instruction": "Offer yourself compassion",
+          "detail": "Remember that all emotions are valid and temporary."
+        }
+      ],
+      "benefits": ["increases emotional awareness", "promotes self-compassion", "guides appropriate action"],
+      "situations": ["emotional overwhelm", "numbness", "confusion", "regular check-ins"]
+    }
+  ],
+  "quickTechniques": [
+    {
+      "id": "three-deep-breaths",
+      "name": "Three Deep Breaths",
+      "duration": "30 seconds",
+      "instruction": "Take three slow, deep breaths. Inhale through nose, exhale through mouth.",
+      "situations": ["immediate stress", "quick reset"]
+    },
+    {
+      "id": "cold-water",
+      "name": "Cold Water on Face/Wrists",
+      "duration": "1 minute",
+      "instruction": "Run cold water over your wrists or splash on your face to activate the dive response.",
+      "situations": ["panic attacks", "intense emotions"]
+    },
+    {
+      "id": "count-backwards",
+      "name": "Count Backwards from 100 by 7s",
+      "duration": "2-3 minutes",
+      "instruction": "100, 93, 86, 79... This engages your rational mind.",
+      "situations": ["racing thoughts", "anxiety"]
+    },
+    {
+      "id": "tense-and-release",
+      "name": "Full Body Tense and Release",
+      "duration": "30 seconds",
+      "instruction": "Tense every muscle for 5 seconds, then release everything at once.",
+      "situations": ["physical tension", "stress"]
+    }
+  ],
+  "categories": {
+    "grounding": {
+      "name": "Grounding Techniques",
+      "description": "Techniques to help you stay present and connected to your body and environment",
+      "icon": "🌱"
+    },
+    "breathing": {
+      "name": "Breathing Exercises",
+      "description": "Structured breathing patterns to calm the nervous system",
+      "icon": "🌬️"
+    },
+    "mindfulness": {
+      "name": "Mindfulness Practices",
+      "description": "Present-moment awareness techniques to reduce anxiety and improve clarity",
+      "icon": "🧘"
+    },
+    "visualization": {
+      "name": "Visualization & Imagery",
+      "description": "Mental imagery techniques for relaxation and emotional regulation",
+      "icon": "🎨"
+    },
+    "physical": {
+      "name": "Physical Techniques",
+      "description": "Body-based practices to release tension and promote relaxation",
+      "icon": "💪"
+    },
+    "cognitive": {
+      "name": "Cognitive Techniques",
+      "description": "Thought-based strategies to challenge negative patterns and reframe perspectives",
+      "icon": "🧠"
+    },
+    "emotional_awareness": {
+      "name": "Emotional Awareness",
+      "description": "Techniques to identify, understand, and process emotions",
+      "icon": "❤️"
+    }
+  },
+  "metadata": {
+    "cacheStrategy": "cache-first",
+    "offlineAvailable": true,
+    "lastVerified": "2025-01-04T00:00:00Z",
+    "updateFrequency": "monthly",
+    "evidenceBased": true,
+    "accessibilityCompliant": true
+  }
+}

@@ -1,0 +1,563 @@
+/* Enhanced Quiet Space View - Ultimate Tranquility */
+
+.quiet-space-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: gentleFadeIn 1s ease-out;
+  background: linear-gradient(
+    180deg,
+    rgba(230, 243, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(230, 250, 255, 0.1) 100%
+  );
+  min-height: 100vh;
+}
+
+@keyframes gentleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Breathing Section */
+.breathing-section {
+  margin-bottom: 3rem;
+  padding: 2.5rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(230, 243, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(230, 250, 255, 0.5) 100%
+  );
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(135, 206, 235, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.breathing-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(135, 206, 235, 0.05) 0%,
+    transparent 70%
+  );
+  animation: gentleRotate 30s linear infinite;
+}
+
+@keyframes gentleRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced Pattern Cards */
+.pattern-card {
+  padding: 1.25rem;
+  border: 2px solid rgba(135, 206, 235, 0.2);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(230, 243, 255, 0.3) 100%
+  );
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(135, 206, 235, 0.2) 0%,
+    transparent 70%
+  );
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%);
+}
+
+.pattern-card:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.pattern-card.selected {
+  background: linear-gradient(135deg, #87ceeb 0%, #b8e6b8 100%);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 8px 24px rgba(135, 206, 235, 0.3);
+  transform: scale(1.02);
+}
+
+.pattern-card.selected .pattern-name,
+.pattern-card.selected .pattern-description {
+  color: white;
+}
+
+/* Enhanced Breathing Animation */
+.breathing-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: radial-gradient(
+    circle,
+    rgba(135, 206, 235, 0.05) 0%,
+    transparent 50%
+  );
+  border-radius: 20px;
+  margin: 2rem 0;
+}
+
+.breathing-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(135, 206, 235, 0.3) 0%,
+    rgba(152, 255, 152, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow:
+    0 0 60px rgba(135, 206, 235, 0.3),
+    inset 0 0 40px rgba(255, 255, 255, 0.2);
+  transition: all 4s ease-in-out;
+}
+
+.breathing-circle.inhaling {
+  transform: scale(1.3);
+  box-shadow:
+    0 0 80px rgba(135, 206, 235, 0.4),
+    inset 0 0 60px rgba(152, 255, 152, 0.3);
+}
+
+.breathing-circle.holding {
+  transform: scale(1.3);
+  box-shadow:
+    0 0 100px rgba(152, 255, 152, 0.5),
+    inset 0 0 80px rgba(255, 255, 255, 0.3);
+}
+
+.breathing-circle.exhaling {
+  transform: scale(1);
+  box-shadow:
+    0 0 40px rgba(230, 243, 255, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.breathing-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  position: absolute;
+  z-index: 2;
+}
+
+.breathing-instruction {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: 500;
+  animation: fadeInOut 4s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Enhanced Meditation Section */
+.meditation-section {
+  margin-bottom: 3rem;
+  padding: 2.5rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 238, 248, 0.5) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 238, 248, 0.5) 100%
+  );
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(255, 182, 193, 0.1);
+}
+
+.meditation-tracks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.meditation-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 238, 248, 0.3) 100%
+  );
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 2px solid rgba(255, 182, 193, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.meditation-card::before {
+  content: "🧘";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 60px;
+  opacity: 0.1;
+  transform: rotate(-15deg);
+}
+
+.meditation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(255, 182, 193, 0.15);
+  border-color: rgba(255, 182, 193, 0.4);
+}
+
+.meditation-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.meditation-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  background: rgba(255, 182, 193, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.meditation-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.play-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.play-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.3);
+}
+
+/* Enhanced Music Section */
+.music-section {
+  margin-bottom: 3rem;
+  padding: 2.5rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(230, 230, 250, 0.5) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(230, 230, 250, 0.5) 100%
+  );
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.1);
+}
+
+.music-player {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(230, 230, 250, 0.3) 100%
+  );
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(147, 112, 219, 0.1);
+  border: 2px solid rgba(147, 112, 219, 0.2);
+}
+
+.now-playing {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.track-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.track-artist {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.control-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(147, 112, 219, 0.1) 0%,
+    rgba(147, 112, 219, 0.2) 100%
+  );
+  border: 2px solid rgba(147, 112, 219, 0.3);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #9370db 0%, #ba55d3 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(147, 112, 219, 0.3);
+}
+
+.control-btn.play-pause {
+  width: 60px;
+  height: 60px;
+  font-size: 1.25rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(147, 112, 219, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9370db 0%, #ba55d3 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 3px solid #9370db;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(147, 112, 219, 0.3);
+}
+
+/* Enhanced Quotes Section */
+.quotes-section {
+  margin-bottom: 3rem;
+  padding: 2.5rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 228, 225, 0.5) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 228, 225, 0.5) 100%
+  );
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(255, 192, 203, 0.1);
+}
+
+.quote-display {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 228, 225, 0.3) 100%
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(255, 192, 203, 0.2);
+  position: relative;
+}
+
+.quote-display::before,
+.quote-display::after {
+  content: '"';
+  position: absolute;
+  font-size: 4rem;
+  color: rgba(255, 192, 203, 0.2);
+  font-family: Georgia, serif;
+}
+
+.quote-display::before {
+  top: 10px;
+  left: 20px;
+}
+
+.quote-display::after {
+  bottom: 10px;
+  right: 20px;
+  transform: rotate(180deg);
+}
+
+.quote-text {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-author {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-author::before {
+  content: "— ";
+}
+
+.new-quote-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.new-quote-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 192, 203, 0.3);
+}
+
+/* Dark Mode Enhancements */
+[data-theme="dark"] .breathing-section,
+[data-theme="dark"] .meditation-section,
+[data-theme="dark"] .music-section,
+[data-theme="dark"] .quotes-section {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.8) 0%,
+    rgba(28, 33, 40, 0.9) 100%
+  );
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .pattern-card,
+[data-theme="dark"] .meditation-card,
+[data-theme="dark"] .music-player,
+[data-theme="dark"] .quote-display {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.95) 0%,
+    rgba(28, 33, 40, 0.8) 100%
+  );
+  border-color: rgba(88, 166, 255, 0.2);
+}
+
+/* Mobile Responsive Enhancements */
+@media (max-width: 768px) {
+  .quiet-space-container {
+    padding: 1rem;
+  }
+
+  .breathing-section,
+  .meditation-section,
+  .music-section,
+  .quotes-section {
+    padding: 1.5rem !important;
+    border-radius: 16px;
+  }
+
+  .breathing-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .meditation-tracks {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-text {
+    font-size: 1.25rem;
+  }
+
+  .quote-display::before,
+  .quote-display::after {
+    font-size: 2.5rem;
+  }
+}

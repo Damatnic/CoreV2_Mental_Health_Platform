@@ -1,0 +1,398 @@
+/**
+ * PostCard Skeleton Loading Styles
+ * 
+ * Provides smooth, accessible loading animations for PostCard components
+ * with support for reduced motion preferences and high contrast themes.
+ */
+
+/* Base skeleton styles */
+.post-card-skeleton {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: var(--skeleton-bg, #f8f9fa);
+  border: 1px solid var(--skeleton-border, #e9ecef);
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton-card {
+  padding: 1rem;
+  background: var(--card-bg, #ffffff);
+  border-radius: 8px;
+}
+
+/* Header section */
+.skeleton-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--skeleton-color, #e9ecef);
+  flex-shrink: 0;
+}
+
+.skeleton-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-status-badge {
+  width: 60px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--skeleton-color, #e9ecef);
+  flex-shrink: 0;
+}
+
+/* Content section */
+.skeleton-content {
+  margin-bottom: 1rem;
+}
+
+.skeleton-line {
+  height: 1rem;
+  background: var(--skeleton-color, #e9ecef);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-category {
+  width: 80px;
+  height: 0.875rem;
+}
+
+.skeleton-timestamp {
+  width: 120px;
+  height: 0.75rem;
+}
+
+.skeleton-title {
+  width: 90%;
+  height: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-text {
+  width: 100%;
+}
+
+.skeleton-text-short {
+  width: 75%;
+}
+
+.skeleton-ai-text {
+  width: 85%;
+  height: 0.875rem;
+}
+
+/* AI Match section */
+.skeleton-ai-match {
+  background: var(--skeleton-highlight, #f1f3f4);
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+/* Footer section */
+.skeleton-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.skeleton-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.skeleton-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeleton-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--skeleton-color, #e9ecef);
+}
+
+.skeleton-count {
+  width: 30px;
+  height: 1rem;
+  background: var(--skeleton-color, #e9ecef);
+  border-radius: 4px;
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.skeleton-button {
+  width: 80px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--skeleton-color, #e9ecef);
+}
+
+/* Animation */
+.animate .skeleton-line,
+.animate .skeleton-avatar,
+.animate .skeleton-status-badge,
+.animate .skeleton-icon,
+.animate .skeleton-count,
+.animate .skeleton-button {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-color, #e9ecef) 25%,
+    var(--skeleton-shine, #f8f9fa) 50%,
+    var(--skeleton-color, #e9ecef) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Pulse animation for inline skeleton */
+.skeleton-pulse {
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Inline skeleton variant */
+.post-card-skeleton.inline {
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+}
+
+.post-card-skeleton.inline .skeleton-card {
+  padding: 0;
+}
+
+.post-card-skeleton.inline .skeleton-content {
+  margin-bottom: 0;
+}
+
+/* Empty state skeleton */
+.empty-posts-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-skeleton-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--skeleton-color, #e9ecef);
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-empty-title {
+  width: 200px;
+  height: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.skeleton-empty-text {
+  width: 300px;
+  height: 1rem;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .skeleton-header {
+    gap: 0.5rem;
+  }
+
+  .skeleton-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .skeleton-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .skeleton-actions {
+    justify-content: center;
+  }
+
+  .skeleton-button {
+    flex: 1;
+    min-width: 70px;
+    max-width: 120px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate .skeleton-line,
+  .animate .skeleton-avatar,
+  .animate .skeleton-status-badge,
+  .animate .skeleton-icon,
+  .animate .skeleton-count,
+  .animate .skeleton-button {
+    animation: none;
+    background: var(--skeleton-color, #e9ecef);
+  }
+
+  .skeleton-pulse {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* High contrast theme support */
+@media (prefers-contrast: high) {
+  .post-card-skeleton {
+    --skeleton-bg: #ffffff;
+    --skeleton-border: #000000;
+    --skeleton-color: #cccccc;
+    --skeleton-shine: #ffffff;
+    --skeleton-highlight: #f0f0f0;
+    border-width: 2px;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .post-card-skeleton {
+    --skeleton-bg: #1a1a1a;
+    --skeleton-border: #333333;
+    --skeleton-color: #333333;
+    --skeleton-shine: #404040;
+    --skeleton-highlight: #2a2a2a;
+    --card-bg: #1e1e1e;
+  }
+}
+
+/* Manual dark theme class */
+.dark .post-card-skeleton {
+  --skeleton-bg: #1a1a1a;
+  --skeleton-border: #333333;
+  --skeleton-color: #333333;
+  --skeleton-shine: #404040;
+  --skeleton-highlight: #2a2a2a;
+  --card-bg: #1e1e1e;
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Focus states for accessibility */
+.post-card-skeleton:focus-within {
+  outline: 2px solid var(--focus-color, #0066cc);
+  outline-offset: 2px;
+}
+
+/* Loading state indicator */
+.post-card-skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--loading-color, #0066cc);
+  animation: loading-progress 2s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes loading-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Remove loading indicator for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .post-card-skeleton::before {
+    animation: none;
+    display: none;
+  }
+}
+
+/* Hover states for interactive elements */
+@media (hover: hover) {
+  .post-card-skeleton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card-skeleton:hover {
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+/* Loading completion fade out */
+.post-card-skeleton.fade-out {
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-skeleton.fade-out {
+    transform: none;
+    transition: opacity 0.1s ease;
+  }
+}

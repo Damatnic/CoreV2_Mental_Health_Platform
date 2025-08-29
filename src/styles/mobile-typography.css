@@ -1,0 +1,308 @@
+/**
+ * Mobile Typography & Font Safety CSS
+ * 
+ * Implements mobile-safe font sizes to prevent unwanted zoom behavior
+ * on iOS Safari and provides consistent typography across devices.
+ */
+
+/* CSS Custom Properties for Mobile Typography */
+:root {
+  /* Mobile-safe font sizes - minimum 16px for inputs */
+  --mobile-font-input: 16px;
+  --mobile-font-button: 16px;
+  --mobile-font-body: 16px;
+  --mobile-font-small: 14px;
+  --mobile-font-large: 18px;
+  --mobile-font-xl: 20px;
+  --mobile-font-xxl: 24px;
+
+  /* Mobile line heights for better readability */
+  --mobile-line-height-tight: 1.2;
+  --mobile-line-height-normal: 1.4;
+  --mobile-line-height-relaxed: 1.6;
+
+  /* Mobile touch target sizes */
+  --mobile-touch-target: 44px;
+  --mobile-touch-target-large: 56px;
+}
+
+/* Mobile-safe input styles - prevents iOS Safari zoom */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+  font-size: var(--mobile-font-input) !important;
+  line-height: var(--mobile-line-height-normal);
+  /* Prevent iOS Safari auto-zoom */
+  -webkit-text-size-adjust: 100%;
+  /* Enhance touch interaction */
+  touch-action: manipulation;
+}
+
+/* Mobile-safe button styles */
+button,
+.btn,
+.app-button,
+input[type="submit"],
+input[type="button"] {
+  font-size: var(--mobile-font-button) !important;
+  min-height: var(--mobile-touch-target);
+  min-width: var(--mobile-touch-target);
+  line-height: var(--mobile-line-height-normal);
+  /* Prevent iOS Safari auto-zoom */
+  -webkit-text-size-adjust: 100%;
+  /* Enhanced touch behavior */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile-optimized body text */
+@media (max-width: 768px) {
+  body {
+    font-size: var(--mobile-font-body);
+    line-height: var(--mobile-line-height-normal);
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Heading adjustments for mobile */
+  h1 {
+    font-size: var(--mobile-font-xxl);
+    line-height: var(--mobile-line-height-tight);
+  }
+  h2 {
+    font-size: var(--mobile-font-xl);
+    line-height: var(--mobile-line-height-tight);
+  }
+  h3 {
+    font-size: var(--mobile-font-large);
+    line-height: var(--mobile-line-height-normal);
+  }
+
+  /* Small text that remains readable */
+  small,
+  .text-small {
+    font-size: var(--mobile-font-small);
+    line-height: var(--mobile-line-height-normal);
+  }
+
+  /* Link touch targets */
+  a {
+    min-height: var(--mobile-touch-target);
+    display: inline-flex;
+    align-items: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Form control improvements */
+  .form-control,
+  .chat-input,
+  .app-input {
+    font-size: var(--mobile-font-input) !important;
+    min-height: var(--mobile-touch-target);
+    padding: 12px 16px;
+    border-radius: 8px;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mobile keyboard handling */
+  .mobile-focused {
+    /* Styling for inputs that are focused on mobile */
+    transform: none; /* Prevent transforms that might interfere with keyboard */
+    position: relative;
+    z-index: 1000;
+  }
+
+  /* Keyboard open state adjustments */
+  body.keyboard-open {
+    /* Prevent background scrolling when keyboard is open */
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  body.keyboard-open .main-content {
+    /* Adjust main content when keyboard is open */
+    height: calc(var(--vh, 1vh) * 100 - var(--keyboard-height, 0px));
+    overflow-y: auto;
+  }
+
+  /* Chat input specific mobile optimizations */
+  .chat-input-container {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    background: var(--bg-primary);
+    padding: 12px;
+    border-top: 1px solid var(--border-color);
+    /* Ensure proper keyboard interaction */
+    transform: translateZ(0); /* Force hardware acceleration */
+  }
+
+  .chat-input {
+    font-size: var(--mobile-font-input) !important;
+    min-height: var(--mobile-touch-target);
+    resize: none;
+    overflow-y: auto;
+    max-height: 120px;
+    /* iOS Safari specific fixes */
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  /* Modal dialog mobile typography */
+  .modal {
+    font-size: var(--mobile-font-body);
+  }
+
+  .modal-title {
+    font-size: var(--mobile-font-large);
+    line-height: var(--mobile-line-height-tight);
+  }
+
+  .modal-button {
+    font-size: var(--mobile-font-button) !important;
+    min-height: var(--mobile-touch-target);
+    padding: 12px 24px;
+  }
+
+  /* Toast notification mobile sizing */
+  .toast {
+    font-size: var(--mobile-font-body);
+    min-height: var(--mobile-touch-target);
+    padding: 16px;
+  }
+
+  /* Navigation mobile typography */
+  .sidebar-nav-link,
+  .mobile-nav-link {
+    font-size: var(--mobile-font-body);
+    min-height: var(--mobile-touch-target);
+    padding: 12px 16px;
+    touch-action: manipulation;
+  }
+
+  /* Crisis button mobile sizing */
+  .crisis-button,
+  .floating-crisis-button {
+    font-size: var(--mobile-font-button) !important;
+    min-height: var(--mobile-touch-target-large);
+    min-width: var(--mobile-touch-target-large);
+    padding: 16px;
+    touch-action: manipulation;
+  }
+
+  /* Safety tips modal mobile optimization */
+  .safety-tips-modal .modal-content {
+    font-size: var(--mobile-font-body);
+    line-height: var(--mobile-line-height-relaxed);
+  }
+
+  .safety-tips-modal .safety-tip-item {
+    min-height: var(--mobile-touch-target);
+    padding: 12px;
+    touch-action: manipulation;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  :root {
+    /* Slightly smaller fonts in landscape for more content */
+    --mobile-font-body: 15px;
+    --mobile-font-large: 17px;
+    --mobile-font-xl: 19px;
+  }
+
+  /* Reduce header sizes in landscape */
+  h1 {
+    font-size: var(--mobile-font-xl);
+  }
+  h2 {
+    font-size: var(--mobile-font-large);
+  }
+
+  /* Maintain input font size to prevent zoom */
+  input,
+  textarea,
+  select {
+    font-size: var(--mobile-font-input) !important;
+  }
+}
+
+/* Accessibility - respect user's font size preferences */
+@media (prefers-reduced-motion: reduce) {
+  /* Remove animations for users who prefer reduced motion */
+  .chat-input,
+  .mobile-focused,
+  button,
+  .btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Dark mode mobile typography adjustments */
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Enhance readability in dark mode on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Increase contrast for small text in dark mode */
+  small,
+  .text-small {
+    opacity: 0.9;
+  }
+}
+
+/* Utilities for manual font size enforcement */
+.mobile-font-safe {
+  font-size: var(--mobile-font-input) !important;
+}
+
+.mobile-touch-safe {
+  min-height: var(--mobile-touch-target);
+  min-width: var(--mobile-touch-target);
+  touch-action: manipulation;
+}
+
+.mobile-no-zoom {
+  font-size: var(--mobile-font-input) !important;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Debug utilities for mobile font testing */
+.debug-mobile-fonts * {
+  outline: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.debug-mobile-fonts input,
+.debug-mobile-fonts textarea,
+.debug-mobile-fonts select {
+  outline: 2px solid rgba(255, 0, 0, 0.8);
+}
+
+.debug-mobile-fonts button {
+  outline: 2px solid rgba(0, 255, 0, 0.8);
+}

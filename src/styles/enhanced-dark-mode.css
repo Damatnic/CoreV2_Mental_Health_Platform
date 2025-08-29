@@ -1,0 +1,558 @@
+/**
+ * Enhanced Dark Mode Theme for CoreV2
+ * 
+ * Therapeutic dark theme designed to reduce eye strain
+ * and create a calming nighttime experience
+ */
+
+/* ===============================================
+   DARK MODE COLOR PALETTE
+   =============================================== */
+
+[data-theme="dark"] {
+  /* Deep Space Background Colors */
+  --dark-bg-primary: #0a0e27;
+  --dark-bg-secondary: #0f1429;
+  --dark-bg-tertiary: #151a3a;
+  --dark-bg-elevated: #1a2040;
+  --dark-bg-hover: #1f2547;
+
+  /* Midnight Text Colors */
+  --dark-text-primary: #e8eaf0;
+  --dark-text-secondary: #b8bcc8;
+  --dark-text-tertiary: #8891a7;
+  --dark-text-muted: #5a6478;
+
+  /* Soft Accent Colors for Dark Mode */
+  --dark-primary: #4a9eff;
+  --dark-primary-hover: #6bb0ff;
+  --dark-primary-muted: #2a7ed8;
+
+  --dark-secondary: #b794f6;
+  --dark-secondary-hover: #c9a8ff;
+  --dark-secondary-muted: #9f7aea;
+
+  --dark-success: #68d391;
+  --dark-success-hover: #7ee3a1;
+  --dark-success-muted: #48bb78;
+
+  --dark-warning: #f6ad55;
+  --dark-warning-hover: #f8bd75;
+  --dark-warning-muted: #ed8936;
+
+  --dark-danger: #fc8181;
+  --dark-danger-hover: #fd9191;
+  --dark-danger-muted: #f56565;
+
+  /* Dark Mode Gradients */
+  --dark-gradient-primary: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+  --dark-gradient-secondary: linear-gradient(135deg, #44337a 0%, #553c9a 100%);
+  --dark-gradient-surface: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  --dark-gradient-calm: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+  --dark-gradient-wellness: linear-gradient(135deg, #22543d 0%, #276749 100%);
+
+  /* Dark Mode Shadows */
+  --dark-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --dark-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --dark-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  --dark-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+  --dark-shadow-glow: 0 0 20px rgba(74, 158, 255, 0.2);
+
+  /* Dark Mode Borders */
+  --dark-border-subtle: rgba(255, 255, 255, 0.06);
+  --dark-border-default: rgba(255, 255, 255, 0.1);
+  --dark-border-strong: rgba(255, 255, 255, 0.15);
+}
+
+/* ===============================================
+   DARK MODE BASE STYLES
+   =============================================== */
+
+[data-theme="dark"] {
+  background: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #0a0e27 0%, #0f1429 50%, #0a0e27 100%);
+  background-attachment: fixed;
+  color: var(--dark-text-primary);
+}
+
+/* Starfield Background Effect */
+[data-theme="dark"]::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent);
+  background-size: 200% 200%;
+  background-position: 0 0;
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 0;
+  animation: starfield 200s linear infinite;
+}
+
+@keyframes starfield {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+/* ===============================================
+   DARK MODE GLASSMORPHISM
+   =============================================== */
+
+[data-theme="dark"] .glass-card {
+  background: rgba(15, 20, 41, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--dark-border-default);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .glass-card:hover {
+  background: rgba(15, 20, 41, 0.7);
+  border-color: var(--dark-border-strong);
+  box-shadow:
+    0 12px 48px 0 rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(74, 158, 255, 0.1);
+}
+
+[data-theme="dark"] .glass-button {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .glass-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  border-color: var(--dark-border-strong);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 15px rgba(74, 158, 255, 0.15);
+}
+
+/* ===============================================
+   DARK MODE NEUMORPHISM
+   =============================================== */
+
+[data-theme="dark"] .neumorph-card {
+  background: linear-gradient(145deg, #0c1021, #141933);
+  box-shadow:
+    5px 5px 10px #070a15,
+    -5px -5px 10px #191f3f,
+    inset 1px 1px 2px rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .neumorph-button {
+  background: linear-gradient(145deg, #141933, #0c1021);
+  box-shadow:
+    5px 5px 10px #070a15,
+    -5px -5px 10px #191f3f;
+  color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .neumorph-button:active {
+  box-shadow:
+    inset 5px 5px 10px #070a15,
+    inset -5px -5px 10px #191f3f;
+}
+
+[data-theme="dark"] .neumorph-input {
+  background: #0f1429;
+  box-shadow:
+    inset 3px 3px 6px #070a15,
+    inset -3px -3px 6px #171d3d;
+  color: var(--dark-text-primary);
+  border: 1px solid var(--dark-border-subtle);
+}
+
+[data-theme="dark"] .neumorph-input:focus {
+  box-shadow:
+    inset 2px 2px 4px #070a15,
+    inset -2px -2px 4px #171d3d,
+    0 0 10px rgba(74, 158, 255, 0.2);
+  border-color: var(--dark-primary-muted);
+}
+
+/* ===============================================
+   DARK MODE COMPONENTS
+   =============================================== */
+
+/* Cards */
+[data-theme="dark"] .therapy-card {
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-subtle);
+  box-shadow: var(--dark-shadow-md);
+}
+
+[data-theme="dark"] .therapy-card:hover {
+  background: var(--dark-bg-elevated);
+  border-color: var(--dark-border-default);
+  box-shadow: var(--dark-shadow-lg);
+}
+
+/* Wellness Cards */
+[data-theme="dark"] .wellness-stat-card {
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-subtle);
+  box-shadow: var(--dark-shadow-sm);
+}
+
+[data-theme="dark"] .wellness-stat-card:hover {
+  background: var(--dark-bg-elevated);
+  box-shadow: var(--dark-shadow-md);
+}
+
+/* Mood Tracker */
+[data-theme="dark"] .mood-option {
+  background: rgba(15, 20, 41, 0.6);
+  border: 2px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .mood-option:hover {
+  background: rgba(26, 32, 64, 0.8);
+  border-color: var(--dark-primary);
+  box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+}
+
+[data-theme="dark"] .mood-option.selected {
+  border-color: transparent;
+  box-shadow: 0 0 30px rgba(74, 158, 255, 0.5);
+}
+
+/* Forms */
+[data-theme="dark"] .therapy-input,
+[data-theme="dark"] .therapy-textarea,
+[data-theme="dark"] .therapy-select {
+  background: var(--dark-bg-tertiary);
+  border: 2px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .therapy-input:focus,
+[data-theme="dark"] .therapy-textarea:focus,
+[data-theme="dark"] .therapy-select:focus {
+  background: var(--dark-bg-elevated);
+  border-color: var(--dark-primary);
+  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.1);
+}
+
+[data-theme="dark"] .therapy-input::placeholder,
+[data-theme="dark"] .therapy-textarea::placeholder {
+  color: var(--dark-text-muted);
+}
+
+/* Navigation */
+[data-theme="dark"] .therapy-nav {
+  background: rgba(15, 20, 41, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--dark-border-subtle);
+}
+
+[data-theme="dark"] .therapy-nav-item {
+  color: var(--dark-text-secondary);
+}
+
+[data-theme="dark"] .therapy-nav-item:hover {
+  background: rgba(74, 158, 255, 0.1);
+  color: var(--dark-primary);
+}
+
+[data-theme="dark"] .therapy-nav-item.active {
+  background: var(--dark-gradient-primary);
+  color: white;
+}
+
+/* Buttons */
+[data-theme="dark"] .btn-primary {
+  background: var(--dark-gradient-primary);
+  border: 1px solid transparent;
+  color: white;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: linear-gradient(135deg, #2a4e7c 0%, #3a5f8f 100%);
+  box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: var(--dark-bg-elevated);
+  border: 1px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--dark-bg-hover);
+  border-color: var(--dark-border-strong);
+}
+
+/* Crisis Elements */
+[data-theme="dark"] .crisis-button {
+  background: linear-gradient(
+    135deg,
+    var(--dark-danger-muted),
+    var(--dark-danger)
+  );
+  box-shadow: 0 4px 20px rgba(252, 129, 129, 0.2);
+}
+
+[data-theme="dark"] .crisis-button:hover {
+  box-shadow: 0 8px 30px rgba(252, 129, 129, 0.4);
+}
+
+[data-theme="dark"] .crisis-indicator {
+  background: rgba(252, 129, 129, 0.1);
+  border-color: var(--dark-danger-muted);
+}
+
+/* Modals */
+[data-theme="dark"] .therapy-modal {
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-default);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .therapy-modal-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Tooltips */
+[data-theme="dark"] .therapy-tooltip {
+  background: var(--dark-bg-elevated);
+  border: 1px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+}
+
+/* Badges */
+[data-theme="dark"] .therapy-badge-primary {
+  background: rgba(74, 158, 255, 0.2);
+  color: var(--dark-primary);
+}
+
+[data-theme="dark"] .therapy-badge-success {
+  background: rgba(104, 211, 145, 0.2);
+  color: var(--dark-success);
+}
+
+[data-theme="dark"] .therapy-badge-warning {
+  background: rgba(246, 173, 85, 0.2);
+  color: var(--dark-warning);
+}
+
+[data-theme="dark"] .therapy-badge-danger {
+  background: rgba(252, 129, 129, 0.2);
+  color: var(--dark-danger);
+}
+
+/* Loading States */
+[data-theme="dark"] .skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    var(--dark-bg-tertiary) 25%,
+    var(--dark-bg-elevated) 50%,
+    var(--dark-bg-tertiary) 75%
+  );
+}
+
+[data-theme="dark"] .therapy-spinner::before {
+  border-top-color: var(--dark-primary);
+}
+
+[data-theme="dark"] .therapy-spinner::after {
+  border-bottom-color: var(--dark-secondary);
+}
+
+[data-theme="dark"] .loading-dot {
+  background: var(--dark-primary);
+}
+
+/* Progress Bars */
+[data-theme="dark"] .wellness-progress {
+  background: var(--dark-bg-tertiary);
+}
+
+[data-theme="dark"] .wellness-progress-bar {
+  background: var(--dark-gradient-primary);
+}
+
+/* ===============================================
+   DARK MODE ANIMATIONS
+   =============================================== */
+
+[data-theme="dark"] .animate-glow {
+  animation: dark-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dark-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.6);
+  }
+}
+
+/* Subtle Aurora Effect */
+[data-theme="dark"] .aurora-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.05;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse at top left,
+      var(--dark-primary) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      var(--dark-secondary) 0%,
+      transparent 50%
+    );
+  animation: aurora 20s ease-in-out infinite;
+}
+
+@keyframes aurora {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(5deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(-5deg) scale(1);
+  }
+  75% {
+    transform: rotate(3deg) scale(1.05);
+  }
+}
+
+/* ===============================================
+   DARK MODE SCROLLBAR
+   =============================================== */
+
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--dark-bg-primary);
+  border-radius: 10px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--dark-bg-elevated);
+  border-radius: 10px;
+  border: 2px solid var(--dark-bg-primary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-bg-hover);
+}
+
+/* Firefox Scrollbar */
+[data-theme="dark"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--dark-bg-elevated) var(--dark-bg-primary);
+}
+
+/* ===============================================
+   DARK MODE FOCUS STATES
+   =============================================== */
+
+[data-theme="dark"] *:focus-visible {
+  outline: 2px solid var(--dark-primary);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] button:focus-visible {
+  outline: 2px solid var(--dark-primary);
+  outline-offset: 2px;
+}
+
+/* ===============================================
+   DARK MODE ACCESSIBILITY
+   =============================================== */
+
+/* High Contrast Dark Mode */
+@media (prefers-contrast: high) {
+  [data-theme="dark"] {
+    --dark-border-subtle: rgba(255, 255, 255, 0.2);
+    --dark-border-default: rgba(255, 255, 255, 0.3);
+    --dark-border-strong: rgba(255, 255, 255, 0.4);
+    --dark-text-primary: #ffffff;
+    --dark-text-secondary: #e0e0e0;
+  }
+}
+
+/* Reduced Motion Dark Mode */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="dark"] *,
+  [data-theme="dark"] *::before,
+  [data-theme="dark"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-theme="dark"]::before {
+    animation: none !important;
+  }
+
+  [data-theme="dark"] .aurora-effect {
+    display: none;
+  }
+}
+
+/* ===============================================
+   DARK MODE TRANSITIONS
+   =============================================== */
+
+/* Smooth theme transition */
+* {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Don't transition colors on theme switch for text */
+*:not(.therapy-card):not(.glass-card) {
+  transition: color 0.3s ease;
+}

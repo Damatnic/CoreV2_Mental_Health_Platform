@@ -1,0 +1,380 @@
+/* Offline Status Indicator - Beautiful Redesign */
+
+.offline-status-indicator {
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(241, 245, 249, 0.95) 100%
+  ) !important;
+  border-radius: 24px !important;
+  padding: 0.875rem 1.25rem !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 0 40px rgba(99, 102, 241, 0.06) !important;
+  border: 2px solid transparent !important;
+  cursor: pointer !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  min-width: auto !important;
+  animation: statusFadeIn 0.5s ease !important;
+}
+
+@keyframes statusFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.offline-status-indicator:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.1),
+    0 0 60px rgba(99, 102, 241, 0.08) !important;
+}
+
+/* Status Dot Styling */
+.offline-status-indicator > div:first-child {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  animation: statusPulse 2s ease-in-out infinite !important;
+  box-shadow: 0 0 8px currentColor !important;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Online Status */
+.offline-status-indicator[title*="Online"] {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(236, 253, 245, 0.95) 100%
+  ) !important;
+}
+
+.offline-status-indicator[title*="Online"] > div:first-child {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
+}
+
+/* Offline Status */
+.offline-status-indicator[title*="Offline"] {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(254, 243, 199, 0.95) 100%
+  ) !important;
+}
+
+.offline-status-indicator[title*="Offline"] > div:first-child {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+}
+
+/* Status Text */
+.offline-status-indicator > span {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* Sync Queue Badge */
+.offline-status-indicator > span:last-child {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 0.125rem 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  min-width: 24px !important;
+  text-align: center !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+  animation: badgePulse 2s ease-in-out infinite !important;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Offline Status Modal Enhancements */
+.offline-status-modal {
+  padding: 1.5rem !important;
+}
+
+.offline-status-modal .status-section,
+.offline-status-modal .capabilities-section,
+.offline-status-modal .storage-section,
+.offline-status-modal .sync-section,
+.offline-status-modal .network-section {
+  padding: 1.25rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(241, 245, 249, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  ) !important;
+  border-radius: 12px !important;
+  margin-bottom: 1rem !important;
+  border: 1px solid rgba(226, 232, 240, 0.3) !important;
+}
+
+.offline-status-modal h3 {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.offline-status-modal h3::before {
+  content: "";
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, #6366f1 0%, #a855f7 100%);
+  border-radius: 2px;
+}
+
+/* Connection Status Display */
+.offline-status-modal .status-section > div {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(241, 245, 249, 0.7) 100%
+  ) !important;
+  border-radius: 10px !important;
+  padding: 0.875rem 1rem !important;
+  border: 1px solid rgba(226, 232, 240, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Capabilities Grid */
+.offline-status-modal .capabilities-section .grid {
+  background: rgba(255, 255, 255, 0.8) !important;
+  padding: 1rem !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(226, 232, 240, 0.2) !important;
+}
+
+.offline-status-modal .capabilities-section .grid > div {
+  padding: 0.5rem !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.offline-status-modal .capabilities-section .grid > div:hover {
+  background: rgba(99, 102, 241, 0.05) !important;
+}
+
+/* Storage Progress Bar */
+.offline-status-modal .storage-section .bg-gray-200 {
+  background: linear-gradient(
+    90deg,
+    rgba(226, 232, 240, 0.5) 0%,
+    rgba(226, 232, 240, 0.3) 100%
+  ) !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.offline-status-modal .storage-section .bg-blue-600 {
+  background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%) !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.3) !important;
+  transition: width 0.5s ease !important;
+  position: relative !important;
+}
+
+.offline-status-modal .storage-section .bg-blue-600::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Action Buttons in Modal */
+.offline-status-modal .actions-section {
+  display: flex !important;
+  gap: 1rem !important;
+  margin-top: 1.5rem !important;
+}
+
+.offline-status-modal .actions-section .app-button {
+  flex: 1 !important;
+  padding: 0.875rem !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.offline-status-modal .actions-section .app-button:first-child {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+.offline-status-modal
+  .actions-section
+  .app-button:first-child:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+}
+
+.offline-status-modal .actions-section .app-button:last-child {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--text-primary) !important;
+  border: 2px solid rgba(226, 232, 240, 0.5) !important;
+}
+
+.offline-status-modal .actions-section .app-button:last-child:hover {
+  background: rgba(239, 68, 68, 0.05) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #ef4444 !important;
+}
+
+/* Help Text Section */
+.offline-status-modal .help-text {
+  background: linear-gradient(
+    135deg,
+    rgba(219, 234, 254, 0.2) 0%,
+    rgba(233, 213, 255, 0.2) 100%
+  ) !important;
+  border: 1px solid rgba(147, 197, 253, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.offline-status-modal .help-text p {
+  color: var(--text-secondary) !important;
+  line-height: 1.5 !important;
+  font-size: 0.875rem !important;
+}
+
+/* Error Display */
+.offline-status-modal .error-section .bg-red-50 {
+  background: linear-gradient(
+    135deg,
+    rgba(254, 226, 226, 0.5) 0%,
+    rgba(254, 226, 226, 0.3) 100%
+  ) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  border-radius: 10px !important;
+  padding: 1rem !important;
+}
+
+.offline-status-modal .error-section .text-red-700 {
+  color: #dc2626 !important;
+  font-weight: 500 !important;
+}
+
+/* Success/Check Marks */
+.offline-status-modal .text-green-600 {
+  color: #10b981 !important;
+  font-weight: 600 !important;
+  font-size: 1.125rem !important;
+}
+
+.offline-status-modal .text-red-600 {
+  color: #ef4444 !important;
+  font-weight: 600 !important;
+  font-size: 1.125rem !important;
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .offline-status-indicator {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.98) 0%,
+    rgba(15, 23, 42, 0.95) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.5) !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(99, 102, 241, 0.1) !important;
+}
+
+[data-theme="dark"] .offline-status-modal .status-section,
+[data-theme="dark"] .offline-status-modal .capabilities-section,
+[data-theme="dark"] .offline-status-modal .storage-section,
+[data-theme="dark"] .offline-status-modal .sync-section,
+[data-theme="dark"] .offline-status-modal .network-section {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.5) 0%,
+    rgba(15, 23, 42, 0.3) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.3) !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .offline-status-indicator {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 20px !important;
+  }
+
+  .offline-status-modal {
+    padding: 1rem !important;
+  }
+
+  .offline-status-modal .actions-section {
+    flex-direction: column !important;
+  }
+}

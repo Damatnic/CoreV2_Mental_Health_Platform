@@ -1,0 +1,356 @@
+/* =========================================
+   CONSOLIDATED SIDEBAR STYLES
+   Single source of truth for sidebar layout
+   ========================================= */
+
+/* Base sidebar width and positioning */
+.sidebar {
+  width: 320px !important;
+  min-width: 320px !important;
+  max-width: 320px !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  z-index: 100 !important;
+  transition: width 0.3s ease !important;
+}
+
+/* Main content positioning - NO GAP */
+.main-content,
+.view-content,
+.content-wrapper,
+[class*="View"],
+[class*="view"] {
+  position: fixed !important;
+  left: 320px !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: calc(100vw - 320px) !important;
+  margin: 0 !important;
+  padding: 2rem !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Navigation container */
+.sidebar-nav {
+  padding: 0.5rem 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Navigation items */
+.nav-item {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0.125rem 0 !important;
+  padding: 0 !important;
+}
+
+/* Navigation links */
+.nav-link {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  gap: 0.75rem !important;
+  min-height: 40px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.2s ease !important;
+}
+
+.nav-link:hover {
+  background: rgba(167, 139, 250, 0.08) !important;
+  padding-left: 1.125rem !important;
+}
+
+.nav-link.active {
+  background: linear-gradient(
+    90deg,
+    rgba(167, 139, 250, 0.15) 0%,
+    rgba(167, 139, 250, 0.05) 100%
+  ) !important;
+  border-left: 3px solid #7c3aed !important;
+  padding-left: calc(1rem - 3px) !important;
+}
+
+/* Icons */
+.nav-icon,
+.nav-link svg {
+  flex-shrink: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Labels - optimized for all text lengths */
+.nav-label {
+  flex: 1 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.005em !important;
+  padding-right: 8px !important;
+  min-width: 0 !important;
+  max-width: calc(100% - 30px) !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+/* Special handling for "My Wellness Dashboard" */
+.nav-item:nth-child(2) .nav-label,
+.nav-item:has(button[class*="starkeeper-dashboard"]) .nav-label {
+  font-size: 0.875rem !important;
+  letter-spacing: -0.025em !important;
+  padding-right: 10px !important;
+}
+
+/* Section headers */
+.nav-section-header,
+.nav-section-title,
+.section-title {
+  padding: 0.625rem 1rem 0.25rem !important;
+  margin: 0.75rem 0 0.25rem !important;
+  font-size: 0.6875rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  opacity: 0.7 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Badge positioning */
+.notification-dot,
+.nav-badge {
+  position: absolute !important;
+  right: 1rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  flex-shrink: 0 !important;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 1rem !important;
+  border-top: 1px solid rgba(167, 139, 250, 0.1) !important;
+  margin-top: auto !important;
+}
+
+.online-status {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Ensure views fill space properly */
+.app-layout {
+  display: flex !important;
+  width: 100% !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body > div,
+#root > div,
+.app-container {
+  display: flex !important;
+  width: 100% !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Responsive adjustments - Large screens */
+@media (max-width: 1400px) {
+  .sidebar {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+  }
+
+  .main-content,
+  .view-content,
+  [class*="View"],
+  [class*="view"] {
+    left: 300px !important;
+    width: calc(100vw - 300px) !important;
+  }
+
+  .nav-label {
+    max-width: 220px !important;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+  }
+
+  .main-content,
+  .view-content,
+  [class*="View"],
+  [class*="view"] {
+    left: 280px !important;
+    width: calc(100vw - 280px) !important;
+  }
+
+  .nav-label {
+    max-width: 200px !important;
+    font-size: 0.875rem !important;
+  }
+
+  .nav-item:nth-child(2) .nav-label {
+    font-size: 0.8125rem !important;
+    letter-spacing: -0.04em !important;
+  }
+}
+
+/* Mobile - sidebar overlay */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  .main-content,
+  .view-content,
+  [class*="View"],
+  [class*="view"] {
+    left: 0 !important;
+    width: 100vw !important;
+  }
+
+  .mobile-sidebar .nav-label {
+    white-space: normal !important;
+    line-height: 1.3 !important;
+    padding-right: 1rem !important;
+  }
+
+  .mobile-sidebar .nav-link {
+    padding: 1rem 1.25rem !important;
+    min-height: 48px !important;
+  }
+}
+
+/* Collapsed sidebar mode */
+.sidebar.collapsed {
+  width: 70px !important;
+  min-width: 70px !important;
+  max-width: 70px !important;
+}
+
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .nav-section-header,
+.sidebar.collapsed .sidebar-footer {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-link {
+  justify-content: center !important;
+  padding: 0.75rem !important;
+}
+
+.sidebar.collapsed .nav-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Scrollbar styling */
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(167, 139, 250, 0.2) !important;
+  border-radius: 3px !important;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .nav-link:hover {
+  background: rgba(88, 166, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .nav-link.active {
+  background: linear-gradient(
+    90deg,
+    rgba(88, 166, 255, 0.15) 0%,
+    rgba(88, 166, 255, 0.05) 100%
+  ) !important;
+  border-left-color: #58a6ff !important;
+}
+
+/* Focus indicators for accessibility */
+.nav-link:focus-visible {
+  outline: 2px solid #7c3aed !important;
+  outline-offset: -2px !important;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .nav-link {
+    border: 1px solid transparent !important;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    border-color: currentColor !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .sidebar {
+    transition: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .sidebar {
+    display: none !important;
+  }
+
+  .main-content,
+  .view-content {
+    left: 0 !important;
+    width: 100vw !important;
+  }
+}

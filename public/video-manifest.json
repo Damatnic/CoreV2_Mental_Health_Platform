@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "generated": "2025-08-05T12:37:25.192Z",
+  "videos": [
+    {
+      "name": "Be Yourself  Ted Lasso",
+      "formats": [
+        {
+          "format": "mp4",
+          "file": "Be Yourself  Ted Lasso.mp4",
+          "size": 4.41
+        }
+      ],
+      "poster": "Be Yourself  Ted Lasso_poster.jpg",
+      "priority": 6,
+      "mentalHealthContent": true
+    },
+    {
+      "name": "The Best Quote Ever",
+      "formats": [
+        {
+          "format": "mp4",
+          "file": "The Best Quote Ever.mp4",
+          "size": 5.78
+        }
+      ],
+      "poster": "The Best Quote Ever_poster.jpg",
+      "priority": 6,
+      "mentalHealthContent": true
+    },
+    {
+      "name": "videoplayback (2)",
+      "formats": [
+        {
+          "format": "mp4",
+          "file": "videoplayback (2).mp4",
+          "size": 0.69
+        }
+      ],
+      "poster": "videoplayback (2)_poster.jpg",
+      "priority": 3,
+      "mentalHealthContent": false
+    },
+    {
+      "name": "videoplayback (3)",
+      "formats": [
+        {
+          "format": "mp4",
+          "file": "videoplayback (3).mp4",
+          "size": 0.66
+        }
+      ],
+      "poster": "videoplayback (3)_poster.jpg",
+      "priority": 3,
+      "mentalHealthContent": false
+    },
+    {
+      "name": "videoplayback (4)",
+      "formats": [
+        {
+          "format": "mp4",
+          "file": "videoplayback (4).mp4",
+          "size": 0.64
+        }
+      ],
+      "poster": "videoplayback (4)_poster.jpg",
+      "priority": 3,
+      "mentalHealthContent": false
+    }
+  ]
+}

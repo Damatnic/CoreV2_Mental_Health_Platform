@@ -1,0 +1,25 @@
+{
+  "name": "corev2-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for CoreV2 Mental Health Platform",
+  "scripts": {
+    "test-connection": "node test-db.js",
+    "migrate": "node ../../database/scripts/migrate-mock-data.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "@netlify/functions": "^2.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "drizzle-orm": "^0.29.3",
+    "pg": "^8.11.3",
+    "openai": "^4.28.0",
+    "@anthropic-ai/sdk": "^0.20.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.11.30",
+    "@types/pg": "^8.11.0"
+  }
+}

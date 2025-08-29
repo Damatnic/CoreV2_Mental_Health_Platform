@@ -1,0 +1,1071 @@
+/**
+ * Therapeutic Design System
+ * 
+ * Apple-level design quality for mental health platform
+ * Designed for people in crisis - calming, trustworthy, accessible
+ */
+
+:root {
+  /* ======================================
+     Therapeutic Color Palette
+     ====================================== */
+
+  /* Calming Blues - Primary therapeutic colors */
+  --therapeutic-ocean-50: #f0f9ff;
+  --therapeutic-ocean-100: #e0f2fe;
+  --therapeutic-ocean-200: #bae6fd;
+  --therapeutic-ocean-300: #7dd3fc;
+  --therapeutic-ocean-400: #38bdf8;
+  --therapeutic-ocean-500: #0ea5e9;
+  --therapeutic-ocean-600: #0284c7;
+  --therapeutic-ocean-700: #0369a1;
+  --therapeutic-ocean-800: #075985;
+  --therapeutic-ocean-900: #0c4a6e;
+
+  /* Soft Greens - Growth & healing */
+  --therapeutic-sage-50: #f0fdf4;
+  --therapeutic-sage-100: #dcfce7;
+  --therapeutic-sage-200: #bbf7d0;
+  --therapeutic-sage-300: #86efac;
+  --therapeutic-sage-400: #4ade80;
+  --therapeutic-sage-500: #22c55e;
+  --therapeutic-sage-600: #16a34a;
+  --therapeutic-sage-700: #15803d;
+  --therapeutic-sage-800: #166534;
+  --therapeutic-sage-900: #14532d;
+
+  /* Warm Sunset - Support & comfort */
+  --therapeutic-sunset-50: #fff7ed;
+  --therapeutic-sunset-100: #ffedd5;
+  --therapeutic-sunset-200: #fed7aa;
+  --therapeutic-sunset-300: #fdba74;
+  --therapeutic-sunset-400: #fb923c;
+  --therapeutic-sunset-500: #f97316;
+  --therapeutic-sunset-600: #ea580c;
+  --therapeutic-sunset-700: #c2410c;
+  --therapeutic-sunset-800: #9a3412;
+  --therapeutic-sunset-900: #7c2d12;
+
+  /* Crisis Colors - Non-alarming but urgent */
+  --crisis-gentle-50: #fef2f2;
+  --crisis-gentle-100: #fee2e2;
+  --crisis-gentle-200: #fecaca;
+  --crisis-gentle-300: #fca5a5;
+  --crisis-gentle-400: #f87171;
+  --crisis-gentle-500: #ef4444;
+  --crisis-gentle-600: #dc2626;
+  --crisis-gentle-700: #b91c1c;
+  --crisis-gentle-800: #991b1b;
+  --crisis-gentle-900: #7f1d1d;
+
+  /* Neutral Therapeutics - Grounding */
+  --therapeutic-stone-50: #fafaf9;
+  --therapeutic-stone-100: #f5f5f4;
+  --therapeutic-stone-200: #e7e5e4;
+  --therapeutic-stone-300: #d6d3d1;
+  --therapeutic-stone-400: #a8a29e;
+  --therapeutic-stone-500: #78716c;
+  --therapeutic-stone-600: #57534e;
+  --therapeutic-stone-700: #44403c;
+  --therapeutic-stone-800: #292524;
+  --therapeutic-stone-900: #1c1917;
+
+  /* ======================================
+     Therapeutic Gradients
+     ====================================== */
+
+  --gradient-therapeutic-calm: linear-gradient(
+    135deg,
+    var(--therapeutic-ocean-100) 0%,
+    var(--therapeutic-sage-100) 50%,
+    var(--therapeutic-sunset-100) 100%
+  );
+
+  --gradient-therapeutic-ocean: linear-gradient(
+    135deg,
+    var(--therapeutic-ocean-400) 0%,
+    var(--therapeutic-ocean-600) 100%
+  );
+
+  --gradient-therapeutic-sage: linear-gradient(
+    135deg,
+    var(--therapeutic-sage-400) 0%,
+    var(--therapeutic-sage-600) 100%
+  );
+
+  --gradient-therapeutic-sunset: linear-gradient(
+    135deg,
+    var(--therapeutic-sunset-400) 0%,
+    var(--therapeutic-sunset-600) 100%
+  );
+
+  --gradient-therapeutic-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+
+  --gradient-therapeutic-aurora: linear-gradient(
+    135deg,
+    var(--therapeutic-ocean-200) 0%,
+    var(--therapeutic-sage-200) 25%,
+    var(--therapeutic-sunset-200) 75%,
+    var(--therapeutic-ocean-300) 100%
+  );
+
+  --gradient-breathing: radial-gradient(
+    circle at center,
+    var(--therapeutic-ocean-200) 0%,
+    var(--therapeutic-sage-100) 50%,
+    var(--therapeutic-ocean-50) 100%
+  );
+
+  /* ======================================
+     Typography - Soothing & Accessible
+     ====================================== */
+
+  --font-therapeutic:
+    "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-therapeutic-display: "Poppins", "Inter", "SF Pro Display", sans-serif;
+  --font-therapeutic-reading:
+    "Source Serif Pro", Georgia, "Times New Roman", serif;
+
+  /* Enhanced Typography Scale */
+  --text-therapeutic-xs: clamp(0.75rem, 1.8vw, 0.875rem);
+  --text-therapeutic-sm: clamp(0.875rem, 2.2vw, 1rem);
+  --text-therapeutic-base: clamp(1rem, 2.8vw, 1.125rem);
+  --text-therapeutic-lg: clamp(1.125rem, 3.2vw, 1.25rem);
+  --text-therapeutic-xl: clamp(1.25rem, 3.8vw, 1.5rem);
+  --text-therapeutic-2xl: clamp(1.5rem, 4.5vw, 1.875rem);
+  --text-therapeutic-3xl: clamp(1.875rem, 5.5vw, 2.25rem);
+  --text-therapeutic-4xl: clamp(2.25rem, 6.5vw, 3rem);
+  --text-therapeutic-5xl: clamp(3rem, 8vw, 4rem);
+
+  /* ======================================
+     Therapeutic Shadows & Depth
+     ====================================== */
+
+  --shadow-therapeutic-whisper: 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-therapeutic-soft:
+    0 4px 12px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-therapeutic-gentle:
+    0 8px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-therapeutic-embrace:
+    0 16px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+  --shadow-therapeutic-depth:
+    0 32px 64px rgba(0, 0, 0, 0.15), 0 16px 32px rgba(0, 0, 0, 0.1);
+
+  /* Healing Glows */
+  --glow-therapeutic-ocean: 0 0 40px rgba(14, 165, 233, 0.15);
+  --glow-therapeutic-sage: 0 0 40px rgba(34, 197, 94, 0.15);
+  --glow-therapeutic-sunset: 0 0 40px rgba(249, 115, 22, 0.15);
+  --glow-therapeutic-aurora:
+    0 0 60px rgba(14, 165, 233, 0.1), 0 0 40px rgba(34, 197, 94, 0.08);
+
+  /* ======================================
+     Therapeutic Animations
+     ====================================== */
+
+  --transition-therapeutic-instant: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-therapeutic-quick: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-therapeutic-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-therapeutic-gentle: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-therapeutic-slow: 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Breathing Curves */
+  --easing-therapeutic-breathe: cubic-bezier(0.37, 0, 0.63, 1);
+  --easing-therapeutic-calm: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --easing-therapeutic-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ======================================
+     Spacing System - 8pt Grid
+     ====================================== */
+
+  --space-therapeutic-xs: 0.25rem; /* 4px */
+  --space-therapeutic-sm: 0.5rem; /* 8px */
+  --space-therapeutic-md: 1rem; /* 16px */
+  --space-therapeutic-lg: 1.5rem; /* 24px */
+  --space-therapeutic-xl: 2rem; /* 32px */
+  --space-therapeutic-2xl: 2.5rem; /* 40px */
+  --space-therapeutic-3xl: 3rem; /* 48px */
+  --space-therapeutic-4xl: 4rem; /* 64px */
+  --space-therapeutic-5xl: 5rem; /* 80px */
+  --space-therapeutic-6xl: 6rem; /* 96px */
+
+  /* ======================================
+     Border Radius - Organic feel
+     ====================================== */
+
+  --radius-therapeutic-xs: 0.25rem;
+  --radius-therapeutic-sm: 0.375rem;
+  --radius-therapeutic-md: 0.5rem;
+  --radius-therapeutic-lg: 0.75rem;
+  --radius-therapeutic-xl: 1rem;
+  --radius-therapeutic-2xl: 1.5rem;
+  --radius-therapeutic-3xl: 2rem;
+  --radius-therapeutic-organic: 1.25rem 0.75rem 1rem 0.5rem;
+  --radius-therapeutic-pill: 100px;
+}
+
+/* ======================================
+   Global Therapeutic Base
+   ====================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-therapeutic);
+  font-size: var(--text-therapeutic-base);
+  line-height: 1.6;
+  color: var(--therapeutic-stone-800);
+  background: var(--gradient-therapeutic-calm);
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ======================================
+   Enhanced Typography
+   ====================================== */
+
+.therapeutic-heading-hero {
+  font-family: var(--font-therapeutic-display);
+  font-size: var(--text-therapeutic-5xl);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  background: var(--gradient-therapeutic-aurora);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-therapeutic-lg);
+}
+
+.therapeutic-heading-1 {
+  font-family: var(--font-therapeutic-display);
+  font-size: var(--text-therapeutic-4xl);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--therapeutic-stone-900);
+  margin-bottom: var(--space-therapeutic-md);
+}
+
+.therapeutic-heading-2 {
+  font-family: var(--font-therapeutic-display);
+  font-size: var(--text-therapeutic-3xl);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--therapeutic-stone-800);
+  margin-bottom: var(--space-therapeutic-md);
+}
+
+.therapeutic-heading-3 {
+  font-family: var(--font-therapeutic-display);
+  font-size: var(--text-therapeutic-2xl);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--therapeutic-stone-800);
+  margin-bottom: var(--space-therapeutic-sm);
+}
+
+.therapeutic-body-text {
+  font-size: var(--text-therapeutic-base);
+  line-height: 1.7;
+  color: var(--therapeutic-stone-700);
+  margin-bottom: var(--space-therapeutic-md);
+}
+
+.therapeutic-body-large {
+  font-size: var(--text-therapeutic-lg);
+  line-height: 1.6;
+  color: var(--therapeutic-stone-700);
+  font-weight: 400;
+}
+
+.therapeutic-caption {
+  font-size: var(--text-therapeutic-sm);
+  line-height: 1.5;
+  color: var(--therapeutic-stone-600);
+  font-weight: 400;
+}
+
+.therapeutic-reading-text {
+  font-family: var(--font-therapeutic-reading);
+  font-size: var(--text-therapeutic-base);
+  line-height: 1.8;
+  color: var(--therapeutic-stone-800);
+}
+
+/* ======================================
+   Therapeutic Cards & Containers
+   ====================================== */
+
+.card-therapeutic {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-therapeutic-2xl);
+  padding: var(--space-therapeutic-2xl);
+  box-shadow: var(--shadow-therapeutic-gentle);
+  transition: var(--transition-therapeutic-gentle);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-therapeutic::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-therapeutic-aurora);
+  opacity: 0;
+  transition: opacity var(--transition-therapeutic-smooth);
+}
+
+.card-therapeutic:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-therapeutic-embrace);
+}
+
+.card-therapeutic:hover::before {
+  opacity: 1;
+}
+
+.card-therapeutic-glass {
+  background: var(--gradient-therapeutic-glass);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-therapeutic-elevated {
+  background: white;
+  box-shadow: var(--shadow-therapeutic-depth);
+  border: none;
+}
+
+.card-therapeutic-glow {
+  box-shadow: var(--shadow-therapeutic-gentle), var(--glow-therapeutic-aurora);
+}
+
+/* Interactive Cards */
+.card-therapeutic-interactive {
+  cursor: pointer;
+  transform-origin: center;
+  transition: all var(--transition-therapeutic-gentle);
+}
+
+.card-therapeutic-interactive:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.card-therapeutic-interactive:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* Crisis Cards - Gentle but noticeable */
+.card-crisis {
+  background: linear-gradient(
+    135deg,
+    var(--crisis-gentle-50) 0%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  border-left: 4px solid var(--crisis-gentle-400);
+  animation: therapeutic-gentle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes therapeutic-gentle-pulse {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-therapeutic-gentle),
+      0 0 0 0 rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-therapeutic-gentle),
+      0 0 20px 5px rgba(239, 68, 68, 0.15);
+  }
+}
+
+/* ======================================
+   Therapeutic Buttons
+   ====================================== */
+
+.btn-therapeutic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-therapeutic-sm);
+  padding: var(--space-therapeutic-md) var(--space-therapeutic-xl);
+  font-family: var(--font-therapeutic);
+  font-size: var(--text-therapeutic-base);
+  font-weight: 500;
+  line-height: 1;
+  border: none;
+  border-radius: var(--radius-therapeutic-lg);
+  cursor: pointer;
+  transition: all var(--transition-therapeutic-smooth);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 48px; /* Touch target */
+}
+
+.btn-therapeutic::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: translate(-50%, -50%);
+  transition:
+    width var(--transition-therapeutic-smooth),
+    height var(--transition-therapeutic-smooth);
+  pointer-events: none;
+}
+
+.btn-therapeutic:active::before {
+  width: 200px;
+  height: 200px;
+}
+
+.btn-therapeutic:focus-visible {
+  outline: 3px solid var(--therapeutic-ocean-300);
+  outline-offset: 2px;
+}
+
+/* Primary Therapeutic Button */
+.btn-therapeutic-primary {
+  background: var(--gradient-therapeutic-ocean);
+  color: white;
+  box-shadow: var(--shadow-therapeutic-soft);
+}
+
+.btn-therapeutic-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-therapeutic-gentle), var(--glow-therapeutic-ocean);
+}
+
+/* Gentle/Secondary Button */
+.btn-therapeutic-gentle {
+  background: var(--gradient-therapeutic-sage);
+  color: white;
+  box-shadow: var(--shadow-therapeutic-soft);
+}
+
+.btn-therapeutic-gentle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-therapeutic-gentle), var(--glow-therapeutic-sage);
+}
+
+/* Ghost/Outline Button */
+.btn-therapeutic-ghost {
+  background: transparent;
+  color: var(--therapeutic-ocean-600);
+  border: 2px solid var(--therapeutic-ocean-200);
+}
+
+.btn-therapeutic-ghost:hover {
+  background: var(--therapeutic-ocean-50);
+  border-color: var(--therapeutic-ocean-400);
+  color: var(--therapeutic-ocean-700);
+}
+
+/* Crisis Button - Calming urgent */
+.btn-therapeutic-crisis {
+  background: var(--gradient-therapeutic-sunset);
+  color: white;
+  box-shadow: var(--shadow-therapeutic-soft);
+  animation: therapeutic-gentle-attention 2s ease-in-out infinite;
+}
+
+@keyframes therapeutic-gentle-attention {
+  0%,
+  100% {
+    box-shadow: var(--shadow-therapeutic-soft);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-therapeutic-gentle),
+      0 0 15px rgba(249, 115, 22, 0.2);
+  }
+}
+
+/* ======================================
+   Therapeutic Forms
+   ====================================== */
+
+.form-therapeutic {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-therapeutic-lg);
+}
+
+.form-group-therapeutic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-therapeutic-sm);
+}
+
+.form-label-therapeutic {
+  font-size: var(--text-therapeutic-sm);
+  font-weight: 500;
+  color: var(--therapeutic-stone-700);
+  margin-bottom: var(--space-therapeutic-xs);
+}
+
+.form-input-therapeutic,
+.form-textarea-therapeutic,
+.form-select-therapeutic {
+  width: 100%;
+  padding: var(--space-therapeutic-md);
+  font-family: var(--font-therapeutic);
+  font-size: var(--text-therapeutic-base);
+  color: var(--therapeutic-stone-800);
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid var(--therapeutic-stone-200);
+  border-radius: var(--radius-therapeutic-lg);
+  transition: all var(--transition-therapeutic-smooth);
+  min-height: 48px; /* Touch target */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.form-input-therapeutic:focus,
+.form-textarea-therapeutic:focus,
+.form-select-therapeutic:focus {
+  outline: none;
+  border-color: var(--therapeutic-ocean-400);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-input-therapeutic::placeholder,
+.form-textarea-therapeutic::placeholder {
+  color: var(--therapeutic-stone-500);
+}
+
+/* Floating Labels */
+.form-floating-therapeutic {
+  position: relative;
+}
+
+.form-floating-therapeutic input,
+.form-floating-therapeutic textarea {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.form-floating-therapeutic label {
+  position: absolute;
+  top: 1rem;
+  left: var(--space-therapeutic-md);
+  font-size: var(--text-therapeutic-base);
+  color: var(--therapeutic-stone-500);
+  pointer-events: none;
+  transition: all var(--transition-therapeutic-smooth);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  padding: 0 var(--space-therapeutic-xs);
+  transform-origin: left top;
+}
+
+.form-floating-therapeutic input:focus ~ label,
+.form-floating-therapeutic input:not(:placeholder-shown) ~ label,
+.form-floating-therapeutic textarea:focus ~ label,
+.form-floating-therapeutic textarea:not(:placeholder-shown) ~ label {
+  transform: translateY(-1.5rem) scale(0.875);
+  color: var(--therapeutic-ocean-600);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* ======================================
+   Therapeutic Navigation
+   ====================================== */
+
+.nav-therapeutic {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-therapeutic-md) 0;
+}
+
+.nav-item-therapeutic {
+  display: flex;
+  align-items: center;
+  gap: var(--space-therapeutic-sm);
+  padding: var(--space-therapeutic-md) var(--space-therapeutic-lg);
+  color: var(--therapeutic-stone-700);
+  text-decoration: none;
+  border-radius: var(--radius-therapeutic-lg);
+  transition: all var(--transition-therapeutic-smooth);
+  position: relative;
+  overflow: hidden;
+  margin: var(--space-therapeutic-xs);
+}
+
+.nav-item-therapeutic::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--gradient-therapeutic-ocean);
+  border-radius: 0 2px 2px 0;
+  transition: height var(--transition-therapeutic-smooth);
+}
+
+.nav-item-therapeutic:hover {
+  background: var(--therapeutic-ocean-50);
+  color: var(--therapeutic-ocean-700);
+  transform: translateX(4px);
+}
+
+.nav-item-therapeutic:hover::before {
+  height: 60%;
+}
+
+.nav-item-therapeutic.active {
+  background: var(--gradient-therapeutic-ocean);
+  color: white;
+  box-shadow: var(--shadow-therapeutic-soft);
+}
+
+.nav-item-therapeutic.active::before {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ======================================
+   Therapeutic Modals
+   ====================================== */
+
+.modal-therapeutic-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: therapeutic-fade-in var(--transition-therapeutic-smooth);
+}
+
+.modal-therapeutic-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-therapeutic-3xl);
+  padding: var(--space-therapeutic-3xl);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-therapeutic-depth);
+  animation: therapeutic-scale-up var(--transition-therapeutic-gentle);
+}
+
+@keyframes therapeutic-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes therapeutic-scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================
+   Therapeutic Toast Notifications
+   ====================================== */
+
+.toast-therapeutic {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-therapeutic-xl);
+  padding: var(--space-therapeutic-lg) var(--space-therapeutic-xl);
+  box-shadow: var(--shadow-therapeutic-embrace);
+  border-left: 4px solid var(--therapeutic-ocean-400);
+  animation: therapeutic-slide-in-right var(--transition-therapeutic-gentle);
+  min-width: 320px;
+  max-width: 480px;
+}
+
+.toast-therapeutic-success {
+  border-left-color: var(--therapeutic-sage-500);
+}
+
+.toast-therapeutic-warning {
+  border-left-color: var(--therapeutic-sunset-500);
+}
+
+.toast-therapeutic-error {
+  border-left-color: var(--crisis-gentle-500);
+}
+
+@keyframes therapeutic-slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ======================================
+   Breathing & Wellness Animations
+   ====================================== */
+
+.breathing-therapeutic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--gradient-breathing);
+  animation: therapeutic-breathe 4s ease-in-out infinite;
+  box-shadow: var(--glow-therapeutic-aurora);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-therapeutic-3xl) auto;
+}
+
+@keyframes therapeutic-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: var(--glow-therapeutic-aurora);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow:
+      var(--glow-therapeutic-aurora),
+      0 0 80px rgba(14, 165, 233, 0.2);
+  }
+}
+
+.floating-therapeutic {
+  animation: therapeutic-float 6s ease-in-out infinite;
+}
+
+@keyframes therapeutic-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.glow-therapeutic {
+  animation: therapeutic-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes therapeutic-glow {
+  from {
+    box-shadow: var(--shadow-therapeutic-gentle);
+  }
+  to {
+    box-shadow:
+      var(--shadow-therapeutic-gentle), var(--glow-therapeutic-aurora);
+  }
+}
+
+/* ======================================
+   Loading States - Calming
+   ====================================== */
+
+.loading-therapeutic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-therapeutic-sm);
+  padding: var(--space-therapeutic-xl);
+}
+
+.spinner-therapeutic {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--therapeutic-stone-200);
+  border-top-color: var(--therapeutic-ocean-500);
+  border-radius: 50%;
+  animation: therapeutic-spin 1s linear infinite;
+}
+
+@keyframes therapeutic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dots-therapeutic {
+  display: flex;
+  gap: var(--space-therapeutic-xs);
+}
+
+.dot-therapeutic {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--therapeutic-ocean-400);
+  animation: therapeutic-bounce 1.4s ease-in-out infinite both;
+}
+
+.dot-therapeutic:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.dot-therapeutic:nth-child(2) {
+  animation-delay: -0.16s;
+}
+.dot-therapeutic:nth-child(3) {
+  animation-delay: 0;
+}
+
+@keyframes therapeutic-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Skeleton Loading - Soft */
+.skeleton-therapeutic {
+  background: linear-gradient(
+    90deg,
+    var(--therapeutic-stone-100) 0%,
+    var(--therapeutic-stone-50) 50%,
+    var(--therapeutic-stone-100) 100%
+  );
+  background-size: 200% 100%;
+  animation: therapeutic-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-therapeutic-lg);
+}
+
+@keyframes therapeutic-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ======================================
+   Crisis Support Elements
+   ====================================== */
+
+.crisis-support-therapeutic {
+  background: linear-gradient(
+    135deg,
+    var(--crisis-gentle-50) 0%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  border: 1px solid var(--crisis-gentle-200);
+  border-left: 6px solid var(--crisis-gentle-400);
+  border-radius: var(--radius-therapeutic-xl);
+  padding: var(--space-therapeutic-xl);
+  margin: var(--space-therapeutic-lg) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.crisis-support-therapeutic::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.03) 0%,
+    transparent 70%
+  );
+  animation: therapeutic-crisis-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes therapeutic-crisis-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.safe-space-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-therapeutic-sm);
+  padding: var(--space-therapeutic-sm) var(--space-therapeutic-md);
+  background: var(--gradient-therapeutic-sage);
+  color: white;
+  border-radius: var(--radius-therapeutic-pill);
+  font-size: var(--text-therapeutic-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-therapeutic-soft);
+}
+
+.safe-space-indicator::before {
+  content: "🛡️";
+  font-size: 1rem;
+}
+
+/* ======================================
+   Accessibility Enhancements
+   ====================================== */
+
+.sr-only-therapeutic {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-therapeutic:focus-visible {
+  outline: 3px solid var(--therapeutic-ocean-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-therapeutic-sm);
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  :root {
+    --therapeutic-stone-800: #000000;
+    --therapeutic-stone-100: #ffffff;
+    --therapeutic-ocean-600: #003d7a;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ======================================
+   Mobile Optimizations
+   ====================================== */
+
+@media (max-width: 768px) {
+  .card-therapeutic {
+    padding: var(--space-therapeutic-lg);
+    border-radius: var(--radius-therapeutic-xl);
+  }
+
+  .btn-therapeutic {
+    padding: var(--space-therapeutic-md) var(--space-therapeutic-lg);
+    font-size: var(--text-therapeutic-base);
+    min-height: 44px;
+  }
+
+  .modal-therapeutic-content {
+    margin: var(--space-therapeutic-md);
+    padding: var(--space-therapeutic-xl);
+    max-width: calc(100vw - 2rem);
+  }
+
+  .breathing-therapeutic {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* ======================================
+   Theme Variations
+   ====================================== */
+
+/* Calm Theme */
+.theme-calm {
+  --therapeutic-primary: var(--therapeutic-ocean-500);
+  --therapeutic-secondary: var(--therapeutic-sage-500);
+  --therapeutic-accent: var(--therapeutic-sunset-400);
+}
+
+/* Peaceful Theme */
+.theme-peaceful {
+  --therapeutic-primary: var(--therapeutic-sage-500);
+  --therapeutic-secondary: var(--therapeutic-ocean-400);
+  --therapeutic-accent: var(--therapeutic-sunset-300);
+}
+
+/* Warm Support Theme */
+.theme-support {
+  --therapeutic-primary: var(--therapeutic-sunset-500);
+  --therapeutic-secondary: var(--therapeutic-sage-400);
+  --therapeutic-accent: var(--therapeutic-ocean-300);
+}

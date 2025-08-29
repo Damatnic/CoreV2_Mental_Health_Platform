@@ -1,0 +1,419 @@
+/**
+ * Safe UI System - Creating a calming, therapeutic interface
+ * Design principles: Soft, warm, welcoming, and safe
+ */
+
+:root {
+  /* Calming Color Palette */
+  --safe-primary: #7c9ea6; /* Soft sage blue */
+  --safe-primary-light: #a3c4cc; /* Light sage */
+  --safe-primary-dark: #5a7a82; /* Deep sage */
+
+  --safe-secondary: #e8d5c4; /* Warm beige */
+  --safe-secondary-light: #f5ede4; /* Light cream */
+  --safe-secondary-dark: #d4b5a0; /* Deep beige */
+
+  --safe-accent: #9fb4a7; /* Mint green */
+  --safe-accent-warm: #f4c2a1; /* Warm peach */
+  --safe-accent-cool: #b8c5d6; /* Cool lavender */
+
+  /* Therapeutic Neutrals */
+  --safe-white: #fdfbf8; /* Warm white */
+  --safe-gray-100: #f7f5f2; /* Lightest gray */
+  --safe-gray-200: #ebe8e4;
+  --safe-gray-300: #d6d2cc;
+  --safe-gray-400: #b3ada5;
+  --safe-gray-500: #8c857b;
+  --safe-gray-600: #665f56;
+  --safe-gray-700: #4a453e;
+  --safe-gray-800: #2e2b27;
+  --safe-gray-900: #1a1917;
+
+  /* Emotional States */
+  --safe-success: #7fb069; /* Soft green */
+  --safe-warning: #f4c367; /* Gentle yellow */
+  --safe-error: #e88873; /* Soft coral */
+  --safe-info: #87b3d8; /* Sky blue */
+
+  /* Crisis Colors (Still visible but softer) */
+  --safe-crisis: #d67b6a; /* Muted red-orange */
+  --safe-crisis-bg: rgba(214, 123, 106, 0.1);
+  --safe-crisis-border: rgba(214, 123, 106, 0.3);
+
+  /* Spacing System */
+  --safe-space-xs: 0.25rem;
+  --safe-space-sm: 0.5rem;
+  --safe-space-md: 1rem;
+  --safe-space-lg: 1.5rem;
+  --safe-space-xl: 2rem;
+  --safe-space-2xl: 3rem;
+  --safe-space-3xl: 4rem;
+
+  /* Border Radius */
+  --safe-radius-sm: 0.375rem;
+  --safe-radius-md: 0.625rem;
+  --safe-radius-lg: 1rem;
+  --safe-radius-xl: 1.5rem;
+  --safe-radius-full: 9999px;
+
+  /* Shadows (Soft and layered) */
+  --safe-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --safe-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --safe-shadow-md:
+    0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --safe-shadow-lg:
+    0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --safe-shadow-xl:
+    0 20px 25px rgba(0, 0, 0, 0.09), 0 8px 10px rgba(0, 0, 0, 0.05);
+  --safe-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  /* Transitions */
+  --safe-transition-fast: 150ms ease-out;
+  --safe-transition-base: 250ms ease-out;
+  --safe-transition-slow: 350ms ease-out;
+  --safe-transition-slower: 500ms ease-out;
+
+  /* Breathing Animation Timing */
+  --safe-breathe-in: 4s;
+  --safe-breathe-hold: 4s;
+  --safe-breathe-out: 4s;
+}
+
+/* Global Styles */
+body {
+  background: linear-gradient(
+    135deg,
+    var(--safe-gray-100) 0%,
+    var(--safe-white) 100%
+  );
+  color: var(--safe-gray-800);
+  min-height: 100vh;
+}
+
+/* Calming Background Patterns */
+.safe-bg-pattern {
+  background-image:
+    radial-gradient(circle at 20% 80%, var(--safe-accent) 0%, transparent 50%),
+    radial-gradient(
+      circle at 80% 20%,
+      var(--safe-secondary-light) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      var(--safe-primary-light) 0%,
+      transparent 50%
+    );
+  opacity: 0.03;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Safe Containers */
+.safe-container {
+  background: var(--safe-white);
+  border-radius: var(--safe-radius-lg);
+  padding: var(--safe-space-xl);
+  box-shadow: var(--safe-shadow-md);
+  border: 1px solid var(--safe-gray-200);
+  transition: all var(--safe-transition-base);
+}
+
+.safe-container:hover {
+  box-shadow: var(--safe-shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Soft Gradients */
+.safe-gradient-primary {
+  background: linear-gradient(
+    135deg,
+    var(--safe-primary) 0%,
+    var(--safe-primary-light) 100%
+  );
+}
+
+.safe-gradient-warm {
+  background: linear-gradient(
+    135deg,
+    var(--safe-accent-warm) 0%,
+    var(--safe-secondary-light) 100%
+  );
+}
+
+.safe-gradient-cool {
+  background: linear-gradient(
+    135deg,
+    var(--safe-accent-cool) 0%,
+    var(--safe-primary-light) 100%
+  );
+}
+
+/* Breathing Animation */
+@keyframes safe-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.safe-breathing {
+  animation: safe-breathe 8s ease-in-out infinite;
+}
+
+/* Pulse Animation for Important Elements */
+@keyframes safe-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--safe-primary);
+  }
+  50% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.safe-pulse {
+  animation: safe-pulse 2s ease-out infinite;
+}
+
+/* Gentle Glow Effect */
+.safe-glow {
+  box-shadow:
+    0 0 20px rgba(124, 158, 166, 0.15),
+    0 0 40px rgba(124, 158, 166, 0.1);
+  transition: box-shadow var(--safe-transition-slow);
+}
+
+.safe-glow:hover {
+  box-shadow:
+    0 0 25px rgba(124, 158, 166, 0.2),
+    0 0 50px rgba(124, 158, 166, 0.15);
+}
+
+/* Crisis Elements (Gentle but Clear) */
+.safe-crisis-alert {
+  background: var(--safe-crisis-bg);
+  border: 2px solid var(--safe-crisis-border);
+  border-radius: var(--safe-radius-lg);
+  padding: var(--safe-space-lg);
+  animation: safe-breathe 4s ease-in-out infinite;
+}
+
+.safe-crisis-button {
+  background: var(--safe-crisis);
+  color: var(--safe-white);
+  border: none;
+  border-radius: var(--safe-radius-full);
+  padding: var(--safe-space-md) var(--safe-space-xl);
+  font-weight: 600;
+  box-shadow: var(--safe-shadow-md);
+  transition: all var(--safe-transition-base);
+  animation: safe-pulse 3s ease-out infinite;
+}
+
+.safe-crisis-button:hover {
+  background: var(--safe-error);
+  transform: scale(1.05);
+  box-shadow: var(--safe-shadow-lg);
+}
+
+/* Safe Space Indicator */
+.safe-space-badge {
+  position: fixed;
+  top: var(--safe-space-md);
+  right: var(--safe-space-md);
+  background: var(--safe-gradient-cool);
+  color: var(--safe-gray-800);
+  padding: var(--safe-space-sm) var(--safe-space-md);
+  border-radius: var(--safe-radius-full);
+  font-size: 0.875rem;
+  box-shadow: var(--safe-shadow-md);
+  display: flex;
+  align-items: center;
+  gap: var(--safe-space-sm);
+  z-index: 1000;
+}
+
+.safe-space-badge::before {
+  content: "🛡️";
+  font-size: 1rem;
+}
+
+/* Wellness Cards */
+.safe-wellness-card {
+  background: var(--safe-white);
+  border-radius: var(--safe-radius-xl);
+  padding: var(--safe-space-xl);
+  box-shadow: var(--safe-shadow-sm);
+  border: 2px solid var(--safe-gray-200);
+  transition: all var(--safe-transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+.safe-wellness-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--safe-gradient-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--safe-transition-slow);
+}
+
+.safe-wellness-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Floating Action Buttons */
+.safe-fab {
+  position: fixed;
+  bottom: var(--safe-space-xl);
+  right: var(--safe-space-xl);
+  width: 60px;
+  height: 60px;
+  border-radius: var(--safe-radius-full);
+  background: var(--safe-gradient-primary);
+  color: var(--safe-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--safe-shadow-lg);
+  transition: all var(--safe-transition-base);
+  cursor: pointer;
+  z-index: 999;
+}
+
+.safe-fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: var(--safe-shadow-xl);
+}
+
+/* Progress Indicators */
+.safe-progress {
+  background: var(--safe-gray-200);
+  border-radius: var(--safe-radius-full);
+  height: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.safe-progress-bar {
+  background: var(--safe-gradient-primary);
+  height: 100%;
+  border-radius: var(--safe-radius-full);
+  transition: width var(--safe-transition-slower) ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.safe-progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Safe Modal Overlay */
+.safe-modal-overlay {
+  background: rgba(26, 25, 23, 0.4);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn var(--safe-transition-base);
+}
+
+.safe-modal {
+  background: var(--safe-white);
+  border-radius: var(--safe-radius-xl);
+  padding: var(--safe-space-2xl);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--safe-shadow-xl);
+  animation: slideUp var(--safe-transition-slow);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Accessibility Focus States */
+.safe-focus:focus-visible {
+  outline: 3px solid var(--safe-primary);
+  outline-offset: 2px;
+  border-radius: var(--safe-radius-sm);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --safe-white: #1a1917;
+    --safe-gray-100: #2e2b27;
+    --safe-gray-200: #4a453e;
+    --safe-gray-800: #ebe8e4;
+    --safe-gray-900: #fdfbf8;
+  }
+
+  .safe-bg-pattern {
+    opacity: 0.02;
+  }
+}

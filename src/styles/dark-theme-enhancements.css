@@ -1,0 +1,405 @@
+/**
+ * Dark Theme Contrast Enhancements for WCAG 2.1 AA Compliance
+ * 
+ * This file provides additional dark mode improvements beyond the base
+ * WCAG color compliance to ensure excellent accessibility and readability.
+ * 
+ * Focus Areas:
+ * - Enhanced contrast ratios for better readability
+ * - Improved focus indicators for keyboard navigation
+ * - Better color differentiation for status states
+ * - Enhanced mobile dark mode experience
+ * - High contrast mode support
+ */
+
+:root {
+  /* =================================
+     ENHANCED DARK MODE VARIABLES
+     ================================= */
+
+  /* Ultra-high contrast text for critical elements */
+  --text-ultra-contrast-dark: #ffffff; /* Pure white for maximum contrast */
+  --text-high-contrast-dark: #f9fafb; /* Near white for important text */
+  --text-medium-contrast-dark: #f3f4f6; /* High contrast for body text */
+
+  /* Enhanced background hierarchy for better depth perception */
+  --bg-elevated-dark: #374151; /* Elevated surfaces (modals, cards) */
+  --bg-interactive-dark: #4b5563; /* Interactive elements hover state */
+  --bg-overlay-dark: rgba(
+    17,
+    24,
+    39,
+    0.95
+  ); /* Modal overlays with transparency */
+
+  /* Enhanced accent colors with better dark mode contrast */
+  --accent-primary-enhanced-dark: #7dd3fc; /* Sky blue (8.2:1 contrast) */
+  --accent-primary-muted-dark: #0ea5e9; /* Darker sky blue for subtle elements */
+  --accent-secondary-enhanced-dark: #86efac; /* Light green (9.1:1 contrast) */
+  --accent-tertiary-dark: #c084fc; /* Purple for variety (6.8:1 contrast) */
+
+  /* Enhanced status colors for better recognition */
+  --status-error-enhanced-dark: #fca5a5; /* Light red (7.2:1 contrast) */
+  --status-warning-enhanced-dark: #fde047; /* Bright yellow (10.1:1 contrast) */
+  --status-success-enhanced-dark: #86efac; /* Light green (9.1:1 contrast) */
+  --status-info-enhanced-dark: #7dd3fc; /* Light blue (8.2:1 contrast) */
+
+  /* Enhanced border colors for better definition */
+  --border-subtle-dark: #6b7280; /* Subtle borders (3.8:1 contrast) */
+  --border-prominent-dark: #9ca3af; /* Prominent borders (5.1:1 contrast) */
+  --border-interactive-dark: #d1d5db; /* Interactive element borders (6.9:1) */
+
+  /* Enhanced focus indicators */
+  --focus-ring-enhanced-dark: #7dd3fc; /* Bright focus ring */
+  --focus-ring-shadow-dark: rgba(125, 211, 252, 0.4);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+
+  /* Enhanced shadow system for dark mode */
+  --shadow-enhanced-sm-dark: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-enhanced-md-dark:
+    0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-enhanced-lg-dark:
+    0 8px 16px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-enhanced-xl-dark:
+    0 16px 32px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* =================================
+   ENHANCED DARK THEME APPLICATION
+   ================================= */
+
+[data-theme="dark"] {
+  /* Enhanced text hierarchy */
+  --text-ultra-contrast: var(--text-ultra-contrast-dark);
+  --text-high-contrast: var(--text-high-contrast-dark);
+  --text-medium-contrast: var(--text-medium-contrast-dark);
+
+  /* Enhanced backgrounds */
+  --bg-elevated: var(--bg-elevated-dark);
+  --bg-interactive: var(--bg-interactive-dark);
+  --bg-overlay: var(--bg-overlay-dark);
+
+  /* Enhanced accents */
+  --accent-primary-enhanced: var(--accent-primary-enhanced-dark);
+  --accent-primary-muted: var(--accent-primary-muted-dark);
+  --accent-secondary-enhanced: var(--accent-secondary-enhanced-dark);
+  --accent-tertiary: var(--accent-tertiary-dark);
+
+  /* Enhanced status colors */
+  --status-error-enhanced: var(--status-error-enhanced-dark);
+  --status-warning-enhanced: var(--status-warning-enhanced-dark);
+  --status-success-enhanced: var(--status-success-enhanced-dark);
+  --status-info-enhanced: var(--status-info-enhanced-dark);
+
+  /* Enhanced borders */
+  --border-subtle: var(--border-subtle-dark);
+  --border-prominent: var(--border-prominent-dark);
+  --border-interactive: var(--border-interactive-dark);
+
+  /* Enhanced focus */
+  --focus-ring-enhanced: var(--focus-ring-enhanced-dark);
+  --focus-ring-shadow: var(--focus-ring-shadow-dark);
+
+  /* Enhanced shadows */
+  --shadow-enhanced-sm: var(--shadow-enhanced-sm-dark);
+  --shadow-enhanced-md: var(--shadow-enhanced-md-dark);
+  --shadow-enhanced-lg: var(--shadow-enhanced-lg-dark);
+  --shadow-enhanced-xl: var(--shadow-enhanced-xl-dark);
+}
+
+/* =================================
+   COMPONENT-SPECIFIC ENHANCEMENTS
+   ================================= */
+
+/* Enhanced card contrast in dark mode */
+[data-theme="dark"] .card,
+[data-theme="dark"] .post-card,
+[data-theme="dark"] .chat-message {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-enhanced-md);
+}
+
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .post-card:hover {
+  background: var(--bg-interactive);
+  border-color: var(--border-prominent);
+  box-shadow: var(--shadow-enhanced-lg);
+}
+
+/* Enhanced button contrast */
+[data-theme="dark"] .btn-primary {
+  background: var(--accent-primary-enhanced);
+  color: var(--bg-primary-dark);
+  border: none;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: var(--accent-primary-muted);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-enhanced-md);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: transparent;
+  color: var(--accent-primary-enhanced);
+  border: 2px solid var(--accent-primary-enhanced);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--accent-primary-enhanced);
+  color: var(--bg-primary-dark);
+}
+
+/* Enhanced link contrast */
+[data-theme="dark"] a,
+[data-theme="dark"] .link {
+  color: var(--accent-primary-enhanced);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] .link:hover {
+  color: var(--text-ultra-contrast);
+  text-decoration-color: var(--accent-primary-enhanced);
+}
+
+/* Enhanced focus indicators */
+[data-theme="dark"] *:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-enhanced);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 0 0 0 6px var(--focus-ring-shadow);
+}
+
+/* Enhanced form inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-high-contrast);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  border-color: var(--accent-primary-enhanced);
+  background: var(--bg-interactive);
+}
+
+/* Enhanced status indicators */
+[data-theme="dark"] .alert-error,
+[data-theme="dark"] .status-error {
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--status-error-enhanced);
+  color: var(--status-error-enhanced);
+}
+
+[data-theme="dark"] .alert-warning,
+[data-theme="dark"] .status-warning {
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--status-warning-enhanced);
+  color: var(--status-warning-enhanced);
+}
+
+[data-theme="dark"] .alert-success,
+[data-theme="dark"] .status-success {
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--status-success-enhanced);
+  color: var(--status-success-enhanced);
+}
+
+[data-theme="dark"] .alert-info,
+[data-theme="dark"] .status-info {
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--status-info-enhanced);
+  color: var(--status-info-enhanced);
+}
+
+/* =================================
+   MOBILE DARK MODE ENHANCEMENTS
+   ================================= */
+
+@media (max-width: 768px) {
+  [data-theme="dark"] {
+    /* Enhanced mobile contrast for better readability */
+    --text-primary: var(--text-ultra-contrast-dark);
+    --text-secondary: var(--text-high-contrast-dark);
+  }
+
+  /* Enhanced mobile touch targets */
+  [data-theme="dark"] .btn,
+  [data-theme="dark"] button,
+  [data-theme="dark"] [role="button"] {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-prominent);
+    min-height: var(--touch-target-comfortable);
+  }
+
+  /* Enhanced mobile sidebar */
+  [data-theme="dark"] .mobile-sidebar {
+    background: var(--bg-primary-dark);
+    border-right: 1px solid var(--border-prominent);
+    box-shadow: var(--shadow-enhanced-xl);
+  }
+
+  /* Enhanced mobile navigation */
+  [data-theme="dark"] .mobile-nav-item {
+    color: var(--text-high-contrast);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  [data-theme="dark"] .mobile-nav-item:hover,
+  [data-theme="dark"] .mobile-nav-item.active {
+    background: var(--bg-interactive);
+    color: var(--accent-primary-enhanced);
+    border-left: 4px solid var(--accent-primary-enhanced);
+  }
+}
+
+/* =================================
+   HIGH CONTRAST MODE ENHANCEMENTS
+   ================================= */
+
+@media (prefers-contrast: high) {
+  [data-theme="dark"] {
+    /* Ultra-high contrast for users who need it */
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-tertiary: #f0f0f0;
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #333333;
+    --accent-primary: #ffffff;
+    --accent-secondary: #ffffff;
+    --border-color: #ffffff;
+  }
+
+  [data-theme="dark"] .btn-primary {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+  }
+
+  [data-theme="dark"] .btn-secondary {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+}
+
+/* =================================
+   REDUCED MOTION CONSIDERATIONS
+   ================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="dark"] * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  [data-theme="dark"] .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* =================================
+   IMPROVED LOADING STATES
+   ================================= */
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary-dark) 25%,
+    var(--bg-elevated-dark) 50%,
+    var(--bg-secondary-dark) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* =================================
+   ENHANCED CRISIS ALERT CONTRAST
+   ================================= */
+
+[data-theme="dark"] .crisis-alert {
+  background: var(--status-error-enhanced-dark);
+  color: var(--bg-primary-dark);
+  border: 3px solid var(--status-error-enhanced-dark);
+  font-weight: 700;
+  box-shadow: var(--shadow-enhanced-lg);
+}
+
+[data-theme="dark"] .crisis-alert .btn {
+  background: var(--bg-primary-dark);
+  color: var(--status-error-enhanced-dark);
+  border: 2px solid var(--bg-primary-dark);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .crisis-alert .btn:hover {
+  background: var(--text-ultra-contrast-dark);
+  transform: scale(1.05);
+}
+
+/* =================================
+   ENHANCED ACCESSIBILITY UTILITIES
+   ================================= */
+
+/* Ultra-high contrast text utility */
+[data-theme="dark"] .text-ultra-contrast {
+  color: var(--text-ultra-contrast-dark) !important;
+  font-weight: 700;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* High contrast background utility */
+[data-theme="dark"] .bg-high-contrast {
+  background: var(--bg-elevated-dark) !important;
+  border: 2px solid var(--border-prominent-dark) !important;
+}
+
+/* Enhanced interactive element utility */
+[data-theme="dark"] .interactive-enhanced {
+  background: var(--bg-interactive-dark);
+  border: 2px solid var(--accent-primary-enhanced-dark);
+  color: var(--text-ultra-contrast-dark);
+  transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .interactive-enhanced:hover {
+  background: var(--accent-primary-enhanced-dark);
+  color: var(--bg-primary-dark);
+  box-shadow: var(--shadow-enhanced-md);
+}
+
+/* =================================
+   PRINT STYLES FOR DARK MODE
+   ================================= */
+
+@media print {
+  [data-theme="dark"] * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  [data-theme="dark"] .btn {
+    border: 2px solid black !important;
+  }
+}

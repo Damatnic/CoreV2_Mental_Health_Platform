@@ -1,0 +1,578 @@
+/* Guided Tether Experience Styles */
+
+/* Experience Selector */
+.guided-experience-selector {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 250, 255, 0.98) 0%,
+    rgba(250, 248, 255, 0.98) 100%
+  );
+  border: 1px solid rgba(138, 43, 226, 0.1);
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 50px rgba(138, 43, 226, 0.08);
+}
+
+.selector-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.selector-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+}
+
+.selector-icon {
+  width: 32px;
+  height: 32px;
+  color: #8a2be2;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.selector-subtitle {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.experience-card {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.experience-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(138, 43, 226, 0.05) 0%,
+    rgba(75, 0, 130, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+  border-color: rgba(138, 43, 226, 0.3);
+}
+
+.experience-card:hover::before {
+  opacity: 1;
+}
+
+.experience-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.experience-icon svg {
+  width: 48px;
+  height: 48px;
+  color: #8a2be2;
+}
+
+.experience-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.experience-description {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+.experience-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 1;
+}
+
+.experience-duration {
+  color: #8a2be2;
+  font-weight: 500;
+}
+
+.experience-type {
+  background: rgba(138, 43, 226, 0.1);
+  color: #8a2be2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* Experience Player */
+.guided-experience-player {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(250, 245, 255, 0.98) 100%
+  );
+  border: 1px solid rgba(138, 43, 226, 0.1);
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(138, 43, 226, 0.1);
+}
+
+.player-header {
+  margin-bottom: 2rem;
+}
+
+.player-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.player-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8a2be2 0%, #4b0082 100%);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-text {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+/* Experience Stage */
+.experience-stage {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.visual-container {
+  margin-bottom: 2rem;
+}
+
+/* Breathing Visuals */
+.breath-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.breath-circle.expanding {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  animation: expand 4s ease-in-out;
+}
+
+.breath-circle.holding {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  animation: hold 7s ease-in-out;
+}
+
+.breath-circle.contracting {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  animation: contract 8s ease-in-out;
+}
+
+.breath-circle.resting {
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  animation: rest 2s ease-in-out;
+}
+
+@keyframes expand {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes hold {
+  0%,
+  100% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes contract {
+  from {
+    transform: scale(1.3);
+  }
+  to {
+    transform: scale(0.8);
+  }
+}
+
+@keyframes rest {
+  0%,
+  100% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(0.85);
+  }
+}
+
+/* Energy Visuals */
+.energy-pulse,
+.energy-glow {
+  font-size: 3rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.energy-pulse.outgoing {
+  animation: sendPulse 2s ease-out;
+}
+
+.energy-glow.incoming {
+  animation: receivePulse 2s ease-in;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes sendPulse {
+  from {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5) translateX(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes receivePulse {
+  from {
+    transform: scale(1.5) translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Affirmation Bubble */
+.affirmation-bubble {
+  font-size: 3rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Instructions */
+.instruction-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.instruction-text {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.action-indicator {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+.action-send {
+  background: linear-gradient(
+    135deg,
+    rgba(231, 76, 60, 0.1) 0%,
+    rgba(192, 57, 43, 0.1) 100%
+  );
+  color: #e74c3c;
+}
+
+.action-receive {
+  background: linear-gradient(
+    135deg,
+    rgba(46, 204, 113, 0.1) 0%,
+    rgba(39, 174, 96, 0.1) 100%
+  );
+  color: #2ecc71;
+}
+
+.action-breathe {
+  background: linear-gradient(
+    135deg,
+    rgba(52, 152, 219, 0.1) 0%,
+    rgba(41, 128, 185, 0.1) 100%
+  );
+  color: #3498db;
+}
+
+.action-visualize {
+  background: linear-gradient(
+    135deg,
+    rgba(155, 89, 182, 0.1) 0%,
+    rgba(142, 68, 173, 0.1) 100%
+  );
+  color: #9b59b6;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Step Progress */
+.step-progress-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.step-progress-bar {
+  height: 4px;
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.step-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8a2be2 0%, #4b0082 100%);
+  transition: width 0.1s linear;
+}
+
+/* Player Controls */
+.player-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.control-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+}
+
+.control-btn.pause,
+.control-btn.resume {
+  background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+  color: white;
+}
+
+.control-btn.pause:hover,
+.control-btn.resume:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3);
+}
+
+.control-btn.stop {
+  background: white;
+  color: #8a2be2;
+  border: 2px solid #8a2be2;
+}
+
+.control-btn.stop:hover {
+  background: rgba(138, 43, 226, 0.05);
+}
+
+/* Completion Message */
+.completion-message {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 204, 113, 0.1) 0%,
+    rgba(39, 174, 96, 0.1) 100%
+  );
+  border-radius: 16px;
+  margin-top: 2rem;
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.completion-icon {
+  width: 48px;
+  height: 48px;
+  color: #2ecc71;
+  margin-bottom: 0.5rem;
+}
+
+.completion-message p {
+  color: #27ae60;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .guided-experience-selector,
+[data-theme="dark"] .guided-experience-player {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 39, 46, 0.98) 0%,
+    rgba(28, 33, 40, 0.98) 100%
+  );
+  border-color: rgba(138, 43, 226, 0.2);
+}
+
+[data-theme="dark"] .selector-title,
+[data-theme="dark"] .player-title,
+[data-theme="dark"] .experience-name,
+[data-theme="dark"] .instruction-text {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .selector-subtitle,
+[data-theme="dark"] .experience-description,
+[data-theme="dark"] .progress-text {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .experience-card {
+  background: rgba(34, 39, 46, 0.8);
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .experience-card:hover {
+  background: rgba(34, 39, 46, 1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .guided-experience-selector,
+  .guided-experience-player {
+    padding: 1.5rem;
+  }
+
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-container {
+    transform: scale(0.8);
+  }
+
+  .instruction-text {
+    font-size: 1.1rem;
+  }
+}

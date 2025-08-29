@@ -1,0 +1,653 @@
+/**
+ * Crisis Detection Dashboard Styles
+ * 
+ * Comprehensive styling for the ML-powered crisis detection dashboard
+ * with accessibility, dark mode, and mobile-responsive design.
+ */
+
+.crisis-detection-dashboard {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dashboard-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Crisis Alert Banner */
+.crisis-alert {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.crisis-alert-none {
+  background: var(--bg-card);
+  border: 2px solid var(--success-color);
+}
+.crisis-alert-low {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  color: #92400e;
+}
+.crisis-alert-medium {
+  background: #fed7aa;
+  border: 2px solid #ea580c;
+  color: #9a3412;
+}
+.crisis-alert-high {
+  background: #fecaca;
+  border: 2px solid #ef4444;
+  color: #991b1b;
+}
+.crisis-alert-critical {
+  background: #fee2e2;
+  border: 2px solid #dc2626;
+  color: #7f1d1d;
+}
+.crisis-alert-immediate {
+  background: #dc2626;
+  border: 2px solid #991b1b;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.crisis-alert-content {
+  padding: 1.5rem;
+}
+
+.crisis-alert-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.crisis-alert-icon {
+  font-size: 1.5rem;
+}
+
+.crisis-alert-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.crisis-alert-description {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.crisis-alert-interventions {
+  margin-bottom: 1rem;
+}
+
+.crisis-alert-interventions ul {
+  margin: 0.5rem 0 0 0;
+  padding-left: 1.5rem;
+}
+
+.crisis-alert-interventions li {
+  margin-bottom: 0.25rem;
+}
+
+.crisis-alert-emergency {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Test Mode Card */
+.test-mode-card {
+  margin-bottom: 2rem;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+}
+
+.test-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.test-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.test-textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Card Styles */
+.status-card,
+.trend-card,
+.prediction-card,
+.metrics-card,
+.interventions-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.status-card:hover,
+.trend-card:hover,
+.prediction-card:hover,
+.metrics-card:hover,
+.interventions-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.status-card h3,
+.trend-card h3,
+.prediction-card h3,
+.metrics-card h3,
+.interventions-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Status Indicators */
+.status-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-label {
+  font-weight: 500;
+  min-width: 100px;
+  color: var(--text-secondary);
+}
+
+.risk-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.risk-bar {
+  height: 8px;
+  border-radius: 4px;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.risk-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.emotional-state {
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.urgency-level {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.urgency-none {
+  background: #d1fae5;
+  color: #065f46;
+}
+.urgency-low {
+  background: #fef3c7;
+  color: #92400e;
+}
+.urgency-medium {
+  background: #fed7aa;
+  color: #9a3412;
+}
+.urgency-high {
+  background: #fecaca;
+  color: #991b1b;
+}
+.urgency-immediate {
+  background: #dc2626;
+  color: white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/* Trend Content */
+.trend-content,
+.prediction-content,
+.metrics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trend-summary,
+.prediction-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.trend-direction {
+  font-size: 1.25rem;
+}
+
+.trend-confidence,
+.prediction-confidence {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.emotion-history {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.emotion-point {
+  font-size: 1.5rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  transition: transform 0.2s ease;
+}
+
+.emotion-point:hover {
+  transform: scale(1.2);
+}
+
+/* Prediction Content */
+.prediction-risk {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.trend-icon {
+  font-size: 1.25rem;
+}
+
+/* Metrics Content */
+.metrics-content {
+  gap: 0.75rem;
+}
+
+.metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.metric-item:last-child {
+  border-bottom: none;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.metric-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+/* Interventions */
+.interventions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.intervention-item {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.intervention-item:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.intervention-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.intervention-type {
+  font-size: 1.25rem;
+}
+
+.intervention-priority {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.intervention-description {
+  margin: 0 0 0.75rem 0;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.intervention-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.intervention-timeframe {
+  font-style: italic;
+}
+
+.intervention-effectiveness {
+  font-weight: 500;
+  color: var(--success-color);
+}
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 2px dashed var(--border-color);
+}
+
+/* Dashboard Footer */
+.dashboard-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Analysis Details Modal */
+.analysis-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.analysis-section {
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.analysis-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.assessment-scores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.pattern-details p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.pattern-details strong {
+  color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crisis-detection-dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .dashboard-controls {
+    justify-content: center;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .status-indicators {
+    gap: 0.75rem;
+  }
+
+  .status-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .risk-indicator {
+    justify-content: space-between;
+  }
+
+  .crisis-alert-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .intervention-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .intervention-meta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .assessment-scores {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .crisis-alert-low {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: #f59e0b;
+    color: #fbbf24;
+  }
+
+  .crisis-alert-medium {
+    background: rgba(234, 88, 12, 0.2);
+    border-color: #ea580c;
+    color: #fb923c;
+  }
+
+  .crisis-alert-high {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #f87171;
+  }
+
+  .crisis-alert-critical {
+    background: rgba(220, 38, 38, 0.2);
+    border-color: #dc2626;
+    color: #fca5a5;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .crisis-detection-dashboard {
+    border: 2px solid var(--text-primary);
+  }
+
+  .status-card,
+  .trend-card,
+  .prediction-card,
+  .metrics-card,
+  .interventions-card {
+    border: 2px solid var(--text-primary);
+  }
+
+  .risk-bar {
+    border: 1px solid var(--text-primary);
+  }
+
+  .urgency-level {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .crisis-alert,
+  .emotion-point,
+  .intervention-item,
+  .status-card,
+  .trend-card,
+  .prediction-card,
+  .metrics-card,
+  .interventions-card {
+    animation: none;
+    transition: none;
+  }
+
+  .crisis-alert-immediate {
+    animation: none;
+  }
+
+  .urgency-immediate {
+    animation: none;
+  }
+}

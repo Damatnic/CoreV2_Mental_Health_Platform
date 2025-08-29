@@ -1,0 +1,246 @@
+{
+  "lastUpdated": "2025-01-04T00:00:00Z",
+  "version": "1.0.0",
+  "emergencyContacts": [
+    {
+      "id": "local-emergency",
+      "name": "Local Emergency Services",
+      "number": "",
+      "placeholder": "Your local emergency number (e.g., 911, 112, 999)",
+      "description": "Add your local emergency services number",
+      "priority": "critical",
+      "type": "emergency",
+      "userEditable": true
+    },
+    {
+      "id": "personal-emergency-1",
+      "name": "Emergency Contact 1",
+      "number": "",
+      "placeholder": "Primary emergency contact",
+      "description": "Family member, close friend, or trusted person",
+      "priority": "high",
+      "type": "personal",
+      "userEditable": true
+    },
+    {
+      "id": "personal-emergency-2",
+      "name": "Emergency Contact 2",
+      "number": "",
+      "placeholder": "Secondary emergency contact",
+      "description": "Another trusted person who can help",
+      "priority": "high",
+      "type": "personal",
+      "userEditable": true
+    }
+  ],
+  "localResources": [
+    {
+      "id": "local-hospital",
+      "name": "Nearest Hospital Emergency Room",
+      "address": "",
+      "phone": "",
+      "placeholder": "Your nearest hospital",
+      "description": "Closest emergency medical facility",
+      "priority": "critical",
+      "type": "medical",
+      "userEditable": true
+    },
+    {
+      "id": "local-crisis-center",
+      "name": "Local Crisis Center",
+      "address": "",
+      "phone": "",
+      "placeholder": "Your local crisis intervention center",
+      "description": "Local mental health crisis support",
+      "priority": "high",
+      "type": "mental_health",
+      "userEditable": true
+    },
+    {
+      "id": "local-therapist",
+      "name": "Your Therapist/Counselor",
+      "phone": "",
+      "email": "",
+      "placeholder": "Your mental health provider",
+      "description": "Your current mental health professional",
+      "priority": "medium",
+      "type": "professional",
+      "userEditable": true
+    },
+    {
+      "id": "local-doctor",
+      "name": "Your Primary Care Doctor",
+      "phone": "",
+      "email": "",
+      "placeholder": "Your primary care physician",
+      "description": "Your regular doctor",
+      "priority": "medium",
+      "type": "medical",
+      "userEditable": true
+    }
+  ],
+  "supportNetwork": [
+    {
+      "id": "trusted-friend-1",
+      "name": "Trusted Friend 1",
+      "phone": "",
+      "relationship": "",
+      "placeholder": "A friend you can talk to",
+      "description": "Someone who listens and supports you",
+      "priority": "medium",
+      "type": "friend",
+      "userEditable": true
+    },
+    {
+      "id": "trusted-friend-2",
+      "name": "Trusted Friend 2",
+      "phone": "",
+      "relationship": "",
+      "placeholder": "Another supportive friend",
+      "description": "Another person in your support network",
+      "priority": "medium",
+      "type": "friend",
+      "userEditable": true
+    },
+    {
+      "id": "family-member",
+      "name": "Supportive Family Member",
+      "phone": "",
+      "relationship": "",
+      "placeholder": "A family member you trust",
+      "description": "Family member who provides emotional support",
+      "priority": "medium",
+      "type": "family",
+      "userEditable": true
+    },
+    {
+      "id": "mentor-spiritual",
+      "name": "Mentor/Spiritual Leader",
+      "phone": "",
+      "email": "",
+      "placeholder": "Mentor, pastor, or spiritual guide",
+      "description": "Someone who provides guidance and wisdom",
+      "priority": "low",
+      "type": "spiritual",
+      "userEditable": true
+    }
+  ],
+  "workplaceContacts": [
+    {
+      "id": "employee-assistance",
+      "name": "Employee Assistance Program (EAP)",
+      "phone": "",
+      "website": "",
+      "placeholder": "Your workplace EAP",
+      "description": "Free counseling and support through your employer",
+      "priority": "medium",
+      "type": "workplace",
+      "userEditable": true
+    },
+    {
+      "id": "hr-contact",
+      "name": "HR Contact (if comfortable)",
+      "phone": "",
+      "email": "",
+      "placeholder": "Human Resources contact",
+      "description": "For workplace accommodations or support",
+      "priority": "low",
+      "type": "workplace",
+      "userEditable": true
+    }
+  ],
+  "safetyPlan": {
+    "warningSigns": {
+      "description": "Personal warning signs that a crisis might be developing",
+      "examples": [
+        "Difficulty sleeping or sleeping too much",
+        "Loss of appetite or overeating",
+        "Withdrawing from friends and family",
+        "Increased substance use",
+        "Feeling hopeless or worthless",
+        "Having thoughts of death or suicide",
+        "Difficulty concentrating",
+        "Extreme mood swings"
+      ],
+      "userSigns": [],
+      "userEditable": true
+    },
+    "copingStrategies": {
+      "description": "Things you can do to help yourself feel better",
+      "examples": [
+        "Take a warm bath or shower",
+        "Listen to calming music",
+        "Go for a walk in nature",
+        "Practice deep breathing",
+        "Write in a journal",
+        "Pet an animal",
+        "Call a friend",
+        "Practice meditation or prayer"
+      ],
+      "userStrategies": [],
+      "userEditable": true
+    },
+    "socialSupport": {
+      "description": "People you can reach out to for support",
+      "referenceIds": ["trusted-friend-1", "trusted-friend-2", "family-member"],
+      "userEditable": true
+    },
+    "professionalSupport": {
+      "description": "Professional contacts for crisis support",
+      "referenceIds": ["local-therapist", "local-crisis-center", "employee-assistance"],
+      "userEditable": true
+    },
+    "environmentSafety": {
+      "description": "Steps to make your environment safer",
+      "examples": [
+        "Remove or secure potentially harmful items",
+        "Ask someone to stay with you",
+        "Go to a safe location (friend's house, family member)",
+        "Remove access to substances",
+        "Create physical barriers to impulsive actions"
+      ],
+      "userSteps": [],
+      "userEditable": true
+    },
+    "reasonsToLive": {
+      "description": "Important reasons to keep going",
+      "examples": [
+        "Family members who love me",
+        "Future goals and dreams",
+        "Pets who depend on me",
+        "People I haven't met yet",
+        "Experiences I want to have",
+        "The possibility that things will get better",
+        "My contribution to the world"
+      ],
+      "userReasons": [],
+      "userEditable": true
+    }
+  },
+  "templates": {
+    "crisisText": {
+      "name": "Crisis Text Template",
+      "content": "Hi, I'm having a really hard time right now and could use some support. Are you available to talk? If not, I understand and will reach out to someone else or a crisis line.",
+      "userEditable": true
+    },
+    "checkInRequest": {
+      "name": "Check-in Request",
+      "content": "Hey, I'm going through a tough time and was wondering if you could check in on me over the next few days? Just a text or call to see how I'm doing would mean a lot.",
+      "userEditable": true
+    },
+    "professionalContact": {
+      "name": "Professional Contact Template",
+      "content": "Hello, I'm experiencing a mental health crisis and need immediate support. Can you help me or direct me to appropriate resources?",
+      "userEditable": true
+    }
+  },
+  "metadata": {
+    "cacheStrategy": "cache-first",
+    "offlineAvailable": true,
+    "lastModified": null,
+    "userCustomized": false,
+    "syncRequired": false,
+    "backupRecommended": true,
+    "privacyLevel": "high"
+  }
+}

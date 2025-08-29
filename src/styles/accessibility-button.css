@@ -1,0 +1,342 @@
+/**
+ * @fileoverview Accessibility Button Styles
+ * Floating accessibility button with WCAG 2.1 AAA compliant design
+ * 
+ * @license Apache-2.0
+ */
+
+/* Accessibility Floating Button */
+.accessibility-floating-button {
+  position: fixed;
+  bottom: 6rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.accessibility-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--primary-color, #007acc);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+  transition: all 0.2s ease;
+  min-height: 44px; /* WCAG minimum touch target */
+  min-width: 44px;
+}
+
+.accessibility-trigger:hover {
+  background: var(--primary-hover, #005a9f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 122, 204, 0.4);
+}
+
+.accessibility-trigger:focus {
+  outline: 3px solid var(--focus-color, #ffff00);
+  outline-offset: 2px;
+}
+
+.accessibility-trigger:active {
+  transform: translateY(0);
+}
+
+.accessibility-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.accessibility-label {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* Quick Actions Toolbar */
+.accessibility-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.accessibility-floating-button:hover .accessibility-quick-actions,
+.accessibility-floating-button:focus-within .accessibility-quick-actions {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-secondary, #f8f9fa);
+  border: 2px solid var(--border-color, #e0e0e0);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  align-self: flex-end;
+}
+
+.quick-action-btn:hover {
+  background: var(--primary-color, #007acc);
+  color: white;
+  border-color: var(--primary-color, #007acc);
+  transform: scale(1.1);
+}
+
+.quick-action-btn:focus {
+  outline: 3px solid var(--focus-color, #ffff00);
+  outline-offset: 2px;
+}
+
+.quick-action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Crisis Shortcut Button Special Styling */
+.crisis-shortcut {
+  background: var(--warning-color, #ff6b35);
+  border-color: var(--warning-color, #ff6b35);
+  color: white;
+}
+
+.crisis-shortcut:hover {
+  background: var(--error-color, #dc3545);
+  border-color: var(--error-color, #dc3545);
+  animation: pulse-urgent 1.5s infinite;
+}
+
+@keyframes pulse-urgent {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.15);
+  }
+}
+
+/* High Contrast Theme Support */
+.theme-high-contrast .accessibility-trigger {
+  background: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+}
+
+.theme-high-contrast .accessibility-trigger:hover {
+  background: #ffff00;
+  color: #000000;
+}
+
+.theme-high-contrast .quick-action-btn {
+  background: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+}
+
+.theme-high-contrast .quick-action-btn:hover {
+  background: #ffff00;
+  color: #000000;
+}
+
+.theme-high-contrast .crisis-shortcut {
+  background: #ff0000;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Reduced Motion Support */
+.reduced-motion .accessibility-floating-button,
+.reduced-motion .accessibility-trigger,
+.reduced-motion .quick-action-btn,
+.reduced-motion .accessibility-quick-actions {
+  transition: none;
+  animation: none;
+}
+
+.reduced-motion .accessibility-trigger:hover {
+  transform: none;
+}
+
+.reduced-motion .quick-action-btn:hover {
+  transform: none;
+}
+
+.reduced-motion .crisis-shortcut:hover {
+  animation: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .accessibility-floating-button {
+    bottom: 5rem;
+    right: 0.75rem;
+  }
+
+  .accessibility-trigger {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 1.5rem;
+  }
+
+  .accessibility-label {
+    display: none; /* Hide text on very small screens */
+  }
+
+  .accessibility-icon {
+    font-size: 1.1rem;
+  }
+
+  .quick-action-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .accessibility-floating-button {
+    bottom: 4.5rem;
+    right: 0.5rem;
+  }
+
+  .accessibility-trigger {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .quick-action-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Screen Reader Enhancements */
+.accessibility-floating-button[aria-expanded="true"]
+  .accessibility-quick-actions {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Voice Navigation Active State */
+.voice-navigation-active .accessibility-trigger {
+  background: var(--success-color, #28a745);
+  animation: pulse-voice 2s infinite;
+}
+
+@keyframes pulse-voice {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.reduced-motion .voice-navigation-active .accessibility-trigger {
+  animation: none;
+  background: var(--success-color, #28a745);
+}
+
+/* Focus Management */
+.accessibility-floating-button:focus-within {
+  z-index: 1001;
+}
+
+.accessibility-trigger:focus + .accessibility-quick-actions,
+.accessibility-quick-actions:hover,
+.accessibility-quick-actions:focus-within {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Skip Link Support */
+.accessibility-floating-button .skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color, #007acc);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 9999;
+  transition: top 0.2s;
+  white-space: nowrap;
+}
+
+.accessibility-floating-button .skip-link:focus {
+  top: -50px;
+}
+
+/* Tooltip Support */
+.quick-action-btn[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text-primary, #333);
+  color: var(--bg-primary, white);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 1002;
+  margin-right: 0.5rem;
+}
+
+/* High DPI Displays */
+@media (min-resolution: 2dppx) {
+  .accessibility-trigger,
+  .quick-action-btn {
+    border-width: 1px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .accessibility-floating-button {
+    display: none;
+  }
+}
+
+/* Dark Theme Compatibility */
+@media (prefers-color-scheme: dark) {
+  .accessibility-floating-button:not([class*="theme-"]) .quick-action-btn {
+    background: #2d2d2d;
+    border-color: #444444;
+    color: #ffffff;
+  }
+
+  .accessibility-floating-button:not([class*="theme-"])
+    .quick-action-btn:hover {
+    background: var(--primary-color, #66aaff);
+    border-color: var(--primary-color, #66aaff);
+  }
+}

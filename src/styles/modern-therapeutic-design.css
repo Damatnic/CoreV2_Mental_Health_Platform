@@ -1,0 +1,1386 @@
+/**
+ * Modern Therapeutic Design System for CoreV2
+ * 
+ * A comprehensive, calming UI system with glassmorphism, 
+ * neumorphism, and therapeutic design patterns
+ * 
+ * Design Philosophy:
+ * - Reduce anxiety through soft colors and smooth transitions
+ * - Create safe spaces with rounded corners and gentle shadows
+ * - Guide users naturally with intuitive visual hierarchy
+ * - Provide immediate, gentle feedback for all interactions
+ */
+
+/* ===============================================
+   THERAPEUTIC COLOR SYSTEM
+   =============================================== */
+
+:root {
+  /* Calming Primary Palette - Soft Sky Blues */
+  --therapy-primary-50: #e3f2fd;
+  --therapy-primary-100: #bbdefb;
+  --therapy-primary-200: #90caf9;
+  --therapy-primary-300: #64b5f6;
+  --therapy-primary-400: #42a5f5;
+  --therapy-primary-500: #2196f3;
+  --therapy-primary-600: #1e88e5;
+  --therapy-primary-700: #1976d2;
+  --therapy-primary-800: #1565c0;
+  --therapy-primary-900: #0d47a1;
+
+  /* Supportive Secondary - Warm Lavender */
+  --therapy-secondary-50: #f3e5f5;
+  --therapy-secondary-100: #e1bee7;
+  --therapy-secondary-200: #ce93d8;
+  --therapy-secondary-300: #ba68c8;
+  --therapy-secondary-400: #ab47bc;
+  --therapy-secondary-500: #9c27b0;
+  --therapy-secondary-600: #8e24aa;
+  --therapy-secondary-700: #7b1fa2;
+  --therapy-secondary-800: #6a1b9a;
+  --therapy-secondary-900: #4a148c;
+
+  /* Wellness Green - Growth & Recovery */
+  --therapy-wellness-50: #e8f5e9;
+  --therapy-wellness-100: #c8e6c9;
+  --therapy-wellness-200: #a5d6a7;
+  --therapy-wellness-300: #81c784;
+  --therapy-wellness-400: #66bb6a;
+  --therapy-wellness-500: #4caf50;
+  --therapy-wellness-600: #43a047;
+  --therapy-wellness-700: #388e3c;
+  --therapy-wellness-800: #2e7d32;
+  --therapy-wellness-900: #1b5e20;
+
+  /* Mindful Orange - Energy & Warmth */
+  --therapy-mindful-50: #fff3e0;
+  --therapy-mindful-100: #ffe0b2;
+  --therapy-mindful-200: #ffcc80;
+  --therapy-mindful-300: #ffb74d;
+  --therapy-mindful-400: #ffa726;
+  --therapy-mindful-500: #ff9800;
+  --therapy-mindful-600: #fb8c00;
+  --therapy-mindful-700: #f57c00;
+  --therapy-mindful-800: #ef6c00;
+  --therapy-mindful-900: #e65100;
+
+  /* Crisis Red - Urgent but Not Alarming */
+  --therapy-crisis-50: #ffebee;
+  --therapy-crisis-100: #ffcdd2;
+  --therapy-crisis-200: #ef9a9a;
+  --therapy-crisis-300: #e57373;
+  --therapy-crisis-400: #ef5350;
+  --therapy-crisis-500: #f44336;
+  --therapy-crisis-600: #e53935;
+  --therapy-crisis-700: #d32f2f;
+  --therapy-crisis-800: #c62828;
+  --therapy-crisis-900: #b71c1c;
+
+  /* Neutral Grays - Soft & Comfortable */
+  --therapy-gray-50: #fafafa;
+  --therapy-gray-100: #f5f5f5;
+  --therapy-gray-200: #eeeeee;
+  --therapy-gray-300: #e0e0e0;
+  --therapy-gray-400: #bdbdbd;
+  --therapy-gray-500: #9e9e9e;
+  --therapy-gray-600: #757575;
+  --therapy-gray-700: #616161;
+  --therapy-gray-800: #424242;
+  --therapy-gray-900: #212121;
+
+  /* Beautiful Gradients */
+  --gradient-calm: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-wellness: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-sky: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-ocean: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-sunset: linear-gradient(
+    135deg,
+    #ff9a9e 0%,
+    #fecfef 50%,
+    #fecfef 100%
+  );
+  --gradient-forest: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+  --gradient-aurora: linear-gradient(135deg, #13547a 0%, #80d0c7 100%);
+  --gradient-peaceful: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+
+  /* Glassmorphism Properties */
+  --glass-background: rgba(255, 255, 255, 0.25);
+  --glass-background-dark: rgba(0, 0, 0, 0.25);
+  --glass-blur: blur(10px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
+  /* Neumorphism Properties */
+  --neumorph-light: #ffffff;
+  --neumorph-dark: #d1d9e6;
+  --neumorph-shadow-light: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
+  --neumorph-shadow-dark: 5px 5px 10px #1a1a1a, -5px -5px 10px #2a2a2a;
+  --neumorph-inset: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+}
+
+/* ===============================================
+   DARK MODE THERAPEUTIC COLORS
+   =============================================== */
+
+[data-theme="dark"] {
+  /* Dark mode adjustments for reduced eye strain */
+  --therapy-bg-primary: #0a0e27;
+  --therapy-bg-secondary: #151a3a;
+  --therapy-bg-tertiary: #1f2547;
+  --therapy-text-primary: #e8eaf0;
+  --therapy-text-secondary: #b8bcc8;
+  --therapy-text-tertiary: #8891a7;
+
+  /* Adjusted gradients for dark mode */
+  --gradient-calm-dark: linear-gradient(135deg, #4a5888 0%, #5a3a72 100%);
+  --gradient-wellness-dark: linear-gradient(135deg, #a063ab 0%, #a5374c 100%);
+  --gradient-peaceful-dark: linear-gradient(135deg, #49a7ae 0%, #3666af 100%);
+}
+
+/* ===============================================
+   GLASSMORPHISM COMPONENTS
+   =============================================== */
+
+.glass-card {
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 20px;
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.25);
+}
+
+.glass-button {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: var(--therapy-text-primary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.glass-button:hover::before {
+  left: 100%;
+}
+
+.glass-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Therapeutic Button Variants */
+.btn-primary-therapeutic {
+  background: var(--gradient-calm) !important;
+  border: none;
+  color: white;
+}
+
+.btn-secondary-therapeutic {
+  background: var(--gradient-peaceful) !important;
+  border: none;
+  color: white;
+}
+
+.btn-success-therapeutic {
+  background: var(--gradient-wellness) !important;
+  border: none;
+  color: white;
+}
+
+.btn-danger-therapeutic {
+  background: linear-gradient(
+    135deg,
+    var(--therapy-crisis-300),
+    var(--therapy-crisis-500)
+  ) !important;
+  border: none;
+  color: white;
+}
+
+.btn-icon {
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ===============================================
+   NEUMORPHISM COMPONENTS
+   =============================================== */
+
+.neumorph-card {
+  background: linear-gradient(145deg, #f0f0f3, #cacaca);
+  box-shadow: var(--neumorph-shadow-light);
+  border-radius: 20px;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.neumorph-card:hover {
+  box-shadow:
+    8px 8px 16px #d1d9e6,
+    -8px -8px 16px #ffffff;
+}
+
+.neumorph-button {
+  background: linear-gradient(145deg, #f0f0f3, #cacaca);
+  box-shadow: var(--neumorph-shadow-light);
+  border: none;
+  border-radius: 15px;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.neumorph-button:active {
+  box-shadow: var(--neumorph-inset);
+  transform: scale(0.98);
+}
+
+.neumorph-input {
+  background: #ecf0f3;
+  box-shadow: var(--neumorph-inset);
+  border: none;
+  border-radius: 12px;
+  padding: 15px 20px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.neumorph-input:focus {
+  box-shadow:
+    inset 3px 3px 6px #d1d9e6,
+    inset -3px -3px 6px #ffffff;
+}
+
+/* Glass Input Styles */
+.glass-input {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px 20px;
+  color: var(--therapy-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--therapy-primary-400);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.glass-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* ===============================================
+   MICRO-ANIMATIONS
+   =============================================== */
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(33, 150, 243, 0.6);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+  background: var(--gradient-calm);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+/* Ripple Effect for Buttons */
+.ripple-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.ripple-button:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* ===============================================
+   SMOOTH TRANSITIONS
+   =============================================== */
+
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-slow {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-fast {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Page Transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===============================================
+   THERAPEUTIC CARD DESIGNS
+   =============================================== */
+
+.therapy-card {
+  background: linear-gradient(
+    135deg,
+    var(--therapy-primary-50),
+    var(--therapy-secondary-50)
+  );
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.therapy-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.therapy-card:hover::before {
+  opacity: 1;
+  transform: rotate(45deg) translateY(50px);
+}
+
+.therapy-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Mood Card Variations */
+.mood-card-happy {
+  background: linear-gradient(135deg, #fff6b7 0%, #f6416c 100%);
+}
+
+.mood-card-calm {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+.mood-card-anxious {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.mood-card-sad {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* ===============================================
+   WELLNESS DASHBOARD COMPONENTS
+   =============================================== */
+
+.wellness-stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.wellness-stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: var(--gradient-peaceful);
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+  opacity: 0.1;
+}
+
+.wellness-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.wellness-progress {
+  background: var(--therapy-gray-200);
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wellness-progress-bar {
+  height: 100%;
+  border-radius: 20px;
+  background: var(--gradient-wellness);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.wellness-progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* ===============================================
+   MOOD TRACKER INTERFACE
+   =============================================== */
+
+.mood-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.mood-option {
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-blur);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-option::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    var(--therapy-primary-200) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  border-radius: 50%;
+}
+
+.mood-option:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+.mood-option:hover {
+  transform: translateY(-5px) scale(1.05);
+  border-color: var(--therapy-primary-400);
+  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
+}
+
+.mood-option.selected {
+  background: var(--gradient-calm);
+  color: white;
+  border-color: transparent;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ===============================================
+   CRISIS SUPPORT UI
+   =============================================== */
+
+.crisis-button {
+  background: linear-gradient(
+    135deg,
+    var(--therapy-crisis-400),
+    var(--therapy-crisis-600)
+  );
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 32px;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.crisis-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+}
+
+.crisis-button:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.crisis-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(244, 67, 54, 0.5);
+}
+
+.crisis-button:active {
+  transform: scale(0.98);
+}
+
+/* Non-alarming crisis indicator */
+.crisis-indicator {
+  background: linear-gradient(
+    135deg,
+    rgba(244, 67, 54, 0.1),
+    rgba(244, 67, 54, 0.05)
+  );
+  border: 2px solid var(--therapy-crisis-300);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.crisis-indicator-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--therapy-crisis-500);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ===============================================
+   LOADING STATES & SKELETONS
+   =============================================== */
+
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    var(--therapy-gray-200) 25%,
+    var(--therapy-gray-100) 50%,
+    var(--therapy-gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.5s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.loading-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--therapy-primary-500);
+  border-radius: 50%;
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+.loading-dot:nth-child(3) {
+  animation-delay: 0;
+}
+
+@keyframes dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Beautiful Loading Spinner */
+.therapy-spinner {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.therapy-spinner::before,
+.therapy-spinner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+
+.therapy-spinner::before {
+  border-top-color: var(--therapy-primary-500);
+  animation: spin 1s linear infinite;
+}
+
+.therapy-spinner::after {
+  border-bottom-color: var(--therapy-secondary-500);
+  animation: spin 1.5s linear infinite reverse;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===============================================
+   FORM ELEMENTS WITH THERAPEUTIC DESIGN
+   =============================================== */
+
+.therapy-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--therapy-gray-300);
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.therapy-input:focus {
+  outline: none;
+  border-color: var(--therapy-primary-400);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+  transform: translateY(-2px);
+}
+
+.therapy-input::placeholder {
+  color: var(--therapy-gray-500);
+  transition: all 0.3s ease;
+}
+
+.therapy-input:focus::placeholder {
+  opacity: 0.5;
+  transform: translateX(5px);
+}
+
+.therapy-textarea {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--therapy-gray-300);
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+  width: 100%;
+  font-family: inherit;
+}
+
+.therapy-textarea:focus {
+  outline: none;
+  border-color: var(--therapy-primary-400);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+}
+
+.therapy-select {
+  appearance: none;
+  background: white
+    url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%239e9e9e' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat;
+  background-position: right 20px center;
+  border: 2px solid var(--therapy-gray-300);
+  border-radius: 12px;
+  padding: 14px 50px 14px 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+}
+
+.therapy-select:focus {
+  outline: none;
+  border-color: var(--therapy-primary-400);
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+}
+
+.therapy-checkbox {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--therapy-gray-400);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  background: white;
+}
+
+.therapy-checkbox:checked {
+  background: var(--gradient-calm);
+  border-color: transparent;
+}
+
+.therapy-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.therapy-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+}
+
+.therapy-radio {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--therapy-gray-400);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  background: white;
+}
+
+.therapy-radio:checked {
+  border-color: var(--therapy-primary-500);
+  background: white;
+}
+
+.therapy-radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gradient-calm);
+}
+
+.therapy-radio:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+}
+
+/* ===============================================
+   NAVIGATION & MENUS
+   =============================================== */
+
+.therapy-nav {
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-blur);
+  border-radius: 20px;
+  padding: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.therapy-nav-item {
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  color: var(--therapy-text-secondary);
+}
+
+.therapy-nav-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--gradient-calm);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.therapy-nav-item:hover {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--therapy-primary-600);
+  padding-left: 28px;
+}
+
+.therapy-nav-item:hover::before {
+  height: 70%;
+}
+
+.therapy-nav-item.active {
+  background: var(--gradient-calm);
+  color: white;
+}
+
+/* ===============================================
+   TOOLTIPS & POPOVERS
+   =============================================== */
+
+.therapy-tooltip {
+  background: var(--therapy-gray-900);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.therapy-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.therapy-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--therapy-gray-900);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* ===============================================
+   MODALS & OVERLAYS
+   =============================================== */
+
+.therapy-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.therapy-modal-overlay.show {
+  opacity: 1;
+}
+
+.therapy-modal {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.therapy-modal-overlay.show .therapy-modal {
+  transform: scale(1) translateY(0);
+}
+
+/* ===============================================
+   BADGES & CHIPS
+   =============================================== */
+
+.therapy-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.therapy-badge-primary {
+  background: var(--therapy-primary-100);
+  color: var(--therapy-primary-700);
+}
+
+.therapy-badge-success {
+  background: var(--therapy-wellness-100);
+  color: var(--therapy-wellness-700);
+}
+
+.therapy-badge-warning {
+  background: var(--therapy-mindful-100);
+  color: var(--therapy-mindful-700);
+}
+
+.therapy-badge-danger {
+  background: var(--therapy-crisis-100);
+  color: var(--therapy-crisis-700);
+}
+
+.therapy-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--therapy-gray-100);
+  border-radius: 20px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.therapy-chip:hover {
+  background: var(--therapy-gray-200);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.therapy-chip-close {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--therapy-gray-400);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.therapy-chip-close:hover {
+  background: var(--therapy-crisis-500);
+  transform: scale(1.2);
+}
+
+/* ===============================================
+   ACCESSIBILITY ENHANCEMENTS
+   =============================================== */
+
+/* Focus states for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid var(--therapy-primary-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .therapy-card {
+    border: 2px solid var(--therapy-gray-900);
+  }
+
+  .therapy-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --therapy-bg-primary: #0a0e27;
+    --therapy-bg-secondary: #151a3a;
+  }
+
+  .therapy-card {
+    background: var(--therapy-bg-secondary);
+    color: var(--therapy-text-primary);
+  }
+
+  .glass-card {
+    background: var(--glass-background-dark);
+  }
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .therapy-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .therapy-modal {
+    padding: 24px;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mood-selector {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .therapy-nav {
+    border-radius: 0;
+    padding: 0;
+  }
+
+  /* Touch-friendly sizes */
+  .therapy-button,
+  .therapy-input,
+  .therapy-select {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .therapy-checkbox,
+  .therapy-radio {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .therapy-card {
+    padding: 28px;
+  }
+
+  .mood-selector {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .therapy-card:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+
+  .glass-button:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Larger hover areas for desktop */
+  .therapy-nav-item {
+    padding: 14px 24px;
+  }
+}
+
+/* ===============================================
+   UTILITY CLASSES
+   =============================================== */
+
+.therapy-shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.therapy-shadow-md {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.therapy-shadow-lg {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+.therapy-shadow-xl {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.therapy-rounded-sm {
+  border-radius: 8px;
+}
+.therapy-rounded-md {
+  border-radius: 12px;
+}
+.therapy-rounded-lg {
+  border-radius: 16px;
+}
+.therapy-rounded-xl {
+  border-radius: 20px;
+}
+.therapy-rounded-2xl {
+  border-radius: 24px;
+}
+.therapy-rounded-full {
+  border-radius: 9999px;
+}
+
+.therapy-transition-all {
+  transition: all 0.3s ease;
+}
+.therapy-transition-fast {
+  transition: all 0.15s ease;
+}
+.therapy-transition-slow {
+  transition: all 0.6s ease;
+}
+
+.therapy-text-center {
+  text-align: center;
+}
+.therapy-text-left {
+  text-align: left;
+}
+.therapy-text-right {
+  text-align: right;
+}
+
+.therapy-flex {
+  display: flex;
+}
+.therapy-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.therapy-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.therapy-grid {
+  display: grid;
+}
+.therapy-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.therapy-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.therapy-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.therapy-gap-sm {
+  gap: 8px;
+}
+.therapy-gap-md {
+  gap: 16px;
+}
+.therapy-gap-lg {
+  gap: 24px;
+}
+.therapy-gap-xl {
+  gap: 32px;
+}

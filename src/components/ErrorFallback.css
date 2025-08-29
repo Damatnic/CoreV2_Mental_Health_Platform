@@ -1,0 +1,232 @@
+/* Error Fallback Component Styles */
+
+.error-fallback {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+}
+
+.error-fallback__container {
+  max-width: 600px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid #fecaca;
+}
+
+.error-fallback__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.error-fallback__title {
+  color: #dc2626;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-fallback__description {
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.error-fallback__details {
+  margin: 1.5rem 0;
+  text-align: left;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.error-fallback__details-summary {
+  padding: 1rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.error-fallback__details-summary:hover {
+  background: #f3f4f6;
+}
+
+.error-fallback__error-info {
+  padding: 0 1rem 1rem 1rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.5rem;
+}
+
+.error-fallback__error-info h4 {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.error-fallback__error-message,
+.error-fallback__stack-trace {
+  background: #1f2937;
+  color: #f9fafb;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.error-fallback__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-fallback__button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.error-fallback__button--primary {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.error-fallback__button--primary:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.error-fallback__button--secondary {
+  background: #6b7280;
+  color: #ffffff;
+  border-color: #6b7280;
+}
+
+.error-fallback__button--secondary:hover {
+  background: #4b5563;
+  border-color: #4b5563;
+}
+
+.error-fallback__button--tertiary {
+  background: transparent;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.error-fallback__button--tertiary:hover {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #9ca3af;
+}
+
+.error-fallback__help {
+  text-align: left;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.error-fallback__help-text {
+  color: #0c4a6e;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.error-fallback__help-list {
+  color: #0369a1;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.error-fallback__help-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .error-fallback {
+    padding: 1rem;
+  }
+  
+  .error-fallback__container {
+    padding: 1.5rem;
+  }
+  
+  .error-fallback__icon {
+    font-size: 3rem;
+  }
+  
+  .error-fallback__title {
+    font-size: 1.25rem;
+  }
+  
+  .error-fallback__actions {
+    gap: 0.5rem;
+  }
+}
+
+/* Dark theme support */
+.theme-dark .error-fallback {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.theme-dark .error-fallback__container {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.theme-dark .error-fallback__title {
+  color: #f87171;
+}
+
+.theme-dark .error-fallback__description {
+  color: #d1d5db;
+}
+
+.theme-dark .error-fallback__details {
+  background: #111827;
+  border-color: #374151;
+}
+
+.theme-dark .error-fallback__details-summary {
+  color: #f9fafb;
+}
+
+.theme-dark .error-fallback__details-summary:hover {
+  background: #1f2937;
+}
+
+.theme-dark .error-fallback__help {
+  background: #1e3a8a;
+  border-color: #3b82f6;
+}
+
+.theme-dark .error-fallback__help-text {
+  color: #dbeafe;
+}
+
+.theme-dark .error-fallback__help-list {
+  color: #93c5fd;
+}

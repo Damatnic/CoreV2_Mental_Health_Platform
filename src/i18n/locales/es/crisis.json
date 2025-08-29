@@ -1,0 +1,185 @@
+{
+  "emergency": {
+    "title": "Apoyo en Crisis",
+    "subtitle": "No estás solo/a. La ayuda está disponible las 24 horas.",
+    "immediate_danger": "Si estás en peligro inmediato, llama al 911 o ve a la sala de emergencias más cercana.",
+    "call_988": {
+      "title": "Llama al 988 Línea de Prevención del Suicidio y Crisis",
+      "description": "Apoyo gratuito y confidencial las 24 horas para personas en crisis y sus seres queridos.",
+      "number": "988",
+      "action": "Llamar Ahora"
+    },
+    "text_crisis": {
+      "title": "Línea de Texto para Crisis",
+      "description": "Envía un mensaje a un consejero de crisis entrenado las 24 horas desde cualquier lugar en EE.UU.",
+      "text": "Envía HOGAR al 741741",
+      "action": "Enviar Mensaje Ahora"
+    },
+    "chat_online": {
+      "title": "Chat de Crisis en Línea",
+      "description": "Chatea en línea con un consejero de crisis entrenado.",
+      "action": "Chatear Ahora"
+    },
+    "emergency_contacts": {
+      "title": "Contactos de Emergencia",
+      "police": "Policía: 911",
+      "fire": "Bomberos: 911",
+      "ambulance": "Ambulancia: 911",
+      "poison_control": "Control de Envenenamiento: 1-800-222-1222"
+    }
+  },
+  "support": {
+    "you_matter": "Tú importas.",
+    "not_alone": "No estás solo/a.",
+    "help_available": "La ayuda está disponible.",
+    "safe_space": "Este es un espacio seguro.",
+    "confidential": "Tus conversaciones son confidenciales.",
+    "no_judgment": "Aquí no hay juicios.",
+    "take_time": "Tómate tu tiempo.",
+    "breathe": "Recuerda respirar.",
+    "one_step": "Un paso a la vez.",
+    "tomorrow_different": "Mañana puede ser diferente.",
+    "strength_within": "Tienes fuerza dentro de ti.",
+    "reach_out": "Está bien pedir ayuda."
+  },
+  "safety_plan": {
+    "title": "Plan de Seguridad para Crisis",
+    "description": "Un plan personalizado para ayudarte a mantenerte seguro/a durante una crisis.",
+    "step1": {
+      "title": "Paso 1: Señales de Alerta",
+      "description": "Reconoce tus señales de alerta personales que indican que una crisis puede estar desarrollándose.",
+      "examples": "Ejemplos: sentirse sin esperanza, aislamiento, aumento del uso de sustancias, cambios en el sueño"
+    },
+    "step2": {
+      "title": "Paso 2: Estrategias Internas de Afrontamiento",
+      "description": "Cosas que puedes hacer por tu cuenta para ayudarte a sentirte mejor.",
+      "examples": "Ejemplos: escuchar música, caminar, practicar respiración profunda, escribir en diario"
+    },
+    "step3": {
+      "title": "Paso 3: Contactos Sociales para Distracción",
+      "description": "Personas y entornos sociales que pueden ayudar a distraerte de la crisis.",
+      "examples": "Ejemplos: amigos, familiares, actividades sociales, grupos de apoyo"
+    },
+    "step4": {
+      "title": "Paso 4: Contactos para Ayuda",
+      "description": "Personas a quienes puedes pedir ayuda durante una crisis.",
+      "examples": "Ejemplos: familiares, amigos, profesionales de salud mental, líneas de crisis"
+    },
+    "step5": {
+      "title": "Paso 5: Contactos Profesionales",
+      "description": "Profesionales de salud mental y agencias a contactar durante una crisis.",
+      "examples": "Ejemplos: terapeuta, psiquiatra, centro de crisis, sala de emergencias"
+    },
+    "step6": {
+      "title": "Paso 6: Hacer el Entorno Seguro",
+      "description": "Formas de remover o restringir el acceso a medios letales.",
+      "examples": "Ejemplos: remover armas de fuego, medicamentos, objetos cortantes; pedirle a alguien que los guarde"
+    },
+    "step7": {
+      "title": "Paso 7: Razones para Vivir",
+      "description": "Cosas que son importantes para ti y dan significado a tu vida.",
+      "examples": "Ejemplos: familia, amigos, mascotas, metas, creencias espirituales, planes futuros"
+    }
+  },
+  "resources": {
+    "hotlines": {
+      "title": "Líneas de Crisis",
+      "suicide_prevention": "Línea Nacional de Prevención del Suicidio",
+      "crisis_text": "Línea de Texto para Crisis",
+      "domestic_violence": "Línea Nacional de Violencia Doméstica",
+      "substance_abuse": "Línea de Ayuda Nacional SAMHSA",
+      "lgbt_crisis": "Línea de Crisis Nacional LGBT",
+      "veterans": "Línea de Crisis para Veteranos",
+      "teens": "Línea para Adolescentes",
+      "eating_disorders": "Asociación Nacional de Trastornos Alimentarios"
+    },
+    "online_resources": {
+      "title": "Recursos en Línea",
+      "mental_health_america": "Mental Health America",
+      "nami": "Alianza Nacional sobre Enfermedades Mentales",
+      "crisis_chat": "Servicios de Chat para Crisis",
+      "therapy_apps": "Aplicaciones de Salud Mental",
+      "support_groups": "Grupos de Apoyo en Línea"
+    },
+    "local_resources": {
+      "title": "Recursos Locales",
+      "hospitals": "Salas de Emergencia Locales",
+      "mental_health_centers": "Centros Comunitarios de Salud Mental",
+      "therapists": "Terapeutas Locales",
+      "support_groups": "Grupos de Apoyo Locales",
+      "crisis_centers": "Centros de Crisis Locales"
+    }
+  },
+  "coping": {
+    "title": "Estrategias de Afrontamiento",
+    "breathing": {
+      "title": "Respiración Profunda",
+      "description": "La respiración lenta y profunda puede ayudar a calmar tu mente y cuerpo.",
+      "steps": [
+        "Respira lentamente por la nariz contando hasta 4",
+        "Mantén la respiración contando hasta 4",
+        "Exhala lentamente por la boca contando hasta 6",
+        "Repite hasta que te sientas más calmado/a"
+      ]
+    },
+    "grounding": {
+      "title": "Técnica de Conexión a Tierra 5-4-3-2-1",
+      "description": "Usa tus sentidos para conectarte al momento presente.",
+      "steps": [
+        "5 cosas que puedes ver",
+        "4 cosas que puedes tocar",
+        "3 cosas que puedes escuchar",
+        "2 cosas que puedes oler",
+        "1 cosa que puedes saborear"
+      ]
+    },
+    "distraction": {
+      "title": "Distracciones Saludables",
+      "activities": [
+        "Escuchar música relajante",
+        "Ver un video divertido",
+        "Llamar a un amigo o familiar",
+        "Tomar una ducha o baño tibio",
+        "Caminar al aire libre",
+        "Practicar un pasatiempo",
+        "Escribir en un diario",
+        "Hacer ejercicio ligero"
+      ]
+    },
+    "self_care": {
+      "title": "Actividades de Autocuidado",
+      "immediate": [
+        "Beber un vaso de agua",
+        "Comer un refrigerio saludable",
+        "Tomar aire fresco",
+        "Escuchar música",
+        "Practicar respiración profunda"
+      ],
+      "short_term": [
+        "Tomar un baño tibio",
+        "Llamar a un amigo que te apoye",
+        "Ver una película reconfortante",
+        "Practicar meditación",
+        "Hacer ejercicio suave"
+      ],
+      "long_term": [
+        "Mantener un horario regular de sueño",
+        "Comer comidas nutritivas",
+        "Hacer ejercicio regularmente",
+        "Mantenerse conectado con seres queridos",
+        "Practicar manejo del estrés"
+      ]
+    }
+  },
+  "messages": {
+    "crisis_detected": "Estamos aquí para ti. Parece que podrías estar pasando por un momento difícil.",
+    "help_available": "La ayuda profesional está disponible las 24 horas. No tienes que enfrentar esto solo/a.",
+    "safety_first": "Tu seguridad es nuestra prioridad. Por favor considera buscar ayuda inmediata si estás en peligro.",
+    "not_therapist": "Recuerda: Esta plataforma proporciona apoyo entre pares, no terapia profesional.",
+    "emergency_services": "Si esta es una emergencia médica, por favor llama al 911 o ve a la sala de emergencias más cercana.",
+    "confidential_support": "Todas las conversaciones de apoyo en crisis son confidenciales y seguras.",
+    "family_context": "Considera involucrar a familiares de confianza que puedan brindar apoyo adicional.",
+    "community_context": "Tu comunidad y apoyos culturales pueden ser recursos valiosos en este momento.",
+    "professional_context": "Los servicios profesionales de salud mental están disponibles y se recomiendan para apoyo continuo."
+  }
+}

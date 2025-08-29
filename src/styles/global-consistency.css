@@ -1,0 +1,652 @@
+/* Global Consistency Fixes - Making Everything Beautiful */
+
+/* ========== Fix Default HTML Elements ========== */
+
+/* All Buttons Should Be Beautiful */
+button:not(.styled) {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  );
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: var(--text-primary);
+  padding: 0.625rem 1.25rem;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:not(.styled):hover {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.2) 0%,
+    rgba(196, 181, 253, 0.2) 100%
+  );
+  border-color: rgba(167, 139, 250, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.15);
+}
+
+/* All Links Should Match Theme */
+a:not(.styled) {
+  color: #7c3aed;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:not(.styled):hover {
+  color: #6d28d9;
+}
+
+a:not(.styled)::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+  transition: width 0.3s ease;
+}
+
+a:not(.styled):hover::after {
+  width: 100%;
+}
+
+/* ========== Form Elements Enhancement ========== */
+
+/* All Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem !important;
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  background: white !important;
+  border-color: rgba(167, 139, 250, 0.5) !important;
+  box-shadow:
+    0 0 0 3px rgba(167, 139, 250, 0.1),
+    0 4px 12px rgba(167, 139, 250, 0.05) !important;
+}
+
+/* Placeholder Styling */
+::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.5 !important;
+}
+
+/* Labels */
+label {
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+  font-size: 0.9375rem !important;
+}
+
+/* ========== Card and Container Consistency ========== */
+
+.card:not(.enhanced),
+.panel,
+.box {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  ) !important;
+  border: 1px solid rgba(226, 232, 240, 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+  padding: 1.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:not(.enhanced):hover,
+.panel:hover,
+.box:hover {
+  box-shadow: 0 8px 24px rgba(167, 139, 250, 0.1) !important;
+  border-color: rgba(167, 139, 250, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ========== Badge and Tag Consistency ========== */
+
+.badge,
+.tag,
+.chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.375rem 0.875rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  ) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 20px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #7c3aed !important;
+  transition: all 0.3s ease !important;
+}
+
+.badge:hover,
+.tag:hover,
+.chip:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.2) 0%,
+    rgba(196, 181, 253, 0.2) 100%
+  ) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Badge Variants */
+.badge.success,
+.tag.success {
+  background: linear-gradient(
+    135deg,
+    rgba(134, 239, 172, 0.1) 0%,
+    rgba(74, 222, 128, 0.1) 100%
+  ) !important;
+  border-color: rgba(74, 222, 128, 0.3) !important;
+  color: #16a34a !important;
+}
+
+.badge.warning,
+.tag.warning {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.1) 0%,
+    rgba(245, 158, 11, 0.1) 100%
+  ) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: #d97706 !important;
+}
+
+.badge.error,
+.tag.error,
+.badge.danger,
+.tag.danger {
+  background: linear-gradient(
+    135deg,
+    rgba(248, 113, 113, 0.1) 0%,
+    rgba(239, 68, 68, 0.1) 100%
+  ) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #dc2626 !important;
+}
+
+/* ========== Alert and Notification Boxes ========== */
+
+.alert,
+.notification,
+.message-box {
+  padding: 1rem 1.25rem !important;
+  border-radius: 12px !important;
+  border: 1px solid !important;
+  margin: 1rem 0 !important;
+  position: relative !important;
+  animation: slideInAlert 0.4s ease !important;
+}
+
+@keyframes slideInAlert {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert.info,
+.notification.info {
+  background: linear-gradient(
+    135deg,
+    rgba(219, 234, 254, 0.3) 0%,
+    rgba(191, 219, 254, 0.3) 100%
+  ) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  color: #1e40af !important;
+}
+
+.alert.success,
+.notification.success {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 252, 231, 0.3) 0%,
+    rgba(187, 247, 208, 0.3) 100%
+  ) !important;
+  border-color: rgba(74, 222, 128, 0.3) !important;
+  color: #14532d !important;
+}
+
+.alert.warning,
+.notification.warning {
+  background: linear-gradient(
+    135deg,
+    rgba(254, 243, 199, 0.3) 0%,
+    rgba(253, 230, 138, 0.3) 100%
+  ) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: #713f12 !important;
+}
+
+.alert.error,
+.notification.error,
+.alert.danger,
+.notification.danger {
+  background: linear-gradient(
+    135deg,
+    rgba(254, 226, 226, 0.3) 0%,
+    rgba(254, 202, 202, 0.3) 100%
+  ) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #7f1d1d !important;
+}
+
+/* ========== Table Styling ========== */
+
+table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: white !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+thead {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.05) 0%,
+    rgba(196, 181, 253, 0.05) 100%
+  ) !important;
+}
+
+th {
+  padding: 1rem !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  border-bottom: 2px solid rgba(167, 139, 250, 0.2) !important;
+}
+
+td {
+  padding: 0.875rem 1rem !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.2) !important;
+}
+
+tr:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.02) 0%,
+    rgba(196, 181, 253, 0.02) 100%
+  ) !important;
+}
+
+/* ========== Progress Bars ========== */
+
+.progress,
+.progress-bar-container {
+  height: 8px !important;
+  background: rgba(226, 232, 240, 0.3) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.progress-bar,
+.progress-fill {
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    #7c3aed 0%,
+    #a78bfa 50%,
+    #c084fc 100%
+  ) !important;
+  border-radius: 4px !important;
+  transition: width 0.5s ease !important;
+  position: relative !important;
+}
+
+.progress-bar::after,
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: progressShimmer 2s infinite;
+}
+
+@keyframes progressShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* ========== Dropdown Menus ========== */
+
+.dropdown,
+.dropdown-menu,
+.menu {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  ) !important;
+  border: 1px solid rgba(226, 232, 240, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dropdown-item,
+.menu-item {
+  padding: 0.625rem 1rem !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  color: var(--text-primary) !important;
+}
+
+.dropdown-item:hover,
+.menu-item:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  ) !important;
+  transform: translateX(2px) !important;
+}
+
+/* ========== Icons Consistency ========== */
+
+.icon,
+svg {
+  transition: all 0.3s ease !important;
+}
+
+.icon:hover,
+svg:hover {
+  transform: scale(1.1) !important;
+}
+
+/* ========== Dividers ========== */
+
+hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(167, 139, 250, 0.3) 50%,
+    transparent 100%
+  ) !important;
+  margin: 2rem 0 !important;
+}
+
+/* ========== Code Blocks ========== */
+
+code {
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.05) 0%,
+    rgba(196, 181, 253, 0.05) 100%
+  ) !important;
+  padding: 0.125rem 0.375rem !important;
+  border-radius: 4px !important;
+  font-family: "Consolas", "Monaco", monospace !important;
+  color: #7c3aed !important;
+  font-size: 0.875em !important;
+}
+
+pre {
+  background: linear-gradient(
+    135deg,
+    rgba(31, 41, 55, 0.98) 0%,
+    rgba(17, 24, 39, 0.95) 100%
+  ) !important;
+  padding: 1rem !important;
+  border-radius: 12px !important;
+  overflow-x: auto !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+}
+
+pre code {
+  background: transparent !important;
+  color: #e5e7eb !important;
+  padding: 0 !important;
+}
+
+/* ========== Tooltip Styling ========== */
+
+.tooltip,
+[data-tooltip] {
+  position: relative !important;
+}
+
+.tooltip::after,
+[data-tooltip]::after {
+  content: attr(data-tooltip) !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(31, 41, 55, 0.95) 0%,
+    rgba(17, 24, 39, 0.9) 100%
+  ) !important;
+  color: white !important;
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 8px !important;
+  font-size: 0.875rem !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.tooltip:hover::after,
+[data-tooltip]:hover::after {
+  opacity: 1 !important;
+}
+
+/* ========== Avatar Consistency ========== */
+
+.avatar {
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-weight: 600 !important;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.avatar:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4) !important;
+}
+
+.avatar.small {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 0.875rem !important;
+}
+
+.avatar.medium {
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 1rem !important;
+}
+
+.avatar.large {
+  width: 56px !important;
+  height: 56px !important;
+  font-size: 1.25rem !important;
+}
+
+/* ========== Empty States ========== */
+
+.empty-state {
+  text-align: center !important;
+  padding: 3rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(237, 233, 254, 0.2) 0%,
+    rgba(243, 232, 255, 0.2) 100%
+  ) !important;
+  border-radius: 16px !important;
+  border: 2px dashed rgba(167, 139, 250, 0.3) !important;
+}
+
+.empty-state-icon {
+  width: 64px !important;
+  height: 64px !important;
+  margin: 0 auto 1.5rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  ) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #7c3aed !important;
+  font-size: 2rem !important;
+}
+
+.empty-state h3 {
+  color: var(--text-primary) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.empty-state p {
+  color: var(--text-secondary) !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ========== Spinner/Loader Consistency ========== */
+
+.spinner,
+.loader {
+  width: 40px !important;
+  height: 40px !important;
+  border: 3px solid rgba(167, 139, 250, 0.2) !important;
+  border-top-color: #7c3aed !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+/* ========== Dark Mode Overrides ========== */
+
+[data-theme="dark"] button:not(.styled) {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(167, 139, 250, 0.1) 100%
+  ) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  color: #e5e7eb !important;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: rgba(17, 24, 39, 0.9) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .card:not(.enhanced),
+[data-theme="dark"] .panel,
+[data-theme="dark"] .box {
+  background: linear-gradient(
+    135deg,
+    rgba(31, 41, 55, 0.98) 0%,
+    rgba(17, 24, 39, 0.95) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.3) !important;
+}
+
+[data-theme="dark"] table {
+  background: rgba(31, 41, 55, 0.98) !important;
+}
+
+[data-theme="dark"] .dropdown,
+[data-theme="dark"] .dropdown-menu,
+[data-theme="dark"] .menu {
+  background: linear-gradient(
+    135deg,
+    rgba(31, 41, 55, 0.98) 0%,
+    rgba(17, 24, 39, 0.95) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.3) !important;
+}
+
+/* ========== Mobile Touch Targets ========== */
+
+@media (max-width: 768px) {
+  button,
+  .btn,
+  .app-button {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 44px !important;
+    font-size: 16px !important; /* Prevent zoom on iOS */
+  }
+
+  .badge,
+  .tag,
+  .chip {
+    padding: 0.5rem 1rem !important;
+  }
+}

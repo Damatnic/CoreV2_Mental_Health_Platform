@@ -1,0 +1,17 @@
+
+/* Skip navigation link - visible only on focus */
+.skip-navigation {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.skip-navigation:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+}

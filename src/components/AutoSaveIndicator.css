@@ -1,0 +1,498 @@
+/* AutoSaveIndicator.css - Mobile-first auto-save status indicator styles */
+
+/* Base indicator styles */
+.auto-save-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--indicator-bg, rgba(0, 0, 0, 0.8));
+  color: var(--indicator-color, #ffffff);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  min-width: 120px;
+  text-align: center;
+  border: 1px solid var(--indicator-border, transparent);
+
+  /* Mobile optimizations */
+  @media (max-width: 767px) {
+    font-size: 12px;
+    padding: 6px 10px;
+    min-width: 100px;
+    border-radius: 4px;
+  }
+}
+
+/* Position variants */
+.auto-save-indicator--top-right {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+
+  @media (max-width: 767px) {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+.auto-save-indicator--top-left {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+
+  @media (max-width: 767px) {
+    top: 8px;
+    left: 8px;
+  }
+}
+
+.auto-save-indicator--bottom-right {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+
+  @media (max-width: 767px) {
+    bottom: 8px;
+    right: 8px;
+  }
+}
+
+.auto-save-indicator--bottom-left {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+
+  @media (max-width: 767px) {
+    bottom: 8px;
+    left: 8px;
+  }
+}
+
+.auto-save-indicator--inline {
+  position: relative;
+  display: inline-flex;
+  margin: 0 8px;
+}
+
+/* Content container */
+.auto-save-indicator__content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: 767px) {
+    gap: 4px;
+  }
+}
+
+/* Icon styles */
+.auto-save-indicator__icon {
+  font-size: 16px;
+  line-height: 1;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+  }
+}
+
+/* Status text */
+.auto-save-indicator__status {
+  font-weight: 500;
+  white-space: nowrap;
+
+  @media (max-width: 767px) {
+    font-size: 11px;
+  }
+}
+
+/* Timestamp */
+.auto-save-indicator__timestamp {
+  font-size: 11px;
+  opacity: 0.8;
+  white-space: nowrap;
+
+  @media (max-width: 767px) {
+    font-size: 10px;
+  }
+}
+
+/* Error message */
+.auto-save-indicator__error {
+  font-size: 11px;
+  color: var(--error-color, #ff6b6b);
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+
+  @media (max-width: 767px) {
+    font-size: 10px;
+    max-width: 100px;
+  }
+}
+
+/* Countdown container */
+.auto-save-indicator__countdown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.9;
+
+  @media (max-width: 767px) {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+}
+
+.auto-save-indicator__countdown-label {
+  white-space: nowrap;
+}
+
+.auto-save-indicator__countdown-time {
+  font-weight: 600;
+  color: var(--countdown-color, #ffd93d);
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Progress bar for saving state */
+.auto-save-indicator__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
+}
+
+.auto-save-indicator__progress-bar {
+  height: 100%;
+  background-color: var(--progress-color, #4ade80);
+  animation: progressSlide 1.5s ease-in-out infinite;
+  width: 30%;
+}
+
+/* Status color variants */
+.auto-save-indicator--blue {
+  --indicator-bg: #3b82f6;
+  --indicator-border: #2563eb;
+  --progress-color: #60a5fa;
+}
+
+.auto-save-indicator--green {
+  --indicator-bg: #10b981;
+  --indicator-border: #059669;
+  --progress-color: #34d399;
+}
+
+.auto-save-indicator--red {
+  --indicator-bg: #ef4444;
+  --indicator-border: #dc2626;
+  --progress-color: #f87171;
+  --error-color: #fecaca;
+}
+
+.auto-save-indicator--orange {
+  --indicator-bg: #f59e0b;
+  --indicator-border: #d97706;
+  --progress-color: #fbbf24;
+}
+
+.auto-save-indicator--gray {
+  --indicator-bg: #6b7280;
+  --indicator-border: #4b5563;
+  --progress-color: #9ca3af;
+}
+
+/* State-based styles */
+.auto-save-indicator--saving {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.auto-save-indicator--saved {
+  animation: bounce 0.6s ease-out;
+}
+
+.auto-save-indicator--error {
+  animation: shake 0.6s ease-in-out;
+}
+
+.auto-save-indicator--dirty .auto-save-indicator__icon {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Animation styles */
+.auto-save-indicator--animated {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+
+.auto-save-indicator--animated.auto-save-indicator--saving {
+  transform: scale(1.05);
+}
+
+.auto-save-indicator--animated.auto-save-indicator--saved {
+  transform: scale(1.1);
+}
+
+.auto-save-indicator--animated.auto-save-indicator--error {
+  transform: scale(1.05);
+}
+
+/* Keyframe animations */
+@keyframes progressSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40%,
+  43% {
+    transform: translateY(-6px);
+  }
+  70% {
+    transform: translateY(-3px);
+  }
+  90% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 2px currentColor;
+  }
+  100% {
+    text-shadow:
+      0 0 6px currentColor,
+      0 0 10px currentColor;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .auto-save-indicator {
+    --indicator-bg: rgba(17, 24, 39, 0.95);
+    --indicator-color: #f9fafb;
+    --indicator-border: #374151;
+    --countdown-color: #fbbf24;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .auto-save-indicator--blue {
+    --indicator-bg: #1e40af;
+    --indicator-border: #1d4ed8;
+  }
+
+  .auto-save-indicator--green {
+    --indicator-bg: #047857;
+    --indicator-border: #065f46;
+  }
+
+  .auto-save-indicator--red {
+    --indicator-bg: #dc2626;
+    --indicator-border: #b91c1c;
+    --error-color: #fca5a5;
+  }
+
+  .auto-save-indicator--orange {
+    --indicator-bg: #d97706;
+    --indicator-border: #b45309;
+  }
+
+  .auto-save-indicator--gray {
+    --indicator-bg: #4b5563;
+    --indicator-border: #374151;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .auto-save-indicator {
+    --indicator-bg: WindowText;
+    --indicator-color: Window;
+    --indicator-border: HighlightText;
+    border-width: 2px;
+    box-shadow: none;
+  }
+
+  .auto-save-indicator--blue,
+  .auto-save-indicator--green,
+  .auto-save-indicator--red,
+  .auto-save-indicator--orange,
+  .auto-save-indicator--gray {
+    --indicator-bg: Highlight;
+    --indicator-color: HighlightText;
+    --indicator-border: WindowText;
+    --progress-color: Window;
+    --countdown-color: Window;
+    --error-color: Window;
+  }
+
+  .auto-save-indicator__progress {
+    background-color: Window;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .auto-save-indicator,
+  .auto-save-indicator__icon,
+  .auto-save-indicator__progress-bar {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .auto-save-indicator--animated {
+    transform: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .auto-save-indicator {
+    position: static;
+    display: inline-block;
+    background: white;
+    color: black;
+    border: 1px solid black;
+    box-shadow: none;
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  .auto-save-indicator__progress {
+    display: none;
+  }
+
+  .auto-save-indicator__countdown {
+    display: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.auto-save-indicator:focus-within {
+  outline: 2px solid var(--focus-color, #0066cc);
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 320px) {
+  .auto-save-indicator--top-right,
+  .auto-save-indicator--bottom-right {
+    right: 4px;
+  }
+
+  .auto-save-indicator--top-left,
+  .auto-save-indicator--bottom-left {
+    left: 4px;
+  }
+
+  .auto-save-indicator {
+    min-width: 80px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+
+  .auto-save-indicator__content {
+    gap: 2px;
+  }
+
+  .auto-save-indicator__error {
+    max-width: 60px;
+  }
+}
+
+/* RTL (Right-to-Left) language support */
+[dir="rtl"] .auto-save-indicator--top-right {
+  right: auto;
+  left: 16px;
+}
+
+[dir="rtl"] .auto-save-indicator--top-left {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .auto-save-indicator--bottom-right {
+  right: auto;
+  left: 16px;
+}
+
+[dir="rtl"] .auto-save-indicator--bottom-left {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .auto-save-indicator__progress-bar {
+  animation-name: progressSlideRTL;
+}
+
+@keyframes progressSlideRTL {
+  0% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(-300%);
+  }
+}

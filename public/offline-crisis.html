@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Resources - Available Offline</title>
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-error: #f56565;
+            --color-warning: #ed8936;
+            --color-success: #48bb78;
+            --color-surface: #ffffff;
+            --color-text: #2d3748;
+            --color-text-secondary: #718096;
+            --color-border: #e2e8f0;
+            
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-surface: #1a202c;
+                --color-text: #f7fafc;
+                --color-text-secondary: #a0aec0;
+                --color-border: #4a5568;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-surface);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+        
+        .crisis-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .crisis-header {
+            background: linear-gradient(135deg, #f56565, #ed8936);
+            color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .crisis-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .crisis-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .emergency-card {
+            background: var(--color-surface);
+            border: 2px solid var(--color-error);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease;
+        }
+        
+        .emergency-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .emergency-card.primary {
+            background: linear-gradient(135deg, rgba(245, 101, 101, 0.1), rgba(237, 137, 54, 0.1));
+            border-color: var(--color-error);
+        }
+        
+        .emergency-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .emergency-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-error);
+        }
+        
+        .emergency-number {
+            font-size: 2rem;
+            font-weight: 900;
+            margin: var(--spacing-md) 0;
+            color: var(--color-error);
+            letter-spacing: 2px;
+        }
+        
+        .emergency-description {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .emergency-button {
+            display: block;
+            width: 100%;
+            background: var(--color-error);
+            color: white;
+            padding: var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .emergency-button:hover {
+            background: #e53e3e;
+            transform: translateY(-1px);
+        }
+        
+        .coping-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .coping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .coping-technique {
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+        }
+        
+        .technique-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+        
+        .technique-steps {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .technique-steps li {
+            padding: var(--spacing-xs) 0;
+            position: relative;
+            padding-left: var(--spacing-lg);
+            color: var(--color-text-secondary);
+        }
+        
+        .technique-steps li:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: var(--spacing-xs);
+            background: var(--color-primary);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .coping-technique .technique-steps {
+            counter-reset: step-counter;
+        }
+        
+        .offline-notice {
+            background: rgba(237, 137, 54, 0.1);
+            border: 1px solid var(--color-warning);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .offline-notice-icon {
+            font-size: 1.5rem;
+            color: var(--color-warning);
+        }
+        
+        .offline-notice-text {
+            color: var(--color-text);
+        }
+        
+        .resources-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .resources-list li {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .resource-info h4 {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text);
+        }
+        
+        .resource-info p {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .resource-contact {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                padding: var(--spacing-md);
+            }
+            
+            .crisis-title {
+                font-size: 1.5rem;
+            }
+            
+            .emergency-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .emergency-number {
+                font-size: 1.5rem;
+            }
+            
+            .coping-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+        }
+        
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .emergency-card,
+            .emergency-button {
+                transition: none;
+            }
+        }
+        
+        @media (prefers-contrast: high) {
+            .emergency-card {
+                border-width: 3px;
+            }
+            
+            .emergency-button {
+                border: 2px solid currentColor;
+            }
+        }
+        
+        /* Focus styles for keyboard navigation */
+        .emergency-button:focus,
+        .emergency-card:focus {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="crisis-container">
+        <header class="crisis-header">
+            <h1 class="crisis-title">🚨 Crisis Resources</h1>
+            <p class="crisis-subtitle">
+                These resources are always available, even when you're offline. 
+                You are not alone, and help is always available.
+            </p>
+        </header>
+        
+        <div class="offline-notice">
+            <div class="offline-notice-icon">📶</div>
+            <div class="offline-notice-text">
+                <strong>Offline Mode:</strong> These crisis resources are cached on your device 
+                and available without an internet connection.
+            </div>
+        </div>
+        
+        <section class="emergency-grid">
+            <div class="emergency-card primary">
+                <div class="emergency-icon">🆘</div>
+                <h2 class="emergency-title">Emergency Services</h2>
+                <div class="emergency-number">911</div>
+                <p class="emergency-description">
+                    For immediate life-threatening emergencies. Available 24/7 in the US.
+                </p>
+                <a href="tel:911" class="emergency-button">Call 911 Now</a>
+            </div>
+            
+            <div class="emergency-card">
+                <div class="emergency-icon">☎️</div>
+                <h2 class="emergency-title">National Suicide Prevention Lifeline</h2>
+                <div class="emergency-number">988</div>
+                <p class="emergency-description">
+                    Free, confidential support 24/7 for people in suicidal crisis or distress.
+                </p>
+                <a href="tel:988" class="emergency-button">Call 988 Now</a>
+            </div>
+            
+            <div class="emergency-card">
+                <div class="emergency-icon">💬</div>
+                <h2 class="emergency-title">Crisis Text Line</h2>
+                <div class="emergency-number">741741</div>
+                <p class="emergency-description">
+                    Text HOME to 741741 for free, 24/7 crisis support via text message.
+                </p>
+                <a href="sms:741741?body=HOME" class="emergency-button">Text HOME to 741741</a>
+            </div>
+        </section>
+        
+        <section class="coping-section">
+            <h2 class="section-title">
+                🌟 Immediate Coping Strategies
+            </h2>
+            
+            <div class="coping-grid">
+                <div class="coping-technique">
+                    <h3 class="technique-title">5-4-3-2-1 Grounding Technique</h3>
+                    <ol class="technique-steps">
+                        <li>Name 5 things you can see</li>
+                        <li>Name 4 things you can touch</li>
+                        <li>Name 3 things you can hear</li>
+                        <li>Name 2 things you can smell</li>
+                        <li>Name 1 thing you can taste</li>
+                    </ol>
+                </div>
+                
+                <div class="coping-technique">
+                    <h3 class="technique-title">Box Breathing</h3>
+                    <ol class="technique-steps">
+                        <li>Breathe in for 4 counts</li>
+                        <li>Hold your breath for 4 counts</li>
+                        <li>Breathe out for 4 counts</li>
+                        <li>Hold empty for 4 counts</li>
+                        <li>Repeat 4-8 times</li>
+                    </ol>
+                </div>
+                
+                <div class="coping-technique">
+                    <h3 class="technique-title">STOP Technique</h3>
+                    <ol class="technique-steps">
+                        <li><strong>S</strong>top what you're doing</li>
+                        <li><strong>T</strong>ake a deep breath</li>
+                        <li><strong>O</strong>bserve your thoughts and feelings</li>
+                        <li><strong>P</strong>roceed with intention and awareness</li>
+                    </ol>
+                </div>
+                
+                <div class="coping-technique">
+                    <h3 class="technique-title">Safe Space Visualization</h3>
+                    <ol class="technique-steps">
+                        <li>Close your eyes and breathe deeply</li>
+                        <li>Imagine a place where you feel completely safe</li>
+                        <li>Picture every detail of this space</li>
+                        <li>Focus on the positive feelings</li>
+                        <li>Stay here as long as you need</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        
+        <section class="coping-section">
+            <h2 class="section-title">
+                📞 Additional Crisis Resources
+            </h2>
+            
+            <ul class="resources-list">
+                <li>
+                    <div class="resource-info">
+                        <h4>SAMHSA National Helpline</h4>
+                        <p>Treatment referral and information service (24/7)</p>
+                    </div>
+                    <div class="resource-contact">1-800-662-4357</div>
+                </li>
+                
+                <li>
+                    <div class="resource-info">
+                        <h4>National Domestic Violence Hotline</h4>
+                        <p>24/7 confidential support for domestic violence</p>
+                    </div>
+                    <div class="resource-contact">1-800-799-7233</div>
+                </li>
+                
+                <li>
+                    <div class="resource-info">
+                        <h4>LGBTQ National Hotline</h4>
+                        <p>Support for LGBTQ individuals (Mon-Fri 4pm-12am ET)</p>
+                    </div>
+                    <div class="resource-contact">1-888-843-4564</div>
+                </li>
+                
+                <li>
+                    <div class="resource-info">
+                        <h4>Veterans Crisis Line</h4>
+                        <p>24/7 support for veterans and their families</p>
+                    </div>
+                    <div class="resource-contact">1-800-273-8255</div>
+                </li>
+                
+                <li>
+                    <div class="resource-info">
+                        <h4>National Sexual Assault Hotline</h4>
+                        <p>24/7 confidential support for sexual assault survivors</p>
+                    </div>
+                    <div class="resource-contact">1-800-656-4673</div>
+                </li>
+            </ul>
+        </section>
+        
+        <div class="offline-notice">
+            <div class="offline-notice-icon">💙</div>
+            <div class="offline-notice-text">
+                <strong>Remember:</strong> These feelings are temporary. You matter, your life has value, 
+                and there are people who want to help. When you're ready, professional support is available.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Make phone numbers clickable on mobile
+        function makePhoneNumbersClickable() {
+            const phoneNumbers = document.querySelectorAll('.resource-contact');
+            phoneNumbers.forEach(element => {
+                const phoneNumber = element.textContent.trim();
+                if (phoneNumber.match(/[\d\-() ]+/)) {
+                    const cleanNumber = phoneNumber.replace(/\D/g, '');
+                    element.innerHTML = `<a href="tel:${cleanNumber}" style="color: inherit; text-decoration: none;">${phoneNumber}</a>`;
+                }
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', makePhoneNumbersClickable);
+        
+        // Track usage for offline analytics
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(registration => {
+                // Log crisis page access for analytics
+                registration.active?.postMessage({
+                    type: 'CRISIS_PAGE_ACCESS',
+                    timestamp: Date.now(),
+                    offline: !navigator.onLine
+                });
+            });
+        }
+        
+        // Accessibility: Announce important information to screen readers
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.textContent = message;
+            announcement.style.position = 'absolute';
+            announcement.style.left = '-10000px';
+            announcement.style.width = '1px';
+            announcement.style.height = '1px';
+            announcement.style.overflow = 'hidden';
+            
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+        
+        // Announce page load to screen readers
+        announceToScreenReader('Crisis resources page loaded. Emergency contacts and coping strategies are available.');
+        
+        // Monitor connection status
+        window.addEventListener('online', () => {
+            announceToScreenReader('Internet connection restored. Full Astral Core features are now available.');
+        });
+        
+        window.addEventListener('offline', () => {
+            announceToScreenReader('You are offline, but crisis resources remain available.');
+        });
+    </script>
+</body>
+</html>

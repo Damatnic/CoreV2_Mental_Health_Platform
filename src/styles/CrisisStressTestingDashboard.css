@@ -1,0 +1,758 @@
+/**
+ * Crisis Stress Testing Dashboard Styles
+ * 
+ * Comprehensive styling for the crisis intervention stress testing interface
+ * with emergency-focused design patterns and accessibility considerations.
+ */
+
+.crisis-stress-testing-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: linear-gradient(135deg, #f8faff 0%, #f1f5ff 100%);
+  min-height: 100vh;
+  color: #1a1a1a;
+}
+
+/* Header Section */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.2);
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.run-tests-btn,
+.emergency-stop-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.run-tests-btn {
+  background: #059669;
+  color: white;
+}
+
+.run-tests-btn:hover:not(:disabled) {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.run-tests-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.emergency-stop-btn {
+  background: #ff4444;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  animation: pulse-red 2s infinite;
+}
+
+.emergency-stop-btn:hover:not(:disabled) {
+  background: #cc0000;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+}
+
+@keyframes pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+  }
+}
+
+/* Emergency Alert */
+.emergency-alert {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 2px solid #fca5a5;
+  border-radius: 12px;
+  animation: shake 0.5s ease-in-out infinite alternate;
+}
+
+.alert-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.alert-icon {
+  font-size: 2rem;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(2px);
+  }
+}
+
+.alert-text {
+  flex: 1;
+}
+
+.alert-text strong {
+  display: block;
+  color: #dc2626;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert-text p {
+  margin: 0.5rem 0;
+  color: #991b1b;
+  font-weight: 500;
+}
+
+.alert-text small {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.clear-alert-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.clear-alert-btn:hover {
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* Current Test Status */
+.current-test-status {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 2px solid #93c5fd;
+  border-radius: 12px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 4px;
+  animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0%,
+  100% {
+    width: 30%;
+  }
+  50% {
+    width: 70%;
+  }
+}
+
+/* Test Configuration */
+.test-configuration {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.test-configuration h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.config-section {
+  margin-bottom: 1.5rem;
+}
+
+.config-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.config-section input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.config-section input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.config-section input:disabled {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Scenario Selection */
+.scenario-selection {
+  margin-bottom: 2rem;
+}
+
+.scenario-selection h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.scenario-card {
+  padding: 1.5rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.scenario-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.scenario-header input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+}
+
+.scenario-name {
+  flex: 1;
+  font-weight: 600;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.severity-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.severity-critical {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.severity-high {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fcd34d;
+}
+
+.severity-medium {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #86efac;
+}
+
+.scenario-description {
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.scenario-details {
+  display: flex;
+  gap: 1rem;
+}
+
+.scenario-details small {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+/* Test Results Summary */
+.test-results-summary {
+  margin-bottom: 2rem;
+}
+
+.test-results-summary h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.stat-card.success .stat-value {
+  color: #059669;
+}
+
+.stat-card.failed .stat-value {
+  color: #dc2626;
+}
+
+.stat-card.critical .stat-value {
+  color: #7c2d12;
+  animation: pulse-critical 2s infinite;
+}
+
+@keyframes pulse-critical {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Detailed Results */
+.detailed-results {
+  margin-bottom: 2rem;
+}
+
+.detailed-results h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.results-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-row {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #e5e7eb;
+}
+
+.result-row.success {
+  border-left-color: #059669;
+}
+
+.result-row.failed {
+  border-left-color: #dc2626;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.test-name {
+  font-weight: 600;
+  color: #1f2937;
+  flex: 1;
+  min-width: 200px;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.failed {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.safety-impact {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.safety-none {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+.safety-minimal {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.safety-moderate {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.safety-significant {
+  background: #fed7aa;
+  color: #ea580c;
+}
+
+.safety-life-threatening {
+  background: #fef2f2;
+  color: #dc2626;
+  animation: pulse-danger 1.5s infinite;
+}
+
+@keyframes pulse-danger {
+  0%,
+  100% {
+    background: #fef2f2;
+    transform: scale(1);
+  }
+  50% {
+    background: #fee2e2;
+    transform: scale(1.05);
+  }
+}
+
+/* Result Metrics */
+.result-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.metric span:last-child {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.over-threshold,
+.above-threshold,
+.below-threshold {
+  color: #dc2626 !important;
+  font-weight: 700;
+}
+
+/* Lists in Results */
+.failure-points,
+.recommendations,
+.emergency-procedures {
+  margin-top: 1rem;
+}
+
+.failure-points strong,
+.recommendations strong,
+.emergency-procedures strong {
+  color: #1f2937;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.failure-points ul,
+.recommendations ul,
+.emergency-procedures ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.failure-points li {
+  color: #dc2626;
+  margin-bottom: 0.25rem;
+}
+
+.recommendations li {
+  color: #059669;
+  margin-bottom: 0.25rem;
+}
+
+.emergency-procedures li {
+  color: #7c2d12;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Failover Results */
+.failover-results {
+  margin-bottom: 2rem;
+}
+
+.failover-results h3 {
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.failover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1rem;
+}
+
+.failover-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #e5e7eb;
+}
+
+.failover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.component-name {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.failover-status {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.failover-status.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.failover-status.failed {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.failover-details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.failover-details strong {
+  color: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crisis-stress-testing-dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .scenario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .result-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .failover-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .scenario-card,
+  .stat-card,
+  .result-row,
+  .failover-card {
+    border-width: 3px;
+    border-color: #000;
+  }
+
+  .emergency-alert {
+    border-width: 3px;
+    border-color: #dc2626;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

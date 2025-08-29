@@ -1,0 +1,174 @@
+/* Video Player Touch Optimizations */
+
+.video-player-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #000;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-play-pause-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.video-play-pause-icon.visible {
+  opacity: 1;
+}
+
+.video-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 1.5rem;
+  color: white;
+}
+
+.video-info {
+  margin-bottom: 1rem;
+}
+
+.video-info .post-user-info {
+  margin-bottom: 0.5rem;
+}
+
+.video-info .username {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.video-info .description {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.video-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.video-action-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  min-width: 44px; /* Touch target minimum */
+  min-height: 44px; /* Touch target minimum */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.video-action-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.video-action-button:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.95);
+}
+
+.video-action-button svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.video-action-button span {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.video-action-button.liked {
+  color: #ff4757;
+}
+
+.video-action-button.liked svg {
+  transform: scale(1.1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .video-overlay {
+    padding: 1rem;
+  }
+
+  .video-actions {
+    gap: 0.5rem;
+  }
+
+  .video-action-button {
+    padding: 1rem 0.75rem; /* Larger touch area */
+    min-width: 48px; /* Enhanced touch target */
+    min-height: 48px; /* Enhanced touch target */
+  }
+
+  .video-action-button:hover {
+    transform: none; /* Remove hover transforms */
+  }
+
+  .video-action-button:active {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(0.92);
+    transition: all 0.1s ease-out;
+  }
+
+  .video-info .description {
+    font-size: 0.95rem;
+  }
+
+  .video-play-pause-icon {
+    font-size: 3rem; /* Smaller on mobile */
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .video-action-button {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .video-action-button:active {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .video-action-button,
+  .video-play-pause-icon {
+    transition: none;
+  }
+
+  .video-action-button:hover,
+  .video-action-button:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,475 @@
+/* Critical Fixes - Addressing all UI issues with deep consistency */
+
+/* ========== Z-Index Management System ========== */
+:root {
+  --z-sidebar: 1000;
+  --z-sidebar-overlay: 999;
+  --z-content: 1;
+  --z-modal-backdrop: 9999;
+  --z-modal: 10000;
+  --z-toast: 10001;
+  --z-welcome: 10002;
+  --z-floating-buttons: 9998;
+  --z-status-popup: 10003;
+  --z-dropdown: 2000;
+}
+
+/* ========== Welcome Screen Alignment Fix ========== */
+.welcome-screen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: var(--z-welcome) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.welcome-container {
+  position: relative !important;
+  margin: auto !important;
+  transform: none !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+/* ========== Content Area Spacing Fix ========== */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 280px; /* Width of sidebar */
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.view-content {
+  padding: 2rem;
+  padding-top: 3rem; /* Extra top padding to prevent navbar overlap */
+  min-height: calc(100vh - 5rem);
+  position: relative;
+  z-index: var(--z-content);
+}
+
+/* Specific fix for Wellness Dashboard */
+.wellness-view .view-header,
+.wellness-tracking-view .view-header {
+  padding-top: 2rem !important;
+  margin-top: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+.wellness-view h1,
+.wellness-tracking-view h1,
+.view-content > h1:first-child {
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== Safety Plan Redesign - Remove Yellow ========== */
+.safety-plan-view,
+.safety-plan-card,
+.safety-plan-section {
+  background: linear-gradient(
+    135deg,
+    rgba(147, 197, 253, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  ) !important;
+  border-color: rgba(147, 197, 253, 0.3) !important;
+}
+
+.safety-plan-header {
+  background: linear-gradient(135deg, #93c5fd 0%, #c4b5fd 100%) !important;
+  color: white !important;
+  padding: 1.5rem !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.safety-plan-item {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid rgba(147, 197, 253, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.safety-plan-item:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(147, 197, 253, 0.05) 0%,
+    rgba(196, 181, 253, 0.05) 100%
+  ) !important;
+  border-color: rgba(147, 197, 253, 0.4) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.2) !important;
+}
+
+.safety-plan-icon {
+  background: linear-gradient(135deg, #93c5fd 0%, #c4b5fd 100%) !important;
+  color: white !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 1rem !important;
+  box-shadow: 0 3px 8px rgba(147, 197, 253, 0.3) !important;
+}
+
+.safety-plan-button,
+.safety-plan-action {
+  background: linear-gradient(135deg, #93c5fd 0%, #c4b5fd 100%) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(147, 197, 253, 0.3) !important;
+}
+
+.safety-plan-button:hover,
+.safety-plan-action:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(147, 197, 253, 0.4) !important;
+}
+
+/* Remove any yellow/warning colors from safety plan */
+.safety-plan-view .warning,
+.safety-plan-view .alert-warning,
+.safety-plan-warning {
+  background: linear-gradient(
+    135deg,
+    rgba(147, 197, 253, 0.1) 0%,
+    rgba(196, 181, 253, 0.1) 100%
+  ) !important;
+  border-color: rgba(147, 197, 253, 0.3) !important;
+  color: #4c51bf !important;
+}
+
+/* ========== Site Status Popup Redesign ========== */
+.site-status-popup,
+.status-popup,
+.connection-status-popup {
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(241, 245, 249, 0.95) 100%
+  ) !important;
+  border-radius: 16px !important;
+  padding: 1.25rem 1.5rem !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    0 0 40px rgba(99, 102, 241, 0.08) !important;
+  border: 1px solid rgba(226, 232, 240, 0.5) !important;
+  z-index: var(--z-status-popup) !important;
+  min-width: 280px !important;
+  animation: statusSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+@keyframes statusSlideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.site-status-header,
+.status-popup-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.3) !important;
+}
+
+.status-indicator-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  animation: statusPulse 2s ease-in-out infinite !important;
+}
+
+.status-indicator-dot.online {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+.status-indicator-dot.offline {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4) !important;
+}
+
+.status-indicator-dot.error {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%) !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4) !important;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.status-title {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.status-message {
+  font-size: 0.875rem !important;
+  color: var(--text-secondary) !important;
+  line-height: 1.5 !important;
+}
+
+.status-details {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  margin-top: 0.75rem !important;
+  padding: 0.75rem !important;
+  background: rgba(241, 245, 249, 0.5) !important;
+  border-radius: 8px !important;
+  font-size: 0.825rem !important;
+}
+
+.status-close-btn {
+  position: absolute !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+}
+
+.status-close-btn:hover {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  transform: rotate(90deg) !important;
+}
+
+/* ========== Mobile Sidebar Responsive Fix ========== */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    transform: translateX(-100%) !important;
+    z-index: var(--z-sidebar) !important;
+  }
+
+  .sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  .view-content {
+    padding: 1.5rem 1rem !important;
+    padding-top: 4rem !important; /* Extra space for mobile header */
+  }
+
+  .welcome-container {
+    width: 95% !important;
+    margin: 1rem !important;
+  }
+
+  .site-status-popup,
+  .status-popup {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    min-width: auto !important;
+  }
+}
+
+/* ========== Floating Elements Z-Index Fix ========== */
+.floating-button-manager {
+  z-index: var(--z-floating-buttons) !important;
+}
+
+.crisis-alert-banner {
+  z-index: calc(var(--z-content) + 100) !important;
+  position: relative !important;
+}
+
+/* ========== Modal Backdrop Proper Blur ========== */
+.modal-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(15, 23, 42, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: var(--z-modal-backdrop) !important;
+}
+
+.modal-content {
+  z-index: var(--z-modal) !important;
+  position: relative !important;
+}
+
+/* ========== Toast Container Position Fix ========== */
+.toast-container {
+  position: fixed !important;
+  top: 2rem !important;
+  right: 2rem !important;
+  z-index: var(--z-toast) !important;
+  max-width: 400px !important;
+}
+
+/* ========== Form Input Consistency ========== */
+input,
+textarea,
+select {
+  font-family: var(--font-family) !important;
+  font-size: 16px !important; /* Prevents zoom on iOS */
+}
+
+/* ========== Button Consistency ========== */
+button,
+.btn,
+.app-button {
+  font-family: var(--font-family) !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important; /* Remove any uppercase transforms */
+}
+
+/* ========== Loading Overlay Proper Coverage ========== */
+.loading-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: calc(var(--z-modal) - 1) !important;
+}
+
+/* ========== Card Hover States Consistency ========== */
+.card:hover,
+.post-card:hover,
+.community-card:hover,
+.wellness-card:hover {
+  transform: translateY(-2px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ========== Dark Mode Status Popup ========== */
+[data-theme="dark"] .site-status-popup,
+[data-theme="dark"] .status-popup {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.98) 0%,
+    rgba(15, 23, 42, 0.95) 100%
+  ) !important;
+  border-color: rgba(71, 85, 105, 0.5) !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(99, 102, 241, 0.1) !important;
+}
+
+[data-theme="dark"] .status-details {
+  background: rgba(15, 23, 42, 0.5) !important;
+}
+
+/* ========== Prevent Layout Shift ========== */
+* {
+  box-sizing: border-box !important;
+}
+
+img,
+video {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* ========== Smooth Scroll Behavior ========== */
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 5rem !important; /* Account for fixed headers */
+}
+
+/* ========== Focus Visible Improvements ========== */
+:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* ========== Accessibility Skip Link ========== */
+.skip-to-content {
+  position: absolute !important;
+  top: -40px !important;
+  left: 0 !important;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+  color: white !important;
+  padding: 8px !important;
+  text-decoration: none !important;
+  z-index: var(--z-modal) !important;
+  border-radius: 0 0 8px 0 !important;
+}
+
+.skip-to-content:focus {
+  top: 0 !important;
+}
+
+/* ========== Print Styles ========== */
+@media print {
+  .sidebar,
+  .floating-button-manager,
+  .toast-container,
+  .modal-backdrop,
+  .site-status-popup {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .view-content {
+    padding: 1rem !important;
+  }
+}

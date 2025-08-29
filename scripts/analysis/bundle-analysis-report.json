@@ -1,0 +1,757 @@
+{
+  "timestamp": "2025-08-14T23:57:12.515Z",
+  "bundles": [
+    {
+      "type": "javascript",
+      "name": "assets\\js\\AdminDashboardRoute-C6ncjXx3.js",
+      "size": 506,
+      "gzipSize": 152,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 0,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\analytics-CaRf5C7Q.js",
+      "size": 2907,
+      "gzipSize": 872,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 3,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\ChatRoute-DOh-d-ZM.js",
+      "size": 1252,
+      "gzipSize": 376,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-BayeSpY8.js",
+      "size": 1481,
+      "gzipSize": 439,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-BnX3_-w0.js",
+      "size": 1852,
+      "gzipSize": 407,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 2,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-BrZeGmZg.js",
+      "size": 6097,
+      "gzipSize": 1802,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 6,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-D7AnflGw.js",
+      "size": 1633,
+      "gzipSize": 424,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 2,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-DEMkF5t1.js",
+      "size": 5513,
+      "gzipSize": 1649,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 5,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-DKFTM35m.js",
+      "size": 7431,
+      "gzipSize": 1601,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 7,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\common-OZ5K9vL3.js",
+      "size": 6015,
+      "gzipSize": 1773,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 6,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\components-D8ktqJn6.js",
+      "size": 182882,
+      "gzipSize": 54794,
+      "bundleType": "dynamic-import",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": false,
+      "metrics": {
+        "parseTime": 179,
+        "executeTime": 39,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-BGs72Qx5.js",
+      "size": 8830,
+      "gzipSize": 2649,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 9,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-BiyP1DTw.js",
+      "size": 9967,
+      "gzipSize": 1952,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 10,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-Bw2az5gW.js",
+      "size": 4870,
+      "gzipSize": 1226,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 5,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-CDthWAAC.js",
+      "size": 6652,
+      "gzipSize": 1956,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 6,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-CglBvZ1P.js",
+      "size": 5175,
+      "gzipSize": 1553,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 5,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-core-BWH9qvQv.js",
+      "size": 14990,
+      "gzipSize": 4486,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 15,
+        "executeTime": 3,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-Dl-I-nMI.js",
+      "size": 3475,
+      "gzipSize": 649,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 3,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\crisis-QPAR2coK.js",
+      "size": 6735,
+      "gzipSize": 2001,
+      "bundleType": "crisis-critical",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 7,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\HelperApplicationRoute-Co8jMuN3.js",
+      "size": 715,
+      "gzipSize": 215,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\HelperDashboardRoute-CkrjVOLZ.js",
+      "size": 713,
+      "gzipSize": 214,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\HelperProfileRoute-CtzQGHVu.js",
+      "size": 735,
+      "gzipSize": 221,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\HelperTrainingRoute-DMuXSr-r.js",
+      "size": 544,
+      "gzipSize": 163,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\index-CVJsQqtj.js",
+      "size": 18608,
+      "gzipSize": 5582,
+      "bundleType": "dynamic-import",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 18,
+        "executeTime": 7,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\react-vendor-DorG7s9p.js",
+      "size": 180136,
+      "gzipSize": 54037,
+      "bundleType": "vendor",
+      "isCrisisCritical": false,
+      "dependencies": [
+        "react",
+        "reactmarkdown"
+      ],
+      "loadPriority": "medium",
+      "mobileOptimized": false,
+      "metrics": {
+        "parseTime": 176,
+        "executeTime": 79,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\state-vendor-AKRFqxZc.js",
+      "size": 813,
+      "gzipSize": 244,
+      "bundleType": "vendor",
+      "isCrisisCritical": false,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "medium",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\stores-CfgjVkVh.js",
+      "size": 11488,
+      "gzipSize": 3446,
+      "bundleType": "main",
+      "isCrisisCritical": false,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "high",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 11,
+        "executeTime": 4,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\utils-CUKR3Uw3.js",
+      "size": 275023,
+      "gzipSize": 82398,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": false,
+      "metrics": {
+        "parseTime": 269,
+        "executeTime": 51,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\vendor-CWQiW4Wo.js",
+      "size": 337690,
+      "gzipSize": 101305,
+      "bundleType": "vendor",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": false,
+      "metrics": {
+        "parseTime": 330,
+        "executeTime": 137,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "assets\\js\\views-DR1mJjQe.js",
+      "size": 211505,
+      "gzipSize": 63379,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "critical",
+      "mobileOptimized": false,
+      "metrics": {
+        "parseTime": 207,
+        "executeTime": 39,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "performance-loader.js",
+      "size": 1700,
+      "gzipSize": 510,
+      "bundleType": "main",
+      "isCrisisCritical": false,
+      "dependencies": [],
+      "loadPriority": "high",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 2,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "sw-notifications.js",
+      "size": 14365,
+      "gzipSize": 4300,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 14,
+        "executeTime": 2,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "sw.js",
+      "size": 1142,
+      "gzipSize": 343,
+      "bundleType": "main",
+      "isCrisisCritical": false,
+      "dependencies": [],
+      "loadPriority": "high",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 1,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "version-check.js",
+      "size": 4312,
+      "gzipSize": 1292,
+      "bundleType": "main",
+      "isCrisisCritical": false,
+      "dependencies": [
+        "react"
+      ],
+      "loadPriority": "high",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 4,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "javascript",
+      "name": "workbox-config.js",
+      "size": 9843,
+      "gzipSize": 2953,
+      "bundleType": "main",
+      "isCrisisCritical": true,
+      "dependencies": [],
+      "loadPriority": "critical",
+      "mobileOptimized": true,
+      "metrics": {
+        "parseTime": 10,
+        "executeTime": 0,
+        "cacheability": "high"
+      }
+    },
+    {
+      "type": "css",
+      "name": "assets\\css\\components-Cj8jejuK.css",
+      "size": 47127,
+      "gzipSize": 14138,
+      "bundleType": "styles",
+      "isCrisisCritical": false,
+      "metrics": {
+        "renderBlocking": true,
+        "criticalCSS": true,
+        "unusedCSS": 173
+      }
+    },
+    {
+      "type": "css",
+      "name": "assets\\css\\crisis-core-D0oKhwaF.css",
+      "size": 14101,
+      "gzipSize": 4229,
+      "bundleType": "styles",
+      "isCrisisCritical": true,
+      "metrics": {
+        "renderBlocking": true,
+        "criticalCSS": true,
+        "unusedCSS": 50
+      }
+    },
+    {
+      "type": "css",
+      "name": "assets\\css\\index-C6uHO2b8.css",
+      "size": 60520,
+      "gzipSize": 18154,
+      "bundleType": "styles",
+      "isCrisisCritical": false,
+      "metrics": {
+        "renderBlocking": true,
+        "criticalCSS": true,
+        "unusedCSS": 151
+      }
+    },
+    {
+      "type": "css",
+      "name": "assets\\css\\views-zwbYvQHV.css",
+      "size": 38400,
+      "gzipSize": 11519,
+      "bundleType": "styles",
+      "isCrisisCritical": false,
+      "metrics": {
+        "renderBlocking": true,
+        "criticalCSS": true,
+        "unusedCSS": 130
+      }
+    },
+    {
+      "type": "css",
+      "name": "index.css",
+      "size": 3513,
+      "gzipSize": 1054,
+      "bundleType": "styles",
+      "isCrisisCritical": false,
+      "metrics": {
+        "renderBlocking": true,
+        "criticalCSS": true,
+        "unusedCSS": 8
+      }
+    }
+  ],
+  "performance": {
+    "estimatedLoadTime": {
+      "3g": 587,
+      "4g": 176,
+      "wifi": 44
+    },
+    "parseTime": {
+      "mobile": 1974,
+      "desktop": 1316
+    },
+    "memoryUsage": 3022512,
+    "coreWebVitals": {
+      "estimatedLCP": 1187,
+      "estimatedFID": 96,
+      "estimatedCLS": 0
+    }
+  },
+  "recommendations": [
+    "Vendor bundle assets\\js\\vendor-CWQiW4Wo.js is 330KB - consider splitting",
+    "Multiple React bundles detected - ensure proper vendor chunk splitting",
+    "Crisis bundles exceed 150KB - consider code splitting",
+    "Too many crisis bundles - consider combining critical resources",
+    "Some crisis resources not marked as critical priority",
+    "Total bundle size (1478KB) exceeds mobile budget (500KB)",
+    "JavaScript bundle too large for mobile - implement code splitting",
+    "Main bundle too large - split into smaller chunks"
+  ],
+  "crisisOptimization": {
+    "totalSize": 1162105,
+    "totalGzipSize": 345720,
+    "loadTime3G": 450,
+    "bundles": 30,
+    "optimizationScore": 25,
+    "recommendations": [
+      "Crisis bundles exceed 150KB - consider code splitting",
+      "Too many crisis bundles - consider combining critical resources",
+      "Some crisis resources not marked as critical priority"
+    ]
+  },
+  "mobileOptimization": {
+    "budgetCompliance": {
+      "total": false,
+      "javascript": false
+    },
+    "loadTimes": {
+      "3g": 587,
+      "4g": 176
+    },
+    "optimizationScore": 45,
+    "recommendations": [
+      "Total bundle size (1478KB) exceeds mobile budget (500KB)",
+      "JavaScript bundle too large for mobile - implement code splitting",
+      "Main bundle too large - split into smaller chunks"
+    ]
+  },
+  "summary": {
+    "javascript": 1347595,
+    "css": 163661,
+    "assets": 1897,
+    "gzipTotal": 450457,
+    "crisisCritical": 1162105,
+    "total": 1513153,
+    "budgetCompliance": {
+      "total": false,
+      "javascript": false,
+      "css": false
+    }
+  },
+  "assets": [
+    {
+      "type": "asset",
+      "name": "icon-192.png",
+      "size": 66,
+      "extension": ".png",
+      "optimized": true,
+      "loadStrategy": "preload"
+    },
+    {
+      "type": "asset",
+      "name": "icon-512.png",
+      "size": 66,
+      "extension": ".png",
+      "optimized": true,
+      "loadStrategy": "preload"
+    },
+    {
+      "type": "asset",
+      "name": "icon.svg",
+      "size": 1765,
+      "extension": ".svg",
+      "optimized": true,
+      "loadStrategy": "preload"
+    }
+  ]
+}

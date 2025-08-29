@@ -1,0 +1,595 @@
+/**
+ * Loading Skeleton Styles for Astral Core
+ * 
+ * This file contains all styling for skeleton loading components
+ * with smooth animations, responsive design, and dark mode support.
+ * 
+ * Features:
+ * - Smooth shimmer animations
+ * - Responsive layouts
+ * - Dark mode compatibility
+ * - Accessibility compliance
+ * - Performance optimized
+ */
+
+/* =================================
+   BASE SKELETON STYLES
+   ================================= */
+
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-200) 25%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark mode skeleton background */
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-700) 25%,
+    var(--color-neutral-600) 50%,
+    var(--color-neutral-700) 75%
+  );
+}
+
+/* =================================
+   SKELETON VARIANTS
+   ================================= */
+
+.skeleton-text {
+  border-radius: var(--radius-xs);
+  width: 100%;
+  height: 1.2em;
+}
+
+.skeleton-rectangular {
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-circular {
+  border-radius: 50%;
+}
+
+/* =================================
+   SKELETON ANIMATIONS
+   ================================= */
+
+.skeleton-wave {
+  animation: skeleton-wave 1.6s ease-in-out infinite;
+  transform: translateZ(0);
+  will-change: background-position;
+}
+
+.skeleton-pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite alternate;
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+.skeleton-none {
+  animation: none;
+}
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+/* =================================
+   TEXT SKELETON STYLES
+   ================================= */
+
+.text-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.text-skeleton-heading .text-skeleton-line {
+  height: 1.5em;
+}
+
+.text-skeleton-body .text-skeleton-line {
+  height: 1.2em;
+}
+
+.text-skeleton-caption .text-skeleton-line {
+  height: 1em;
+}
+
+/* =================================
+   POST CARD SKELETON STYLES
+   ================================= */
+
+.post-card-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.post-card-skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.post-card-skeleton-avatar {
+  flex-shrink: 0;
+}
+
+.post-card-skeleton-user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.post-card-skeleton-content {
+  margin-bottom: var(--spacing-md);
+}
+
+.post-card-skeleton-image {
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.post-card-skeleton-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.post-card-skeleton-action {
+  border-radius: var(--radius-sm);
+}
+
+/* =================================
+   CHAT MESSAGE SKELETON STYLES
+   ================================= */
+
+.chat-message-skeleton {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.chat-message-skeleton-own {
+  flex-direction: row-reverse;
+}
+
+.chat-message-skeleton-avatar {
+  flex-shrink: 0;
+}
+
+.chat-message-skeleton-content {
+  flex: 1;
+  max-width: 70%;
+}
+
+.chat-message-skeleton-bubble {
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+}
+
+.chat-message-skeleton-own .chat-message-skeleton-bubble {
+  background: var(--color-primary-100);
+}
+
+[data-theme="dark"] .chat-message-skeleton-own .chat-message-skeleton-bubble {
+  background: var(--color-primary-800);
+}
+
+.chat-message-skeleton-timestamp {
+  opacity: 0.6;
+}
+
+/* =================================
+   PROFILE CARD SKELETON STYLES
+   ================================= */
+
+.profile-card-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.profile-card-skeleton-header {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  align-items: center;
+}
+
+.profile-card-skeleton-avatar {
+  flex-shrink: 0;
+}
+
+.profile-card-skeleton-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.profile-card-skeleton-stats {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  justify-content: center;
+}
+
+.profile-card-skeleton-stat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.profile-card-skeleton-bio {
+  margin-bottom: var(--spacing-lg);
+}
+
+.profile-card-skeleton-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.profile-card-skeleton-action-primary,
+.profile-card-skeleton-action-secondary {
+  flex: 1;
+  border-radius: var(--radius-md);
+}
+
+/* =================================
+   NAVIGATION SKELETON STYLES
+   ================================= */
+
+.navigation-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.navigation-skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+}
+
+.navigation-skeleton-icon {
+  flex-shrink: 0;
+  border-radius: var(--radius-xs);
+}
+
+/* =================================
+   DASHBOARD WIDGET SKELETON STYLES
+   ================================= */
+
+.dashboard-widget-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+}
+
+.dashboard-widget-skeleton-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.dashboard-widget-skeleton-content {
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.dashboard-widget-skeleton-value {
+  margin-bottom: var(--spacing-sm);
+}
+
+.dashboard-widget-skeleton-chart {
+  border-radius: var(--radius-sm);
+}
+
+/* =================================
+   FEED SKELETON STYLES
+   ================================= */
+
+.feed-skeleton {
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-skeleton-item {
+  margin-bottom: var(--spacing-lg);
+}
+
+.feed-skeleton-item:last-child {
+  margin-bottom: 0;
+}
+
+/* =================================
+   SEARCH RESULTS SKELETON STYLES
+   ================================= */
+
+.search-results-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.search-result-skeleton-item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.search-result-skeleton-thumbnail {
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+}
+
+.search-result-skeleton-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.search-result-skeleton-title {
+  margin-bottom: var(--spacing-xs);
+}
+
+.search-result-skeleton-meta {
+  opacity: 0.6;
+}
+
+/* =================================
+   TABLE SKELETON STYLES
+   ================================= */
+
+.table-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.table-skeleton-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-surface-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-skeleton-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-skeleton-row:last-child {
+  border-bottom: none;
+}
+
+.table-skeleton-header-cell,
+.table-skeleton-cell {
+  justify-self: start;
+}
+
+/* =================================
+   FORM SKELETON STYLES
+   ================================= */
+
+.form-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.form-skeleton-title {
+  margin-bottom: var(--spacing-xl);
+}
+
+.form-skeleton-field {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-skeleton-label {
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.form-skeleton-input {
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.form-skeleton-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  margin-top: var(--spacing-xl);
+}
+
+.form-skeleton-button {
+  border-radius: var(--radius-md);
+}
+
+/* =================================
+   LOADING WRAPPER STYLES
+   ================================= */
+
+.loading-wrapper {
+  transition: opacity 0.2s ease;
+}
+
+/* =================================
+   SKELETON LIST STYLES
+   ================================= */
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-list-item {
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-list-item:last-child {
+  margin-bottom: 0;
+}
+
+/* =================================
+   CONTAINER STYLES
+   ================================= */
+
+.skeleton-container {
+  position: relative;
+  isolation: isolate;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .post-card-skeleton {
+    padding: var(--spacing-md);
+  }
+
+  .profile-card-skeleton {
+    padding: var(--spacing-lg);
+  }
+
+  .profile-card-skeleton-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-card-skeleton-stats {
+    justify-content: space-around;
+  }
+
+  .chat-message-skeleton-content {
+    max-width: 85%;
+  }
+
+  .search-result-skeleton-item {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .search-result-skeleton-thumbnail {
+    align-self: center;
+  }
+
+  .table-skeleton-header,
+  .table-skeleton-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .form-skeleton-actions {
+    flex-direction: column;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .profile-card-skeleton-stats {
+    gap: var(--spacing-md);
+  }
+
+  .table-skeleton-header,
+  .table-skeleton-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================= */
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-wave,
+  .skeleton-pulse {
+    animation: none;
+  }
+
+  .skeleton {
+    background: var(--color-neutral-200);
+  }
+
+  [data-theme="dark"] .skeleton {
+    background: var(--color-neutral-700);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skeleton {
+    border: 1px solid var(--color-border);
+  }
+
+  .skeleton-container {
+    border: 2px solid var(--color-border);
+  }
+}
+
+/* =================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================= */
+
+/* Optimize for loading states */
+.skeleton,
+.skeleton-container {
+  contain: layout style paint;
+}

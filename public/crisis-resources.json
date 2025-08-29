@@ -1,0 +1,185 @@
+{
+  "lastUpdated": "2025-01-04T00:00:00Z",
+  "version": "1.0.0",
+  "emergencyContacts": [
+    {
+      "id": "emergency-911",
+      "name": "Emergency Services",
+      "number": "911",
+      "description": "For immediate life-threatening emergencies",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "critical",
+      "type": "emergency"
+    },
+    {
+      "id": "suicide-prevention-988",
+      "name": "National Suicide Prevention Lifeline",
+      "number": "988",
+      "description": "Free, confidential support for people in suicidal crisis or distress",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "critical",
+      "type": "mental_health"
+    },
+    {
+      "id": "crisis-text-741741",
+      "name": "Crisis Text Line",
+      "number": "741741",
+      "textKeyword": "HOME",
+      "description": "Free, 24/7 crisis support via text message",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "critical",
+      "type": "text_support"
+    }
+  ],
+  "supportContacts": [
+    {
+      "id": "samhsa-helpline",
+      "name": "SAMHSA National Helpline",
+      "number": "1-800-662-4357",
+      "description": "Treatment referral and information service",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "high",
+      "type": "treatment_referral",
+      "services": ["substance_abuse", "mental_health", "treatment_referral"]
+    },
+    {
+      "id": "domestic-violence-hotline",
+      "name": "National Domestic Violence Hotline",
+      "number": "1-800-799-7233",
+      "website": "https://www.thehotline.org",
+      "description": "24/7 confidential support for domestic violence",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "high",
+      "type": "domestic_violence",
+      "services": ["domestic_violence", "safety_planning", "legal_resources"]
+    },
+    {
+      "id": "lgbtq-hotline",
+      "name": "LGBTQ National Hotline",
+      "number": "1-888-843-4564",
+      "description": "Support for LGBTQ individuals",
+      "availability": "Mon-Fri 4pm-12am ET, Sat 12pm-5pm ET",
+      "region": "US",
+      "priority": "high",
+      "type": "lgbtq_support",
+      "services": ["lgbtq_support", "peer_counseling", "local_resources"]
+    },
+    {
+      "id": "veterans-crisis-line",
+      "name": "Veterans Crisis Line",
+      "number": "1-800-273-8255",
+      "textNumber": "838255",
+      "description": "24/7 support for veterans and their families",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "high",
+      "type": "veterans_support",
+      "services": ["veterans_support", "ptsd", "family_support"]
+    },
+    {
+      "id": "sexual-assault-hotline",
+      "name": "National Sexual Assault Hotline",
+      "number": "1-800-656-4673",
+      "description": "24/7 confidential support for sexual assault survivors",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "high",
+      "type": "sexual_assault",
+      "services": ["sexual_assault", "trauma_support", "legal_advocacy"]
+    },
+    {
+      "id": "teen-line",
+      "name": "Teen Line",
+      "number": "1-800-852-8336",
+      "textNumber": "839863",
+      "textKeyword": "TEEN",
+      "description": "Teen-to-teen crisis support",
+      "availability": "6pm-10pm PT daily",
+      "region": "US",
+      "priority": "medium",
+      "type": "teen_support",
+      "services": ["teen_support", "peer_counseling", "crisis_intervention"]
+    },
+    {
+      "id": "postpartum-support",
+      "name": "Postpartum Support International Helpline",
+      "number": "1-944-944-4773",
+      "description": "Support for perinatal mood and anxiety disorders",
+      "availability": "24/7",
+      "region": "US",
+      "priority": "medium",
+      "type": "postpartum_support",
+      "services": ["postpartum_depression", "anxiety", "maternal_mental_health"]
+    }
+  ],
+  "internationalContacts": [
+    {
+      "id": "canada-talk-suicide",
+      "name": "Talk Suicide Canada",
+      "number": "1-833-456-4566",
+      "description": "24/7 suicide prevention support in Canada",
+      "availability": "24/7",
+      "region": "Canada",
+      "priority": "critical",
+      "type": "suicide_prevention"
+    },
+    {
+      "id": "uk-samaritans",
+      "name": "Samaritans",
+      "number": "116 123",
+      "description": "Free emotional support in the UK and Ireland",
+      "availability": "24/7",
+      "region": "UK/Ireland",
+      "priority": "critical",
+      "type": "emotional_support"
+    },
+    {
+      "id": "australia-lifeline",
+      "name": "Lifeline Australia",
+      "number": "13 11 14",
+      "description": "24/7 crisis support and suicide prevention",
+      "availability": "24/7",
+      "region": "Australia",
+      "priority": "critical",
+      "type": "suicide_prevention"
+    }
+  ],
+  "quickActions": [
+    {
+      "id": "call-911",
+      "label": "Call Emergency Services",
+      "action": "tel:911",
+      "type": "emergency",
+      "description": "For immediate life-threatening situations",
+      "icon": "🚨"
+    },
+    {
+      "id": "call-988",
+      "label": "Call Suicide Prevention",
+      "action": "tel:988",
+      "type": "crisis",
+      "description": "24/7 suicide prevention support",
+      "icon": "☎️"
+    },
+    {
+      "id": "text-crisis",
+      "label": "Text Crisis Line",
+      "action": "sms:741741?body=HOME",
+      "type": "text",
+      "description": "Text HOME to 741741",
+      "icon": "💬"
+    }
+  ],
+  "metadata": {
+    "cacheStrategy": "cache-first",
+    "offlineAvailable": true,
+    "lastVerified": "2025-01-04T00:00:00Z",
+    "updateFrequency": "weekly",
+    "criticalResource": true
+  }
+}

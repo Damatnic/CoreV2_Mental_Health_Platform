@@ -1,0 +1,121 @@
+{
+  "emergency": {
+    "title": "Hỗ trợ khủng hoảng",
+    "subtitle": "Bạn không đơn độc. Trợ giúp có sẵn 24/7.",
+    "immediate_danger": "Nếu bạn đang gặp nguy hiểm trực tiếp, hãy gọi 113 hoặc đến phòng cấp cứu gần nhất.",
+    "call_988": {
+      "title": "Gọi 1800-1567 Đường dây nóng khủng hoảng",
+      "description": "Hỗ trợ miễn phí và bảo mật 24/7 cho những người đang gặp khủng hoảng.",
+      "number": "1800-1567",
+      "action": "Gọi ngay"
+    },
+    "additional_resources": {
+      "mental_health_hotline": {
+        "title": "Tổng đài Tư vấn Sức khỏe Tâm thần",
+        "number": "02873086888",
+        "description": "Bệnh viện Tâm thần TP.HCM"
+      },
+      "youth_hotline": {
+        "title": "Đường dây nóng Thanh thiếu niên",
+        "number": "18001567",
+        "description": "Hỗ trợ thanh thiếu niên 24/7"
+      },
+      "family_violence": {
+        "title": "Đường dây nóng Bạo lực Gia đình",
+        "number": "18001769",
+        "description": "Hỗ trợ nạn nhân bạo lực gia đình"
+      }
+    }
+  },
+  "cultural_support": {
+    "buddhist_healing": {
+      "title": "Hỗ trợ Tâm linh Phật giáo",
+      "meditation": "Thiền định và chánh niệm",
+      "temple_support": "Tìm sự bình an tại chùa",
+      "monks_guidance": "Lời khuyên từ sư thầy",
+      "dharma_teachings": "Học Phật pháp để vượt khổ",
+      "karma_understanding": "Hiểu về nghiệp và nhân quả"
+    },
+    "ancestor_connection": {
+      "title": "Kết nối với Tổ tiên",
+      "ancestor_worship": "Cầu nguyện với tổ tiên",
+      "family_altar": "Thắp hương tại bàn thờ",
+      "seeking_guidance": "Xin lời khuyên từ tổ tiên",
+      "spiritual_protection": "Cầu xin sự phù hộ"
+    },
+    "community_support": {
+      "title": "Hỗ trợ Cộng đồng",
+      "neighborhood": "Tình làng nghĩa xóm",
+      "collective_help": "Cùng nhau vượt khó",
+      "elder_wisdom": "Lời khuyên từ người lớn tuổi",
+      "community_activities": "Sinh hoạt cộng đồng"
+    },
+    "traditional_healing": {
+      "title": "Y học Cổ truyền",
+      "herbal_medicine": "Thuốc Nam trị tâm",
+      "acupuncture": "Châm cứu điều hòa",
+      "massage_therapy": "Xoa bóp thư giãn",
+      "qi_gong": "Khí công dưỡng sinh"
+    },
+    "face_preservation": {
+      "title": "Giữ thể diện",
+      "discrete_help": "Hỗ trợ kín đáo",
+      "family_reputation": "Bảo vệ danh dự gia đình",
+      "private_consultation": "Tư vấn riêng tư",
+      "gradual_approach": "Từng bước một"
+    }
+  },
+  "support": {
+    "you_matter": "Bạn rất quan trọng.",
+    "not_alone": "Bạn không đơn độc.",
+    "help_available": "Có trợ giúp sẵn sàng.",
+    "safe_space": "Đây là nơi an toàn.",
+    "take_time": "Hãy từ từ.",
+    "breathe": "Nhớ thở sâu.",
+    "community_context": "Cộng đồng và hỗ trợ văn hóa của bạn có thể là nguồn tài nguyên quý giá vào lúc này.",
+    "karma_comfort": "Mọi khổ đau đều có thể vượt qua.",
+    "ancestors_watching": "Tổ tiên luôn phù hộ bạn.",
+    "collective_strength": "Sức mạnh từ cộng đồng.",
+    "inner_peace": "Tìm lại sự bình an nội tâm.",
+    "gradual_healing": "Từng bước sẽ khỏe lại."
+  },
+  "messages": {
+    "crisis_detected": "Chúng tôi ở đây để hỗ trợ bạn. Có vẻ như bạn đang trải qua thời điểm khó khăn.",
+    "help_available": "Có nhiều cách để nhận được sự giúp đỡ, bao gồm cả hỗ trợ kín đáo.",
+    "family_context": "Nếu bạn sẵn sàng, hãy chia sẻ với người thân tin cậy hoặc tìm kiếm lời khuyên từ người lớn tuổi.",
+    "spiritual_support": "Tìm sự bình an qua thiền định, cầu nguyện, hoặc đến chùa.",
+    "community_help": "Láng giềng và cộng đồng có thể là nguồn hỗ trợ quan trọng.",
+    "traditional_approach": "Y học cổ truyền cũng có thể giúp điều hòa tâm trạng.",
+    "preserve_dignity": "Chúng tôi hiểu tầm quan trọng của việc giữ thể diện và danh dự gia đình."
+  },
+  "coping_strategies": {
+    "title": "Cách đối phó phù hợp văn hóa",
+    "buddhist_meditation": "Thiền Phật giáo mỗi ngày",
+    "ancestor_prayer": "Cầu nguyện với tổ tiên",
+    "community_gathering": "Tham gia sinh hoạt xóm làng",
+    "nature_connection": "Đi dạo trong thiên nhiên",
+    "traditional_tea": "Thưởng trà tĩnh tâm",
+    "family_meals": "Ăn cơm cùng gia đình",
+    "temple_visits": "Viếng chùa thường xuyên",
+    "herbal_remedies": "Dùng thuốc Nam an thần"
+  },
+  "professional_help": {
+    "title": "Hỗ trợ chuyên môn",
+    "psychiatric_hospital": "Bệnh viện Tâm thần",
+    "mental_health_clinic": "Phòng khám Tâm lý",
+    "counseling_center": "Trung tâm Tư vấn",
+    "traditional_medicine": "Y học Cổ truyền",
+    "community_health": "Trạm Y tế Phường/Xã",
+    "online_counseling": "Tư vấn trực tuyến"
+  },
+  "resources": {
+    "hotlines": {
+      "title": "Đường dây nóng",
+      "national_crisis": "Tổng đài Khủng hoảng Quốc gia",
+      "mental_health": "Đường dây Sức khỏe Tâm thần",
+      "youth_support": "Hỗ trợ Thanh thiếu niên",
+      "family_violence": "Bạo lực Gia đình",
+      "substance_abuse": "Cai nghiện"
+    }
+  }
+}
