@@ -1,0 +1,338 @@
+# ============================================================================
+# ASTRAL CORE - ENHANCED SECURITY CONFIGURATION
+# ============================================================================
+# Version: 2.0.0 - Enterprise Security Hardened
+# Date: August 30, 2025
+# Purpose: Production-grade security configuration for mental health platform
+# ============================================================================
+
+[build]
+  publish = "dist"
+  command = "npm run build:production"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+  NODE_ENV = "production"
+  # Security flags
+  GENERATE_SOURCEMAP = "false"
+  INLINE_RUNTIME_CHUNK = "false"
+
+# ============================================================================
+# COMPREHENSIVE SECURITY HEADERS
+# ============================================================================
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Strict Transport Security - Force HTTPS for 2 years
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    
+    # Content Security Policy - Strict policy for mental health app
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com data:;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' https://api.corev2-mental-health.app wss://api.corev2-mental-health.app https://*.supabase.co https://*.sentry.io;
+      media-src 'self' blob:;
+      object-src 'none';
+      frame-src 'self';
+      frame-ancestors 'none';
+      form-action 'self';
+      base-uri 'self';
+      manifest-src 'self';
+      worker-src 'self' blob:;
+      upgrade-insecure-requests;
+      block-all-mixed-content;
+      report-uri https://api.corev2-mental-health.app/csp-report;
+    """
+    
+    # Prevent clickjacking attacks
+    X-Frame-Options = "DENY"
+    
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+    
+    # XSS Protection (legacy browsers)
+    X-XSS-Protection = "1; mode=block"
+    
+    # Referrer Policy - Privacy-focused
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Permissions Policy - Restrict browser features
+    Permissions-Policy = """
+      accelerometer=(),
+      ambient-light-sensor=(),
+      autoplay=(self),
+      battery=(),
+      camera=(),
+      display-capture=(),
+      document-domain=(),
+      encrypted-media=(self),
+      execution-while-not-rendered=(),
+      execution-while-out-of-viewport=(),
+      fullscreen=(self),
+      geolocation=(),
+      gyroscope=(),
+      layout-animations=(self),
+      legacy-image-formats=(),
+      magnetometer=(),
+      microphone=(),
+      midi=(),
+      navigation-override=(),
+      oversized-images=(),
+      payment=(),
+      picture-in-picture=(self),
+      publickey-credentials-get=(),
+      speaker-selection=(),
+      sync-xhr=(),
+      unoptimized-images=(),
+      unsized-media=(),
+      usb=(),
+      wake-lock=(),
+      web-share=(),
+      xr-spatial-tracking=()
+    """
+    
+    # Cross-Origin policies
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    
+    # DNS Prefetch Control
+    X-DNS-Prefetch-Control = "off"
+    
+    # Download Options for IE
+    X-Download-Options = "noopen"
+    
+    # Permitted Cross-Domain Policies
+    X-Permitted-Cross-Domain-Policies = "none"
+    
+    # Expect-CT for Certificate Transparency
+    Expect-CT = "max-age=86400, enforce, report-uri=\"https://api.corev2-mental-health.app/ct-report\""
+
+# ============================================================================
+# CACHE CONTROL HEADERS
+# ============================================================================
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Robots-Tag = "index, follow"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# ============================================================================
+# API SECURITY HEADERS
+# ============================================================================
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    # API-specific CORS settings (more restrictive)
+    Access-Control-Allow-Origin = "https://corev2-mental-health.app"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Request-ID, X-Session-ID"
+    Access-Control-Max-Age = "3600"
+    Access-Control-Allow-Credentials = "true"
+    
+    # API Security Headers
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-Rate-Limit = "100"
+    X-Rate-Limit-Window = "60"
+
+# ============================================================================
+# FUNCTION SECURITY HEADERS
+# ============================================================================
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://corev2-mental-health.app"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Max-Age = "3600"
+    Access-Control-Allow-Credentials = "true"
+
+# ============================================================================
+# SECURITY REDIRECTS
+# ============================================================================
+
+# Force HTTPS
+[[redirects]]
+  from = "http://corev2-mental-health.app/*"
+  to = "https://corev2-mental-health.app/:splat"
+  status = 301
+  force = true
+
+# Force www to non-www
+[[redirects]]
+  from = "https://www.corev2-mental-health.app/*"
+  to = "https://corev2-mental-health.app/:splat"
+  status = 301
+  force = true
+
+# Security.txt file
+[[redirects]]
+  from = "/.well-known/security.txt"
+  to = "/security.txt"
+  status = 200
+
+# Block access to sensitive files
+[[redirects]]
+  from = "/*.env"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.git/*"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/node_modules/*"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.bak"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.backup"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.sql"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.log"
+  to = "/404"
+  status = 404
+  force = true
+
+# SPA routing (must be last)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ============================================================================
+# SECURITY PLUGINS
+# ============================================================================
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+# Content Security Policy reporting
+[[plugins]]
+  package = "@netlify/plugin-csp-generator"
+  [plugins.inputs]
+    buildDir = "dist"
+    reportUri = "https://api.corev2-mental-health.app/csp-report"
+    reportOnly = false
+
+# ============================================================================
+# RATE LIMITING (via Edge Functions)
+# ============================================================================
+
+[[edge_functions]]
+  path = "/api/*"
+  function = "rate-limiter"
+
+[[edge_functions]]
+  path = "/.netlify/functions/*"
+  function = "rate-limiter"
+
+# ============================================================================
+# ENVIRONMENT CONTEXT SETTINGS
+# ============================================================================
+
+[context.production]
+  command = "npm run build:production"
+  environment = { NODE_ENV = "production", GENERATE_SOURCEMAP = "false" }
+
+[context.staging]
+  command = "npm run build"
+  environment = { NODE_ENV = "staging" }
+
+[context.deploy-preview]
+  command = "npm run build"
+  environment = { NODE_ENV = "development" }
+
+# ============================================================================
+# FUNCTION CONFIGURATION
+# ============================================================================
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  
+  # Set timeouts for functions
+  [functions."*"]
+    timeout = 10
+    
+  # Critical functions with extended timeout
+  [functions."api-auth"]
+    timeout = 30
+    
+  [functions."api-ai"]
+    timeout = 30
+    
+  [functions."api-safety"]
+    timeout = 30
+
+# ============================================================================
+# DEVELOPMENT SETTINGS
+# ============================================================================
+
+[dev]
+  command = "npm run dev:vite"
+  port = 3000
+  targetPort = 5173
+  framework = "vite"
+  autoLaunch = false
