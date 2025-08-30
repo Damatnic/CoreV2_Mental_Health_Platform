@@ -11,11 +11,18 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Dynamic import for legacy plugin to handle potential loading issues
+// Dynamic imports for optional plugins
 let legacy: any;
-// Legacy plugin is disabled for now to avoid build issues
-// If needed, it can be imported dynamically:
-// legacy = await import('@vitejs/plugin-legacy').then(m => m.default).catch(() => null);
+let sentryPlugin: any;
+
+// Import Sentry plugin for production builds
+if (process.env.NODE_ENV === 'production' && process.env.VITE_SENTRY_DSN) {
+  try {
+    sentryPlugin = await import('@sentry/vite-plugin').then(m => m.sentryVitePlugin);
+  } catch (e) {
+    console.warn('Sentry plugin not available');
+  }
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -53,6 +60,17 @@ export default defineConfig(({ mode }) => {
         gzipSize: true,
         brotliSize: true,
       }),
+      // Sentry plugin for production source map upload
+      isProduction && sentryPlugin && sentryPlugin({
+        org: process.env.SENTRY_ORG || 'astral-core',
+        project: process.env.SENTRY_PROJECT || 'mental-health-platform',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        telemetry: false,
+        sourcemaps: {
+          assets: './dist/**',
+          ignore: ['node_modules/**'],
+        },
+      }),
     ].filter(Boolean),
     publicDir: 'public',
     resolve: {
@@ -72,12 +90,14 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
-      sourcemap: !isProduction, // No sourcemaps in production to reduce size
+      sourcemap: isProduction ? 'hidden' : true, // Hidden sourcemaps in production for Sentry
       assetsInlineLimit: 4096, // Inline small assets
       cssCodeSplit: true, // Split CSS for better caching
-      manifest: false,
+      manifest: true, // Generate manifest for PWA
       minify: isProduction ? 'terser' : false, // Aggressive minification with terser
-      target: 'es2015', // Support older browsers while maintaining performance
+      target: isProduction ? ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'] : 'es2015', // Optimized browser targets
+      chunkSizeWarningLimit: 1000, // Warn for chunks over 1MB
+      reportCompressedSize: false, // Speed up build by not reporting compressed size
       rollupOptions: {
         plugins: [
           // Ensure proper module resolution
@@ -191,25 +211,71 @@ export default defineConfig(({ mode }) => {
         compress: {
           drop_console: isProduction, // Remove console.log in production
           drop_debugger: isProduction,
-          pure_funcs: isProduction ? ['console.log', 'console.info'] : []
+          pure_funcs: isProduction ? ['console.log', 'console.info', 'console.debug'] : [],
+          passes: 2, // Two passes for better compression
+          ecma: 2020,
+          module: true,
+          toplevel: true
+        },
+        format: {
+          comments: false, // Remove all comments
+          ecma: 2020
+        },
+        mangle: {
+          safari10: true, // Work around Safari 10 bugs
+          properties: {
+            regex: /^_/ // Mangle properties starting with _
+          }
+        }
+      },
+      // CSS minification options
+      cssMinify: isProduction ? 'lightningcss' : false
+    },
+    server: {
+      port: parseInt(process.env.PORT || '3000'),
+      strictPort: false,
+      host: process.env.HOST || 'localhost',
+      fs: {
+        allow: ['..'],
+        strict: true
+      },
+      hmr: {
+        overlay: !isProduction,
+        host: process.env.HMR_HOST || 'localhost',
+        port: parseInt(process.env.HMR_PORT || '3001')
+      },
+      cors: {
+        origin: process.env.CORS_ORIGINS?.split(',') || true,
+        credentials: true
+      },
+      proxy: isProduction ? {} : {
+        '/api': {
+          target: process.env.VITE_API_BASE_URL || 'http://localhost:8080',
+          changeOrigin: true,
+          secure: false
+        },
+        '/ws': {
+          target: process.env.VITE_WEBSOCKET_URL || 'ws://localhost:8080',
+          ws: true,
+          changeOrigin: true
         }
       }
     },
-    server: {
-      port: 3000,
-      strictPort: false,
-      fs: {
-        allow: ['..']
-      },
-      hmr: {
-        overlay: false,
-        host: 'localhost'
-      }
+    preview: {
+      port: parseInt(process.env.PREVIEW_PORT || '4173'),
+      host: process.env.PREVIEW_HOST || 'localhost',
+      strictPort: true
     },
     define: {
       // Fix CommonJS compatibility issues
       global: 'globalThis',
-      'process.env': JSON.stringify(env)
+      'process.env.NODE_ENV': JSON.stringify(mode),
+      'process.env.VITE_APP_VERSION': JSON.stringify(process.env.VITE_APP_VERSION || '1.0.0'),
+      'process.env.VITE_BUILD_TIME': JSON.stringify(new Date().toISOString()),
+      __APP_VERSION__: JSON.stringify(process.env.VITE_APP_VERSION || '1.0.0'),
+      __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+      __DEV__: !isProduction,
+      __PROD__: isProduction
     },
     // Optimize dependencies for mobile with CommonJS compatibility
     optimizeDeps: {

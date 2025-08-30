@@ -347,7 +347,7 @@ describe('AIChatbot Component', () => {
       chatbotService.sendMessage
         .mockResolvedValueOnce({
           response: 'How are you?',
-          suggestions: ['I'm feeling good', 'Not great']
+          suggestions: ["I'm feeling good", 'Not great']
         })
         .mockResolvedValueOnce({
           response: 'Glad to hear that!'
@@ -360,15 +360,15 @@ describe('AIChatbot Component', () => {
       fireEvent.click(screen.getByRole('button', { name: /Send/i }));
       
       await waitFor(() => {
-        expect(screen.getByText('I'm feeling good')).toBeInTheDocument();
+        expect(screen.getByText("I'm feeling good")).toBeInTheDocument();
       });
       
-      const suggestion = screen.getByText('I'm feeling good');
+      const suggestion = screen.getByText("I'm feeling good");
       fireEvent.click(suggestion);
       
       await waitFor(() => {
         // Suggestion becomes user message
-        expect(screen.getAllByText('I'm feeling good')).toHaveLength(2);
+        expect(screen.getAllByText("I'm feeling good")).toHaveLength(2);
         expect(screen.getByText('Glad to hear that!')).toBeInTheDocument();
       });
     });
@@ -489,14 +489,14 @@ describe('AIChatbot Component', () => {
       });
       
       chatbotService.sendMessage.mockResolvedValueOnce({
-        response: 'I hear that you're feeling sad. That must be difficult.',
+        response: "I hear that you're feeling sad. That must be difficult.",
         tone: 'empathetic'
       });
       
       render(<AIChatbot />);
       
       const input = screen.getByPlaceholderText(/Type your message/i);
-      await userEvent.type(input, 'I'm very sad');
+      await userEvent.type(input, "I'm very sad");
       fireEvent.click(screen.getByRole('button', { name: /Send/i }));
       
       await waitFor(() => {

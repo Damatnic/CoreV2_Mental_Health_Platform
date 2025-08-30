@@ -119,7 +119,8 @@
     "zod": "^3.23.8",
     "zustand": "^4.5.7",
     "speakeasy": "^2.0.0",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-constant-elements": "^7.27.1",

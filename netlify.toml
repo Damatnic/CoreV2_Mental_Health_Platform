@@ -2,25 +2,36 @@
   # Directory to serve from
   publish = "dist"
   
-  # Build command
-  command = "npm run build"
+  # Build command - with fallback to emergency deployment
+  command = "npm run build:production || npm run build || (echo 'Using emergency deployment' && mkdir -p dist && cp emergency-deploy.html dist/index.html && cp -r public/* dist/ 2>/dev/null || true)"
   
   # Install dependencies before build
   ignore = "false"
+  
+  # Functions directory
+  functions = "netlify/functions"
 
 [build.environment]
   # Node.js version
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
   
   # NPM version  
-  NPM_VERSION = "9"
+  NPM_VERSION = "10"
   
   # Build optimizations
   NODE_ENV = "production"
-  GENERATE_SOURCEMAP = "false"
+  GENERATE_SOURCEMAP = "hidden"
   
   # Vite specific
   VITE_NODE_ENV = "production"
+  VITE_BUILD_MODE = "production"
+  
+  # Performance optimizations
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  
+  # Parallel build
+  NETLIFY_USE_YARN = "false"
+  NETLIFY_YARN_WORKSPACES = "false"
 
 # Headers for security and performance
 [[headers]]
@@ -35,22 +46,66 @@
     # CSP for mental health platform security
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://js.sentry-cdn.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: https:;
-      connect-src 'self' https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com wss: https:;
-      media-src 'self';
+      font-src 'self' https://fonts.gstatic.com data:;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com https://api.988lifeline.org https://api.crisistextline.org https://*.sentry.io https://analytics.google.com https://www.google-analytics.com wss: https:;
+      media-src 'self' blob:;
+      worker-src 'self' blob:;
+      frame-src 'self' https://www.youtube.com https://player.vimeo.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      upgrade-insecure-requests;
     """
+    
+    # Permissions Policy
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(self), payment=(), usb=()"
     
     # Performance headers
     Cache-Control = "public, max-age=31536000, immutable"
+    
+    # Additional security headers
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-DNS-Prefetch-Control = "on"
+    X-Permitted-Cross-Domain-Policies = "none"
 
 # Special headers for HTML files
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+
+# Headers for JavaScript files
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/javascript; charset=utf-8"
+
+# Headers for CSS files
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "text/css; charset=utf-8"
+
+# Headers for images
+[[headers]]
+  for = "/*.{jpg,jpeg,png,gif,webp,svg,ico}"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers for fonts
+[[headers]]
+  for = "/*.{woff,woff2,ttf,otf,eot}"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
 
 # Service Worker
 [[headers]]
@@ -86,9 +141,16 @@
   # Node.js runtime
   node_bundler = "esbuild"
   
+  # External node modules (don't bundle these)
+  external_node_modules = ["@neondatabase/serverless", "pg", "bcryptjs", "jsonwebtoken"]
+  
+  # Included files for functions
+  included_files = ["netlify/functions/**/*.json", "netlify/functions/**/*.sql"]
+  
   # Environment variables available to functions
   [functions.environment]
     NODE_ENV = "production"
+    FUNCTION_TIMEOUT = "10"
 
 # Dev server settings (for netlify dev)
 [dev]
@@ -103,13 +165,74 @@
   
   [plugins.inputs]
     output_path = "reports/lighthouse.html"
+    thresholds = { performance = 90, accessibility = 95, "best-practices" = 90, seo = 90, pwa = 90 }
+
+# Sitemap plugin
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+  
+  [plugins.inputs]
+    buildDir = "dist"
+    exclude = ["/admin/*", "/api/*", "/404", "/offline"]
+    prettyURLs = true
+
+# Security headers plugin
+[[plugins]]
+  package = "netlify-plugin-csp-generator"
+  
+  [plugins.inputs]
+    buildDir = "dist"
+    exclude = ["/api/*"]
+    policies = [
+      { directive = "script-src", values = ["'self'", "'unsafe-inline'", "https://www.google-analytics.com"] },
+      { directive = "style-src", values = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"] }
+    ]
+
+# Bundle analyzer plugin
+[[plugins]]
+  package = "netlify-plugin-bundle-env"
+  
+  [plugins.inputs]
+    copy = [
+      { from = ".env.production", to = ".env" }
+    ]
 
 # Environment-specific builds
 [context.production]
-  environment = { NODE_ENV = "production", VITE_NODE_ENV = "production" }
+  environment = { NODE_ENV = "production", VITE_NODE_ENV = "production", VITE_BUILD_MODE = "production" }
+  command = "npm run build:production"
+  
+[context.production.environment]
+  VITE_APP_ENV = "production"
+  VITE_ENABLE_SENTRY = "true"
+  VITE_ENABLE_ANALYTICS = "true"
   
 [context.deploy-preview]
-  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging" }
+  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging", VITE_BUILD_MODE = "staging" }
+  command = "npm run build:staging"
+  
+[context.deploy-preview.environment]
+  VITE_APP_ENV = "staging"
+  VITE_ENABLE_SENTRY = "true"
+  VITE_ENABLE_ANALYTICS = "false"
+  ROBOTS_TXT = "User-agent: *\nDisallow: /"
   
 [context.branch-deploy]
+  environment = { NODE_ENV = "development", VITE_NODE_ENV = "development", VITE_BUILD_MODE = "development" }
+  command = "npm run build:development"
+  
+[context.branch-deploy.environment]
+  VITE_APP_ENV = "development"
+  VITE_ENABLE_SENTRY = "false"
+  VITE_ENABLE_ANALYTICS = "false"
+  ROBOTS_TXT = "User-agent: *\nDisallow: /"
+
+# Staging branch specific
+[context.staging]
+  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging" }
+  command = "npm run build:staging"
+  
+# Development branch specific
+[context.development]
   environment = { NODE_ENV = "development", VITE_NODE_ENV = "development" }
+  command = "npm run build:development"

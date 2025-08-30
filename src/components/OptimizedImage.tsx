@@ -1,310 +1,339 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { imageOptimizer, OptimizedImage as OptimizedImageData } from '../utils/imageOptimization';
+/**
+ * OptimizedImage Component
+ * High-performance image loading with lazy loading, responsive images, and blur-up effect
+ */
 
-interface OptimizedImageProps {
+import React, { useState, useEffect, useRef, ImgHTMLAttributes } from 'react';
+import './OptimizedImage.css';
+
+interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   src: string;
   alt: string;
-  className?: string;
-  loading?: "lazy" | 'eager';
-  priority?: number;
+  srcSet?: string;
+  sizes?: string;
+  placeholder?: string; // Low-quality placeholder or base64
+  aspectRatio?: number; // Width/height ratio for maintaining aspect ratio
+  priority?: boolean; // Load immediately without lazy loading
   onLoad?: () => void;
-  onError?: () => void;
-  style?: React.CSSProperties;
-  onClick?: () => void;
+  onError?: (error: Error) => void;
+  fadeInDuration?: number; // Milliseconds
+  observerOptions?: IntersectionObserverInit;
+  fallbackSrc?: string; // Fallback image on error
+  webpSrc?: string; // WebP version for supported browsers
+  avifSrc?: string; // AVIF version for supported browsers
 }
 
-/**
- * Optimized Image Component with Progressive Loading
- *
- * Features:
- * - Responsive image loading with multiple sizes
- * - Lazy loading with intersection observer
- * - WebP format with JPEG fallback
- * - Progressive loading with blur-up technique
- * - Bandwidth-aware image serving
- */
-const OptimizedImageComponent: React.FC<OptimizedImageProps> = ({
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
-  className = "",
-  loading = 'lazy',
-  priority = 5,
+  srcSet,
+  sizes,
+  placeholder,
+  aspectRatio,
+  priority = false,
   onLoad,
   onError,
-  style,
-  onClick
+  fadeInDuration = 300,
+  observerOptions = {},
+  fallbackSrc = '/images/placeholder.jpg',
+  webpSrc,
+  avifSrc,
+  className = '',
+  style = {},
+  ...imgProps
 }) => {
+  const [imageSrc, setImageSrc] = useState<string | undefined>(placeholder);
+  const [imageRef, setImageRef] = useState<string | undefined>();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
-  const [optimizedImage, setOptimizedImage] = useState<OptimizedImageData | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Determine best image format
+  const getBestImageFormat = (): string => {
+    if (avifSrc && supportsAvif()) {
+      return avifSrc;
+    }
+    if (webpSrc && supportsWebP()) {
+      return webpSrc;
+    }
+    return src;
+  };
+
+  // Check AVIF support
+  const supportsAvif = (): boolean => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/avif').indexOf('image/avif') === 0;
+  };
+
+  // Check WebP support
+  const supportsWebP = (): boolean => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('image/webp') === 0;
+  };
+
+  // Setup Intersection Observer
   useEffect(() => {
-    if (src) {
-      const optimized = imageOptimizer.generateOptimizedImages(src, {
-        alt,
-        priority,
-        loading
-      });
-      setOptimizedImage(optimized);
-    }
-  }, [src, alt, priority, loading]);
+    if (priority || !imgRef.current) return;
 
-  useEffect(() => {
-    if (optimizedImage && imgRef.current && loading === "lazy") {
-      imageOptimizer.setupLazyLoading(imgRef.current);
-    }
-  }, [optimizedImage, loading]);
-
-  const handleLoad = () => {
-    setIsLoaded(true);
-    onLoad?.();
-  };
-
-  const handleError = () => {
-    setHasError(true);
-    onError?.();
-  };
-
-  const handleClick = () => {
-    onClick?.();
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === ' ') {
-      event.preventDefault();
-      onClick?.();
-    }
-  };
-
-  if (!optimizedImage) {
-    return (
-      <div className={`optimized-image-loading ${className}`}
-        style={{
-          ...style, 
-          backgroundColor: "#f3f4f6"
-        }}
-      >
-        <div className="loading-spinner" />
-      </div>
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            observerRef.current?.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '50px 0px',
+        threshold: 0.01,
+        ...observerOptions,
+      }
     );
-  }
 
-  const containerClass = [
-    "optimized-image-container",
+    observerRef.current.observe(imgRef.current);
+
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, [priority, observerOptions]);
+
+  // Load image when in view
+  useEffect(() => {
+    if (!isInView) return;
+
+    const bestSrc = getBestImageFormat();
+    const img = new Image();
+
+    img.onload = () => {
+      setImageSrc(bestSrc);
+      setImageRef(bestSrc);
+      setIsLoaded(true);
+      setHasError(false);
+      onLoad?.();
+    };
+
+    img.onerror = () => {
+      console.error(`Failed to load image: ${bestSrc}`);
+      setHasError(true);
+      setImageSrc(fallbackSrc);
+      setImageRef(fallbackSrc);
+      onError?.(new Error(`Failed to load image: ${bestSrc}`));
+    };
+
+    // Set srcset if provided
+    if (srcSet) {
+      img.srcset = srcSet;
+    }
+
+    // Set sizes if provided
+    if (sizes) {
+      img.sizes = sizes;
+    }
+
+    img.src = bestSrc;
+
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [isInView, src, srcSet, sizes, fallbackSrc, webpSrc, avifSrc, onLoad, onError]);
+
+  // Calculate padding for aspect ratio
+  const paddingBottom = aspectRatio ? `${(1 / aspectRatio) * 100}%` : undefined;
+
+  // Build class names
+  const containerClassName = [
+    'optimized-image-container',
+    isLoaded && 'is-loaded',
+    hasError && 'has-error',
     className,
-    isLoaded ? "loaded" : "loading",
-    hasError ? "error" : ""
-  ].filter(Boolean).join(' ');
-
-  // Generate srcset for responsive images
-  const webpSrcSet = imageOptimizer.generateSrcSet(optimizedImage, "webp");
-  const jpegSrcSet = imageOptimizer.generateSrcSet(optimizedImage, 'jpeg');
-  const sizes = imageOptimizer.generateSizes();
-
-  const containerProps = onClick ? {
-    onClick: handleClick,
-    onKeyDown: handleKeyDown,
-    tabIndex: 0,
-    role: "button",
-    "aria-label": `View ${alt}`
-  } : {};
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div className={containerClass}
-      style={style}
-      {...containerProps}
+    <div
+      className={containerClassName}
+      style={{
+        ...style,
+        paddingBottom,
+        position: aspectRatio ? 'relative' : undefined,
+      }}
     >
-      {/* Blur placeholder */}
-      {!isLoaded && (
-        <img className="optimized-image-placeholder"
-          src={optimizedImage.placeholder}
+      {/* Placeholder/blur image */}
+      {placeholder && !isLoaded && (
+        <img
+          className="optimized-image-placeholder"
+          src={placeholder}
           alt=""
+          aria-hidden="true"
           style={{
-            filter: "blur(10px)",
+            position: aspectRatio ? 'absolute' : undefined,
+            filter: 'blur(10px)',
             transform: 'scale(1.1)',
-            transition: "opacity 0.3s ease-out"
           }}
         />
       )}
 
-      {/* Main optimized image with progressive enhancement */}
+      {/* Main image */}
       <picture>
-        {/* WebP format for modern browsers */}
-        <source
-          srcSet={webpSrcSet}
-          sizes={sizes}
-          type="image/webp"
-        />
-
-        {/* JPEG fallback */}
+        {avifSrc && isInView && (
+          <source srcSet={avifSrc} type="image/avif" />
+        )}
+        {webpSrc && isInView && (
+          <source srcSet={webpSrc} type="image/webp" />
+        )}
         <img
           ref={imgRef}
-          className={`optimized-image ${isLoaded ? "visible" : "hidden"}`}
-          src={imageOptimizer.getOptimalFormat(optimizedImage).url}
-          srcSet={jpegSrcSet}
-          sizes={sizes}
+          className="optimized-image"
+          src={imageRef || (priority ? getBestImageFormat() : undefined)}
           alt={alt}
-          loading={loading}
-          data-image-id={optimizedImage.id}
-          onLoad={handleLoad}
-          onError={handleError}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
           style={{
-            transition: "opacity 0.3s ease-out",
-            opacity: isLoaded ? 1 : 0
+            position: aspectRatio ? 'absolute' : undefined,
+            opacity: isLoaded ? 1 : 0,
+            transition: `opacity ${fadeInDuration}ms ease-in-out`,
           }}
+          {...imgProps}
         />
       </picture>
 
-      {/* Error fallback */}
+      {/* Loading skeleton */}
+      {!isLoaded && !placeholder && !hasError && (
+        <div className="optimized-image-skeleton" aria-hidden="true" />
+      )}
+
+      {/* Error state */}
       {hasError && (
-        <div className="optimized-image-error">
-          <span>Failed to load image</span>
-        </div>
-      )}
-
-      {/* Loading indicator for eager loading */}
-      {loading === "eager" && !isLoaded && !hasError && (
-        <div className='optimized-image-loading-indicator'>
-          <div className="loading-spinner" />
+        <div className="optimized-image-error" role="img" aria-label={alt}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5zm-2 14H5V5h14v14zM6.5 12.5l2.5 3 3.5-4.5 4.5 6H7z"/>
+          </svg>
+          <span>Image not available</span>
         </div>
       )}
     </div>
   );
 };
 
-/**
- * Video Thumbnail Component
- * Specialized for wellness video thumbnails with additional features
- */
-interface VideoThumbnailProps extends OptimizedImageProps {
-  videoId: string;
-  videoDuration?: string;
-  isPlaying?: boolean;
-  showPlayButton?: boolean;
-  overlayContent?: React.ReactNode;
-}
+// Export memoized version for performance
+export default React.memo(OptimizedImage);
 
-export const VideoThumbnail: React.FC<VideoThumbnailProps> = ({
-  videoId,
-  videoDuration,
-  isPlaying = false,
-  showPlayButton = true,
-  overlayContent,
-  className = "",
-  ...imageProps
-}) => {
-  const thumbnailClass = [
-    "video-thumbnail",
-    className,
-    isPlaying ? "playing" : ""
-  ].filter(Boolean).join(" ");
-
-  return (
-    <div className={`video-thumbnail-container ${thumbnailClass}`}>
-      <OptimizedImageComponent
-        {...imageProps}
-        className='video-thumbnail-image'
-        loading={imageProps.loading || 'lazy'}
-        priority={imageProps.priority || 7} // Slightly higher priority for video thumbnails
-      />
-
-      {/* Video overlay elements */}
-      <div className="video-thumbnail-overlay">
-        {/* Play button */}
-        {showPlayButton && !isPlaying && (
-          <button className="video-play-button"
-            aria-label='Play video'
-            onClick={imageProps.onClick}
-          >
-            <svg className="play-icon"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              width="24"
-              height="24"
-            >
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
-        )}
-
-        {/* Duration badge */}
-        {videoDuration && (
-          <div className="video-duration-badge">
-            {videoDuration}
-          </div>
-        )}
-
-        {/* Custom overlay content */}
-        {overlayContent && (
-          <div className="video-custom-overlay">
-            {overlayContent}
-          </div>
-        )}
-      </div>
-
-      {/* Playing indicator */}
-      {isPlaying && (
-        <div className='video-playing-indicator'>
-          <div className='playing-animation' />
-        </div>
-      )}
-    </div>
-  );
-};
-
-/**
- * Image Grid Component for multiple thumbnails
- */
-interface ImageGridProps {
-  images: Array<{
-    id: string;
-    src: string;
-    alt: string;
-    priority?: number;
-  }>;
-  className?: string;
-  onImageClick?: (imageId: string) => void;
-  maxImages?: number;
-}
-
-export const ImageGrid: React.FC<ImageGridProps> = ({
-  images,
-  className = "",
-  onImageClick,
-  maxImages = 12
-}) => {
-  const visibleImages = images.slice(0, maxImages);
+// Hook for preloading images
+export const useImagePreloader = (images: string[]): boolean => {
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Preload critical images (first 3)
-    const criticalImages = visibleImages
-      .slice(0, 3)
-      .map(img => imageOptimizer.generateOptimizedImages(img.src, {
-        alt: img.alt,
-        priority: img.priority || 8,
-        loading: "eager"
-      }));
+    let isMounted = true;
 
-    imageOptimizer.preloadCriticalImages(criticalImages);
-  }, [visibleImages]);
+    const preloadImages = async () => {
+      const promises = images.map((src) => {
+        return new Promise<void>((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve();
+          img.onerror = () => reject();
+          img.src = src;
+        });
+      });
 
-  return (
-    <div className={`image-grid ${className}`}>
-      {visibleImages.map((image, index) => (
-        <OptimizedImageComponent
-          key={image.id}
-          src={image.src}
-          alt={image.alt}
-          className="image-grid-item"
-          loading={index < 3 ? "eager" : "lazy"}
-          priority={index < 3 ? 8 : 5}
-          onClick={() => onImageClick?.(image.id)}
-        />
-      ))}
-    </div>
-  );
+      try {
+        await Promise.all(promises);
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Failed to preload images:', error);
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    preloadImages();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [images]);
+
+  return isLoading;
 };
 
-export { OptimizedImageComponent as OptimizedImage };
-export default OptimizedImageComponent;
+// Utility to generate responsive image srcset
+export const generateSrcSet = (
+  baseUrl: string,
+  sizes: number[] = [320, 640, 768, 1024, 1280, 1920]
+): string => {
+  return sizes
+    .map((size) => {
+      const url = baseUrl.replace('{width}', size.toString());
+      return `${url} ${size}w`;
+    })
+    .join(', ');
+};
+
+// Utility to generate sizes attribute
+export const generateSizes = (
+  breakpoints: { maxWidth?: number; size: string }[]
+): string => {
+  return breakpoints
+    .map(({ maxWidth, size }) => {
+      if (maxWidth) {
+        return `(max-width: ${maxWidth}px) ${size}`;
+      }
+      return size;
+    })
+    .join(', ');
+};
+
+// Image optimization utilities
+export const imageOptimizationUtils = {
+  // Convert image to base64 for placeholders
+  async toBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  },
+
+  // Generate low-quality placeholder
+  async generatePlaceholder(
+    src: string,
+    width: number = 20,
+    height: number = 20
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      img.onload = () => {
+        canvas.width = width;
+        canvas.height = height;
+        ctx?.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.1));
+      };
+
+      img.onerror = reject;
+      img.src = src;
+    });
+  },
+
+  // Calculate optimal image dimensions
+  getOptimalDimensions(
+    containerWidth: number,
+    devicePixelRatio: number = window.devicePixelRatio || 1
+  ): number {
+    return Math.ceil(containerWidth * devicePixelRatio);
+  },
+};
