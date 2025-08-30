@@ -1,825 +1,467 @@
 /**
- * Animation Utilities
+ * THERAPEUTIC ANIMATION SYSTEM
  * 
- * Comprehensive animation system for micro-interactions and page transitions
- * with therapeutic and crisis-aware animations for mental health applications.
- * 
- * @fileoverview Animation utilities and therapeutic motion design
- * @version 2.0.0
+ * Comprehensive animation library optimized for mental health applications
+ * with a focus on calming, non-jarring transitions that reduce anxiety
+ * and support users during vulnerable moments.
  */
 
-/**
- * Animation easing types
- */
-export type AnimationEasing = 
-  | 'linear'
-  | 'ease'
-  | 'ease-in'
-  | 'ease-out'
-  | 'ease-in-out'
-  | 'therapeutic'
-  | 'bounce'
-  | 'back'
-  | 'elastic';
+import { CSSProperties } from 'react';
 
-/**
- * Animation direction types
- */
-export type AnimationDirection = 
-  | 'normal' 
-  | 'reverse' 
-  | 'alternate' 
-  | 'alternate-reverse';
-
-/**
- * Animation fill mode types
- */
-export type AnimationFillMode = 
-  | 'none' 
-  | 'forwards' 
-  | 'backwards' 
-  | 'both';
-
-/**
- * Animation options interface
- */
-export interface AnimationOptions {
+// Animation configuration interface
+interface AnimationConfig {
   duration?: number;
   delay?: number;
-  easing?: AnimationEasing;
-  direction?: AnimationDirection;
-  fillMode?: AnimationFillMode;
+  easing?: string;
   iterationCount?: number | 'infinite';
+  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+  fillMode?: 'none' | 'forwards' | 'backwards' | 'both';
+  playState?: 'running' | 'paused';
 }
 
-/**
- * Transition options interface
- */
-export interface TransitionOptions {
-  duration?: number;
-  delay?: number;
-  easing?: AnimationEasing;
-  property?: string | string[];
-}
-
-/**
- * Animation CSS Variables
- */
-export const animationVars = {
-  // Durations
-  'duration-instant': '75ms',
-  'duration-fast': '150ms',
-  'duration-normal': '300ms',
-  'duration-slow': '500ms',
-  'duration-slower': '700ms',
-  
-  // Easing functions
-  'ease-linear': 'cubic-bezier(0, 0, 1, 1)',
-  'ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
-  'ease-out': 'cubic-bezier(0, 0, 0.2, 1)',
-  'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
-  'ease-therapeutic': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  'ease-bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-  'ease-back': 'cubic-bezier(0.68, -0.3, 0.32, 1)',
-  'ease-elastic': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+// Preset animation durations (in milliseconds)
+export const DURATIONS = {
+  instant: 0,
+  fast: 150,
+  base: 300,
+  moderate: 500,
+  slow: 750,
+  slower: 1000,
+  therapeutic: 2000,
+  breathing: 4000,
+  meditation: 8000,
 } as const;
 
-/**
- * Page Transition Animations
- */
-export const pageTransitions = {
-  fadeIn: {
-    name: 'page-fade-in',
-    keyframes: `
-      @keyframes page-fade-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-    `,
-    defaultOptions: {
-      duration: 300,
-      easing: 'ease-out' as AnimationEasing
-    }
-  },
-  
-  slideInUp: {
-    name: 'page-slide-in-up',
-    keyframes: `
-      @keyframes page-slide-in-up {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `,
-    defaultOptions: {
-      duration: 400,
-      easing: 'therapeutic' as AnimationEasing
-    }
-  },
-  
-  slideInDown: {
-    name: 'page-slide-in-down',
-    keyframes: `
-      @keyframes page-slide-in-down {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `,
-    defaultOptions: {
-      duration: 400,
-      easing: 'therapeutic' as AnimationEasing
-    }
-  },
-  
-  slideInLeft: {
-    name: 'page-slide-in-left',
-    keyframes: `
-      @keyframes page-slide-in-left {
-        from {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-    `,
-    defaultOptions: {
-      duration: 400,
-      easing: 'therapeutic' as AnimationEasing
-    }
-  },
-  
-  slideInRight: {
-    name: 'page-slide-in-right',
-    keyframes: `
-      @keyframes page-slide-in-right {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-    `,
-    defaultOptions: {
-      duration: 400,
-      easing: 'therapeutic' as AnimationEasing
-    }
-  },
-  
-  scaleIn: {
-    name: 'page-scale-in',
-    keyframes: `
-      @keyframes page-scale-in {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-    `,
-    defaultOptions: {
-      duration: 300,
-      easing: 'back' as AnimationEasing
-    }
-  }
+// Therapeutic easing functions
+export const EASINGS = {
+  linear: 'linear',
+  easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+  easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
+  easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  therapeutic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+  gentle: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+  bounce: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  overshoot: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+  anticipate: 'cubic-bezier(0.6, -0.28, 0.735, 0.045)',
+  decelerate: 'cubic-bezier(0, 0, 0.58, 1)',
+  accelerate: 'cubic-bezier(0.42, 0, 1, 1)',
 } as const;
 
-/**
- * Micro-interaction Animations
- */
-export const microInteractions = {
-  buttonPress: {
-    name: 'button-press',
-    keyframes: `
-      @keyframes button-press {
-        0% { transform: scale(1); }
-        50% { transform: scale(0.98); }
-        100% { transform: scale(1); }
-      }
-    `,
-    defaultOptions: {
-      duration: 150,
-      easing: 'ease-out' as AnimationEasing
+// Predefined keyframe animations
+export const KEYFRAMES = {
+  fadeIn: `
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-  },
-  
-  buttonHover: {
-    name: 'button-hover',
-    keyframes: `
-      @keyframes button-hover {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-2px); }
-      }
-    `,
-    defaultOptions: {
-      duration: 200,
-      easing: 'ease-out' as AnimationEasing
+  `,
+  fadeOut: `
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
-  },
-  
-  cardFloat: {
-    name: 'card-float',
-    keyframes: `
-      @keyframes card-float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-4px); }
+  `,
+  slideInUp: `
+    @keyframes slideInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
       }
-    `,
-    defaultOptions: {
-      duration: 3000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  cardHover: {
-    name: 'card-hover',
-    keyframes: `
-      @keyframes card-hover {
-        0% {
-          transform: translateY(0) scale(1);
-          box-shadow: var(--shadow-sm);
-        }
-        100% {
-          transform: translateY(-4px) scale(1.02);
-          box-shadow: var(--shadow-lg);
-        }
+      to {
+        transform: translateY(0);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 200,
-      easing: 'therapeutic' as AnimationEasing
     }
-  },
-  
-  pulse: {
-    name: 'pulse',
-    keyframes: `
-      @keyframes pulse {
-        0%, 100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.8;
-          transform: scale(1.05);
-        }
+  `,
+  slideInDown: `
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
       }
-    `,
-    defaultOptions: {
-      duration: 2000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  heartbeat: {
-    name: 'heartbeat',
-    keyframes: `
-      @keyframes heartbeat {
-        0% { transform: scale(1); }
-        14% { transform: scale(1.1); }
-        28% { transform: scale(1); }
-        42% { transform: scale(1.1); }
-        70% { transform: scale(1); }
+      to {
+        transform: translateY(0);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 1500,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  breathe: {
-    name: 'breathe',
-    keyframes: `
-      @keyframes breathe {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 0.8;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 1;
-        }
+  `,
+  slideInLeft: `
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-30px);
+        opacity: 0;
       }
-    `,
-    defaultOptions: {
-      duration: 4000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  glow: {
-    name: 'glow',
-    keyframes: `
-      @keyframes glow {
-        0%, 100% {
-          box-shadow: var(--shadow-sm);
-        }
-        50% {
-          box-shadow: var(--shadow-md), var(--shadow-glow-primary);
-        }
+      to {
+        transform: translateX(0);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 2000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  shake: {
-    name: 'shake',
-    keyframes: `
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-        20%, 40%, 60%, 80% { transform: translateX(2px); }
+  `,
+  slideInRight: `
+    @keyframes slideInRight {
+      from {
+        transform: translateX(30px);
+        opacity: 0;
       }
-    `,
-    defaultOptions: {
-      duration: 600,
-      easing: 'ease-in-out' as AnimationEasing
-    }
-  },
-  
-  bounce: {
-    name: 'bounce',
-    keyframes: `
-      @keyframes bounce {
-        0%, 100% {
-          transform: translateY(0);
-          animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-        }
-        50% {
-          transform: translateY(-8px);
-          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-        }
+      to {
+        transform: translateX(0);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  swing: {
-    name: 'swing',
-    keyframes: `
-      @keyframes swing {
-        0%, 100% { transform: rotate(0deg); }
-        25% { transform: rotate(5deg); }
-        75% { transform: rotate(-5deg); }
+  `,
+  scaleIn: `
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  }
-} as const;
-
-/**
- * Loading Animations
- */
-export const loadingAnimations = {
-  spin: {
-    name: 'spin',
-    keyframes: `
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+      to {
+        transform: scale(1);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'linear' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  dots: {
-    name: 'loading-dots',
-    keyframes: `
-      @keyframes loading-dots {
-        0%, 80%, 100% {
-          opacity: 0.3;
-          transform: scale(0.8);
-        }
-        40% {
-          opacity: 1;
-          transform: scale(1.2);
-        }
+  `,
+  gentlePulse: `
+    @keyframes gentlePulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 1400,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  wave: {
-    name: 'loading-wave',
-    keyframes: `
-      @keyframes loading-wave {
-        0% { background-position: -200px 0; }
-        100% { background-position: 200px 0; }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.9;
       }
-    `,
-    defaultOptions: {
-      duration: 1600,
-      easing: 'linear' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  progress: {
-    name: 'progress-bar',
-    keyframes: `
-      @keyframes progress-bar {
-        from { transform: scaleX(0); }
-        to { transform: scaleX(1); }
+  `,
+  breathingCircle: `
+    @keyframes breathingCircle {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'ease-out' as AnimationEasing
-    }
-  }
-} as const;
-
-/**
- * Therapeutic Animations
- */
-export const therapeuticAnimations = {
-  calmingBreath: {
-    name: 'calming-breath',
-    keyframes: `
-      @keyframes calming-breath {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 0.7;
-        }
-        25% {
-          transform: scale(1.15);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.15);
-          opacity: 1;
-        }
-        75% {
-          transform: scale(1);
-          opacity: 0.7;
-        }
+      25% {
+        transform: scale(1.2);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 8000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  gentleFloat: {
-    name: 'gentle-float',
-    keyframes: `
-      @keyframes gentle-float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        33% { transform: translateY(-8px) rotate(1deg); }
-        66% { transform: translateY(4px) rotate(-1deg); }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
       }
-    `,
-    defaultOptions: {
-      duration: 6000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  soothingGlow: {
-    name: 'soothing-glow',
-    keyframes: `
-      @keyframes soothing-glow {
-        0%, 100% {
-          box-shadow: var(--shadow-sm);
-          opacity: 0.8;
-        }
-        50% {
-          box-shadow: var(--shadow-md), 0 0 20px rgba(14, 165, 233, 0.3);
-          opacity: 1;
-        }
+      75% {
+        transform: scale(1);
+        opacity: 0.8;
       }
-    `,
-    defaultOptions: {
-      duration: 3000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  peaceRipple: {
-    name: 'peace-ripple',
-    keyframes: `
-      @keyframes peace-ripple {
-        0% {
-          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
-        }
-        70% {
-          box-shadow: 0 0 0 20px rgba(34, 197, 94, 0);
-        }
-        100% {
-          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-        }
+  `,
+  gentleFloat: `
+    @keyframes gentleFloat {
+      0%, 100% {
+        transform: translateY(0);
       }
-    `,
-    defaultOptions: {
-      duration: 2000,
-      easing: 'ease-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  }
-} as const;
-
-/**
- * Crisis Animations
- */
-export const crisisAnimations = {
-  urgentPulse: {
-    name: 'urgent-pulse',
-    keyframes: `
-      @keyframes urgent-pulse {
-        0%, 100% {
-          box-shadow: var(--shadow-sm);
-        }
-        50% {
-          box-shadow: var(--shadow-lg), var(--shadow-glow-crisis);
-        }
+      50% {
+        transform: translateY(-10px);
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
     }
-  },
-  
-  alertBlink: {
-    name: 'alert-blink',
-    keyframes: `
-      @keyframes alert-blink {
-        0%, 50% { opacity: 1; }
-        25%, 75% { opacity: 0.3; }
+  `,
+  shimmer: `
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
       }
-    `,
-    defaultOptions: {
-      duration: 1200,
-      easing: 'ease-in-out' as AnimationEasing,
-      iterationCount: 'infinite' as const
-    }
-  },
-  
-  safeTransition: {
-    name: 'safe-transition',
-    keyframes: `
-      @keyframes safe-transition {
-        0% {
-          background: var(--color-error-50);
-          border-color: var(--color-error-200);
-        }
-        100% {
-          background: var(--color-success-50);
-          border-color: var(--color-success-200);
-        }
+      100% {
+        background-position: 200% 0;
       }
-    `,
-    defaultOptions: {
-      duration: 1000,
-      easing: 'ease-in-out' as AnimationEasing
     }
-  }
-} as const;
-
-/**
- * Animation Utility Functions
- */
-export const getEasingFunction = (easing: AnimationEasing): string => {
-  const easingMap = {
-    linear: animationVars['ease-linear'],
-    ease: 'ease',
-    'ease-in': animationVars['ease-in'],
-    'ease-out': animationVars['ease-out'],
-    'ease-in-out': animationVars['ease-in-out'],
-    therapeutic: animationVars['ease-therapeutic'],
-    bounce: animationVars['ease-bounce'],
-    back: animationVars['ease-back'],
-    elastic: animationVars['ease-elastic']
-  };
-  
-  return easingMap[easing] || animationVars['ease-out'];
+  `,
+  ripple: `
+    @keyframes ripple {
+      from {
+        transform: scale(0);
+        opacity: 1;
+      }
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `,
+  checkmark: `
+    @keyframes checkmark {
+      0% {
+        stroke-dashoffset: 100;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+  `,
+  errorShake: `
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+      20%, 40%, 60%, 80% { transform: translateX(2px); }
+    }
+  `,
+  successBounce: `
+    @keyframes successBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+  `,
+  loadingDots: `
+    @keyframes loadingDots {
+      0%, 80%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      40% {
+        transform: scale(1.3);
+        opacity: 0.5;
+      }
+    }
+  `,
 };
 
 /**
- * Create animation CSS string
+ * Create CSS animation property string
  */
-export const createAnimationCSS = (
+export function createAnimation(
   name: string,
-  options: AnimationOptions = {}
-): string => {
+  config: AnimationConfig = {}
+): string {
   const {
-    duration = 300,
+    duration = DURATIONS.base,
     delay = 0,
-    easing = 'ease-out',
+    easing = EASINGS.therapeutic,
+    iterationCount = 1,
     direction = 'normal',
     fillMode = 'both',
-    iterationCount = 1
-  } = options;
-  
-  const easingFunction = getEasingFunction(easing);
-  const iterationValue = typeof iterationCount === 'number' 
-    ? iterationCount.toString() 
-    : iterationCount;
-  
-  return `${name} ${duration}ms ${easingFunction} ${delay}ms ${iterationValue} ${direction} ${fillMode}`;
-};
+    playState = 'running',
+  } = config;
+
+  return `${name} ${duration}ms ${easing} ${delay}ms ${iterationCount} ${direction} ${fillMode} ${playState}`;
+}
 
 /**
- * Create transition CSS string
+ * Create CSS transition property string
  */
-export const createTransitionCSS = (
-  options: TransitionOptions = {}
-): string => {
-  const {
-    duration = 300,
-    delay = 0,
-    easing = 'ease-out',
-    property = 'all'
-  } = options;
-  
-  const easingFunction = getEasingFunction(easing);
-  const properties = Array.isArray(property) ? property.join(', ') : property;
-  
-  return `${properties} ${duration}ms ${easingFunction} ${delay}ms`;
-};
+export function createTransition(
+  properties: string | string[],
+  duration: number = DURATIONS.base,
+  easing: string = EASINGS.therapeutic,
+  delay: number = 0
+): string {
+  const props = Array.isArray(properties) ? properties : [properties];
+  return props
+    .map(prop => `${prop} ${duration}ms ${easing} ${delay}ms`)
+    .join(', ');
+}
 
 /**
- * Animation Hook for React Components
+ * Stagger animation delays for list items
  */
-export const useAnimation = (
-  element: HTMLElement | null,
-  animationName: string,
-  options: AnimationOptions = {}
-): {
-  play: () => void;
-  pause: () => void;
-  resume: () => void;
-  stop: () => void;
-} => {
-  const play = (): void => {
-    if (!element) return;
-    const animation = createAnimationCSS(animationName, options);
-    element.style.animation = animation;
-  };
-  
-  const pause = (): void => {
-    if (!element) return;
-    element.style.animationPlayState = 'paused';
-  };
-  
-  const resume = (): void => {
-    if (!element) return;
-    element.style.animationPlayState = 'running';
-  };
-  
-  const stop = (): void => {
-    if (!element) return;
-    element.style.animation = 'none';
-  };
-  
-  return { play, pause, resume, stop };
-};
+export function staggerDelay(
+  index: number,
+  baseDelay: number = 0,
+  increment: number = 50
+): number {
+  return baseDelay + index * increment;
+}
 
 /**
- * Generate CSS for all animations
+ * Generate spring physics animation
  */
-export const generateAnimationCSS = (): string => {
-  const allAnimations = {
-    ...pageTransitions,
-    ...microInteractions,
-    ...loadingAnimations,
-    ...therapeuticAnimations,
-    ...crisisAnimations
-  };
+export function springAnimation(
+  stiffness: number = 200,
+  damping: number = 20,
+  mass: number = 1
+): string {
+  // Simplified spring animation using CSS cubic-bezier approximation
+  const dampingRatio = damping / (2 * Math.sqrt(stiffness * mass));
   
-  return Object.values(allAnimations)
-    .map(animation => animation.keyframes)
-    .join('\n\n');
-};
-
-/**
- * Intersection Observer Animation Utility
- */
-export const createScrollRevealObserver = (
-  className: string = 'scroll-reveal',
-  options: IntersectionObserverInit = {}
-): {
-  observe: (element: Element) => void;
-  unobserve: (element: Element) => void;
-  disconnect: () => void;
-} => {
-  const defaultOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px',
-    ...options
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-in');
-        entry.target.classList.remove('animate-out');
-      }
-    });
-  }, defaultOptions);
-  
-  const observe = (element: Element): void => {
-    element.classList.add(className);
-    observer.observe(element);
-  };
-  
-  const unobserve = (element: Element): void => {
-    observer.unobserve(element);
-  };
-  
-  const disconnect = (): void => {
-    observer.disconnect();
-  };
-  
-  return { observe, unobserve, disconnect };
-};
-
-/**
- * Performance-aware animation utilities
- */
-export const prefersReducedMotion = (): boolean => {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-};
-
-/**
- * Respect motion preference
- */
-export const respectMotionPreference = <T extends AnimationOptions>(
-  options: T
-): T => {
-  if (prefersReducedMotion()) {
-    return {
-      ...options,
-      duration: 0,
-      iterationCount: 1
-    };
+  if (dampingRatio < 1) {
+    // Underdamped - will oscillate
+    return EASINGS.bounce;
+  } else if (dampingRatio === 1) {
+    // Critically damped
+    return EASINGS.therapeutic;
+  } else {
+    // Overdamped
+    return EASINGS.easeOut;
   }
-  return options;
-};
+}
 
-// Default export with all utilities
-export default {
-  animationVars,
-  pageTransitions,
-  microInteractions,
-  loadingAnimations,
-  therapeuticAnimations,
-  crisisAnimations,
-  getEasingFunction,
-  createAnimationCSS,
-  createTransitionCSS,
-  useAnimation,
-  generateAnimationCSS,
-  createScrollRevealObserver,
-  prefersReducedMotion,
-  respectMotionPreference
-};
+/**
+ * Micro-interaction animation presets
+ */
+export const MICRO_INTERACTIONS = {
+  buttonPress: {
+    transform: 'scale(0.98)',
+    transition: createTransition('transform', DURATIONS.fast),
+  },
+  buttonRelease: {
+    transform: 'scale(1)',
+    transition: createTransition('transform', DURATIONS.fast, EASINGS.bounce),
+  },
+  hoverLift: {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    transition: createTransition(['transform', 'box-shadow'], DURATIONS.base),
+  },
+  focusGlow: {
+    boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.5)',
+    transition: createTransition('box-shadow', DURATIONS.fast),
+  },
+  successPulse: {
+    animation: createAnimation('gentlePulse', {
+      duration: DURATIONS.therapeutic,
+      iterationCount: 2,
+    }),
+  },
+  errorShake: {
+    animation: createAnimation('errorShake', {
+      duration: DURATIONS.moderate,
+    }),
+  },
+  loadingPulse: {
+    animation: createAnimation('gentlePulse', {
+      duration: DURATIONS.slower,
+      iterationCount: 'infinite',
+    }),
+  },
+} as const;
+
+/**
+ * Page transition presets
+ */
+export const PAGE_TRANSITIONS = {
+  fadeIn: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: DURATIONS.base / 1000, ease: EASINGS.therapeutic },
+  },
+  slideUp: {
+    initial: { y: 20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: -20, opacity: 0 },
+    transition: { duration: DURATIONS.base / 1000, ease: EASINGS.therapeutic },
+  },
+  slideRight: {
+    initial: { x: -20, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: 20, opacity: 0 },
+    transition: { duration: DURATIONS.base / 1000, ease: EASINGS.therapeutic },
+  },
+  scale: {
+    initial: { scale: 0.95, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    exit: { scale: 1.05, opacity: 0 },
+    transition: { duration: DURATIONS.base / 1000, ease: EASINGS.therapeutic },
+  },
+} as const;
+
+/**
+ * Crisis mode animation overrides
+ */
+export const CRISIS_ANIMATIONS = {
+  immediate: {
+    duration: DURATIONS.instant,
+    easing: EASINGS.linear,
+  },
+  urgent: {
+    duration: DURATIONS.fast,
+    easing: EASINGS.easeOut,
+  },
+  clear: {
+    duration: DURATIONS.base,
+    easing: EASINGS.easeInOut,
+  },
+} as const;
+
+/**
+ * Accessibility-aware animation wrapper
+ */
+export function accessibleAnimation(
+  animation: string | CSSProperties,
+  prefersReducedMotion: boolean
+): string | CSSProperties {
+  if (prefersReducedMotion) {
+    if (typeof animation === 'string') {
+      // Remove or reduce animation
+      return animation.replace(/(\d+)ms/g, '0ms');
+    } else {
+      // Remove animation properties
+      const { animation: _, transition: __, ...rest } = animation;
+      return rest;
+    }
+  }
+  return animation;
+}
+
+/**
+ * Generate skeleton loading animation
+ */
+export function skeletonAnimation(): CSSProperties {
+  return {
+    background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+    backgroundSize: '200% 100%',
+    animation: createAnimation('shimmer', {
+      duration: DURATIONS.slower * 1.5,
+      iterationCount: 'infinite',
+      easing: EASINGS.linear,
+    }),
+  };
+}
+
+/**
+ * Generate progress animation
+ */
+export function progressAnimation(progress: number): CSSProperties {
+  return {
+    width: `${progress}%`,
+    transition: createTransition('width', DURATIONS.moderate, EASINGS.easeOut),
+  };
+}
+
+/**
+ * Generate notification entrance animation
+ */
+export function notificationAnimation(position: 'top' | 'bottom' = 'top'): CSSProperties {
+  const translateY = position === 'top' ? '-100%' : '100%';
+  return {
+    animation: createAnimation(position === 'top' ? 'slideInDown' : 'slideInUp', {
+      duration: DURATIONS.base,
+      easing: EASINGS.overshoot,
+      fillMode: 'forwards',
+    }),
+    transform: `translateY(${translateY})`,
+  };
+}
+
+/**
+ * Export all keyframes as a single CSS string for injection
+ */
+export const ALL_KEYFRAMES = Object.values(KEYFRAMES).join('\n');
+
+// Helper to check if user prefers reduced motion
+export function getPrefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+// Helper to apply animation with reduced motion check
+export function applyAnimation(
+  element: HTMLElement,
+  animation: string | CSSProperties
+): void {
+  const prefersReducedMotion = getPrefersReducedMotion();
+  const finalAnimation = accessibleAnimation(animation, prefersReducedMotion);
+  
+  if (typeof finalAnimation === 'string') {
+    element.style.animation = finalAnimation;
+  } else {
+    Object.assign(element.style, finalAnimation);
+  }
+}

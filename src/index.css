@@ -3,6 +3,14 @@
  * Base styles and CSS reset
  */
 
+/* Import Unified Design System - Single source of truth for all design tokens */
+@import "./styles/unified-design-system.css";
+@import "./styles/unified-components.css";
+@import "./styles/accessibility-validation.css";
+@import "./styles/crisis-ui-optimization.css";
+@import "./styles/responsive-validation.css";
+@import "./styles/component-migration-guide.css";
+
 /* Import Master Design System - Apple-level quality for mental health platform */
 @import "./styles/master-design-system.css";
 

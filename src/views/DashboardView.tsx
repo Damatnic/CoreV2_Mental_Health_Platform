@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { logger } from '../utils/logger';
+
+// Lazy load enhanced components for performance
+const MoodTrackerEnhanced = lazy(() => import('../components/MoodTrackerEnhanced'));
+const CrisisFlowOptimized = lazy(() => import('../components/CrisisFlowOptimized'));
+const MicroInteractions = lazy(() => import('../components/MicroInteractions'));
+const LoadingSpinner = lazy(() => import('../components/LoadingSpinner'));
 
 interface DashboardCard {
   id: string;
@@ -12,6 +20,12 @@ interface DashboardCard {
 
 const DashboardView: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [showMoodTracker, setShowMoodTracker] = useState(false);
+  const [showCrisisFlow, setShowCrisisFlow] = useState(false);
+  const [todaysMood, setTodaysMood] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [cards] = useState<DashboardCard[]>([
     {
       id: 'ai-chat',
@@ -74,8 +88,54 @@ const DashboardView: React.FC = () => {
     return user?.firstName || user?.username || 'there';
   };
 
+  const handleMoodUpdate = (mood: number) => {
+    setTodaysMood(mood);
+    logger.info('Mood updated', { mood }, 'DashboardView');
+    // Save to backend or localStorage
+    localStorage.setItem('todaysMood', JSON.stringify({ mood, date: new Date().toISOString() }));
+  };
+
+  const checkCrisisIndicators = () => {
+    // Check for crisis indicators in mood or user behavior
+    if (todaysMood && todaysMood <= 3) {
+      setShowCrisisFlow(true);
+    }
+  };
+
+  useEffect(() => {
+    // Load today's mood if it exists
+    const savedMood = localStorage.getItem('todaysMood');
+    if (savedMood) {
+      const { mood, date } = JSON.parse(savedMood);
+      const today = new Date().toDateString();
+      const moodDate = new Date(date).toDateString();
+      if (today === moodDate) {
+        setTodaysMood(mood);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    checkCrisisIndicators();
+  }, [todaysMood]);
+
   return (
     <div className="dashboard-view">
+      {/* Crisis Flow Overlay */}
+      {showCrisisFlow && (
+        <Suspense fallback={<LoadingSpinner />}>
+          <CrisisFlowOptimized 
+            onClose={() => setShowCrisisFlow(false)}
+            severity="high"
+          />
+        </Suspense>
+      )}
+
+      {/* Micro Interactions Layer */}
+      <Suspense fallback={null}>
+        <MicroInteractions />
+      </Suspense>
+
       <div className="dashboard-header">
         <h1 className="dashboard-title">
           {getGreeting()}, {getUserName()}!
@@ -85,13 +145,30 @@ const DashboardView: React.FC = () => {
         </p>
       </div>
 
+      {/* Enhanced Mood Tracker Section */}
+      <div className="mood-tracker-container">
+        <Suspense fallback={<LoadingSpinner message="Loading mood tracker..." />}>
+          <MoodTrackerEnhanced 
+            onMoodUpdate={handleMoodUpdate}
+            currentMood={todaysMood}
+            userId={user?.id || 'anonymous'}
+          />
+        </Suspense>
+      </div>
+
       <div className="dashboard-stats">
         <div className="stat-card">
           <div className="stat-icon">📊</div>
           <div className="stat-content">
             <h3>Today's Check-in</h3>
-            <p>How are you feeling?</p>
-            <button className="stat-button">Quick Mood Check</button>
+            <p>{todaysMood ? `Mood: ${todaysMood}/10` : 'How are you feeling?'}</p>
+            <button 
+              className="stat-button"
+              onClick={() => setShowMoodTracker(!showMoodTracker)}
+              aria-label="Open mood tracker"
+            >
+              Quick Mood Check
+            </button>
           </div>
         </div>
         
@@ -123,7 +200,7 @@ const DashboardView: React.FC = () => {
             <div 
               key={card.id} 
               className={`dashboard-card dashboard-card--${card.color}`}
-              onClick={() => window.location.href = card.link}
+              onClick={() => navigate(card.link)}
             >
               <div className="card-icon">{card.icon}</div>
               <div className="card-content">
@@ -139,19 +216,40 @@ const DashboardView: React.FC = () => {
       <div className="dashboard-quick-actions">
         <h2>Quick Actions</h2>
         <div className="quick-actions-grid">
-          <button className="quick-action-button">
+          <button 
+            className="quick-action-button"
+            onClick={() => window.location.href = 'tel:988'}
+            aria-label="Call 988 Crisis Line"
+          >
             <span className="action-icon">📞</span>
             <span>Call Crisis Line</span>
           </button>
-          <button className="quick-action-button">
+          <button 
+            className="quick-action-button"
+            onClick={() => navigate('/ai-chat')}
+            aria-label="Start AI chat session"
+          >
             <span className="action-icon">💬</span>
             <span>Start AI Chat</span>
           </button>
-          <button className="quick-action-button">
+          <button 
+            className="quick-action-button"
+            onClick={() => navigate('/reflections')}
+            aria-label="Write a journal reflection"
+          >
             <span className="action-icon">📝</span>
             <span>Write Reflection</span>
           </button>
-          <button className="quick-action-button">
+          <button 
+            className="quick-action-button"
+            onClick={() => {
+              // Trigger breathing exercise modal/component
+              document.dispatchEvent(new CustomEvent('startBreathingExercise'));
+              // Also navigate to wellness for the full experience
+              navigate('/wellness');
+            }}
+            aria-label="Start breathing exercise"
+          >
             <span className="action-icon">🧘</span>
             <span>Breathing Exercise</span>
           </button>

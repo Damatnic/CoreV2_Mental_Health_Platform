@@ -1,46 +1,69 @@
 /**
- * Authentication Hook - Production-ready authentication integration
- * Provides seamless authentication state and methods
- * HIPAA-compliant with complete 2FA support
+ * Authentication Hook - Simplified for demo functionality
+ * Provides authentication state and methods via mock API
  */
 
-import { useContext } from 'react';
-import { AuthContext, AuthContextType } from '../contexts/AuthContext';
+import { useSimpleAuth } from './useSimpleAuth';
 
 /**
  * useAuth Hook - Provides authentication functionality
  * This is the primary way components should access authentication
+ * Now using simplified implementation for immediate functionality
  */
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
+export const useAuth = () => {
+  const simpleAuth = useSimpleAuth();
   
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  
-  return context;
+  // Map simple auth to expected interface for compatibility
+  return {
+    user: simpleAuth.user,
+    loading: simpleAuth.loading,
+    error: simpleAuth.error,
+    isAuthenticated: simpleAuth.isAuthenticated,
+    requiresTwoFactor: false, // Not implemented in simple auth
+    sessionTimeRemaining: 3600, // Default 1 hour
+    
+    // Core methods - map with appropriate signatures
+    login: async (email: string, password: string, rememberMe?: boolean, twoFactorCode?: string) => {
+      return simpleAuth.login(email, password);
+    },
+    
+    register: async (data: any) => {
+      const email = typeof data === 'string' ? data : data.email;
+      const password = typeof data === 'object' ? data.password : 'password123';
+      const profile = typeof data === 'object' ? data : undefined;
+      return simpleAuth.register(email, password, profile);
+    },
+    
+    logout: simpleAuth.logout,
+    updateUser: simpleAuth.updateUser,
+    clearError: simpleAuth.clearError,
+    
+    // Stub methods for compatibility
+    loginWithGoogle: async () => {
+      console.log('Google login not available in demo mode');
+    },
+    
+    loginWithApple: async () => {
+      console.log('Apple login not available in demo mode');
+    },
+    
+    handleOAuthCallback: async () => false,
+    completeTwoFactorAuth: async () => false,
+    setupTwoFactorAuth: async () => null,
+    disableTwoFactorAuth: async () => false,
+    changePassword: async () => false,
+    requestPasswordReset: async () => false,
+    resetPassword: async () => false,
+    verifyEmail: async () => false,
+    resendVerificationEmail: async () => false,
+    refreshToken: async () => true,
+    checkSession: () => {}
+  };
 };
 
-// Export type for convenience
-export type { AuthContextType as UseAuthReturn } from '../contexts/AuthContext';
-export type { User as AuthUser } from '../contexts/AuthContext';
-
-// Re-export common types
-export type {
-  LoginCredentials,
-  RegisterData,
-  TwoFactorSetup,
-  TokenPair,
-  UserPreferences,
-  NotificationPreferences,
-  PrivacySettings,
-  AccessibilitySettings,
-  CrisisSupportSettings,
-  EmergencyContact,
-  UserProfile,
-  TherapistInfo,
-  EmergencyInfo
-} from '../services/auth/authService';
+// Export types for compatibility
+export type UseAuthReturn = ReturnType<typeof useAuth>;
+export type AuthUser = any;
 
 // Export default for backwards compatibility
 export default useAuth;

@@ -1,0 +1,552 @@
+/**
+ * CRISIS UI OPTIMIZATION SYSTEM
+ * Specialized UI patterns optimized for mental health crisis situations
+ * Designed to reduce anxiety and provide immediate support
+ */
+
+@import "./unified-design-system.css";
+
+/* ========================================
+   CRISIS MODE ACTIVATION
+   ======================================== */
+
+/* When crisis mode is activated */
+body.crisis-active {
+  /* Calming background to reduce anxiety */
+  background: linear-gradient(135deg, 
+    rgba(239, 249, 255, 1) 0%, 
+    rgba(219, 234, 254, 1) 100%);
+  
+  /* Smooth all transitions */
+  * {
+    transition-duration: var(--duration-slow) !important;
+    transition-timing-function: var(--ease-therapeutic) !important;
+  }
+}
+
+/* ========================================
+   CRISIS BANNER SYSTEM
+   ======================================== */
+
+.crisis-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, 
+    var(--color-crisis-urgent) 0%, 
+    var(--color-crisis-high) 100%);
+  color: white;
+  padding: var(--space-4);
+  z-index: var(--z-crisis);
+  box-shadow: var(--shadow-lg);
+  animation: gentleSlideDown var(--duration-slow) var(--ease-therapeutic);
+}
+
+@keyframes gentleSlideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.crisis-banner-content {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.crisis-banner-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
+}
+
+.crisis-banner-icon {
+  width: var(--space-6);
+  height: var(--space-6);
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.crisis-banner-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ========================================
+   EMERGENCY CONTACT CARDS
+   ======================================== */
+
+.emergency-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.emergency-contact-card {
+  background: white;
+  border: 3px solid var(--color-crisis-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md), var(--shadow-crisis);
+  transition: all var(--duration-base) var(--ease-therapeutic);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.emergency-contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--color-crisis-urgent);
+}
+
+.emergency-contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-crisis);
+  border-color: var(--color-crisis-urgent);
+}
+
+.emergency-contact-priority {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: var(--color-crisis-urgent);
+  color: white;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.emergency-contact-number {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary-600);
+  margin: var(--space-3) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.emergency-contact-number::before {
+  content: "📞";
+  font-size: var(--text-3xl);
+}
+
+.emergency-contact-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.emergency-contact-availability::before {
+  content: "•";
+  color: var(--color-success);
+  font-size: var(--text-xl);
+  line-height: 0;
+}
+
+/* ========================================
+   CRISIS ACTION BUTTONS
+   ======================================== */
+
+.crisis-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-8);
+  background: linear-gradient(135deg, 
+    var(--color-crisis-urgent) 0%, 
+    var(--color-crisis-high) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  box-shadow: var(--shadow-lg), var(--shadow-crisis);
+  transition: all var(--duration-base) var(--ease-therapeutic);
+  min-height: 56px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  position: relative;
+  overflow: hidden;
+}
+
+.crisis-action-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.crisis-action-button:hover::before {
+  transform: translate(-50%, -50%) scale(2);
+}
+
+.crisis-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), var(--shadow-crisis);
+}
+
+.crisis-action-button:active {
+  transform: translateY(0);
+}
+
+.crisis-action-button-icon {
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+/* Text message crisis button variant */
+.crisis-text-button {
+  background: linear-gradient(135deg, 
+    var(--color-primary-500) 0%, 
+    var(--color-primary-600) 100%);
+  box-shadow: var(--shadow-lg), var(--shadow-calm);
+}
+
+/* Chat crisis button variant */
+.crisis-chat-button {
+  background: linear-gradient(135deg, 
+    var(--color-secondary-500) 0%, 
+    var(--color-secondary-600) 100%);
+  box-shadow: var(--shadow-lg), var(--shadow-healing);
+}
+
+/* ========================================
+   BREATHING EXERCISE OVERLAY
+   ======================================== */
+
+.crisis-breathing-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(239, 249, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  animation: fadeIn var(--duration-slow) var(--ease-therapeutic);
+}
+
+.crisis-breathing-circle {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    var(--color-primary-100) 0%, 
+    var(--color-primary-200) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-2xl), var(--shadow-calm);
+  animation: breatheScale 4s ease-in-out infinite;
+}
+
+@keyframes breatheScale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.crisis-breathing-text {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary-700);
+  text-align: center;
+  animation: breatheOpacity 4s ease-in-out infinite;
+}
+
+@keyframes breatheOpacity {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   SAFETY PLAN WIDGET
+   ======================================== */
+
+.safety-plan-widget {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  background: white;
+  border: 2px solid var(--color-primary-300);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xl);
+  max-width: 400px;
+  z-index: var(--z-sticky);
+}
+
+.safety-plan-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.safety-plan-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-neutral-900);
+}
+
+.safety-plan-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.safety-plan-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.safety-plan-step:last-child {
+  border-bottom: none;
+}
+
+.safety-plan-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  background: var(--gradient-calm);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-bold);
+  color: var(--color-primary-700);
+  flex-shrink: 0;
+}
+
+.safety-plan-step-content {
+  flex: 1;
+}
+
+.safety-plan-step-title {
+  font-weight: var(--font-semibold);
+  color: var(--color-neutral-800);
+  margin-bottom: var(--space-1);
+}
+
+.safety-plan-step-description {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  line-height: var(--leading-relaxed);
+}
+
+/* ========================================
+   GROUNDING TECHNIQUES
+   ======================================== */
+
+.grounding-technique-card {
+  background: var(--gradient-healing);
+  border: 2px solid var(--color-secondary-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-base), var(--shadow-healing);
+}
+
+.grounding-technique-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-secondary-800);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.grounding-technique-title::before {
+  content: "🌿";
+  font-size: var(--text-2xl);
+}
+
+.grounding-senses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.grounding-sense-item {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-fast) var(--ease-therapeutic);
+}
+
+.grounding-sense-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-base);
+}
+
+.grounding-sense-icon {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-2);
+}
+
+.grounding-sense-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-neutral-700);
+}
+
+/* ========================================
+   CRISIS COUNTDOWN TIMER
+   ======================================== */
+
+.crisis-countdown {
+  background: var(--gradient-warm);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-lg), var(--shadow-warm);
+}
+
+.crisis-countdown-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent-800);
+  margin-bottom: var(--space-4);
+}
+
+.crisis-countdown-timer {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent-700);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+
+.crisis-countdown-message {
+  font-size: var(--text-md);
+  color: var(--color-accent-700);
+  line-height: var(--leading-relaxed);
+}
+
+/* ========================================
+   MOBILE CRISIS OPTIMIZATION
+   ======================================== */
+
+@media (max-width: 768px) {
+  .crisis-banner {
+    padding: var(--space-3);
+  }
+  
+  .crisis-banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .emergency-contact-grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+  }
+  
+  .crisis-action-button {
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+  }
+  
+  .safety-plan-widget {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    max-width: 100%;
+  }
+  
+  .crisis-breathing-circle {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* ========================================
+   REDUCED ANXIETY ANIMATIONS
+   ======================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .crisis-mode * {
+    animation-duration: calc(var(--duration-slow) * 1.5) !important;
+    transition-duration: calc(var(--duration-base) * 1.5) !important;
+  }
+}
+
+/* Dark mode crisis adjustments */
+[data-theme="dark"] .crisis-banner {
+  background: linear-gradient(90deg, 
+    var(--color-crisis-urgent) 0%, 
+    #991b1b 100%);
+}
+
+[data-theme="dark"] .emergency-contact-card {
+  background: var(--color-neutral-800);
+  border-color: var(--color-crisis-urgent);
+}
+
+[data-theme="dark"] .safety-plan-widget {
+  background: var(--color-neutral-800);
+  border-color: var(--color-primary-400);
+}

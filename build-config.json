@@ -1,0 +1,184 @@
+{
+  "name": "astral-core-production-build",
+  "version": "1.0.0",
+  "description": "Production build configuration for Astral Core Mental Health Platform",
+  "buildSettings": {
+    "optimization": {
+      "minify": true,
+      "treeshake": true,
+      "splitChunks": true,
+      "compression": ["gzip", "brotli"],
+      "imageOptimization": true,
+      "cssOptimization": true,
+      "removeConsole": true,
+      "sourcemaps": false
+    },
+    "performance": {
+      "budgets": {
+        "maxBundleSize": "500kb",
+        "maxChunkSize": "200kb",
+        "maxAssetSize": "100kb",
+        "maxInitialLoad": "3s",
+        "maxFCP": "1.8s",
+        "maxLCP": "2.5s"
+      },
+      "preload": ["critical-css", "critical-fonts"],
+      "prefetch": ["secondary-routes"],
+      "lazyLoad": ["images", "components", "routes"]
+    },
+    "security": {
+      "csp": {
+        "defaultSrc": ["'self'"],
+        "scriptSrc": ["'self'", "'unsafe-inline'"],
+        "styleSrc": ["'self'", "'unsafe-inline'"],
+        "imgSrc": ["'self'", "data:", "https:"],
+        "fontSrc": ["'self'", "data:"],
+        "connectSrc": ["'self'", "https://api.astralcore.app"]
+      },
+      "headers": {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+      }
+    },
+    "pwa": {
+      "enabled": true,
+      "manifest": {
+        "name": "Astral Core Mental Health Platform",
+        "short_name": "Astral Core",
+        "description": "Comprehensive mental health support platform",
+        "theme_color": "#667eea",
+        "background_color": "#ffffff",
+        "display": "standalone",
+        "orientation": "portrait",
+        "start_url": "/",
+        "categories": ["health", "medical", "lifestyle"]
+      },
+      "workbox": {
+        "runtimeCaching": true,
+        "offlineMode": true,
+        "backgroundSync": true,
+        "pushNotifications": false
+      }
+    },
+    "deployment": {
+      "targets": ["netlify", "vercel", "aws", "azure"],
+      "cdn": {
+        "enabled": true,
+        "provider": "cloudflare",
+        "cache": {
+          "html": "1h",
+          "css": "1y",
+          "js": "1y",
+          "images": "1y",
+          "fonts": "1y"
+        }
+      },
+      "monitoring": {
+        "errorTracking": "sentry",
+        "analytics": "google-analytics",
+        "performance": "web-vitals",
+        "uptime": "pingdom"
+      }
+    },
+    "testing": {
+      "preDeployment": {
+        "unitTests": true,
+        "integrationTests": true,
+        "e2eTests": true,
+        "accessibilityTests": true,
+        "performanceTests": true,
+        "securityTests": true
+      },
+      "postDeployment": {
+        "smokeTests": true,
+        "healthChecks": true,
+        "syntheticMonitoring": true
+      }
+    },
+    "features": {
+      "mentalHealthTools": {
+        "moodTracking": true,
+        "crisisIntervention": true,
+        "aiChatSupport": true,
+        "communitySupport": true,
+        "professionalConnect": true,
+        "wellnessTools": true,
+        "journaling": true,
+        "assessments": true
+      },
+      "accessibility": {
+        "wcagLevel": "AA",
+        "screenReaderSupport": true,
+        "keyboardNavigation": true,
+        "highContrast": true,
+        "reducedMotion": true,
+        "textResize": true
+      },
+      "localization": {
+        "defaultLanguage": "en",
+        "supportedLanguages": ["en", "es", "fr", "de", "pt", "zh", "ja", "ar"],
+        "rtlSupport": true
+      }
+    },
+    "validation": {
+      "html": true,
+      "css": true,
+      "javascript": true,
+      "typescript": true,
+      "accessibility": true,
+      "seo": true,
+      "performance": true,
+      "security": true
+    }
+  },
+  "scripts": {
+    "build:production": "vite build --mode production",
+    "build:staging": "vite build --mode staging",
+    "build:analyze": "vite build --mode production --analyze",
+    "build:report": "vite build --mode production --report",
+    "test:production": "vitest run --coverage",
+    "validate:build": "node scripts/validate-build.js",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:vercel": "vercel --prod",
+    "monitor:performance": "lighthouse dist/index.html",
+    "monitor:bundle": "webpack-bundle-analyzer dist/stats.json"
+  },
+  "environments": {
+    "production": {
+      "apiUrl": "https://api.astralcore.app",
+      "wsUrl": "wss://ws.astralcore.app",
+      "cdnUrl": "https://cdn.astralcore.app",
+      "analyticsId": "GA-PRODUCTION",
+      "sentryDsn": "https://sentry.io/astralcore-prod"
+    },
+    "staging": {
+      "apiUrl": "https://staging-api.astralcore.app",
+      "wsUrl": "wss://staging-ws.astralcore.app",
+      "cdnUrl": "https://staging-cdn.astralcore.app",
+      "analyticsId": "GA-STAGING",
+      "sentryDsn": "https://sentry.io/astralcore-staging"
+    }
+  },
+  "healthChecks": {
+    "endpoints": [
+      "/health",
+      "/api/health",
+      "/api/status"
+    ],
+    "interval": 60,
+    "timeout": 5000,
+    "retries": 3
+  },
+  "rollback": {
+    "enabled": true,
+    "strategy": "blue-green",
+    "maxVersions": 5,
+    "autoRollback": {
+      "errorThreshold": 5,
+      "latencyThreshold": 3000,
+      "availabilityThreshold": 99.5
+    }
+  }
+}

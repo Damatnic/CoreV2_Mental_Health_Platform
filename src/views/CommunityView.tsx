@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { logger } from '../utils/logger';
+
+// Lazy load community components
+const CommunityFeaturesComplete = lazy(() => import('../components/community/CommunityFeaturesComplete'));
+const LoadingSpinner = lazy(() => import('../components/LoadingSpinner'));
 
 interface CommunityPost {
   id: string;
@@ -14,6 +19,8 @@ interface CommunityPost {
 
 const CommunityView: React.FC = () => {
   const { user } = useAuth();
+  const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(false);
+  const [activeTab, setActiveTab] = useState<'posts' | 'groups' | 'events'>('posts');
   const [posts, setPosts] = useState<CommunityPost[]>([
     {
       id: '1',
@@ -54,21 +61,57 @@ const CommunityView: React.FC = () => {
     return diffHours < 24 ? `${diffHours}h ago` : `${Math.floor(diffHours / 24)}d ago`;
   };
 
+  const handleReportContent = (postId: string) => {
+    logger.warn('Content reported', { postId, reportedBy: user?.id }, 'CommunityView');
+    // Implement reporting logic
+  };
+
+  const handleJoinGroup = (groupId: string) => {
+    logger.info('User joined group', { groupId, userId: user?.id }, 'CommunityView');
+    // Implement group joining logic
+  };
+
   return (
     <div className="community-view">
       <div className="community-header">
-        <h1>Community Support</h1>
-        <p>Connect with others on their mental health journey</p>
+        <h1>Community Hub</h1>
+        <p>Connect, share, and support each other on your mental health journey</p>
+        <button 
+          className="advanced-features-toggle"
+          onClick={() => setShowAdvancedFeatures(!showAdvancedFeatures)}
+          aria-label="Toggle advanced community features"
+        >
+          {showAdvancedFeatures ? '📊 Basic View' : '🚀 Advanced Features'}
+        </button>
       </div>
 
-      <div className="community-guidelines">
-        <h3>Community Guidelines</h3>
-        <ul>
-          <li>Be respectful and supportive</li>
-          <li>Share experiences, not advice</li>
-          <li>Respect privacy</li>
-        </ul>
-      </div>
+      {/* Enhanced Community Features */}
+      {showAdvancedFeatures && (
+        <div className="community-features-container">
+          <Suspense fallback={<LoadingSpinner message="Loading community features..." />}>
+            <CommunityFeaturesComplete 
+              userId={user?.id || 'anonymous'}
+              onGroupJoin={handleJoinGroup}
+              onContentReport={handleReportContent}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
+          </Suspense>
+        </div>
+      )}
+
+      {!showAdvancedFeatures && (
+        <div className="community-guidelines">
+          <h3>Community Guidelines</h3>
+          <ul>
+            <li>Be respectful and supportive</li>
+            <li>Share experiences, not medical advice</li>
+            <li>Respect privacy and confidentiality</li>
+            <li>Report concerning content immediately</li>
+            <li>Practice active listening and empathy</li>
+          </ul>
+        </div>
+      )}
 
       <div className="posts-section">
         {posts.map((post) => (

@@ -23,6 +23,7 @@ const Navigation: React.FC = () => {
     { path: '/crisis', label: 'Crisis Resources', public: true },
     { path: '/community', label: 'Community', public: false },
     { path: '/wellness', label: 'Wellness', public: false },
+    { path: '/professional', label: 'Professional', public: false },
     { path: '/assessments', label: 'Assessments', public: false },
     { path: '/reflections', label: 'Reflections', public: false },
     { path: '/tether', label: 'Tether', public: false },

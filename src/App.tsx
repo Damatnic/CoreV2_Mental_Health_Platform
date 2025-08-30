@@ -19,20 +19,26 @@ import ErrorFallback from './components/ErrorFallback';
 import PWAInstallBanner from './components/PWAInstallBanner';
 import ServiceWorkerUpdate from './components/ServiceWorkerUpdate';
 
-// Views - Lazy loaded for better performance
-const LandingView = React.lazy(() => import('./views/LandingView'));
-const DashboardView = React.lazy(() => import('./views/DashboardView'));
-const AuthPage = React.lazy(() => import('./views/AuthPage'));
-const ProfileView = React.lazy(() => import('./views/ProfileView'));
-const SettingsView = React.lazy(() => import('./views/SettingsView'));
-const AIChatView = React.lazy(() => import('./views/AIChatView'));
-const CrisisView = React.lazy(() => import('./views/CrisisView'));
-const CommunityView = React.lazy(() => import('./views/CommunityView'));
-const WellnessView = React.lazy(() => import('./views/WellnessView'));
-const AssessmentsView = React.lazy(() => import('./views/AssessmentsView'));
-const ReflectionsView = React.lazy(() => import('./views/ReflectionsView'));
-const TetherView = React.lazy(() => import('./views/TetherView'));
-const HelpView = React.lazy(() => import('./views/HelpView'));
+// Views - Lazy loaded for better performance with retry logic
+const retryLazy = (componentImport: () => Promise<any>) => 
+  React.lazy(() => componentImport().catch(() => 
+    new Promise(resolve => setTimeout(resolve, 1500)).then(() => componentImport())
+  ));
+
+const LandingView = retryLazy(() => import('./views/LandingView'));
+const DashboardView = retryLazy(() => import('./views/DashboardView'));
+const AuthPage = retryLazy(() => import('./views/AuthPage'));
+const ProfileView = retryLazy(() => import('./views/ProfileView'));
+const SettingsView = retryLazy(() => import('./views/SettingsView'));
+const AIChatView = retryLazy(() => import('./views/AIChatView'));
+const CrisisView = retryLazy(() => import('./views/CrisisView'));
+const CommunityView = retryLazy(() => import('./views/CommunityView'));
+const WellnessView = retryLazy(() => import('./views/WellnessView'));
+const AssessmentsView = retryLazy(() => import('./views/AssessmentsView'));
+const ReflectionsView = retryLazy(() => import('./views/ReflectionsView'));
+const TetherView = retryLazy(() => import('./views/TetherView'));
+const HelpView = retryLazy(() => import('./views/HelpView'));
+const ProfessionalView = retryLazy(() => import('./views/ProfessionalView'));
 
 // Utils
 import { logger } from './utils/logger';
@@ -120,6 +126,7 @@ const App: React.FC = () => {
                           <Route path="/assessments" element={<AssessmentsView />} />
                           <Route path="/reflections" element={<ReflectionsView />} />
                           <Route path="/tether" element={<TetherView />} />
+                          <Route path="/professional" element={<ProfessionalView />} />
                         </>
                       ) : (
                         <Route path="*" element={<Navigate to="/auth" replace />} />

@@ -1,0 +1,289 @@
+/**
+ * COMPONENT MIGRATION GUIDE
+ * Instructions for migrating existing components to the unified design system
+ * 
+ * This guide shows how to update existing components to use the new design tokens
+ * and maintain consistency across the platform.
+ */
+
+/* ========================================
+   MIGRATION CHECKLIST
+   ======================================== */
+
+/**
+ * 1. COLOR MIGRATION
+ * 
+ * OLD:                          NEW:
+ * #2563eb                  -->  var(--color-primary-500)
+ * #3b82f6                  -->  var(--color-primary-400)
+ * #22c55e                  -->  var(--color-success)
+ * #ef4444                  -->  var(--color-error)
+ * #f59e0b                  -->  var(--color-warning)
+ * #111827                  -->  var(--color-neutral-900)
+ * #6b7280                  -->  var(--color-neutral-500)
+ * rgba(0,0,0,0.5)          -->  rgba(0, 0, 0, 0.5) [keep for overlays]
+ * 
+ * Crisis Colors:
+ * #dc2626                  -->  var(--color-crisis-urgent)
+ * #ea580c                  -->  var(--color-crisis-high)
+ * #d97706                  -->  var(--color-crisis-medium)
+ * #059669                  -->  var(--color-crisis-low)
+ */
+
+/**
+ * 2. SPACING MIGRATION
+ * 
+ * OLD:                          NEW:
+ * padding: 8px             -->  padding: var(--space-2)
+ * padding: 16px            -->  padding: var(--space-4)
+ * padding: 24px            -->  padding: var(--space-6)
+ * padding: 32px            -->  padding: var(--space-8)
+ * margin: 1rem             -->  margin: var(--space-4)
+ * margin: 1.5rem           -->  margin: var(--space-6)
+ * margin: 2rem             -->  margin: var(--space-8)
+ * gap: 12px                -->  gap: var(--space-3)
+ */
+
+/**
+ * 3. TYPOGRAPHY MIGRATION
+ * 
+ * OLD:                          NEW:
+ * font-size: 12px          -->  font-size: var(--text-xs)
+ * font-size: 14px          -->  font-size: var(--text-sm)
+ * font-size: 16px          -->  font-size: var(--text-base)
+ * font-size: 18px          -->  font-size: var(--text-md)
+ * font-size: 20px          -->  font-size: var(--text-lg)
+ * font-size: 24px          -->  font-size: var(--text-xl)
+ * font-weight: 500         -->  font-weight: var(--font-medium)
+ * font-weight: 600         -->  font-weight: var(--font-semibold)
+ * font-weight: 700         -->  font-weight: var(--font-bold)
+ */
+
+/**
+ * 4. BORDER RADIUS MIGRATION
+ * 
+ * OLD:                          NEW:
+ * border-radius: 4px       -->  border-radius: var(--radius-base)
+ * border-radius: 8px       -->  border-radius: var(--radius-lg)
+ * border-radius: 12px      -->  border-radius: var(--radius-xl)
+ * border-radius: 16px      -->  border-radius: var(--radius-2xl)
+ * border-radius: 24px      -->  border-radius: var(--radius-3xl)
+ * border-radius: 9999px    -->  border-radius: var(--radius-full)
+ */
+
+/**
+ * 5. SHADOW MIGRATION
+ * 
+ * OLD:                                                          NEW:
+ * box-shadow: 0 1px 3px rgba(0,0,0,0.1)                   -->  box-shadow: var(--shadow-sm)
+ * box-shadow: 0 4px 6px rgba(0,0,0,0.1)                   -->  box-shadow: var(--shadow-base)
+ * box-shadow: 0 10px 15px rgba(0,0,0,0.1)                 -->  box-shadow: var(--shadow-md)
+ * box-shadow: 0 20px 25px rgba(0,0,0,0.1)                 -->  box-shadow: var(--shadow-lg)
+ * 
+ * For colored shadows:
+ * box-shadow: 0 10px 30px rgba(59,130,246,0.2)            -->  box-shadow: var(--shadow-calm)
+ * box-shadow: 0 10px 30px rgba(34,197,94,0.2)             -->  box-shadow: var(--shadow-healing)
+ */
+
+/**
+ * 6. ANIMATION MIGRATION
+ * 
+ * OLD:                          NEW:
+ * transition: all 0.3s ease     -->  transition: all var(--duration-base) var(--ease-therapeutic)
+ * transition: all 0.15s ease    -->  transition: all var(--duration-fast) var(--ease-out)
+ * transition: all 0.5s ease     -->  transition: all var(--duration-slow) var(--ease-in-out)
+ */
+
+/**
+ * 7. Z-INDEX MIGRATION
+ * 
+ * OLD:                          NEW:
+ * z-index: 100             -->  z-index: var(--z-dropdown)
+ * z-index: 200             -->  z-index: var(--z-sticky)
+ * z-index: 300             -->  z-index: var(--z-overlay)
+ * z-index: 400             -->  z-index: var(--z-modal)
+ * z-index: 9999            -->  z-index: var(--z-crisis)
+ */
+
+/* ========================================
+   COMPONENT CLASS MIGRATION
+   ======================================== */
+
+/**
+ * BUTTONS:
+ * 
+ * OLD:
+ * .breathing-button, .crisis-button, .chat-button
+ * 
+ * NEW:
+ * .btn (base class)
+ * .btn-primary, .btn-secondary, .btn-success, .btn-crisis
+ * .btn-sm, .btn-lg (sizes)
+ */
+
+/**
+ * CARDS:
+ * 
+ * OLD:
+ * .widget-card, .breathing-widget-card, .crisis-alert__container
+ * 
+ * NEW:
+ * .card (base class)
+ * .card-calm, .card-healing, .card-warm, .card-crisis (variants)
+ * .card-header, .card-body, .card-footer (sections)
+ */
+
+/**
+ * FORMS:
+ * 
+ * OLD:
+ * input, textarea, select (element selectors)
+ * 
+ * NEW:
+ * .form-input, .form-textarea, .form-select (class-based)
+ * .form-group, .form-label, .form-help (structure)
+ * .form-input-success, .form-input-error (states)
+ */
+
+/**
+ * MODALS:
+ * 
+ * OLD:
+ * .crisis-alert, .modal-overlay (various implementations)
+ * 
+ * NEW:
+ * .modal-overlay (overlay)
+ * .modal (container)
+ * .modal-header, .modal-body, .modal-footer (sections)
+ * .modal-crisis (variant)
+ */
+
+/* ========================================
+   EXAMPLE MIGRATIONS
+   ======================================== */
+
+/* BEFORE - Old Crisis Alert Button */
+.old-crisis-button-example {
+  padding: 12px 24px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 6px rgba(220, 38, 38, 0.2);
+}
+
+/* AFTER - Migrated Crisis Button */
+.new-crisis-button-example {
+  /* Use unified button base class */
+  /* @extend .btn; */
+  /* @extend .btn-crisis; */
+  
+  /* Or apply tokens directly */
+  padding: var(--space-3) var(--space-6);
+  background: linear-gradient(135deg, var(--color-error) 0%, var(--color-error-dark) 100%);
+  color: white;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-therapeutic);
+  box-shadow: var(--shadow-base), var(--shadow-crisis);
+  min-height: var(--touch-target-min);
+}
+
+/* BEFORE - Old Card Component */
+.old-card-example {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* AFTER - Migrated Card Component */
+.new-card-example {
+  /* Use unified card class */
+  /* @extend .card; */
+  
+  /* Or apply tokens directly */
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-base);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all var(--duration-base) var(--ease-therapeutic);
+}
+
+/* ========================================
+   ACCESSIBILITY REQUIREMENTS
+   ======================================== */
+
+/**
+ * All migrated components MUST:
+ * 
+ * 1. Use focus-visible styles:
+ *    :focus-visible {
+ *      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+ *      outline-offset: var(--focus-ring-offset);
+ *    }
+ * 
+ * 2. Meet minimum touch target size:
+ *    min-height: var(--touch-target-min); /* 44px */
+ * 
+ * 3. Support dark mode:
+ *    [data-theme="dark"] .component { ... }
+ * 
+ * 4. Support reduced motion:
+ *    @media (prefers-reduced-motion: reduce) { ... }
+ * 
+ * 5. Support high contrast:
+ *    @media (prefers-contrast: high) { ... }
+ */
+
+/* ========================================
+   MENTAL HEALTH SPECIFIC PATTERNS
+   ======================================== */
+
+/**
+ * Crisis Components MUST use:
+ * - var(--color-crisis-urgent) for urgent alerts
+ * - var(--z-crisis) for z-index layering
+ * - animation: subtle-pulse for attention without anxiety
+ * 
+ * Therapeutic Components SHOULD use:
+ * - Gradient backgrounds: var(--gradient-calm), var(--gradient-healing)
+ * - Soft shadows: var(--shadow-calm), var(--shadow-healing)
+ * - Smooth transitions: var(--ease-therapeutic)
+ * 
+ * Calming Interactions:
+ * - Use longer durations: var(--duration-slow) or var(--duration-slower)
+ * - Apply therapeutic easing: var(--ease-therapeutic)
+ * - Avoid sudden movements or jarring animations
+ */
+
+/* ========================================
+   TESTING CHECKLIST
+   ======================================== */
+
+/**
+ * After migrating a component, test:
+ * 
+ * [ ] Visual consistency across all states (hover, focus, active, disabled)
+ * [ ] Dark mode appearance
+ * [ ] Mobile responsiveness (test at 320px, 768px, 1024px, 1440px)
+ * [ ] Keyboard navigation
+ * [ ] Screen reader compatibility
+ * [ ] Touch target sizes on mobile
+ * [ ] Color contrast ratios (WCAG AA minimum)
+ * [ ] Animation performance
+ * [ ] Crisis mode functionality
+ * [ ] Cross-browser compatibility
+ */
