@@ -52,6 +52,9 @@ async function build() {
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="/assets/css/index.css">
+  <!-- Load React from CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <style>
     /* Critical CSS */
     * {
@@ -210,9 +213,15 @@ async function build() {
     return;
   }
   
-  // React and ReactDOM are expected to be loaded via CDN or bundled
-  const React = window.React || {};
-  const ReactDOM = window.ReactDOM || {};
+  // Check for React and ReactDOM
+  if (!window.React || !window.ReactDOM) {
+    console.error('React and ReactDOM must be loaded before this script');
+    document.getElementById('root').innerHTML = '<div style="text-align: center; padding: 2rem; color: white;"><h1>Loading Error</h1><p>Required libraries are not loaded. Please refresh the page.</p></div>';
+    return;
+  }
+  
+  const React = window.React;
+  const ReactDOM = window.ReactDOM;
   
   // Main App Component
   class App extends React.Component {
@@ -297,30 +306,12 @@ async function build() {
       return;
     }
     
-    // Check if React is available
-    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
-      // Load React from CDN as fallback
-      const script1 = document.createElement('script');
-      script1.src = 'https://unpkg.com/react@18/umd/react.production.min.js';
-      script1.crossOrigin = 'anonymous';
-      
-      const script2 = document.createElement('script');
-      script2.src = 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
-      script2.crossOrigin = 'anonymous';
-      
-      script1.onload = () => {
-        document.head.appendChild(script2);
-      };
-      
-      script2.onload = () => {
-        window.React = window.React;
-        window.ReactDOM = window.ReactDOM;
-        renderApp();
-      };
-      
-      document.head.appendChild(script1);
-    } else {
+    // React should already be loaded from CDN in HTML
+    if (typeof React !== 'undefined' && typeof ReactDOM !== 'undefined') {
       renderApp();
+    } else {
+      console.error('React or ReactDOM not available');
+      rootElement.innerHTML = '<div style="text-align: center; padding: 2rem; background: white; border-radius: 8px; margin: 2rem;"><h1 style="color: red;">Loading Error</h1><p>Required libraries failed to load. Please check your internet connection and refresh the page.</p></div>';
     }
   }
   

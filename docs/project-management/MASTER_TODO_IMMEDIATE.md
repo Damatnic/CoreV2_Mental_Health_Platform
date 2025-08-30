@@ -35,9 +35,9 @@
 **Priority**: CRITICAL | **Time**: 1 day | **Owner**: DevOps
 
 - [ ] **Domain Configuration**
-  - Purchase/configure domain (e.g., mental-health-platform.com)
+  - Purchase/configure domain (e.g., mentalhealthplatform.com)
   - Set up DNS records
-  - Configure subdomain for API (api.mental-health-platform.com)
+  - Configure subdomain for API (api.mentalhealthplatform.com)
 
 - [ ] **SSL Certificate Setup**
   - AWS Certificate Manager (if using AWS)
