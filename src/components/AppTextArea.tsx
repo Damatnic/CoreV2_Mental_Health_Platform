@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useCallback, useRef, useEffect } from 'react';
-import { AlertCircle, EyeOff, Copy, Check, MessageSquare, Mic, MicOff } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff, Copy, Check, MessageSquare, Mic, MicOff } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 interface AppTextAreaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
@@ -82,7 +82,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
   const [crisisWarning, setCrisisWarning] = useState<{ level: 'low' | 'medium' | 'high'; message: string } | null>(null);
   
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const recognitionRef = useRef<any>(null); // SpeechRecognition from Web Speech API
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   // Use provided ref or internal ref
   const resolvedRef = ref || textareaRef;
@@ -108,7 +108,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
       return;
     }
 
-    const content = String(currentValue).toLowerCase();
+    const content = currentValue.toLowerCase();
     
     // Check for high-risk keywords
     const hasHighRisk = CRISIS_KEYWORDS.some(keyword => content.includes(keyword));
@@ -118,7 +118,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
         message: 'We\'re concerned about your safety. Would you like to speak with someone?'
       };
       setCrisisWarning(warning);
-      onCrisisDetected?.(String(currentValue), 'high');
+      onCrisisDetected?.(currentValue, 'high');
       return;
     }
 
@@ -130,7 +130,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
         message: 'It sounds like you\'re going through a difficult time. Support is available.'
       };
       setCrisisWarning(warning);
-      onCrisisDetected?.(String(currentValue), 'medium');
+      onCrisisDetected?.(currentValue, 'medium');
       return;
     }
 
@@ -219,7 +219,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
     if (!currentValue) return;
 
     try {
-      await navigator.clipboard.writeText(String(currentValue));
+      await navigator.clipboard.writeText(currentValue);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -261,7 +261,7 @@ export const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(({
   };
 
   const getCharCount = () => {
-    return String(currentValue).length;
+    return currentValue.length;
   };
 
   return (

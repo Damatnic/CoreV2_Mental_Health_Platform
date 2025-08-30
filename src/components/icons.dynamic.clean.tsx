@@ -116,19 +116,7 @@ export const ICON_REGISTRY: Record<string, IconConfig> = {
   'scale': { name: 'Scale', category: 'legal', keywords: ['justice'], component: LucideIcons.Scale },
 
   // Sorting and organization
-  'arrow-up-down': { name: 'ArrowUpDown', category: 'sort', keywords: ['sort'], component: LucideIcons.ArrowUpDown },
-
-  // Additional missing icons
-  'heart': { name: 'Heart', category: 'emotion', keywords: ['love', 'like'], component: LucideIcons.Heart },
-  'sparkles': { name: 'Sparkles', category: 'decoration', keywords: ['magic'], component: LucideIcons.Sparkles },
-  'bookmark': { name: 'Bookmark', category: 'save', keywords: ['save'], component: LucideIcons.Bookmark },
-  'volume-2': { name: 'Volume2', category: 'media', keywords: ['sound'], component: LucideIcons.Volume2 },
-  'mic-off': { name: 'MicOff', category: 'media', keywords: ['mute'], component: LucideIcons.MicOff },
-  'mic': { name: 'Mic', category: 'media', keywords: ['microphone'], component: LucideIcons.Mic },
-  'video': { name: 'Video', category: 'media', keywords: ['camera'], component: LucideIcons.Video },
-  'video-off': { name: 'VideoOff', category: 'media', keywords: ['no camera'], component: LucideIcons.VideoOff },
-  'phone-off': { name: 'PhoneOff', category: 'communication', keywords: ['hang up'], component: LucideIcons.PhoneOff },
-  'more-horizontal': { name: 'MoreHorizontal', category: 'action', keywords: ['menu', 'options'], component: LucideIcons.MoreHorizontal }
+  'arrow-up-down': { name: 'ArrowUpDown', category: 'sort', keywords: ['sort'], component: LucideIcons.ArrowUpDown }
 };
 
 // Helper function to normalize icon names
@@ -161,7 +149,7 @@ export const getIconComponent = (name: string): LucideIcon | null => {
 };
 
 // Main dynamic icon component
-export const DynamicIcon = ({
+export const DynamicIcon: React.FC<DynamicIconProps> = ({
   name,
   size = 24,
   color,
@@ -170,29 +158,36 @@ export const DynamicIcon = ({
   'aria-label': ariaLabel,
   'data-testid': testId,
   ...props
-}: DynamicIconProps): React.ReactElement => {
+}) => {
   const IconComponent = getIconComponent(name);
 
   if (!IconComponent) {
-    return React.createElement('div', {
-      className: `inline-flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-gray-400 text-xs ${className}`,
-      style: {
-        width: typeof size === 'number' ? `${size}px` : size,
-        height: typeof size === 'number' ? `${size}px` : size
-      },
-      'aria-label': ariaLabel || `Icon: ${name}`,
-      'data-testid': testId
-    }, '?');
+    return (
+      <div
+        className={`inline-flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-gray-400 text-xs ${className}`}
+        style={{
+          width: typeof size === 'number' ? `${size}px` : size,
+          height: typeof size === 'number' ? `${size}px` : size
+        }}
+        aria-label={ariaLabel || `Icon: ${name}`}
+        data-testid={testId}
+      >
+        ?
+      </div>
+    );
   }
 
-  return React.createElement(IconComponent, {
-    size,
-    color,
-    strokeWidth,
-    className,
-    'aria-label': ariaLabel || `Icon: ${name}`,
-    ...props
-  });
+  return (
+    <IconComponent
+      size={size}
+      color={color}
+      strokeWidth={strokeWidth}
+      className={className}
+      aria-label={ariaLabel || `Icon: ${name}`}
+      data-testid={testId}
+      {...props}
+    />
+  );
 };
 
 // Named exports for backward compatibility
@@ -267,27 +262,6 @@ export const FlagIcon = () => <DynamicIcon name="flag" />;
 export const MessageSquareIcon = () => <DynamicIcon name="message-square" />;
 export const BarChart3Icon = () => <DynamicIcon name="bar-chart-3" />;
 export const ThumbsUpIcon = () => <DynamicIcon name="thumbs-up" />;
-
-// Missing icons that are causing errors (only add ones that don't exist)
-export const HeartIcon = () => <DynamicIcon name="heart" />;
-export const SparkleIcon = () => <DynamicIcon name="sparkles" />;
-export const BookmarkIcon = () => <DynamicIcon name="bookmark" />;
-export const PlayIcon = () => <DynamicIcon name="play" />;
-export const ShareIcon = () => <DynamicIcon name="share" />;
-export const VolumeIcon = () => <DynamicIcon name="volume-2" />;
-export const MicOffIcon = () => <DynamicIcon name="mic-off" />;
-export const CommentIcon = () => <DynamicIcon name="message-circle" />;
-export const MicOnIcon = () => <DynamicIcon name="mic" />;
-export const VideoOnIcon = () => <DynamicIcon name="video" />;
-export const VideoOffIcon = () => <DynamicIcon name="video-off" />;
-export const HangUpIcon = () => <DynamicIcon name="phone-off" />;
-export const WarningIcon = () => <DynamicIcon name="alert-triangle" />;
-export const MoreIcon = () => <DynamicIcon name="more-horizontal" />;
-
-// Additional commonly used icons that were missing
-export const CloseIcon = () => <DynamicIcon name="x" />;
-export const MenuIcon = () => <DynamicIcon name="menu" />;
-export const PlusIcon = () => <DynamicIcon name="plus" />;
 
 // Search icons as object
 export const searchIcons = {

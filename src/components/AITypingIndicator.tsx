@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MessageCircle, Bot, Heart, Brain, Sparkles } from 'lucide-react';
+import { MessageCircle, Bot, Zap, Heart, Brain, Sparkles } from 'lucide-react';
 
 interface AITypingIndicatorProps {
   isVisible: boolean;
@@ -59,6 +59,7 @@ const SPEED_CONFIGS = {
 
 export const AITypingIndicator: React.FC<AITypingIndicatorProps> = ({
   isVisible,
+  aiName = 'AI Assistant',
   variant = 'default',
   size = 'medium',
   speed = 'normal',
@@ -384,5 +385,14 @@ export const useAITypingState = () => {
     stopTyping
   };
 };
+
+// CSS animations (to be added to your global styles)
+const styles = `
+  @keyframes slideInOut {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
+  }
+`;
 
 export default AITypingIndicator;

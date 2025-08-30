@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Loader2, AlertTriangle, Phone } from 'lucide-react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
+import { Loader2, Heart, AlertTriangle, Phone, Check, X } from 'lucide-react';
 
 export interface AppButtonProps {
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline' | 'crisis' | 'mood' | 'emergency' | 'breathing' | 'success';
@@ -97,7 +97,7 @@ const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(({
   onBlur,
   ...rest
 }, ref) => {
-
+  const [isPressed, setIsPressed] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showRipple, setShowRipple] = useState(false);
   const [ripplePosition, setRipplePosition] = useState({ x: 0, y: 0 });
@@ -107,11 +107,15 @@ const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(({
   const [lastClickTime, setLastClickTime] = useState(0);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const successTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
-  const errorTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const successTimeoutRef = useRef<NodeJS.Timeout>();
+  const errorTimeoutRef = useRef<NodeJS.Timeout>();
 
-  // Use imperative handle to expose the ref
-  useImperativeHandle(ref, () => buttonRef.current!);
+  // Merge refs
+  const mergedRef = (node: HTMLButtonElement | null) => {
+    if (buttonRef.current) buttonRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
 
   // Handle success state timeout
   useEffect(() => {
@@ -259,12 +263,15 @@ const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(({
     onClick?.(e);
   };
 
-  const handleKeyDown = (_e: React.KeyboardEvent<HTMLButtonElement>) => {
-    // Handle key down for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      setIsPressed(true);
+    }
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
+      setIsPressed(false);
       handleClick(e as any);
     }
   };
@@ -362,7 +369,7 @@ const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(({
   return (
     <div className="relative inline-flex">
       <button
-        ref={buttonRef}
+        ref={mergedRef}
         className={buttonClasses}
         disabled={disabled || loading}
         onClick={handleClick}

@@ -12,7 +12,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   resetErrorBoundary, 
   className = '' 
 }) => {
-  const isDevelopment = import.meta.env.DEV;
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
   const handleReportError = () => {
     // In production, this could send error details to an error tracking service
