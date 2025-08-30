@@ -1,190 +1,36 @@
 [build]
-  # Directory to serve from
   publish = "dist"
-  
-  # Build command - simplified for better parsing
   command = "npm run build"
-  
-  # Install dependencies before build
-  ignore = false
-  
-  # Functions directory
-  functions = "netlify/functions"
 
 [build.environment]
-  # Node.js version
   NODE_VERSION = "20"
-  
-  # NPM version  
   NPM_VERSION = "10"
-  
-  # Build optimizations
   NODE_ENV = "production"
-  GENERATE_SOURCEMAP = "hidden"
-  
-  # Vite specific
-  VITE_NODE_ENV = "production"
-  VITE_BUILD_MODE = "production"
-  
-  # Performance optimizations
-  NODE_OPTIONS = "--max-old-space-size=4096"
-  
-  # Parallel build
-  NETLIFY_USE_YARN = "false"
-  NETLIFY_YARN_WORKSPACES = "false"
 
-# Headers for security and performance
 [[headers]]
   for = "/*"
   [headers.values]
-    # Security headers
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    
-    # CSP for mental health platform security
-    Content-Security-Policy = """
-      default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://js.sentry-cdn.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com data:;
-      img-src 'self' data: https: blob:;
-      connect-src 'self' https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com https://api.988lifeline.org https://api.crisistextline.org https://*.sentry.io https://analytics.google.com https://www.google-analytics.com wss: https:;
-      media-src 'self' blob:;
-      worker-src 'self' blob:;
-      frame-src 'self' https://www.youtube.com https://player.vimeo.com;
-      object-src 'none';
-      base-uri 'self';
-      form-action 'self';
-      frame-ancestors 'none';
-      upgrade-insecure-requests;
-    """
-    
-    # Permissions Policy
-    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(self), payment=(), usb=()"
-    
-    # Performance headers
-    Cache-Control = "public, max-age=31536000, immutable"
-    
-    # Additional security headers
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    X-DNS-Prefetch-Control = "on"
-    X-Permitted-Cross-Domain-Policies = "none"
 
-# Special headers for HTML files
 [[headers]]
-  for = "/*.html"
+  for = "*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
 
-# Headers for JavaScript files
 [[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-    Content-Type = "application/javascript; charset=utf-8"
-
-# Headers for CSS files
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-    Content-Type = "text/css; charset=utf-8"
-
-# Headers for images
-[[headers]]
-  for = "/*.{jpg,jpeg,png,gif,webp,svg,ico}"
+  for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Headers for fonts
 [[headers]]
-  for = "/*.{woff,woff2,ttf,otf,eot}"
+  for = "*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-# Service Worker
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Service-Worker-Allowed = "/"
-
-# API routes (for future backend functions)
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-
-# Redirects for SPA routing
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Functions configuration
-[functions]
-  # Directory for Netlify functions
-  directory = "netlify/functions"
-  
-  # Node.js runtime
-  node_bundler = "esbuild"
-  
-  # External node modules (don't bundle these)
-  external_node_modules = ["@neondatabase/serverless", "pg", "bcryptjs", "jsonwebtoken"]
-  
-  # Included files for functions
-  included_files = ["netlify/functions/**/*.json", "netlify/functions/**/*.sql"]
-  
-  # Environment variables available to functions
-  [functions.environment]
-    NODE_ENV = "production"
-    FUNCTION_TIMEOUT = "10"
-
-# Dev server settings (for netlify dev)
-[dev]
-  command = "npm run dev"
-  port = 3000
-  publish = "dist"
-  autoLaunch = false
-
-# Plugin configuration
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-  
-  [plugins.inputs]
-    output_path = "reports/lighthouse.html"
-
-[[plugins]]
-  package = "@netlify/plugin-sitemap"
-  
-  [plugins.inputs]
-    buildDir = "dist"
-
-# Environment-specific builds
-[context.production]
-  command = "npm run build"
-  
-[context.production.environment]
-  NODE_ENV = "production"
-  VITE_NODE_ENV = "production"
-  VITE_APP_ENV = "production"
-  
-[context.deploy-preview]
-  command = "npm run build"
-  
-[context.deploy-preview.environment]
-  NODE_ENV = "staging"
-  VITE_NODE_ENV = "staging"
-  VITE_APP_ENV = "staging"

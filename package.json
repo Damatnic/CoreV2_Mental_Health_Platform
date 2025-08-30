@@ -6,7 +6,7 @@
     "dev": "netlify dev",
     "dev:vite": "vite",
     "clean": "rimraf dist",
-    "build": "node scripts/netlify-production-build.js",
+    "build": "vite build",
     "build:netlify-simple": "node scripts/netlify-build.js",
     "build:netlify-production": "node scripts/netlify-production-build.js",
     "build:netlify-safe": "node scripts/netlify-safe-build.js",
