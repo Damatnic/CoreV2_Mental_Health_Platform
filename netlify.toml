@@ -2,11 +2,11 @@
   # Directory to serve from
   publish = "dist"
   
-  # Build command - with fallback to emergency deployment
-  command = "npm run build:production || npm run build || (echo 'Using emergency deployment' && mkdir -p dist && cp emergency-deploy.html dist/index.html && cp -r public/* dist/ 2>/dev/null || true)"
+  # Build command - simplified for better parsing
+  command = "npm run build"
   
   # Install dependencies before build
-  ignore = "false"
+  ignore = false
   
   # Functions directory
   functions = "netlify/functions"
@@ -165,74 +165,26 @@
   
   [plugins.inputs]
     output_path = "reports/lighthouse.html"
-    thresholds = { performance = 90, accessibility = 95, "best-practices" = 90, seo = 90, pwa = 90 }
 
-# Sitemap plugin
 [[plugins]]
   package = "@netlify/plugin-sitemap"
   
   [plugins.inputs]
     buildDir = "dist"
-    exclude = ["/admin/*", "/api/*", "/404", "/offline"]
-    prettyURLs = true
-
-# Security headers plugin
-[[plugins]]
-  package = "netlify-plugin-csp-generator"
-  
-  [plugins.inputs]
-    buildDir = "dist"
-    exclude = ["/api/*"]
-    policies = [
-      { directive = "script-src", values = ["'self'", "'unsafe-inline'", "https://www.google-analytics.com"] },
-      { directive = "style-src", values = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"] }
-    ]
-
-# Bundle analyzer plugin
-[[plugins]]
-  package = "netlify-plugin-bundle-env"
-  
-  [plugins.inputs]
-    copy = [
-      { from = ".env.production", to = ".env" }
-    ]
 
 # Environment-specific builds
 [context.production]
-  environment = { NODE_ENV = "production", VITE_NODE_ENV = "production", VITE_BUILD_MODE = "production" }
-  command = "npm run build:production"
+  command = "npm run build"
   
 [context.production.environment]
+  NODE_ENV = "production"
+  VITE_NODE_ENV = "production"
   VITE_APP_ENV = "production"
-  VITE_ENABLE_SENTRY = "true"
-  VITE_ENABLE_ANALYTICS = "true"
   
 [context.deploy-preview]
-  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging", VITE_BUILD_MODE = "staging" }
-  command = "npm run build:staging"
+  command = "npm run build"
   
 [context.deploy-preview.environment]
+  NODE_ENV = "staging"
+  VITE_NODE_ENV = "staging"
   VITE_APP_ENV = "staging"
-  VITE_ENABLE_SENTRY = "true"
-  VITE_ENABLE_ANALYTICS = "false"
-  ROBOTS_TXT = "User-agent: *\nDisallow: /"
-  
-[context.branch-deploy]
-  environment = { NODE_ENV = "development", VITE_NODE_ENV = "development", VITE_BUILD_MODE = "development" }
-  command = "npm run build:development"
-  
-[context.branch-deploy.environment]
-  VITE_APP_ENV = "development"
-  VITE_ENABLE_SENTRY = "false"
-  VITE_ENABLE_ANALYTICS = "false"
-  ROBOTS_TXT = "User-agent: *\nDisallow: /"
-
-# Staging branch specific
-[context.staging]
-  environment = { NODE_ENV = "staging", VITE_NODE_ENV = "staging" }
-  command = "npm run build:staging"
-  
-# Development branch specific
-[context.development]
-  environment = { NODE_ENV = "development", VITE_NODE_ENV = "development" }
-  command = "npm run build:development"

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreV2 Mental Health Platform - Emergency Deployment</title>
+    <title>Mental Health Support Platform - Emergency Mode</title>
     <style>
         * {
             margin: 0;
@@ -12,260 +12,125 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
+            padding: 20px;
         }
         
         .container {
+            max-width: 800px;
+            margin: 0 auto;
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
-        h1 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .crisis-banner {
-            background: #ff4444;
-            color: white;
+        .crisis-alert {
+            background: #fed7d7;
+            border: 2px solid #fc8181;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 10px;
             margin-bottom: 30px;
             text-align: center;
         }
         
-        .crisis-banner h2 {
-            font-size: 24px;
+        .crisis-button {
+            background: #e53e3e;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .crisis-button:hover {
+            background: #c53030;
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .resource {
+            background: #f7fafc;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .resource h3 {
+            color: #2b6cb0;
             margin-bottom: 10px;
         }
         
-        .crisis-number {
-            font-size: 36px;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        
-        .status-message {
-            background: #f0f4ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .features {
-            margin-top: 30px;
-        }
-        
-        .feature-item {
-            padding: 15px;
-            margin: 10px 0;
-            background: #f9f9f9;
+        .status {
+            background: #c6f6d5;
+            border: 1px solid #68d391;
             border-radius: 8px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .feature-item h3 {
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-        
-        .resources {
+            padding: 15px;
             margin-top: 30px;
-            padding: 20px;
-            background: #fff9e6;
-            border-radius: 10px;
-        }
-        
-        .resources h3 {
-            color: #ff9800;
-            margin-bottom: 15px;
-        }
-        
-        .resource-link {
-            display: block;
-            padding: 10px;
-            margin: 5px 0;
-            background: white;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s;
-        }
-        
-        .resource-link:hover {
-            background: #667eea;
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #667eea;
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            margin: 10px 5px;
-            transition: all 0.3s;
-        }
-        
-        .button:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .emergency-button {
-            background: #ff4444;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .emergency-button:hover {
-            background: #cc0000;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .crisis-number {
-                font-size: 28px;
-            }
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌟 CoreV2 Mental Health Platform</h1>
+        <h1>🧠 Mental Health Support Platform</h1>
         
-        <div class="crisis-banner">
-            <h2>Crisis Support Available 24/7</h2>
-            <div class="crisis-number">988</div>
-            <p>Suicide & Crisis Lifeline</p>
-            <p>Free • Confidential • Available 24/7</p>
+        <div class="crisis-alert">
+            <h2>🚨 In Crisis? Get Help Now</h2>
+            <p><strong>You are not alone. Help is available 24/7.</strong></p>
+            <a href="tel:988" class="crisis-button">📞 Call 988 - Crisis Lifeline</a>
+            <a href="sms:741741" class="crisis-button">💬 Text HOME to 741741</a>
         </div>
         
-        <div class="status-message">
-            <h3>Platform Status</h3>
-            <p>The full application is currently being deployed. In the meantime, please use the resources below for immediate support.</p>
-            <p><strong>Expected completion:</strong> Within 30 minutes</p>
+        <div class="resource">
+            <h3>🌟 988 Suicide & Crisis Lifeline</h3>
+            <p><strong>Call: 988 | Available 24/7</strong></p>
+            <p>Free and confidential support for people in distress, prevention and crisis resources.</p>
         </div>
         
-        <div class="features">
-            <h2>Coming Soon</h2>
-            <div class="feature-item">
-                <h3>✅ AI-Powered Support</h3>
-                <p>24/7 therapeutic chat with advanced crisis detection</p>
-            </div>
-            <div class="feature-item">
-                <h3>📊 Mood Tracking</h3>
-                <p>Track your emotional wellness journey</p>
-            </div>
-            <div class="feature-item">
-                <h3>📝 Secure Journaling</h3>
-                <p>Private, encrypted journal entries</p>
-            </div>
-            <div class="feature-item">
-                <h3>👥 Professional Help</h3>
-                <p>Connect with licensed therapists</p>
-            </div>
+        <div class="resource">
+            <h3>💬 Crisis Text Line</h3>
+            <p><strong>Text HOME to 741741 | Available 24/7</strong></p>
+            <p>Free, 24/7 support for those in crisis. Text with a trained Crisis Counselor.</p>
         </div>
         
-        <div class="resources">
-            <h3>Immediate Resources</h3>
-            <a href="tel:988" class="button emergency-button">Call 988 - Crisis Lifeline</a>
-            <a href="sms:741741" class="button">Text HOME to 741741</a>
-            
-            <h4 style="margin-top: 20px;">Additional Support:</h4>
-            <a href="https://www.samhsa.gov/find-help/national-helpline" class="resource-link" target="_blank">
-                SAMHSA National Helpline: 1-800-662-4357
-            </a>
-            <a href="https://www.nami.org/help" class="resource-link" target="_blank">
-                NAMI HelpLine: 1-800-950-6264
-            </a>
-            <a href="https://www.veteranscrisisline.net/" class="resource-link" target="_blank">
-                Veterans Crisis Line: 1-800-273-8255
-            </a>
-            <a href="https://www.crisistextline.org/" class="resource-link" target="_blank">
-                Crisis Text Line: Text HOME to 741741
-            </a>
+        <div class="resource">
+            <h3>🇺🇸 SAMHSA National Helpline</h3>
+            <p><strong>Call: 1-800-662-HELP (4357)</strong></p>
+            <p>Treatment referral and information service for mental health and substance abuse.</p>
         </div>
         
-        <div style="text-align: center; margin-top: 30px;">
-            <p style="color: #666;">You are not alone. Help is available.</p>
-            <p style="color: #999; font-size: 14px; margin-top: 10px;">
-                CoreV2 Mental Health Platform © 2025<br>
-                HIPAA Compliant • Secure • Confidential
-            </p>
+        <div class="resource">
+            <h3>🎖️ Veterans Crisis Line</h3>
+            <p><strong>Call: 1-800-273-8255, Press 1</strong></p>
+            <p>Confidential support for Veterans in crisis and their families and friends.</p>
+        </div>
+        
+        <div class="resource">
+            <h3>🌈 The Trevor Project</h3>
+            <p><strong>Call: 1-866-488-7386</strong></p>
+            <p>Crisis support services for LGBTQ+ young people under 25.</p>
+        </div>
+        
+        <div class="status">
+            <h3>🔄 Platform Status</h3>
+            <p>The full platform is currently being deployed. This emergency page ensures you can access crisis resources immediately.</p>
+            <p><em>Full features will be available shortly including AI therapy support, mood tracking, and professional services.</em></p>
         </div>
     </div>
-    
-    <script>
-        // Basic crisis keyword detection
-        document.addEventListener('DOMContentLoaded', function() {
-            const crisisKeywords = ['suicide', 'kill myself', 'end it', 'no hope', 'want to die'];
-            
-            // Check if user came from a search with crisis keywords
-            const referrer = document.referrer.toLowerCase();
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchTerm = urlParams.get('q') || '';
-            
-            let showCrisisAlert = false;
-            for (const keyword of crisisKeywords) {
-                if (referrer.includes(keyword) || searchTerm.includes(keyword)) {
-                    showCrisisAlert = true;
-                    break;
-                }
-            }
-            
-            if (showCrisisAlert) {
-                // Emphasize crisis resources
-                document.querySelector('.crisis-banner').style.animation = 'pulse 2s infinite';
-            }
-        });
-        
-        // Add pulse animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Periodic check for main app availability
-        setInterval(() => {
-            fetch('/api/health')
-                .then(response => {
-                    if (response.ok) {
-                        // Main app is available, redirect
-                        window.location.href = '/';
-                    }
-                })
-                .catch(() => {
-                    // Main app not ready yet
-                });
-        }, 30000); // Check every 30 seconds
-    </script>
 </body>
 </html>
