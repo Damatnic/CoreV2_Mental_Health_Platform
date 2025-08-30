@@ -93,8 +93,9 @@
   Cache-Control: no-cache, no-store, must-revalidate
   X-Content-Type-Options: nosniff
 
+# Emergency build app.js - MUST BE EXECUTABLE
 /app.js
-  Content-Type: text/plain
+  Content-Type: application/javascript; charset=UTF-8
   Cache-Control: no-cache, no-store, must-revalidate
   X-Content-Type-Options: nosniff
 
