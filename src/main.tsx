@@ -19,6 +19,7 @@ import './styles/accessibility.css';
 import './styles/mobile-responsive-fixes.css';
 import './styles/dark-theme-enhancements.css';
 import './styles/safe-ui-system.css';
+import './styles/mobile-performance.css'; // Mobile performance optimizations
 
 // Import i18n configuration
 import './i18n';
@@ -40,6 +41,11 @@ import { openTelemetryService } from './services/openTelemetryService';
 
 // Import performance monitoring
 import { performanceMonitoringService } from './services/performanceMonitoringService';
+
+// Import enhanced mobile performance services
+import { enhancedMobilePerformanceService } from './services/mobilePerformanceEnhancedService';
+import { mobileMemoryManager } from './services/mobileMemoryManagerService';
+import { mobileCrisisCacheService } from './services/mobileCrisisCacheService';
 
 // Validate environment variables on startup
 try {
@@ -75,6 +81,37 @@ if (import.meta.env.VITE_OTEL_ENABLED === 'true') {
 
 // Initialize performance monitoring
 performanceMonitoringService.initialize();
+
+// Initialize enhanced mobile performance services
+if (typeof window !== 'undefined') {
+  // Detect if mobile device
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                   window.matchMedia('(max-width: 768px)').matches ||
+                   'ontouchstart' in window;
+  
+  if (isMobile) {
+    // Initialize mobile-specific performance optimizations
+    enhancedMobilePerformanceService.initialize().then(() => {
+      logger.info('Enhanced mobile performance service initialized', undefined, 'main');
+    }).catch(error => {
+      logger.error('Failed to initialize enhanced mobile performance', error, 'main');
+    });
+    
+    // Start memory monitoring for leak detection
+    mobileMemoryManager.startMonitoring();
+    logger.info('Mobile memory monitoring started', undefined, 'main');
+    
+    // Initialize crisis cache for offline support
+    mobileCrisisCacheService.initialize().then(() => {
+      logger.info('Mobile crisis cache initialized', undefined, 'main');
+      
+      // Preload critical resources
+      mobileCrisisCacheService.preloadCriticalResources();
+    }).catch(error => {
+      logger.error('Failed to initialize crisis cache', error, 'main');
+    });
+  }
+}
 
 // Skip Auth0 initialization - using simple auth instead
 // auth0Service.initialize().catch(error => {

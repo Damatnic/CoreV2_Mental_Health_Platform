@@ -286,7 +286,8 @@ function runViteBuild(configPath) {
   console.log('\n🔨 [4/10] Running optimized Vite build...');
   
   try {
-    execSync(`npx vite build --config ${configPath}`, {
+    // Properly quote the config path to handle spaces
+    execSync(`npx vite build --config "${configPath}"`, {
       cwd: projectRoot,
       stdio: 'inherit',
       env: { ...process.env, NODE_ENV: 'production' }

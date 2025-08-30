@@ -1,0 +1,51 @@
+{
+  "timestamp": "2025-08-30T13:17:11.008Z",
+  "overallScore": 99,
+  "metrics": {
+    "bundleSize": {
+      "target": 500,
+      "actual": 0,
+      "unit": "KB"
+    },
+    "criticalCss": {
+      "target": 14,
+      "actual": 1,
+      "unit": "KB"
+    },
+    "initialLoad": {
+      "target": 3,
+      "actual": 0,
+      "unit": "seconds"
+    },
+    "touchTargets": {
+      "target": 44,
+      "actual": 0,
+      "unit": "px"
+    },
+    "imageOptimization": {
+      "target": 100,
+      "actual": 0,
+      "unit": "%"
+    },
+    "cacheEfficiency": {
+      "target": 90,
+      "actual": 100,
+      "unit": "%"
+    },
+    "offlineReadiness": {
+      "target": 100,
+      "actual": 75,
+      "unit": "%"
+    },
+    "crisisAccessTime": {
+      "target": 1,
+      "actual": 1,
+      "unit": "tap"
+    }
+  },
+  "recommendations": [
+    "👆 Increase touch target sizes to minimum 44px",
+    "🖼️ Convert images to WebP/AVIF format for better compression",
+    "🔌 Enhance offline capabilities with service workers"
+  ]
+}

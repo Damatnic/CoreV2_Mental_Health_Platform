@@ -1,0 +1,89 @@
+{
+  "timestamp": "2025-08-30T13:14:39.453Z",
+  "overallScore": 100,
+  "categories": {
+    "viewport": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Viewport-fit for notch support",
+        "✅ Zoom enabled for accessibility",
+        "✅ Responsive width configured",
+        "✅ Initial scale set correctly",
+        "✅ User scaling allowed"
+      ]
+    },
+    "touch": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Mobile responsive components found",
+        "✅ Mobile crisis kit implemented",
+        "✅ Touch event handlers implemented",
+        "✅ Swipe gestures supported"
+      ]
+    },
+    "performance": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Code splitting configured",
+        "✅ Minification enabled",
+        "✅ Lazy loading implemented",
+        "✅ Mobile feature services found"
+      ]
+    },
+    "pwa": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ App names configured",
+        "✅ Start URL defined",
+        "✅ Standalone display mode",
+        "✅ Multiple icon sizes",
+        "✅ App shortcuts configured",
+        "✅ Crisis shortcut available",
+        "✅ Screenshots for install prompt",
+        "✅ Health category specified",
+        "✅ Share target configured"
+      ]
+    },
+    "offline": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Service worker found: sw.js",
+        "✅ Caching strategy implemented",
+        "✅ Offline fallback configured",
+        "✅ Crisis resources cached offline"
+      ]
+    },
+    "crisis": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Emergency call links configured",
+        "✅ Crisis text support available",
+        "✅ Breathing exercises included",
+        "✅ Location-based help finder"
+      ]
+    },
+    "accessibility": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ Mobile accessibility system found",
+        "✅ ARIA labels implemented"
+      ]
+    },
+    "responsive": {
+      "score": 100,
+      "issues": [],
+      "passed": [
+        "✅ 21 mobile style files found",
+        "✅ Media queries implemented"
+      ]
+    }
+  },
+  "recommendations": []
+}
